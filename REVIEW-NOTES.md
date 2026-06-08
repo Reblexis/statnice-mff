@@ -5,7 +5,6 @@ Only high-confidence factual/clarity corrections were applied directly. Items be
 
 ## `src/sections/zaklady-ui.tex`
 
-- In the CSP example, the mini diagram says "po hraně A<B" and shows both domains pruned. Strictly, AC-3 works with oriented arcs, so this result corresponds to enforcing both directions of the binary constraint, not just processing one oriented arc. The study intuition is fine, but wording could be made more exact.
 - The Bayes net factorization uses `parents(x_i)` in the formula. More standard notation is `pa_i` or values of `Parents(X_i)`. The current version is understandable and exam-safe.
 - The MDP Bellman equation uses a transition reward `R(s,a,s')`. Some courses use state reward `R(s)` or action reward `R(s,a)`. The text is correct under its stated convention, but an examiner may use a different notation.
 - The second-price auction note says truthful bidding is a dominant strategy in a simple model. This is correct for the standard sealed-bid Vickrey auction with private values, but not a universal fact about every auction informally called "second price".

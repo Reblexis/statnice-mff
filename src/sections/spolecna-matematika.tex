@@ -78,7 +78,7 @@ obrazu). Matice je \emph{regulární} $\iff$ má inverzi $\iff$ $\det\neq0$ $\if
 ($x\neq0$), kořeny char.\ polynomu $\det(A-\lambda I)=0$. \emph{Skalární součin} dává normu a kolmost;
 \emph{Gram-Schmidt} vyrobí ortonormální bázi. Souřadnice vektoru vůči ortonormální bázi jsou
 \emph{Fourierovy koeficienty} $\langle u|v_i\rangle$ (a \emph{ortogonální projekce} na podprostor
-je jejich součet). Pythagorova věta a Cauchy-Schwarzova nerovnost $|\langle u|v\rangle|\le\|u\|\|v\|$.\par
+je součet $\sum_i \langle u|v_i\rangle v_i$). Pythagorova věta a Cauchy-Schwarzova nerovnost $|\langle u|v\rangle|\le\|u\|\|v\|$.\par
 \noindent\bod{3}\ \textbf{Bonus:} \emph{Diagonalizace} $A=S\Lambda S^{-1}$ (sloupce $S$ = vlastní
 vektory). Symetrické matice mají reálná vl.\ čísla a ortogonální diagonalizaci $A=Q\Lambda Q^\top$.
 Reálná symetrická matice je \emph{pozitivně definitní} ($x^\top Ax>0$ pro $x\neq0$)
@@ -126,11 +126,11 @@ antiřetězec (žádné dva); \emph{Dilworthova věta} dává vztah šířky a p
 znaménka). \emph{Binomická věta}: $(a+b)^n=\sum\binom nk a^k b^{n-k}$ (kombinační čísla =
 Pascalův trojúhelník).\par
 \noindent\bod{3}\ \textbf{Bonus:} \emph{Hallova věta}: bipartitní graf má párování pokrývající $A$
-$\iff$ pro každou $X\subseteq A$ platí $|N(X)|\ge|X|$ (Hallova podmínka); ekvivalentně
-\emph{Kőnig-Egerváryho věta}: max.\ párování = min.\ vrcholové pokrytí. Aplikace inkluze-exkluze:
+$\iff$ pro každou $X\subseteq A$ platí $|N(X)|\ge|X|$ (Hallova podmínka); související
+\emph{Kőnigova věta}: max.\ párování = min.\ vrcholové pokrytí v bipartitním grafu. Aplikace inkluze-exkluze:
 počet surjekcí, Eulerova funkce, problém šatnářky. Počet prostých funkcí $N\to M$ je
-$m^{\underline n}$ a bijekcí na $n$ prvcích je $n!$. ČUM má minimální a maximální prvky,
-výška krát šířka je aspoň $|X|$.
+$m^{\underline n}$ a bijekcí na $n$ prvcích je $n!$. V konečné neprázdné ČUM existují
+minimální a maximální prvky, výška krát šířka je aspoň $|X|$.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -172,7 +172,7 @@ Grafy = vrcholy a hrany. Mnoho úloh = „dá se projít / spojit / obarvit / pr
   \draw (a) edge node[above right]{$2$} (t);
   \draw (b) edge node[below right]{$3$} (t);
 \end{tikzpicture}\\[-2pt]
-{\scriptsize Síť s kapacitami. Max tok = min řez (zde 4).}
+{\scriptsize Síť s kapacitami. Max tok = min řez (zde 5).}
 \end{center}
 
 \begin{odpoved}
@@ -282,8 +282,8 @@ odvodí $C\lor D$; spor = prázdná klauzule (důkaz nesplnitelnosti). \emph{Tab
 hledání modelu. \emph{Věta o úplnosti}: $T\models\varphi \iff T\vdash\varphi$.\par
 \noindent\bod{3}\ \textbf{Bonus:} \emph{Kompaktnost}: teorie má model $\iff$ každá konečná část má
 model. \emph{Skolemizace} odstraní existenční kvantifikátory. \emph{Rozhodnutelnost}: výroková
-logika je rozhodnutelná (SAT), predikátová obecně ne; \emph{kompletní} teorie (rozhoduje o každé
-formuli) jsou rozhodnutelné, ale např.\ Peanova aritmetika kompletní není.
+logika je rozhodnutelná (SAT), predikátová obecně ne; \emph{rekurzivně axiomatizovaná kompletní}
+teorie je rozhodnutelná, ale např.\ Peanova aritmetika kompletní není.
 PNF má kvantifikátory v prefixu; Horn-SAT je lineární přes jednotkovou propagaci.
 Extenze je konzervativní, když nepřidá nové důsledky ve starém jazyce. Tablo je
 sporné, když se uzavřou všechny větve; korektnost a úplnost spojují důkaz s platností.
