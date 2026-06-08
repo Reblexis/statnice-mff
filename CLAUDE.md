@@ -8,7 +8,24 @@ Build one polished Czech study PDF (`statnice-priprava.pdf`) to prepare for the
 MFF UK bachelor state final exam (statnice), program **Informatika - Umělá
 inteligence**, zaměření **Strojové učení**. The PDF must cover every required
 exam topic, stay faithful to the source notes, and clearly mark anything that is
-missing, only an alternative, or left to self-practice. Goal: study it and get an A.
+missing, only an alternative, or left to self-practice.
+
+**Primary objective: learn as time-efficiently as possible.** Optimize for the
+LEAST study time needed to reliably PASS, i.e. reach grade 3 ("dobře", the lowest
+passing grade) with > 98 % probability. This supersedes any "get an A" framing:
+maximizing the grade is not the goal, minimizing time-to-pass is. Practical
+consequences for how to shape the material:
+
+- Pass thresholds (see "Struktura zkoušky" in the PDF): at least 5 points from
+  the common areas AND at least 7 from the specialization; 12 points total = grade 3.
+  Prioritize broad, shallow coverage that secures these minimums over deep mastery
+  of any single topic.
+- Favor crisp definitions, key statements, and the one-line "why" over long
+  derivations and proofs (the exam has přehledový charakter anyway).
+- Keep it lean: do not add depth or topics beyond the requirements. Anything that
+  does not move the needle on passing is bloat and should be cut.
+- When trimming or expanding, ask "does this raise the probability of passing per
+  minute of study?" If not, leave it out.
 
 Owner: Viktor Číhal. GitHub account: **Reblexis** (private repo
 `github.com/Reblexis/statnice-mff`). Local unix user is `cihalvi`.
