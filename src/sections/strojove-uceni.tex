@@ -41,17 +41,17 @@ i pro \textbf{nová} data. Nejde o to namemorovat trénink, ale \emph{generalizo
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} \emph{klasifikace} = výstup je třída, \emph{regrese} = výstup je číslo.
-Model trénujeme na trénovacích datech a hodnotíme na \emph{oddělených testovacích} datech.\par
+\noindent\bod{1}\ \textbf{Minimum:} \emph{Klasifikace} učí funkci $h:X\to Y$ s diskrétními třídami, \emph{regrese} učí $h:X\to\mathbb R^k$.
+\emph{MLE} volí hypotézu nebo parametry $\hat h=\arg\max_h P(D\mid h)$.
+Accuracy $=\frac{TP+TN}{TP+TN+FP+FN}$, precision $=\frac{TP}{TP+FP}$, recall $=\frac{TP}{TP+FN}$, $F1=\frac{2PR}{P+R}$.\par
 \noindent\bod{2}\ \textbf{+ k tomu:} \emph{Generalizační chyba} = chyba na nových datech. \emph{Přeučení}
 = model sedí na šumu trénovacích dat (malá trénovací, velká testovací chyba). Bráníme se:
 \emph{regularizací} (L2 = penalizuje velké váhy $\lambda\|w\|_2^2$, hladší model; L1 = $\lambda\|w\|_1$,
 navíc dělá řídké váhy, tj.\ výběr příznaků), \emph{včasným zastavením} trénování a více daty.
 \emph{Křížová validace} (k-fold): data rozdělím na $k$ částí, postupně každou použiju jako test,
 průměruju - spolehlivější odhad chyby než jediné rozdělení.\par
-\noindent\bod{3}\ \textbf{Bonus:} \emph{metriky} - klasifikace: accuracy, precision, recall, F1
-(z matice záměn); regrese: MSE/RMSE. \emph{Maximální věrohodnost (MLE)}: parametry volíme tak, aby
-data byla nejpravděpodobnější; minimalizace záporné log-věrohodnosti je často přesně ta loss funkce.
+\noindent\bod{3}\ \textbf{Bonus:} Regrese se hodnotí například $MSE=\frac1n\sum_i(y_i-\hat y_i)^2$ a $RMSE=\sqrt{MSE}$.
+Minimalizace záporné log-věrohodnosti je často přesně ta loss funkce.
 \emph{Prokletí dimenzionality}: v mnoha rozměrech jsou data řídká a vzdálenosti ztrácejí smysl, je
 třeba exponenciálně víc dat. NLL je běžná klasifikační loss pro pravděpodobnostní modely.
 ROC mění práh a kreslí TPR proti FPR, AUC je plocha pod ní; senzitivita = recall,
@@ -142,7 +142,7 @@ odchylek byl co nejmenší.
 \begin{odpoved}
 \setlength{\parskip}{2pt}
 \noindent\bod{1}\ \textbf{Minimum:} Model $y = w^\top x + b$. Minimalizujeme \emph{MSE}
-$\sum_i (y_i - w^\top x_i)^2$ (metoda nejmenších čtverců).\par
+$\frac1n\sum_i (y_i - w^\top x_i-b)^2$, ekvivalentně L2 chybu $\|Xw-y\|_2^2$ (metoda nejmenších čtverců).\par
 \noindent\bod{2}\ \textbf{+ k tomu:} \emph{Analytické řešení} (normální rovnice):
 $\hat w = (X^\top X)^{-1} X^\top y$, kde sloupec jedniček v $X$ pokryje intercept $b$.
 Funguje přímo jen při regulární $X^\top X$; při singularitě se používá pseudoinverze
@@ -234,10 +234,10 @@ po kterých jsou výsledné skupiny co \emph{nejčistší} (jedna třída).
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} Strom dělí data podmínkami na příznacích; v listech je predikce
-(třída/hodnota). Staví se hladově shora.\par
+\noindent\bod{1}\ \textbf{Minimum:} \emph{Rozhodovací strom} má ve vnitřním uzlu test příznaku, hrany podle výsledku testu a v listu predikci.
+\emph{Entropie} uzlu je $H(S)=-\sum_c p_c\log p_c$ a \emph{Gini nečistota} je $G(S)=1-\sum_c p_c^2$.\par
 \noindent\bod{2}\ \textbf{+ k tomu:} V každém uzlu vyber dělení, které nejvíc \emph{zvýší čistotu} -
-kritéria: \emph{informační zisk} (pokles \emph{entropie}) nebo \emph{Gini index}. Rekurzivně až do
+\emph{informační zisk} je pokles entropie po rozdělení. Rekurzivně až do
 čistých listů / zastavovacího kritéria.\par
 \noindent\bod{3}\ \textbf{Bonus:} Plně narostlý strom se přeučí $\Rightarrow$ \emph{prořezávání}
 (pre-pruning: zastav brzy podle hloubky/min.\ vzorků; post-pruning: ořež větve, které nezlepší
@@ -285,8 +285,8 @@ Mezi dvě třídy chceme proložit \textbf{co nejširší ulici} (pruh bez bodů
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} Najdi nadrovinu oddělující třídy s \emph{největším marginem};
-klasifikace $\operatorname{sign}(w^\top x+b)$.\par
+\noindent\bod{1}\ \textbf{Minimum:} \emph{SVM} hledá nadrovinu $w^\top x+b=0$ oddělující třídy s maximálním marginem; pro kanonické škálování je šířka marginu $\frac{2}{\|w\|}$.
+Klasifikace je $\operatorname{sign}(w^\top x+b)$.\par
 \noindent\bod{2}\ \textbf{+ k tomu:} \emph{Podpůrné vektory} = body na okraji marginu
 (u měkkého marginu i uvnitř marginu / chybně klasifikované), jen ty určují hranici.
 Neseparabilní data: \emph{měkký margin} se slack $\xi_i$ a penaltou $C\sum\xi_i$ ($C$ = kompromis
@@ -408,8 +408,8 @@ nebo směry, kde se data nejvíc mění (PCA).
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} \emph{Shlukování} = rozděl data do skupin podle podobnosti.
-\emph{PCA} = najdi pár směrů, které zachytí nejvíc rozptylu, a do nich data promítni (zmenšení dimenze).\par
+\noindent\bod{1}\ \textbf{Minimum:} \emph{k-means} minimalizuje $\sum_{j=1}^k\sum_{x_i\in C_j}\|x_i-\mu_j\|^2$, kde $\mu_j$ je centroid shluku.
+\emph{PCA} hledá ortogonální směry maximalizující rozptyl projekce; jsou to vlastní vektory kovarianční matice s největšími vlastními čísly.\par
 \noindent\bod{2}\ \textbf{+ k tomu:} \emph{k-means}: zvol $k$ center, opakuj \{přiřaď body
 nejbližšímu centru; přepočítej centra jako průměry\} až do ustálení. \emph{Hierarchické
 shlukování}: postupně slučuj nejbližší shluky (aglomerativně) $\Rightarrow$ \emph{dendrogram},

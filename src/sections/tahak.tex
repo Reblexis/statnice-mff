@@ -11,18 +11,18 @@ Nauč se nejdřív tohle celé, pak teprve prohlubuj (zejména specializaci).}
 \begin{multicols}{2}
 \textbf{\color{mffblue}Část I: Společná matematika}
 \begin{itemize}[leftmargin=1em,itemsep=1.5pt,topsep=2pt]
-  \item \textbf{Dif./int. počet:} limita = kam se blíží; derivace = sklon tečny; integrál = plocha pod grafem; Newton-Leibniz $\int_a^b f=F(b)-F(a)$.
-  \item \textbf{Lin. algebra:} báze = lin.\ nezávislá generující množina, dimenze = její velikost; hodnost = počet pivotů; regulární $\iff \det\neq0 \iff$ existuje inverze.
-  \item \textbf{Diskrétní mat.:} ekvivalence = reflexivní + symetrická + tranzitivní (rozklad na třídy); bijekce = prostá i na; funkcí $A\to B$ je $|B|^{|A|}$.
-  \item \textbf{Teorie grafů:} strom = souvislý bez kružnic ($n-1$ hran); bipartitní $\iff$ bez liché kružnice; Eulerova formule $v-e+f=2$.
-  \item \textbf{Pravděpodobnost:} $P(A|B)=\frac{P(A\cap B)}{P(B)}$; Bayes; $E[X]=\sum x_i p_i$, linearita $E$ platí vždy.
+  \item \textbf{Dif./int. počet:} $\lim a_n=L \iff \forall\varepsilon>0\ \exists n_0:\forall n\ge n_0\ |a_n-L|<\varepsilon$; spojitost $\lim_{x\to a}f(x)=f(a)$; $f'(a)=\lim_{h\to0}\frac{f(a+h)-f(a)}h$.
+  \item \textbf{Lin. algebra:} báze = lin.\ nezávislá generující množina, dimenze = její velikost; hodnost = dimenze sloupcového prostoru; vlastní vektor $Ax=\lambda x$.
+  \item \textbf{Diskrétní mat.:} ekvivalence = reflexivní + symetrická + tranzitivní; částečné uspořádání = reflexivní + antisymetrické + tranzitivní; bijekce = prostá i na.
+  \item \textbf{Teorie grafů:} strom = souvislý bez kružnic ($n-1$ hran); bipartitní = hrany jen mezi dvěma částmi; $\chi(G)$ = min.\ počet barev; Euler $v-e+f=2$.
+  \item \textbf{Pravděpodobnost:} prostor $(\Omega,\mathcal F,P)$; $P(A|B)=\frac{P(A\cap B)}{P(B)}$; $E[X]=\sum x_i p_i$, $\mathrm{var}(X)=E[X^2]-E[X]^2$.
   \item \textbf{Logika:} tautologie = pravdivá vždy, splnitelná = aspoň v jednom modelu; CNF = konjunkce klauzulí; rezoluce do prázdné klauzule = spor.
 \end{itemize}
 
 \textbf{\color{mffblue}Část II: Společná informatika}
 \begin{itemize}[leftmargin=1em,itemsep=1.5pt,topsep=2pt]
-  \item \textbf{Automaty:} regulární = DFA/NFA/regex; bezkontextové = zásobníkový automat; Turingův stroj = rekurzivně spočetné; Chomského hierarchie.
-  \item \textbf{Algoritmy:} asymptotika $O/\Theta$; P vs NP, NP-úplnost přes převoditelnost; BFS/DFS, Dijkstra (nezáporné hrany), min.\ kostra.
+  \item \textbf{Automaty:} DFA $(Q,\Sigma,\delta,q_0,F)$; regulární = konečný automat/regex; bezkontextové = PDA/CFG; rekurzivně spočetné = Turingův stroj.
+  \item \textbf{Algoritmy:} $f\in O(g)\iff f\le cg$ od jistého $n$; P = poly čas; NP = poly ověřitelný certifikát; NP-úplný = v NP a NP-těžký.
   \item \textbf{Prog.\ jazyky (C\#):} třída/rozhraní/dědičnost/polymorfismus; hodnotové vs referenční typy; garbage collector; výjimky; tabulka virtuálních metod.
   \item \textbf{Architektura/OS:} čísla ve dvojkovém doplňku; privilegovaný režim + jádro; proces/vlákno a přepínání kontextu; virtuální paměť (stránka + offset $\to$ rámec).
 \end{itemize}
@@ -30,27 +30,27 @@ Nauč se nejdřív tohle celé, pak teprve prohlubuj (zejména specializaci).}
 \columnbreak
 \textbf{\color{mffblue}Část III: Základy UI}
 \begin{itemize}[leftmargin=1em,itemsep=1.5pt,topsep=2pt]
-  \item \textbf{Prohledávání:} stavový prostor; BFS/DFS/uniform-cost; A* je optimální s přípustnou heuristikou ve stromu a konzistentní v grafu.
-  \item \textbf{CSP:} proměnné + domény + podmínky; AC-3 = hranová konzistence; řešení backtrackingem (MAC).
+  \item \textbf{Prohledávání:} úloha = počáteční stav, akce, test cíle, cena; přípustná heuristika $h\le h^*$; konzistentní $h(n)\le c+h(n')$.
+  \item \textbf{CSP:} proměnné + domény + relace podmínek, výstup = úplné konzistentní přiřazení; AC-3 = hranová konzistence; MAC = backtracking + AC.
   \item \textbf{Logické uvažování:} CNF; DPLL; rezoluce; dopředné/zpětné řetězení (Hornovy klauzule).
-  \item \textbf{Pravděp.\ uvažování:} úplná sdružená distribuce; Bayes; Bayesovská síť = DAG + $P(X\mid \text{rodiče})$.
-  \item \textbf{Reprezentace znalostí:} HMM = skryté stavy + pozorování; filtrace/predikce/vyhlazování; Viterbi = nejpravděpodobnější cesta.
+  \item \textbf{Pravděp.\ uvažování:} Bayesovská síť = DAG + $P(X_i\mid Parents(X_i))$, faktorizace $\prod_i P(x_i\mid pa_i)$.
+  \item \textbf{Reprezentace znalostí:} HMM = skryté $X_t$, pozorování $E_t$, přechod $P(X_t\mid X_{t-1})$, senzor $P(E_t\mid X_t)$; Viterbi = max.\ cesta.
   \item \textbf{Plánování:} stav + operátory (precond/efekty); dopředné a zpětné hledání plánu.
-  \item \textbf{MDP:} stavy/akce/přechody/odměny; Bellmanova rovnice; iterace hodnot a strategií.
+  \item \textbf{MDP:} $S,A,P(s'\mid s,a),R,\gamma$; strategie $\pi(s)$; Bellman $U(s)=\max_a\sum_{s'}P(s'\mid s,a)(R+\gamma U(s'))$.
   \item \textbf{Hry:} minimax + alfa-beta prořezávání; Nashovo ekvilibrium; vězňovo dilema.
   \item \textbf{ML přehledově:} s učitelem / bez učitele / zpětnovazební; stromy, regrese, SVM; Q-učení.
 \end{itemize}
 
 \textbf{\color{mffblue}Část IV: Strojové učení}
 \begin{itemize}[leftmargin=1em,itemsep=1.5pt,topsep=2pt]
-  \item \textbf{Učení s učitelem:} klasifikace (třída) vs regrese (číslo); trénink vs test; přeučení; regularizace L1/L2.
+  \item \textbf{Učení s učitelem:} MLE $\arg\max_h P(D\mid h)$; accuracy $(TP+TN)/N$, precision $TP/(TP+FP)$, recall $TP/(TP+FN)$, F1 $=2PR/(P+R)$.
   \item \textbf{kNN:} třída podle většiny $k$ nejbližších bodů; líné učení; nutno škálovat příznaky.
-  \item \textbf{Lineární regrese:} $y=w^\top x+b$, minimalizuj MSE; normální rovnice $w=(X^\top X)^{-1}X^\top y$ při regulární $X^\top X$.
+  \item \textbf{Lineární regrese:} $y=w^\top x+b$, minimalizuj $MSE=\frac1n\sum_i(y_i-\hat y_i)^2$ neboli L2 chybu; normální rovnice při regulární $X^\top X$.
   \item \textbf{Logistická regrese:} $\sigma(w^\top x+b)$ = pravděpodobnost třídy, práh 0,5; softmax pro více tříd.
-  \item \textbf{Rozhodovací stromy:} dělení podle čistoty (entropie/Gini); prořezávání proti přeučení.
-  \item \textbf{SVM:} nadrovina s největším marginem; podpůrné vektory; měkký margin pro chyby, jádro pro nelineární hranice.
+  \item \textbf{Rozhodovací stromy:} entropie $-\sum p_c\log p_c$, Gini $1-\sum p_c^2$; informační zisk = pokles entropie; prořezávání proti přeučení.
+  \item \textbf{SVM:} nadrovina $w^\top x+b=0$ s max.\ marginem $2/\|w\|$; podpůrné vektory; měkký margin a jádro.
   \item \textbf{Ensembly:} bagging (paralelně, $\downarrow$rozptyl) vs boosting (sekvenčně, $\downarrow$bias); náhodný les.
   \item \textbf{Statistické testy:} $H_0$; $p<\alpha \Rightarrow$ zamítni; t-test (průměry), chí-kvadrát (četnosti).
-  \item \textbf{Učení bez učitele:} k-means (přiřaď body + přepočítej centra); hierarchické; PCA = směr max.\ rozptylu.
+  \item \textbf{Učení bez učitele:} k-means minimalizuje $\sum_j\sum_{x_i\in C_j}\|x_i-\mu_j\|^2$; PCA = vlastní směry kovariance s max.\ rozptylem.
 \end{itemize}
 \end{multicols}

@@ -66,11 +66,12 @@ přes Turingův stroj.
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} Regulární jazyk pozná konečný automat a popíše regulární
-výraz nebo regulární gramatika. DFA má jeden přechod pro stav a znak, NFA může mít více
-přechodů nebo $\varepsilon$-kroky, ale poznává stejnou třídu jazyků.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} Bezkontextový jazyk generuje CFG s pravidly
-$A\to\alpha$ a přijímá ho zásobníkový automat. Zásobník dá paměť pro vnoření, například
+\noindent\bod{1}\ \textbf{Minimum:} \emph{DFA} je pětice $(Q,\Sigma,\delta,q_0,F)$ s totální funkcí $\delta:Q\times\Sigma\to Q$; \emph{NFA} dovolí množinu přechodů a $\varepsilon$-kroky.
+\emph{Regulární jazyk} je jazyk přijímaný konečným automatem, ekvivalentně popsatelný regulárním výrazem nebo regulární gramatikou.
+\emph{Turingův stroj} má konečné řízení, pásku a přechodovou funkci; přijímá vstupy, na nichž zastaví v přijímajícím stavu.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Bezkontextový jazyk} generuje CFG s pravidly
+$A\to\alpha$ a přijímá ho \emph{PDA}, tedy konečný automat se zásobníkem. \emph{Rekurzivně spočetný jazyk} přijímá Turingův stroj.
+Zásobník dá paměť pro vnoření, například
 $\{a^n b^n\mid n\ge0\}$, ale ne pro dvě nezávislá počítání jako $a^n b^n c^n$.\par
 \noindent\bod{3}\ \textbf{Bonus:} Typ 0 gramatiky odpovídají rekurzivně spočetným jazykům
 a Turingovým strojům. Existují algoritmicky nerozhodnutelné problémy, klasicky problém
@@ -155,14 +156,15 @@ strukturu a umět odhadnout složitost. U společné části stačí mít mapu p
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} Složitost měř vzhledem k velikosti vstupu a rozliš čas,
-prostor, nejlepší, průměrný a nejhorší případ. Značení $O$, $\Omega$, $\Theta$ popisuje
-asymptotický růst. P je řešitelné v polynomiálním čase, NP má polynomiálně ověřitelné
-certifikáty.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} NP-těžkost se ukazuje polynomiálním převodem ze známého
-NP-těžkého problému, NP-úplný problém je v NP a je NP-těžký. Rozděl a panuj: rozděl,
+\noindent\bod{1}\ \textbf{Minimum:} $f\in O(g)$ znamená $\exists c,n_0\ \forall n\ge n_0:\ f(n)\le c g(n)$; $\Omega$ je dolní a $\Theta$ oboustranný asymptotický odhad.
+\emph{P} je třída rozhodovacích problémů řešitelných v polynomiálním čase deterministickým strojem.
+\emph{NP} je třída problémů, jejichž ano-certifikát lze ověřit v polynomiálním čase.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Polynomiální redukce} $A\le_p B$ je polynomiálně spočitatelná transformace $x\mapsto f(x)$ se $x\in A \iff f(x)\in B$.
+\emph{NP-těžký} problém je takový, že se na něj polynomiálně redukuje každý problém z NP; \emph{NP-úplný} je NP-těžký a leží v NP.
+\emph{BST} má v každém uzlu vlevo menší a vpravo větší klíče; \emph{AVL} je BST, kde se výšky levého a pravého podstromu v každém uzlu liší nejvýše o 1.
+Rozděl a panuj: rozděl,
 vyřeš podproblémy, slož výsledek, například mergesort $T(n)=2T(n/2)+O(n)=O(n\log n)$.
-BST hledá podle pořadí klíčů, AVL drží vyvážení rotacemi. Porovnávací třídění má dolní
+AVL drží vyvážení rotacemi. Porovnávací třídění má dolní
 odhad $\Omega(n\log n)$.\par
 \noindent\bod{3}\ \textbf{Bonus:} Quicksort má průměrně $O(n\log n)$ a nejhůře $O(n^2)$.
 BFS je fronta a vzdálenosti v neohodnoceném grafu, DFS je zásobník a časy průchodu.
