@@ -551,7 +551,21 @@ Pokud mají hypotézy stejné apriorní pravděpodobnosti, stačí likelihoody n
 \[
 p(z\mid\mathrm{data})=\sum_h p(z\mid h)p(h\mid\mathrm{data}).
 \]
-EM algoritmus se používá pro maximum-likelihood odhad, když ho nelze jednoduše spočítat kvůli skrytým proměnným. Začne náhodnými parametry a iteruje do konvergence: E-step dopočte střední hodnoty skrytých proměnných, M-step upraví parametry tak, aby maximalizovaly likelihood modelu. Příklad: z výšek bez pohlaví chceme odhadnout průměr mužů $\mu_0$ a žen $\mu_1$. Pohlaví je skrytá proměnná; v E-kroku spočteme pravděpodobnosti, že daná výška patří ženě nebo muži, a v M-kroku přepočteme $\mu_0,\mu_1$ jako vážené průměry výšek. Parametry mohou vyjít prohozené, protože EM je učení bez učitele a nezajišťuje interpretaci tříd. Pasivní zpětnovazební učení uvažuje agenta v MDP s pevně danou strategií $\pi$; učí se, jak je strategie dobrá, tedy utility funkci, a nezná přechodový model ani reward function. Přímý odhad utility používá běhy, traces, a pro každý stav průměruje reward-to-go, tedy odměnu současného a budoucích stavů, případně diskontovanou faktorem $\gamma$. Je to podobné učení s učitelem se stavem na vstupu a užitkem na výstupu, ale konverguje pomalu, protože ignoruje Bellmanovy vazby a hledá v příliš velkém prostoru hypotéz. ADP se učí přechodový model a odměny z pozorovaných přechodů a utility potom počítá z Bellmanových rovnic, například iterací hodnot; tím vynucuje konzistenci odhadů užitků. TD learning model nepotřebuje a při přechodu $s\to s'$ aktualizuje
+EM algoritmus se používá pro maximum-likelihood odhad, když ho nelze jednoduše spočítat kvůli skrytým proměnným. Začne náhodnými parametry a iteruje do konvergence: E-step dopočte střední hodnoty skrytých proměnných, M-step upraví parametry tak, aby maximalizovaly likelihood modelu. Pro směsový model se skrytým shlukem $C$ a pozorováním $x_j$ je odpovědnost
+\[
+r_{jk}=P(C=k\mid x_j;\theta)=
+\frac{P(C=k;\theta)P(x_j\mid C=k;\theta)}
+{\sum_\ell P(C=\ell;\theta)P(x_j\mid C=\ell;\theta)}.
+\]
+V Bayesovské síti s podmíněně nezávislými pozorovanými potomky platí například
+$P(x_j\mid C=k)=P(\mathrm{Color}=c_j\mid C=k)P(\mathrm{Holes}=h_j\mid C=k)$.
+M-krok pak používá očekávané četnosti:
+\[
+P(C=k)\leftarrow\frac1N\sum_j r_{jk},\qquad
+P(A=a\mid C=k)\leftarrow
+\frac{\sum_{j:A_j=a} r_{jk}}{\sum_j r_{jk}}.
+\]
+Příklad: z výšek bez pohlaví chceme odhadnout průměr mužů $\mu_0$ a žen $\mu_1$. Pohlaví je skrytá proměnná; v E-kroku spočteme pravděpodobnosti, že daná výška patří ženě nebo muži, a v M-kroku přepočteme $\mu_0,\mu_1$ jako vážené průměry výšek. Parametry mohou vyjít prohozené, protože EM je učení bez učitele a nezajišťuje interpretaci tříd. Pasivní zpětnovazební učení uvažuje agenta v MDP s pevně danou strategií $\pi$; učí se, jak je strategie dobrá, tedy utility funkci, a nezná přechodový model ani reward function. Přímý odhad utility používá běhy, traces, a pro každý stav průměruje reward-to-go, tedy odměnu současného a budoucích stavů, případně diskontovanou faktorem $\gamma$. Je to podobné učení s učitelem se stavem na vstupu a užitkem na výstupu, ale konverguje pomalu, protože ignoruje Bellmanovy vazby a hledá v příliš velkém prostoru hypotéz. ADP se učí přechodový model a odměny z pozorovaných přechodů a utility potom počítá z Bellmanových rovnic, například iterací hodnot; tím vynucuje konzistenci odhadů užitků. TD learning model nepotřebuje a při přechodu $s\to s'$ aktualizuje
 \[
 U^\pi(s)\leftarrow U^\pi(s)+\alpha\bigl(R(s)+\gamma U^\pi(s')-U^\pi(s)\bigr),
 \]

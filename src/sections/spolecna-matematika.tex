@@ -514,7 +514,19 @@ Pro $X=\sum_iX_i$ platí
 $\mathrm{var}(X)=\sum_i\sum_j\mathrm{cov}(X_i,X_j)$; pro nezávislé veličiny je rozptyl
 součtu součtem rozptylů. Silný zákon velkých čísel: pro nezávislé stejně rozdělené
 $X_i$ s průměrem $\mu$ platí $\bar X_n\to\mu$ skoro jistě. Slabý zákon:
-$P(|\bar X_n-\mu|>\varepsilon)\to0$, tedy $\bar X_n\xrightarrow P\mu$. Centrální limitní
+$P(|\bar X_n-\mu|>\varepsilon)\to0$, tedy $\bar X_n\xrightarrow P\mu$. Pro diskrétní
+veličinu je entropie
+\[
+H(X)=-\sum_x P(X=x)\log P(X=x),
+\]
+kde členy s nulovou pravděpodobností vynecháme. Podmíněná entropie je
+$H(X|Y)=\sum_y P(Y=y)H(X|Y=y)$ a vzájemná informace je
+\[
+I(X;Y)=H(X)-H(X|Y)=H(X)+H(Y)-H(X,Y).
+\]
+Platí $I(X;Y)\ge0$, tedy $H(X)\ge H(X|Y)$: znalost $Y$ nemůže v průměru zvýšit
+nejistotu o $X$. Zároveň $H(X,Y)=H(X)+H(Y)-I(X;Y)\le H(X)+H(Y)$, s rovností právě při
+nezávislosti. Centrální limitní
 věta: pro stejně rozdělené nezávislé veličiny se střední hodnotou $\mu$ a rozptylem
 $\sigma^2>0$ má
 $Y_n=\frac{(X_1+\cdots+X_n)-n\mu}{\sigma\sqrt n}$ limitní rozdělení $N(0,1)$, tj.
