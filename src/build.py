@@ -8,8 +8,8 @@ s odrážkami odsazenými tabulátory a s inline/zobrazenou matematikou v LaTeXu
 Tento skript je převede 1:1 na LaTeX (zachová obsah i strukturu), aby výsledný
 PDF dokument byl věrně "postavený na poznámkách".
 
-Pozn.: skript NEMĚNÍ odborný obsah, jen formát. Doplnění chybějících témat a
-audit pokrytí řeší ručně psaný soubor coverage.tex a callouty v main.tex.
+Pozn.: skript NEMĚNÍ odborný obsah, jen formát. Audit pokrytí řeší ručně
+psaný soubor audit.tex a callouty v main.tex.
 """
 import re
 import sys
@@ -29,9 +29,9 @@ LATEX_ESCAPE = {
 
 # Unicode symboly, které se v poznámkách vyskytují MIMO matematiku (prostý text).
 # Matematika je v tu chvíli už vytažená do placeholderů, takže je bezpečné mapovat.
-# Pomlčky (en/em dash) převádíme na obyčejný spojovník dle preferencí uživatele.
+# Unicode pomlcky prevadime na obycejny spojovnik dle preferenci uzivatele.
 UNICODE_TEXT = {
-    "–": "-", "—": "-",            # en/em dash -> spojovník
+    "\u2013": "-", "\u2014": "-",
     "…": r"\dots{}",                      # …
     "→": r"$\to$", "←": r"$\leftarrow$", "↔": r"$\leftrightarrow$",
     "×": r"$\times$", "÷": r"$\div$",
@@ -53,7 +53,7 @@ def escape_text(s):
 # Unicode symboly uvnitř matematiky (math je vytažená doslovně, tady ji ošetříme).
 UNICODE_MATH = {
     "×": r"\times ", "÷": r"\div ", "→": r"\to ", "←": r"\leftarrow ",
-    "↔": r"\leftrightarrow ", "–": "-", "—": "-", "…": r"\dots ",
+    "↔": r"\leftrightarrow ", "\u2013": "-", "\u2014": "-", "…": r"\dots ",
     "„": r"\quotedblbase{}", "“": r"\textquotedblleft{}",
     "”": r"\textquotedblright{}", " ": " ", "ő": r"\H{o}",
 }
@@ -79,7 +79,7 @@ def escape_code(s):
         "$": r"\$", "&": r"\&", "%": r"\%", "#": r"\#", "_": r"\_",
         "~": r"\textasciitilde{}", "^": r"\textasciicircum{}",
         "<": r"\textless{}", ">": r"\textgreater{}", "|": r"\textbar{}",
-        "…": "...", "–": "-", "—": "-", "→": r"$\to$",
+        "…": "...", "\u2013": "-", "\u2014": "-", "→": r"$\to$",
     }
     # povolíme zalomení dlouhých kódových úseků (C# snippety) za vybranými znaky
     breakafter = set(" .,;)>}_(")
@@ -195,6 +195,8 @@ CALLOUTS = {
          practice("Překlad konstrukcí (přiřazení, podmínka, cyklus, volání funkce) do instrukcí procesoru je dovednost - natrénuj na konkrétní (i fiktivní) instrukční sadě.")),
         ("Zapsat běžnou konstrukci vyššího jazyka",
          practice("Opačný směr (z dané sekvence instrukcí poznat konstrukci vyššího jazyka) je třeba natrénovat na příkladech.")),
+        ("implementaci nacvičit",
+         practice("Programem řízenou obsluhu zařízení (PIO) pro zadané adresy a porty je potřeba natrénovat na konkrétních zadáních.")),
     ],
 }
 
