@@ -1,0 +1,549 @@
+\section{Vzorová řešení z posledních zkoušek}
+
+{\small Výběr je omezený na společné okruhy a specializaci UI-SU / UI-SU, UI-ZPJ, které jsou
+pokryté v těchto poznámkách. Každé řešení je psané jako modelová odpověď na tříbodovou otázku:
+nejprve definice, potom konstrukce nebo výpočet, nakonec hraniční případ nebo praktický komentář.}
+
+\subsection{2026-jaro, otázka 1: DFA pro porovnání modulárních hashů}
+
+Zadání: pro prvočíslo $p$ je $h(w)$ hodnota binárního slova $w$ modulo $p$. Sestrojte DFA pro
+\[
+L_p=\{u\#v\mid u,v\in\{0,1\}^*,\ h(u)=h(v)\}.
+\]
+
+\begin{odpoved}
+\textbf{Definice.} Deterministický konečný automat je pětice
+$A=(Q,\Sigma,\delta,q_0,F)$, kde $Q$ je konečná neprázdná množina stavů,
+$\Sigma$ konečná neprázdná abeceda, $\delta:Q\times\Sigma\to Q$ přechodová funkce,
+$q_0\in Q$ počáteční stav a $F\subseteq Q$ množina přijímajících stavů. Pokud připustíme
+parciální $\delta$, chybějící přechody lze doplnit mrtvým stavem.
+
+\textbf{Konstrukce.} Označme $[p]=\{0,\ldots,p-1\}$. Automat má
+\[
+Q=[p]\cup([p]\times[p]),\qquad \Sigma=\{0,1,\#\},\qquad q_0=0,
+\]
+\[
+F=\{(i,i)\mid i\in[p]\}.
+\]
+Stav $i$ znamená, že jsme stále před znakem $\#$ a hodnota už přečteného prefixu $u'$ je
+$h(u')=i$. Stav $(i,j)$ znamená, že jsme za znakem $\#$, pamatujeme $i=h(u)$ a pro dosavadní
+prefix $v'$ platí $j=h(v')$.
+
+Přechody jsou pro $i,j\in[p]$:
+\[
+\delta(i,0)=2i\bmod p,\qquad
+\delta(i,1)=(2i+1)\bmod p,\qquad
+\delta(i,\#)=(i,0),
+\]
+\[
+\delta((i,j),0)=(i,2j\bmod p),\qquad
+\delta((i,j),1)=(i,(2j+1)\bmod p).
+\]
+Přechod na druhý znak $\#$ je nedefinovaný, případně vede do žumpy.
+
+\textbf{Příklad pro $p=2$.} Před $\#$ stačí rozlišovat paritu hodnoty. Ze stavu $0$ vede $0$ do
+$0$, $1$ do $1$ a $\#$ do $(0,0)$. Ze stavu $1$ vede $0$ do $0$, $1$ do $1$ a $\#$ do $(1,0)$.
+Za $\#$ se první složka nemění a druhá se aktualizuje stejně modulo $2$:
+z každého $(i,j)$ vede $0$ do $(i,0)$ a $1$ do $(i,1)$. Přijímající jsou $(0,0)$ a $(1,1)$.
+Tím automat přijme přesně slova s jedním oddělovačem a shodnými zbytky.
+\end{odpoved}
+
+\subsection{2026-jaro, otázka 27: CSP a AC-3}
+
+Zadání: definujte binární CSP a hranovou konzistenci, rozhodněte vztah ke splnitelnosti a
+aplikujte AC-3 na domény
+\[
+D_A=\{1\},\quad D_B=D_C=D_D=\{1,2,3\}
+\]
+s podmínkami $C+D=4$, $A+B\le 3$, $B+C\ge 4$.
+
+\begin{odpoved}
+\textbf{Definice.} Binární CSP je dáno konečnou množinou proměnných, konečnou doménou
+$D_X$ pro každou proměnnou $X$ a množinou binárních podmínek, tedy relací nad dvojicemi
+proměnných. Výstupem je úplné přiřazení hodnot všem proměnným splňující všechny podmínky,
+nebo zjištění, že žádné neexistuje. Orientovaná hrana $(X,Y)$ je hranově konzistentní, pokud
+pro každé $x\in D_X$ existuje $y\in D_Y$ takové, že dvojice splní podmínku mezi $X$ a $Y$.
+
+\textbf{Splnitelnost.} Hranová konzistence negarantuje splnitelnost. Protipříklad: tři
+proměnné $X_1,X_2,X_3$ s doménou $\{0,1\}$ a podmínkami $X_i\ne X_j$ pro každou dvojici.
+Každá dvojice má podporu, ale tři proměnné dvěma hodnotami obarvit nelze. Naopak hranově
+nekonzistentní problém může být splnitelný, protože AC-3 může teprve odstranit hodnoty,
+které v žádném řešení nejsou.
+
+\textbf{AC-3 na zadaném příkladu.} Začneme všemi orientovanými hranami. Podmínka
+$A+B\le3$ při $D_A=\{1\}$ dává pro $B$ podporu jen hodnotám $1,2$, protože $1+3>3$.
+Tedy $D_B$ se zmenší na $\{1,2\}$.
+
+Podmínka $B+C\ge4$ teď čistí obě strany. Pro $B=1$ je potřeba $C=3$, pro $B=2$ stačí
+$C=2$ nebo $3$, takže $B$ zůstává $\{1,2\}$. Hodnota $C=1$ nemá podporu v $B=\{1,2\}$,
+protože $1+1<4$ i $2+1<4$. Tedy $D_C=\{2,3\}$.
+
+Podmínka $C+D=4$ s $D_C=\{2,3\}$ ponechá $D_D=\{1,2\}$: pro $C=2$ je podpora $D=2$,
+pro $C=3$ je podpora $D=1$; hodnota $D=3$ by vyžadovala $C=1$, která už v doméně není.
+Zpětná kontrola nezmění $C$, protože $C=2$ má $D=2$ a $C=3$ má $D=1$.
+
+Výsledné hranově konzistentní domény jsou
+\[
+D_A=\{1\},\qquad D_B=\{1,2\},\qquad D_C=\{2,3\},\qquad D_D=\{1,2\}.
+\]
+Například přiřazení $A=1,B=1,C=3,D=1$ ukazuje, že tento konkrétní problém je splnitelný.
+\end{odpoved}
+
+\subsection{2026-jaro, otázka 28: Shlukování pomocí k-means}
+
+Zadání: popište k-means, jeho inicializaci, optimalizovanou ztrátu, konvergenci a praktické
+důsledky.
+
+\begin{odpoved}
+\textbf{Účel a algoritmus.} k-means je metoda učení bez učitele pro shlukování bodů do $K$
+skupin podle geometrické podobnosti. Na vstupu jsou body $x_1,\ldots,x_N$ a počet shluků
+$K$. Algoritmus:
+\begin{enumerate}
+  \item Inicializuj centroidy $\mu_1,\ldots,\mu_K$, například náhodným výběrem bodů.
+  \item Přiřaď každý bod k nejbližšímu centroidu.
+  \item Každý centroid nahraď průměrem bodů přiřazených do jeho shluku.
+  \item Opakuj přiřazení a přepočet centroidů, dokud se nezmění přiřazení nebo centroidy.
+\end{enumerate}
+Inicializace kmeans++ zvolí první centroid náhodně a další vybírá s pravděpodobností
+úměrnou druhé mocnině vzdálenosti od nejbližšího už zvoleného centroidu.
+
+\textbf{Ztrátová funkce.} Minimalizuje se součet čtverců vzdáleností bodů od centroidů:
+\[
+J=\sum_{k=1}^K\sum_{x_i\in C_k}\|x_i-\mu_k\|^2.
+\]
+Při pevných centroidech je nejlepší přiřazení k nejbližšímu centroidu. Při pevném
+přiřazení je nejlepší centroid aritmetický průměr bodů ve shluku.
+
+\textbf{Konvergence a důsledky.} Každý krok algoritmu hodnotu $J$ nezvětší: přiřazení k
+nejbližšímu centroidu ji sníží nebo ponechá, přepočet průměru je optimální centroid pro
+daný shluk. Ztráta je omezená zdola nulou a počet možných přiřazení bodů do $K$ shluků je
+konečný, takže algoritmus skončí v lokálním optimu. Negarantuje globální optimum.
+
+Prakticky to znamená, že výsledek závisí na inicializaci. Běžně se pouští více běhů s
+různými počátečními centroidy a vybere se řešení s nejmenší ztrátou. Metoda předpokládá
+spíše kompaktní kulové shluky a je citlivá na měřítko příznaků, proto je často potřeba
+standardizace.
+\end{odpoved}
+
+\subsection{2026-jaro, otázka 29: Kombinace modelů}
+
+Zadání: vysvětlete bagging a boosting a rozhodněte, kdy většinové hlasování modelů s
+accuracy $0.70$, $0.75$ a $0.80$ překoná nejlepší jednotlivý model.
+
+\begin{odpoved}
+\textbf{Bagging a boosting.} Bagging trénuje více modelů nezávisle na různých bootstrap
+vzorcích trénovací množiny, tedy na výběrech s opakováním. Výstupy se agregují
+hlasováním nebo průměrem. Typický příklad je random forest, kde se navíc v každém uzlu
+stromu náhodně omezuje množina uvažovaných příznaků.
+
+Boosting trénuje modely sekvenčně. Další model klade větší důraz na příklady, které
+předchozí modely klasifikovaly špatně. Příklady jsou AdaBoost, gradient boosting a
+XGBoost.
+
+\textbf{Hlasování tří modelů.} Ensemble ze tří binárních klasifikátorů chybuje právě tehdy,
+když na dané instanci chybují aspoň dva modely. Proto nestačí znát jen samostatné accuracy.
+Rozhodující je překryv množin chyb.
+
+Pokud jsou chyby modelů co nejvíc komplementární, může ensemble překonat nejlepší model.
+V extrémním ideálním případě jsou množiny chyb tří modelů disjunktní. Potom na každém
+vzorku chybuje nejvýše jeden model, většina hlasuje správně a accuracy ensemblu je
+$100\,\%$.
+
+Naopak pokud se chyby silně překrývají, ensemble může být horší než nejlepší model. Jestliže
+chyby modelu $M_2$ leží uvnitř chyb modelu $M_1$, hlasování na těchto instancích nepomůže
+a accuracy může být nejvýše $0.75$. Pokud navíc chyby modelu $M_3$ pokryjí zbytek chyb
+modelu $M_1$, na každé chybě $M_1$ chybují aspoň dva modely a ensemble může mít accuracy
+jen $0.70$.
+
+\textbf{Hraniční pointa.} Ensemble zlepšuje výsledek hlavně tehdy, když jsou modely dostatečně
+přesné a jejich chyby nejsou silně korelované. Samotná vyšší accuracy jednotlivých modelů
+bez diverzity chyb nezaručuje lepší většinové hlasování.
+\end{odpoved}
+
+\subsection{2026-jaro, otázka 30: Rozhodovací strom}
+
+Zadání: popište stavbu rozhodovacího stromu, s kořenem v atributu $D$ určete další dělení
+pro zadaná data a vysvětlete prořezávání.
+
+\begin{odpoved}
+\textbf{Algoritmus.} Rozhodovací strom stavíme hladově. V uzlu máme podmnožinu trénovacích
+dat. Pokud je čistá, vytvoříme list s danou třídou. Jinak vybereme test atributu, který
+nejvíc zlepší čistotu potomků, typicky maximalizuje entropický zisk nebo sníží Gini
+nečistotu. Entropie dvoutřídního uzlu s počty $a,b$ je
+\[
+H(a,b)=-\frac{a}{a+b}\log_2\frac{a}{a+b}
+-\frac{b}{a+b}\log_2\frac{b}{a+b}.
+\]
+Entropický zisk je entropie před dělením minus vážený průměr entropií po dělení.
+
+\textbf{Kořen $D$.} V zadaných datech má $D$ hodnoty $3$ a $6$, takže přirozený test je
+$D\le4.5$. Pro $D=3$ jsou řádky $2,6,7$ s třídami $1,0,1$. Pro $D=6$ jsou řádky
+$0,1,3,4,5$ s třídami $0,0,1,1,0$.
+
+V pravém podstromu $D=6$ je podle nástinu třeba porovnat atributy $A,B,C$. Dělení podle
+$A$ nebo $B$ dává váženou entropii přibližně
+\[
+\frac35H(1,2)+\frac25H(1,1)\approx 0.95.
+\]
+Dělení podle $C$ dává
+\[
+\frac15H(1,0)+\frac45H(3,1)\approx 0.65.
+\]
+Proto je v pravém podstromu nejlepší dělit podle $C$. Větev $C=6$ je čistý list $Y=1$,
+větev $C=8$ obsahuje tři nuly a jednu jedničku a pokračuje dalším testem.
+
+V levém podstromu $D=3$ lze oddělit řádek $6$ pomocí $C=6$, takže $C=6$ dá list $Y=0$ a
+$C=8$ dá list $Y=1$. Neprořezaný strom do maximální hloubky tedy lze popsat pravidly:
+\[
+\begin{array}{ll}
+D=3,\ C=6 &\Rightarrow Y=0,\\
+D=3,\ C=8 &\Rightarrow Y=1,\\
+D=6,\ C=6 &\Rightarrow Y=1,\\
+D=6,\ C=8,\ A\le2 &\Rightarrow Y=0,\\
+D=6,\ C=8,\ A>2 &\Rightarrow Y=0\ \text{s jednou trénovací chybou, případně se dále štěpí.}
+\end{array}
+\]
+Poslední uzel je právě místo, kde oficiální nástin uvádí prořezání.
+
+\textbf{Prořezávání.} Prořezávání omezuje přeučení: složitý strom může mít malou trénovací
+chybu, ale horší chybu na validačních nebo testovacích datech. V tomto příkladu se uzel
+$A\le2.0$ nahradí listem, protože se tím nezhorší klasifikační chyba a strom má méně listů.
+Obecné cost-complexity pruning používá kritérium
+\[
+\alpha_{\mathrm{eff}}=\frac{R(t)-R(T_t)}{|T_t|-1},
+\]
+kde $R(T_t)$ je chyba podstromu, $R(t)$ chyba po nahrazení listem a $|T_t|$ počet listů
+podstromu. Postupně se odstraňují větve s nejmenším efektivním zlepšením pod zvoleným
+prahem.
+\end{odpoved}
+
+\subsection{2025-podzim, otázka 1: Třídy složitosti}
+
+Zadání: definujte $P$, $NP$, polynomiální redukci, NP-úplnost a rozhodněte, zda je v $NP$
+problém faktorizace čísla $x$ na dva stejně dlouhé netriviální desítkové faktory.
+
+\begin{odpoved}
+\textbf{Definice.} Třída $P$ obsahuje rozhodovací problémy, které lze rozhodnout
+deterministickým algoritmem v čase polynomiálním ve velikosti vstupu. Třída $NP$ obsahuje
+rozhodovací problémy, pro něž existuje polynomiálně dlouhý certifikát a deterministický
+verifikátor běžící v polynomiálním čase:
+\[
+x\in L\iff \exists y,\ |y|\le p(|x|): V(x,y)=1.
+\]
+Polynomiální redukce $A\le_P B$ je funkce $f$ spočitatelná v polynomiálním čase taková, že
+$x\in A$ právě tehdy, když $f(x)\in B$. Problém je NP-těžký, pokud se na něj polynomiálně
+redukuje každý problém z $NP$. Je NP-úplný, pokud je NP-těžký a zároveň leží v $NP$.
+
+\textbf{Daný problém je v $NP$.} Vstupem je desítkový zápis přirozeného čísla $x$. Jako
+certifikát stačí číslo $a$. Verifikátor zkontroluje:
+\begin{enumerate}
+  \item $1<a<x$,
+  \item zda $a$ dělí $x$ beze zbytku,
+  \item položí $b=x/a$ a ověří $1<b<x$,
+  \item porovná délky desítkových zápisů $a$ a $b$ bez počátečních nul.
+\end{enumerate}
+Pokud všechny testy projdou, přijme.
+
+\textbf{Polynomiálnost.} Certifikát $a$ má nejvýše tolik číslic jako $x$, tedy délku
+lineární ve velikosti vstupu. Dělení velkých čísel, porovnání a zjištění délky zápisu lze
+provést v polynomiálním čase vzhledem k počtu číslic $x$. Proto problém leží v $NP$.
+Netvrdíme tím, že je NP-úplný, ani že neumíme faktorizovat obecně v polynomiálním čase.
+\end{odpoved}
+
+\subsection{2025-podzim, otázka 2: Čtení binárního souboru}
+
+Zadání: navrhněte C\# třídy `Reader` a `Node` pro binární soubor s hlavičkou typů atributů,
+big-endian čísly a uzly s délkou dat. `Node` má držet surová data a umožnit konstantní
+lokalizaci atributu; implementujte `getUInt16` a `getSInt16`.
+
+\begin{odpoved}
+\textbf{Datový návrh.} `Reader` drží odkaz na `BinaryFile`, počet atributů a pole typů.
+Hlavička má dva bajty počtu atributů a potom jeden bajt na typ. Pozice kořenového uzlu je
+tedy $2+\texttt{attributes}$. `readNode` na dané pozici přečte dvoubajtovou délku dat uzlu,
+potom přesně tolik bajtů dat a vytvoří `Node`.
+
+`Node` ukládá data uzlu jako `byte[]` přesně ve formátu souboru. Navíc si v konstruktoru
+jedním průchodem spočítá offset začátku každého atributu v datech. Proto lze i-tý atribut
+lokalizovat v čase $O(1)$. U řetězce se posun zvětší o $2+\text{délka}$, u čísel o $2$ a u
+linku o $8$.
+
+\begin{verbatim}
+enum AttrType { TUInt16 = 0x48, TLink = 0x4C,
+                TString = 0x53, TSInt16 = 0x68 }
+
+class Reader {
+    private readonly BinaryFile _file;
+    private readonly AttrType[] _types;
+    private readonly long _root;
+
+    public Reader(BinaryFile file) {
+        _file = file;
+
+        byte[] countBuf = new byte[2];
+        _file.readBytes(0, countBuf, 2);
+        int count = (countBuf[0] << 8) | countBuf[1];
+
+        byte[] typeBuf = new byte[count];
+        _file.readBytes(2, typeBuf, count);
+
+        _types = new AttrType[count];
+        for (int i = 0; i < count; i++)
+            _types[i] = (AttrType)typeBuf[i];
+
+        _root = 2 + count;
+    }
+
+    public int attributes() { return _types.Length; }
+    public AttrType getType(int i) { return _types[i]; }
+    public long getRoot() { return _root; }
+
+    public Node readNode(long filepos) {
+        byte[] lenBuf = new byte[2];
+        _file.readBytes(filepos, lenBuf, 2);
+        int len = (lenBuf[0] << 8) | lenBuf[1];
+
+        byte[] data = new byte[len];
+        _file.readBytes(filepos + 2, data, len);
+        return new Node(_types, data);
+    }
+}
+
+class Node {
+    private readonly AttrType[] _types;
+    private readonly byte[] _data;
+    private readonly int[] _offsets;
+
+    public Node(AttrType[] types, byte[] data) {
+        _types = types;
+        _data = data;
+        _offsets = new int[types.Length];
+
+        int pos = 0;
+        for (int i = 0; i < types.Length; i++) {
+            _offsets[i] = pos;
+            switch (types[i]) {
+                case AttrType.TUInt16:
+                case AttrType.TSInt16:
+                    pos += 2;
+                    break;
+                case AttrType.TLink:
+                    pos += 8;
+                    break;
+                case AttrType.TString:
+                    int len = (_data[pos] << 8) | _data[pos + 1];
+                    pos += 2 + len;
+                    break;
+            }
+        }
+    }
+
+    public int getUInt16(int i) {
+        int p = _offsets[i];
+        return (_data[p] << 8) | _data[p + 1];
+    }
+
+    public int getSInt16(int i) {
+        int u = getUInt16(i);
+        if ((u & 0x8000) != 0) return u - 0x10000;
+        return u;
+    }
+}
+\end{verbatim}
+
+\textbf{Hraniční případy.} Big-endian znamená, že první bajt je vyšší část čísla. Pro
+znaménkové šestnáctibitové číslo ve dvojkovém doplňku mají hodnoty s nastaveným bitem
+$0x8000$ záporný význam, proto od unsigned hodnoty odečteme $0x10000$. Metody `get...`
+nemají kontrolovat typ atributu, protože zadání tuto odpovědnost dává volajícímu.
+\end{odpoved}
+
+\subsection{2025-podzim, otázka 28: Evaluace binárního klasifikátoru}
+
+Zadání: na 10000 instancích je 1 procento anomálií. První nástroj má accuracy $99.5\,\%$
+a recall $90\,\%$. Druhý má recall $81\,\%$ a jen $10\,\%$ nahlášených anomálií je falešně
+pozitivních. Spočítejte matice konfuze a metriky.
+
+\begin{odpoved}
+V datech je $100$ pozitivních instancí a $9900$ negativních.
+
+\textbf{První nástroj.} Recall $0.90$ znamená
+\[
+TP=90,\qquad FN=10.
+\]
+Accuracy $0.995$ na $10000$ instancích znamená $9950$ správných predikcí. Proto
+\[
+TN=9950-90=9860,\qquad FP=9900-9860=40.
+\]
+Metriky:
+\[
+\mathrm{precision}=\frac{TP}{TP+FP}=\frac{90}{130}\approx0.69,
+\]
+\[
+\mathrm{recall}=0.90,\qquad
+\mathrm{accuracy}=0.995,
+\]
+\[
+F_1=\frac{2PR}{P+R}\approx\frac{2\cdot0.69\cdot0.90}{0.69+0.90}\approx0.78.
+\]
+
+\textbf{Druhý nástroj.} Recall $0.81$ znamená
+\[
+TP=81,\qquad FN=19.
+\]
+Jen $10\,\%$ hlášení je falešně pozitivních, tedy precision je $0.90$:
+\[
+0.90=\frac{TP}{TP+FP}=\frac{81}{81+FP}.
+\]
+Z toho $FP=9$ a
+\[
+TN=9900-9=9891.
+\]
+Metriky:
+\[
+\mathrm{precision}=0.90,\qquad \mathrm{recall}=0.81,
+\]
+\[
+\mathrm{accuracy}=\frac{81+9891}{10000}=0.9972,
+\]
+\[
+F_1=\frac{2\cdot0.90\cdot0.81}{0.90+0.81}\approx0.85.
+\]
+
+\textbf{Volba v praxi.} Druhý nástroj je lepší v accuracy, precision i $F_1$ a generuje
+mnohem méně falešných poplachů. První má vyšší recall, tedy zachytí více anomálií. Pokud
+jsou falešně negativní kritické, lze zvolit první nástroj. Pokud je důležitá provozní
+zátěž správců a důvěryhodnost hlášení, je vhodnější druhý.
+\end{odpoved}
+
+\subsection{2025-podzim, otázka 30: Lineární regrese a L2 regularizace}
+
+Zadání: pro data $(-1,1)$, $(0,3)$, $(1,2)$ určete OLS model $f(x)=\beta_0+\beta_1x$ a
+popište vliv L2 regularizace.
+
+\begin{odpoved}
+\textbf{Model a OLS.} Lineární regrese s jedním příznakem predikuje
+\[
+f(x)=\beta_0+\beta_1x.
+\]
+Metoda nejmenších čtverců minimalizuje
+\[
+\sum_i(f(x_i)-y_i)^2.
+\]
+V maticovém zápisu s prvním sloupcem jedniček platí
+\[
+\beta=(X^TX)^{-1}X^Ty,
+\]
+pokud je $X^TX$ regulární.
+
+\textbf{Výpočet.} Pro zadaná centrovaná $x$ platí $\sum x_i=0$, takže
+\[
+\beta_0=\bar y=\frac{1+3+2}{3}=2.
+\]
+Sklon je
+\[
+\beta_1=\frac{\sum_i x_i(y_i-\bar y)}{\sum_i x_i^2}
+=\frac{(-1)(-1)+0\cdot1+1\cdot0}{1+0+1}
+=\frac12.
+\]
+OLS model je tedy
+\[
+f(x)=2+\frac12x.
+\]
+Predikce na $x=-1,0,1$ jsou $1.5$, $2$ a $2.5$.
+
+\textbf{L2 regularizace.} Ridge regrese minimalizuje
+\[
+\sum_i(f(x_i)-y_i)^2+\alpha\beta_1^2,\qquad \alpha>0,
+\]
+kde bias $\beta_0$ se typicky nepenalizuje. Regularizace tlačí sklon k nule, takže
+$\beta_1$ bude menší než $0.5$, ale zůstane kladný. Proto bude regularizovaná přímka
+plošší. V tomto centrovaném příkladu se intercept nezmění a zůstane přibližně $2$;
+obecně se intercept může změnit nepřímo podle dat a penalizovaných koeficientů.
+\end{odpoved}
+
+\subsection{2025-leto, otázka 4: Centrální limitní věta}
+
+Zadání: formulujte CLV a odhadněte pravděpodobnost, že zpracování 100 vstupů s průměrem
+100 ms a směrodatnou odchylkou 20 ms bude trvat víc než 10.3 s.
+
+\begin{odpoved}
+\textbf{Znění CLV.} Nechť $X_1,X_2,\ldots$ jsou nezávislé stejně rozdělené náhodné veličiny
+se střední hodnotou $\mu$ a rozptylem $\sigma^2>0$. Pak
+\[
+Y_n=\frac{(X_1+\cdots+X_n)-n\mu}{\sigma\sqrt n}
+\]
+konverguje v distribuci k normálnímu rozdělení $N(0,1)$. Ekvivalentně, pro distribuční
+funkce $F_{Y_n}$ platí $F_{Y_n}(x)\to\Phi(x)$ pro každé reálné $x$.
+
+\textbf{Výpočet.} Měříme v sekundách:
+\[
+\mu=0.1,\qquad \sigma=0.02,\qquad n=100.
+\]
+Hledáme
+\[
+P(X_1+\cdots+X_{100}>10.3).
+\]
+Standardizace dává
+\[
+z=\frac{10.3-100\cdot0.1}{0.02\sqrt{100}}
+=\frac{0.3}{0.2}=1.5.
+\]
+Podle CLV
+\[
+P(X_1+\cdots+X_{100}>10.3)\approx P(Z>1.5)=1-\Phi(1.5).
+\]
+Z tabulky $\Phi(1.5)\approx0.93$, tedy pravděpodobnost je přibližně
+\[
+1-0.93=0.07.
+\]
+Odhad je asi $7\,\%$.
+
+\textbf{Předpoklady.} CLV nepotřebuje normální rozdělení jednotlivých časů, ale potřebuje
+nezávislost, stejné rozdělení a konečný rozptyl. Nezávislost může být v praxi problematická:
+přetížený počítač zpomalí mnoho běhů současně. Také používáme limitní větu pro $n=100$,
+což je aproximace, ale pro běžné aplikace CLV už obvykle rozumná.
+\end{odpoved}
+
+\subsection{2024-leto, otázka 30: Metoda podpůrných vektorů}
+
+Zadání: pro lineárně separabilní data tříd $A=\{(1,1),(2,2),(2,0)\}$ a
+$B=\{(0,0),(1,0),(0,1)\}$ popište lineární SVM, rozhodovací hranici, vliv bodu $(3,3)$
+a použití RBF jádra.
+
+\begin{odpoved}
+\textbf{Lineární separabilní SVM.} Pro třídy $t_i\in\{-1,1\}$ hledá SVM nadrovinu
+\[
+w^Tx+b=0
+\]
+s maximálním marginem. V kanonickém škálování řeší
+\[
+\min_{w,b}\frac12\|w\|^2
+\quad\text{za podmínek}\quad
+t_i(w^Tx_i+b)\ge1.
+\]
+Šířka marginu je $2/\|w\|$. Rozhodovací hranici určují podpůrné vektory, tedy body ležící
+na okrajích marginu.
+
+\textbf{Hranice pro data.} Body třídy $B$ leží vlevo dole a body třídy $A$ vpravo nahoře,
+respektive vpravo. Přirozená separace je zhruba podle součtu souřadnic. Hranice může být
+přibližně
+\[
+x_1+x_2=1.5.
+\]
+Na jedné straně jsou $B$: $(0,0)$ má součet $0$, $(1,0)$ a $(0,1)$ mají součet $1$.
+Na druhé straně jsou $A$: $(1,1)$ má součet $2$, $(2,0)$ a $(2,2)$ mají součty $2$ a $4$.
+Nejbližší body k hranici jsou zejména $(1,0)$, $(0,1)$, $(1,1)$ a $(2,0)$, takže právě ony
+ovlivňují margin.
+
+\textbf{Přidání bodu $(3,3)$.} Bod $(3,3)$ třídy $A$ je daleko od rozhodovací hranice a
+neleží na marginu. U hard-margin SVM tedy nebude podpůrným vektorem a hranici prakticky
+nezmění. SVM je určeno hlavně nejbližšími body, ne hluboko správně klasifikovanými body.
+
+\textbf{RBF jádro.} Na těchto datech RBF jádro klasifikaci nezlepší podstatně, protože data
+jsou už lineárně separabilní a lineární hranice je jednoduchá. RBF jádro pomáhá u nelineárních
+struktur, například když jedna třída tvoří malý kruh uprostřed a druhá třída prstenec kolem
+ní, nebo u XOR uspořádání. Pak lokální podobnost
+\[
+K(x,z)=\exp(-\gamma\|x-z\|^2)
+\]
+umožní nelineární rozhodovací hranici.
+\end{odpoved}
