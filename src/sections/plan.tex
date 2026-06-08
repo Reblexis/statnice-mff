@@ -1,0 +1,69 @@
+\section{Plán učení a drilovací list (minimum času k trojce)}
+
+\begin{infobox}[title={Pořadí učení (od nejvyššího výnosu)}]
+\begin{enumerate}[leftmargin=1.4em]
+  \item \textbf{Tahák zpaměti} (sekce „Tahák: kostry odpovědí na 1 bod“): u všech 28 témat
+  uměj první větu / definici. Tím zajistíš, že z žádné otázky nebude nula.
+  \item \textbf{Specializace na zelenou} (ML + Základy UI): principy, uměj \emph{vysvětlit a
+  načrtnout} (SVM, stromy, k-means, PCA, Bayesovské sítě, HMM, MDP, CSP, prohledávání).
+  Sem dej nejvíc času - tady je vázaná podmínka 7/12.
+  \item \textbf{Společné definice + jeden typový výpočet} u nejčastějších témat (automaty,
+  grafové algoritmy, lineární algebra, analýza, pravděpodobnost). Stačí 5/12, jeď na šířku.
+  \item \textbf{Výpočetní a kódové drily} (sekce „Vzorové výpočty a kódové vzory“) + \textbf{2-3
+  staré zkoušky na čas}. Tohle promění „znám postup“ v „zvládnu to udělat“.
+\end{enumerate}
+\end{infobox}
+
+\noindent\textbf{Rozpočet času} (libovolný celkový čas): $\approx$32~\% Strojové učení,
+28~\% Základy UI, 22~\% společná informatika, 18~\% společná matematika (tj.\ $\approx$60~\%
+specializace, 40~\% společné). \textbf{Pravidlo:} dokud máš téma „červené“ (neumíš ani
+definici), neuč 3.\ bod u tématu, které už je „zelené“.
+
+\smallskip
+\noindent\textbf{Cyklus na jedno téma} (rychlé učení z hutného textu): přečti \textsc{Téma}
+(oficiální) $\to$ zakryj a řekni nahlas \bod{1} (definici) $\to$ doplň \bod{2}
+(věta/algoritmus) $\to$ vyřeš jednu otázku z „Vyzkoušej se“ nebo načrtni obrázek $\to$ označ
+stav (červená/žlutá/zelená/modrá). Zelené téma už jen občas zopakuj.
+
+\subsection{Drilovací list (dělej zpaměti, pak zkontroluj ve „Vzorových výpočtech“)}
+{\small Tohle jsou přesně typy 2.\ a 3.\ podotázek, které zkouška chce. Zvládni je bez koukání.}
+\begin{multicols}{2}\small
+\textbf{Matematika}
+\begin{itemize}[leftmargin=1.1em,itemsep=1pt,topsep=2pt]
+  \item Napiš $\varepsilon$-definici limity posloupnosti a spojitosti v bodě.
+  \item Spočti $\int_0^1 (x^2+1)\,dx$ a najdi minimum $g(p)=p+\tfrac1p$.
+  \item Diagonalizuj $\begin{psmallmatrix}2&1\\1&2\end{psmallmatrix}$ (vlastní čísla i vektory).
+  \item Proveď Gram-Schmidt na $(1,1,0),(1,0,1)$.
+  \item Z $v-e+f=2$ odvoď horní mez hran rovinného grafu.
+\end{itemize}
+\textbf{Pravděpodobnost / statistika}
+\begin{itemize}[leftmargin=1.1em,itemsep=1pt,topsep=2pt]
+  \item Bayes / E-krok: spočti responsibility $\gamma_1$ pro (blue, no).
+  \item $\chi^2$ pro pozorováno $(30,10)$, očekáváno $(20,20)$; urči df.
+  \item Použij Markovovu nerovnost pro $E[X]=2$, $P(X\ge8)$.
+\end{itemize}
+
+\textbf{Strojové učení / UI}
+\begin{itemize}[leftmargin=1.1em,itemsep=1pt,topsep=2pt]
+  \item Entropie uzlu 3:3 a informační zisk dokonalého dělení.
+  \item Z matice záměn spočti accuracy, precision, recall, $F_1$.
+  \item Jedna iterace k-means na 4 bodech (přiřaď + přepočti centra).
+  \item Jeden krok AC-3 pro $X<Y$ na doménách $\{1,2,3\}$.
+\end{itemize}
+\textbf{Informatika (napiš v C\#)}
+\begin{itemize}[leftmargin=1.1em,itemsep=1pt,topsep=2pt]
+  \item Funkce čtení 16bit big-endian z \texttt{byte[]}.
+  \item Kostra producent-konzument se semafory.
+  \item Sestroj DFA pro zadaný jednoduchý jazyk.
+  \item Master theorem: urči složitost z $T(n)=aT(n/b)+\Theta(n^c)$.
+\end{itemize}
+\end{multicols}
+
+\begin{infobox}[title={Kontrola před zkouškou}]
+\begin{itemize}[leftmargin=1.2em]
+  \item Každé z 28 témat aspoň \emph{žluté} (umíš definici). Specializace většinou \emph{zelená}.
+  \item Uděláš \textbf{2-3 staré zkoušky na čas} a v žádné nespadneš pod limity
+  (celkem $\ge$12, společné $\ge$5, specializace $\ge$7).
+  \item Drilovací list zvládneš zpaměti, hlavně specializaci a aspoň jeden kódový vzor.
+\end{itemize}
+\end{infobox}

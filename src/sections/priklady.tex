@@ -62,16 +62,22 @@ $X{<}1\Rightarrow$ smaž $1$ z $Y$, $Y\in\{2,3\}$.
 
 \noindent\textbf{Čtení dat z binárního souboru} (big-endian, práce s bajty):
 \begin{verbatim}
-// 16bit unsigned big-endian z bufferu na pozici i
-int ReadU16BE(byte[] b, int i) => (b[i] << 8) | b[i + 1];
-// 16bit signed: dvojkový doplněk
-short ReadS16BE(byte[] b, int i) => (short)((b[i] << 8) | b[i + 1]);
+using System.IO;
+
+static class BigEndian {
+    // 16bit unsigned big-endian z bufferu na pozici i
+    public static int ReadU16BE(byte[] b, int i) => (b[i] << 8) | b[i + 1];
+    // 16bit signed: dvojkový doplněk
+    public static short ReadS16BE(byte[] b, int i) =>
+        (short)((b[i] << 8) | b[i + 1]);
+}
 
 class Reader {
-    private byte[] data; private int attrCount;
-    public Reader(BinaryFile f) {        // konstruktor načte hlavičku
-        byte[] h = new byte[2]; f.readBytes(0, h, 2);
-        attrCount = ReadU16BE(h, 0);
+    private readonly int attrCount;
+    public Reader(Stream f) {           // konstruktor načte hlavičku
+        byte[] h = new byte[2];
+        f.ReadExactly(h);
+        attrCount = BigEndian.ReadU16BE(h, 0);
     }
     public int Attributes() => attrCount;
 }
@@ -79,21 +85,31 @@ class Reader {
 
 \noindent\textbf{Producent-konzument se semafory} (synchronizace vláken):
 \begin{verbatim}
-SemaphoreSlim empty = new(capacity);   // volná místa v bufferu
-SemaphoreSlim full  = new(0);          // obsazená místa
-object mtx = new();
-Queue<int> buf = new();
+using System.Collections.Generic;
+using System.Threading;
 
-void Produce(int x) {
-    empty.Wait();                      // počkej na volné místo
-    lock (mtx) { buf.Enqueue(x); }
-    full.Release();                    // přibyla položka
-}
-int Consume() {
-    full.Wait();                       // počkej na položku
-    int x; lock (mtx) { x = buf.Dequeue(); }
-    empty.Release();                   // uvolnilo se místo
-    return x;
+class BoundedBuffer {
+    private readonly SemaphoreSlim empty; // volná místa v bufferu
+    private readonly SemaphoreSlim full = new(0); // obsazená místa
+    private readonly object mtx = new();
+    private readonly Queue<int> buf = new();
+
+    public BoundedBuffer(int capacity) {
+        empty = new SemaphoreSlim(capacity);
+    }
+    public void Produce(int x) {
+        empty.Wait();                  // počkej na volné místo
+        lock (mtx) { buf.Enqueue(x); }
+        full.Release();                // přibyla položka
+    }
+    public int Consume() {
+        full.Wait();                   // počkej na položku
+        lock (mtx) {
+            int x = buf.Dequeue();
+            empty.Release();           // uvolnilo se místo
+            return x;
+        }
+    }
 }
 \end{verbatim}
 

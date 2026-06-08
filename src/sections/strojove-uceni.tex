@@ -343,7 +343,7 @@ c_{\mathrm{entropy}}(\mathcal T)
 =-|I_\mathcal T|\sum_k p_\mathcal T(k)\log p_\mathcal T(k),
 \]
 ve kterém vynecháme třídy s nulovou pravděpodobností; lze ho odvodit z NLL. Dělení volíme tak, aby co nejvíc snížilo kritérium, tedy maximalizovalo čistotu.\par
-\noindent\bod{3}\ \textbf{Bonus:} CART začíná jedním listem s trénovacími daty. Vybraný list rozdělí na vnitřní vrchol a dva nové listy. Split volí tak, aby $c_{\mathcal T_L}+c_{\mathcal T_R}-c_\mathcal T$ bylo co nejmenší, tedy aby pokles kritéria byl co největší. Lze omezit maximální hloubku, minimální počet dat v děleném listu a maximální počet listů. Obvykle se dělí do hloubky; při omezeném počtu listů je vhodné dělit listy s největším zlepšením. Minimalizací dělicího kritéria minimalizujeme nejlepší dosažitelnou hodnotu loss pro daný strom.
+\noindent\bod{3}\ \textbf{Bonus:} CART začíná jedním listem s trénovacími daty. Vybraný list rozdělí na vnitřní vrchol a dva nové listy. Split volí tak, aby pokles $c_\mathcal T-(c_{\mathcal T_L}+c_{\mathcal T_R})$ byl co největší. Lze omezit maximální hloubku, minimální počet dat v děleném listu a maximální počet listů. Obvykle se dělí do hloubky; při omezeném počtu listů je vhodné dělit listy s největším zlepšením. Minimalizací dělicího kritéria minimalizujeme nejlepší dosažitelnou hodnotu loss pro daný strom.
 Prořezávání zjednodušuje strom a omezuje přeučení; může být top-down nebo bottom-up. Reduced error pruning je bottom-up: na validačních datech měříme accuracy a zkoušíme rušit větvení ve vnitřních vrcholech; pokud přesnost neklesne, větev nahradíme listem s většinovou třídou.
 \end{odpoved}
 \begin{recall}

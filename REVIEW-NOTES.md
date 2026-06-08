@@ -28,3 +28,7 @@ Přímo opravené byly jen vysokojistotní faktické chyby. Položky níže pone
 - `src/sections/spolecna-informatika.tex`: Detaily syncblocku v C# jsou zjednodušený model pro zkouškovou odpověď. Přesná implementace CLR je runtime-dependent.
 - `src/sections/zaklady-ui.tex`: V aukcích jsou desiderata dobrého mechanismu uvedená pohromadě. V obecném mechanism designu nejdou všechna garantovat bez dalších předpokladů, ale pro přehledovou odpověď je formulace použitelná jako motivace.
 - `src/sections/strojove-uceni.tex`: EM příklad s výškami ponechává fixní zjednodušený počet komponent a neřeší plný odhad směsí včetně variancí a priorů, protože by to přidalo nové téma.
+
+## Cílená kontrola aritmetických příkladů - 2026-06-08
+
+Nejisté položky po této kontrole: žádné.
