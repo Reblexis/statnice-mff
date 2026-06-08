@@ -66,20 +66,200 @@ přes Turingův stroj.
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} \emph{DFA} je pětice $(Q,\Sigma,\delta,q_0,F)$ s totální funkcí $\delta:Q\times\Sigma\to Q$; \emph{NFA} dovolí množinu přechodů a $\varepsilon$-kroky.
-\emph{Regulární jazyk} je jazyk přijímaný konečným automatem, ekvivalentně popsatelný regulárním výrazem nebo regulární gramatikou.
-\emph{Turingův stroj} má konečné řízení, pásku a přechodovou funkci; přijímá vstupy, na nichž zastaví v přijímajícím stavu.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Bezkontextový jazyk} generuje CFG s pravidly
-$A\to\alpha$ a přijímá ho \emph{PDA}, tedy konečný automat se zásobníkem. \emph{Rekurzivně spočetný jazyk} přijímá Turingův stroj.
-Zásobník dá paměť pro vnoření, například
-$\{a^n b^n\mid n\ge0\}$, ale ne pro dvě nezávislá počítání jako $a^n b^n c^n$.\par
-\noindent\bod{3}\ \textbf{Bonus:} Typ 0 gramatiky odpovídají rekurzivně spočetným jazykům
-a Turingovým strojům. Existují algoritmicky nerozhodnutelné problémy, klasicky problém
-zastavení. U zařazování jazyka zkus sestrojit automat nebo gramatiku, případně říct, proč
-nižší třída nestačí. Pumping lemma a Myhill-Nerodeova věta slouží k důkazu neregularity;
-pro CFL existuje pumping lemma a Chomského normální tvar. PDA přijímá koncovým stavem
-nebo prázdným zásobníkem, obě varianty jsou ekvivalentní. Regulární jazyky jsou uzavřené
-na doplněk, průnik a sjednocení, CFL ne na průnik obecně.
+\noindent\bod{1}\ \textbf{Definice.}
+Jazyk nad abecedou $\Sigma$ je podmnožina $\Sigma^*$. DFA je pětice
+$A=(Q,\Sigma,\delta,q_0,F)$, kde $Q$ je konečná množina stavů, $\Sigma$ konečná
+neprázdná abeceda, $\delta:Q\times\Sigma\to Q$ totální přechodová funkce,
+$q_0\in Q$ počáteční stav a $F\subseteq Q$ přijímající stavy. Rozšířená funkce
+$\delta^*$ čte celé slovo a jazyk DFA je
+\[
+L(A)=\{w\in\Sigma^*\mid \delta^*(q_0,w)\in F\}.
+\]
+Slovo $w$ je přijato právě tehdy, když $w\in L(A)$. Jazyk je rozpoznatelný konečným
+automatem, pokud existuje konečný automat $A$ s $L=L(A)$; třída těchto jazyků se značí
+$\mathcal F$ a nazývá se regulární jazyky.
+
+Nedeterministický konečný automat s $\epsilon$-přechody je pětice
+$N=(Q,\Sigma,\delta,q_0,F)$, kde
+$\delta:Q\times(\Sigma\cup\{\epsilon\})\to\mathcal P(Q)$ vrací množinu možných stavů.
+Místo jednoho počátečního stavu se někdy používá množina počátečních stavů
+$S_0\subseteq Q$. $\epsilon$-uzávěr množiny stavů je množina všech stavů dosažitelných
+po libovolně mnoha $\epsilon$-krocích. NFA přijímá, když existuje aspoň jeden přijímající
+výpočet.
+
+Regulární výraz nad $\Sigma$ se definuje induktivně. Základní výrazy jsou
+$\epsilon$ s hodnotou $\{\epsilon\}$, $\emptyset$ s hodnotou $\emptyset$ a symbol
+$a\in\Sigma$ s hodnotou $\{a\}$. Operace jsou sjednocení
+$L(\alpha+\beta)=L(\alpha)\cup L(\beta)$, zřetězení
+$L(\alpha\beta)=L(\alpha)L(\beta)$, iterace $L(\alpha^*)=L(\alpha)^*$ a závorky,
+které hodnotu nemění. Priorita je $^*$, potom zřetězení, potom $+$.
+
+Formální gramatika je čtveřice $G=(V,T,P,S)$, kde $V$ je konečná množina neterminálů,
+$T$ neprázdná konečná množina terminálů, $S\in V$ počáteční symbol a $P$ konečná
+množina pravidel. V obecné gramatice má pravidlo tvar $\beta A\gamma\to\omega$,
+kde $A\in V$ a $\beta,\gamma,\omega\in(V\cup T)^*$. Jazyk generovaný gramatikou je
+\[
+L(G)=\{w\in T^*\mid S\Rightarrow_G^* w\}.
+\]
+Jazyk neterminálu $A$ je $L(A)=\{w\in T^*\mid A\Rightarrow_G^* w\}$.
+Bezkontextová gramatika má pravidla pouze tvaru $A\to\omega$.
+
+Zásobníkový automat je sedmice $P=(Q,\Sigma,\Gamma,\delta,q_0,Z_0,F)$, kde
+$\Gamma$ je konečná zásobníková abeceda, $Z_0\in\Gamma$ počáteční symbol zásobníku a
+\[
+\delta:Q\times(\Sigma\cup\{\epsilon\})\times\Gamma
+\to \mathcal P_{\mathrm{FIN}}(Q\times\Gamma^*).
+\]
+Přechod $(q,\gamma)\in\delta(p,a,X)$ znamená: v jednom kroku přečti $a$ nebo nic,
+přejdi do $q$ a nahraď vrchol zásobníku $X$ řetězcem $\gamma$; nejlevější znak
+$\gamma$ bude na vrcholu. Hrany v diagramu se značí ``vstup, vrchol zásobníku
+$\to$ push řetězec''. Přijímání koncovým stavem:
+\[
+L(P)=\{w\in\Sigma^*\mid(\exists q\in F)(\exists\alpha\in\Gamma^*)
+(q_0,w,Z_0)\vdash_P^*(q,\epsilon,\alpha)\}.
+\]
+Přijímání prázdným zásobníkem:
+\[
+N(P)=\{w\in\Sigma^*\mid(\exists q\in Q)(q_0,w,Z_0)\vdash_P^*(q,\epsilon,\epsilon)\}.
+\]
+
+Turingův stroj je sedmice $M=(Q,\Sigma,\Gamma,\delta,q_0,B,F)$, kde
+$\Gamma\supseteq\Sigma$ je pásková abeceda, $Q\cap\Gamma=\emptyset$, $B\in\Gamma-\Sigma$
+je blank a
+\[
+\delta:(Q-F)\times\Gamma\to Q\times\Gamma\times\{L,R\}
+\]
+je částečná přechodová funkce. Pokud $\delta(q,X)=(p,Y,D)$, stroj v aktuální buňce
+přepíše $X$ na $Y$, přejde do $p$ a pohne hlavou doleva nebo doprava. Přijímaný jazyk je
+\[
+L(M)=\{w\in\Sigma^*\mid(\exists p\in F)(\exists\alpha,\beta\in\Gamma^*)
+q_0w\vdash_M^*\alpha p\beta\}.
+\]
+Páska po přijetí nemusí být uklizená. Jazyk je rekurzivně spočetný, pokud ho přijímá
+nějaký TM. TM rozhoduje jazyk $L$, pokud $L=L(M)$ a pro každé $w\in\Sigma^*$ zastaví;
+takové jazyky jsou rekurzivní a platí $\text{rekurzivní}\subseteq\text{rekurzivně spočetné}$.
+
+\noindent\bod{2}\ \textbf{Věty, konstrukce a hlavní algoritmy.}
+Iterační lemma pro regulární jazyky: je-li $L$ regulární, pak existuje
+$n\in\mathbb N$ takové, že každé $w\in L$ s $|w|\ge n$ lze rozložit
+$w=xyz$, kde $y\ne\epsilon$, $|xy|\le n$ a pro všechna $k\ge0$ platí
+$xy^kz\in L$. Důkaz neregularity $L_{01}=\{0^i1^i\mid i\ge0\}$: pro
+$w=0^n1^n$ leží $xy$ celé v nulách, $y$ je neprázdné, takže $xz$ má méně nul než
+jedniček a neleží v $L_{01}$.
+
+Pravá kongruence na $\Sigma^*$ je ekvivalence $\sim$ splňující
+$u\sim v\Rightarrow uw\sim vw$ pro všechna $u,v,w\in\Sigma^*$. Má konečný index,
+pokud rozklad $\Sigma^*/\sim$ má konečně mnoho tříd; třída slova $u$ se značí
+$[u]_\sim$. Příklad pravé kongruence: ``končí stejným písmenem''. Relace ``mají
+stejný počet znaků'' nemá konečný index. Myhillova-Nerodova věta: pro jazyk $L$ nad
+konečnou abecedou jsou ekvivalentní tvrzení, že $L$ je rozpoznatelný konečným
+automatem, a že existuje pravá kongruence konečného indexu, jejíž některé třídy mají
+sjednocení přesně $L$. K důkazu neregularity se ukáže nekonečně mnoho rozlišitelných
+prefixů. Typicky pro jazyk obsahující slova $ab^ic^i$: pokud má kongruence index $m$,
+množina $\{ab,abb,\ldots,ab^{m+1}\}$ má dvě slova $ab^i\sim ab^j$, $i\ne j$; po
+připojení $c^i$ jedno slovo v jazyce je a druhé není, spor.
+
+Podmnožinová konstrukce převádí $\epsilon$NFA $N$ na ekvivalentní DFA $D$. Stavy $D$
+jsou $\epsilon$-uzavřené podmnožiny $Q_N$ včetně případně $\emptyset$,
+počáteční stav je $\epsilon\text{-closure}(q_{0N})$, přijímající stavy jsou
+\[
+F_D=\{S\subseteq Q_N\mid S\cap F_N\ne\emptyset\},
+\]
+a pro $S\subseteq Q_N$, $x\in\Sigma$ je
+\[
+\delta_D(S,x)=\epsilon\text{-closure}\left(\bigcup_{p\in S}\delta_N(p,x)\right).
+\]
+Tedy jazyk je rozpoznatelný $\epsilon$NFA právě tehdy, když je regulární; NFA a DFA
+mají stejnou vyjadřovací sílu. Kleeneho věta: každý jazyk rozpoznaný konečným automatem
+lze popsat regulárním výrazem a každý regulární výraz lze převést na $\epsilon$NFA.
+
+PDA a CFG popisují stejnou třídu. Věta: pro jazyk $L$ jsou ekvivalentní tvrzení, že
+$L$ je bezkontextový, že je přijímán nějakým PDA koncovým stavem, a že je přijímán
+nějakým PDA prázdným zásobníkem. Převod z koncového stavu na prázdný zásobník: na dno
+přidáme špunt, z přijímajících stavů vedeme $\epsilon$-přechod do vypouštěcího stavu a
+tam zásobník vyprázdníme. Převod z prázdného zásobníku na koncový stav: na dno přidáme
+špunt a z každého stavu vedeme přechod do nového přijímajícího stavu, jakmile je špunt
+vidět. Konstrukce PDA z CFG $G=(V,T,P,S)$: vezmeme jeden stav $q$, vstupní abecedu
+$T$, zásobníkovou abecedu $V\cup T$, počáteční zásobníkový symbol $S$ a přijímání
+prázdným zásobníkem. Pro každé pravidlo $A\to\beta$ dáme
+$\delta(q,\epsilon,A)\ni(q,\beta)$ a pro každý terminál $a$ dáme
+$\delta(q,a,a)=\{(q,\epsilon)\}$. Na zásobníku se nedeterministicky generuje derivace a
+terminály se průběžně párují se vstupem.
+
+Lemma o vkládání pro bezkontextové jazyky: je-li $L$ bezkontextový, pak existuje $n$
+takové, že každé $w\in L$ s $|w|\ge n$ lze rozložit
+$w=u_1u_2u_3u_4u_5$, kde $u_2u_4\ne\epsilon$, $|u_2u_3u_4|\le n$ a pro všechna
+$k\ge0$ platí $u_1u_2^ku_3u_4^ku_5\in L$. Idea: na nejdelší cestě derivačního stromu
+se opakuje neterminál; dva odpovídající podstromy lze opakovat nebo vynechat.
+Příklad: $L_{012}=\{0^i1^i2^i\mid i\ge1\}$ není bezkontextový, protože pumpovaná část
+délky nejvýše $n$ zasáhne nejvýše dva druhy symbolů a pumpování poruší rovnost tří
+počtů.
+
+Chomského normální tvar pro CFG bez zbytečných symbolů má všechna pravidla tvaru
+$A\to BC$ nebo $A\to a$, kde $A,B,C\in V$ a $a\in T$. Převod: odstranit
+$\epsilon$-pravidla pomocí nulovatelných symbolů a doplněných variant pravidel,
+odstranit jednotková pravidla přes jednotkové páry, odstranit zbytečné symboly
+nejprve negenerující a potom nedosažitelné, nahradit terminály v dlouhých pravých
+stranách novými neterminály a pravé strany délky aspoň tři rozdělit binárními pravidly.
+
+Rozhodovací problém je množina kódovaných instancí s odpovědí ano/ne. Je rozhodnutelný,
+pokud existuje TM, který na každém vstupu zastaví a přijme právě instance s odpovědí ano.
+Redukce problému $P_1$ na $P_2$ je algoritmus $R$, který pro každou instanci zastaví a
+zachová odpověď:
+$P_1(w)=\text{ano}\Leftrightarrow P_2(R(w))=\text{ano}$. Pokud se $P_1$ redukuje na
+$P_2$ a $P_1$ je nerozhodnutelný, pak je nerozhodnutelný i $P_2$; stejně, pokud $P_1$
+není rekurzivně spočetný, není rekurzivně spočetný ani $P_2$.
+
+Diagonální jazyk $L_d$ je množina binárních slov $w$, která kódují TM nepřijímající
+vlastní kód $w$. Věta: $L_d$ není rekurzivně spočetný; jinak by spuštění přijímače
+$L_d$ na vlastním kódu dalo paradox. Problém zastavení má vstup $(M,w)$ a ptá se,
+zda stroj $M$ na vstupu $w$ zastaví. Věta: problém zastavení není rozhodnutelný,
+například redukcí z diagonálního jazyka. Univerzální jazyk
+$L_u=\{\langle M,w\rangle\mid w\in L(M)\}$ je rekurzivně spočetný, protože existuje
+univerzální Turingův stroj simulující $M$ na $w$, ale není rekurzivní. Také problém
+prázdnosti jazyka daného TM není rozhodnutelný.
+
+Chomského hierarchie: typ 0 má obecná pravidla $\alpha\to\omega$, kde $\alpha$ obsahuje
+neterminál, a odpovídá rekurzivně spočetným jazykům a TM. Typ 1 jsou kontextové
+gramatiky s pravidly $\gamma A\beta\to\gamma\omega\beta$, kde $\omega\in(V\cup T)^+$;
+výjimka je $S\to\epsilon$, pokud se $S$ nevyskytuje na pravé straně. Kontextové jazyky
+rozpoznává lineárně omezený automat. Typ 2 jsou bezkontextové gramatiky $A\to\omega$ a
+odpovídají nedeterministickým PDA. Typ 3 jsou regulární, pravé lineární gramatiky
+$A\to\omega B$ nebo $A\to\omega$, kde $\omega\in T^*$; neterminály odpovídají stavům
+konečného automatu a pravidla přechodům. Platí vnoření
+$\mathcal L_3\subseteq\mathcal L_2\subseteq\mathcal L_1\subseteq\mathcal L_0$.
+
+\noindent\bod{3}\ \textbf{Detaily, uzávěry a zařazování jazyků.}
+Regulární jazyky jsou uzavřené na sjednocení, průnik, rozdíl, doplněk, zřetězení,
+iteraci $L^*$, pozitivní iteraci $L^+$, reverzi $L^R$, levý i pravý kvocient, homomorfismus
+a inverzní homomorfismus. Doplněk DFA vznikne prohozením přijímajících a nepřijímajících
+stavů. Pro průnik, sjednocení a rozdíl se použije součinový automat
+$(Q_1\times Q_2,\Sigma,\delta,(q_{01},q_{02}),F)$ s
+$\delta((p,q),x)=(\delta_1(p,x),\delta_2(q,x))$. Pro průnik je
+$F=F_1\times F_2$, pro sjednocení
+$F=(F_1\times Q_2)\cup(Q_1\times F_2)$ a pro rozdíl $F=F_1\times(Q_2-F_2)$.
+Bezkontextové jazyky jsou uzavřené na sjednocení, zřetězení, iteraci a reverzi, nejsou
+obecně uzavřené na průnik, ale jsou uzavřené na průnik s regulárním jazykem. Uzávěry
+lze použít i negativně: kdyby z jazyka $L$ regulárními operacemi vyšel známý neregulární
+jazyk jako $\{0^i1^i\}$, pak $L$ nemohl být regulární.
+
+Při zařazování konkrétního jazyka se hledá co nejpřesnější třída. Regularitu ukáže
+konečný automat nebo regulární gramatika; neregularitu pumping lemma nebo
+Myhillova-Nerodova věta. Bezkontextovost ukáže CFG nebo PDA; nebezkontextovost lemma
+o vkládání. Rekurzivní nebo rekurzivně spočetný jazyk se ukáže algoritmem nebo TM;
+negativní tvrzení se obvykle dokazují redukcí z $L_d$, $L_u$ nebo problému zastavení.
+Příklad TM pro $\{0^n1^n\}$: opakovaně jezdí po pásce, přepisuje jednu dosud
+neoznačenou nulu na $X$ a jednu odpovídající jedničku na $Y$; přijme, když zbyly jen
+$X$ a $Y$ a nuly a jedničky došly současně.
+
+Kontextový příklad z poznámek:
+$L=\{a^ib^jc^k\mid 1\le i\le j\le k\}$ je kontextový, ale není bezkontextový.
+Generování lze popsat pravidly $S\to aSBC\mid aBC$, $B\to BBC$, $C\to CC$,
+$CB\to BC$, $aB\to ab$, $bB\to bb$, $bC\to bc$, $cC\to cc$. Pravidlo $CB\to BC$
+není přímo kontextové, opraví se pomocnými označenými symboly, které mění písmena po
+jednom, například $CB\to\bar C B\to\bar C\bar B\to B\bar B\to BC$. Důležité je, že
+chybí pravidlo $cB\to cb$, takže po zahájení přepisu $C$ už nelze přepisovat další
+$B$.
 \end{odpoved}
 
 \begin{recall}
@@ -156,25 +336,200 @@ strukturu a umět odhadnout složitost. U společné části stačí mít mapu p
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} $f\in O(g)$ znamená $\exists c,n_0\ \forall n\ge n_0:\ f(n)\le c g(n)$; $\Omega$ je dolní a $\Theta$ oboustranný asymptotický odhad.
-\emph{P} je třída rozhodovacích problémů řešitelných v polynomiálním čase deterministickým strojem.
-\emph{NP} je třída problémů, jejichž ano-certifikát lze ověřit v polynomiálním čase.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Polynomiální redukce} $A\le_p B$ je polynomiálně spočitatelná transformace $x\mapsto f(x)$ se $x\in A \iff f(x)\in B$.
-\emph{NP-těžký} problém je takový, že se na něj polynomiálně redukuje každý problém z NP; \emph{NP-úplný} je NP-těžký a leží v NP.
-\emph{BST} má v každém uzlu vlevo menší a vpravo větší klíče; \emph{AVL} je BST, kde se výšky levého a pravého podstromu v každém uzlu liší nejvýše o 1.
-Rozděl a panuj: rozděl,
-vyřeš podproblémy, slož výsledek, například mergesort $T(n)=2T(n/2)+O(n)=O(n\log n)$.
-AVL drží vyvážení rotacemi. Porovnávací třídění má dolní
-odhad $\Omega(n\log n)$.\par
-\noindent\bod{3}\ \textbf{Bonus:} Quicksort má průměrně $O(n\log n)$ a nejhůře $O(n^2)$.
-BFS je fronta a vzdálenosti v neohodnoceném grafu, DFS je zásobník a časy průchodu.
-Topologické třídění funguje pro DAG. Dijkstra vyžaduje nezáporné hrany, Bellman-Ford
-zvládá záporné hrany, Jarník a Borůvka řeší MST, Ford-Fulkerson zlepšuje tok po
-reziduálních cestách. Master theorem pro $T(n)=aT(n/b)+\Theta(n^c)$ porovnává
-$a/b^c$; Karacuba násobí dlouhá čísla v $O(n^{\log_2 3})$. NP převody jsou
-reflexivní a tranzitivní; typické NP-úplné problémy jsou SAT, 3-SAT, klika,
-nezávislá množina, $k$-obarvitelnost, Hamiltonovská kružnice, batoh a součet podmnožiny.
-AVL má hloubku $\Theta(\log n)$, porovnávací třídění má dolní mez $\Omega(n\log n)$.
+\noindent\bod{1}\ \textbf{Definice.}
+Velikost vstupu závisí na úloze: někdy je to počet prvků, jindy počet bitů čísel nebo
+jiný přirozený parametr. Pro vstup $x$ je doba běhu
+$t(x)$ součet cen provedených instrukcí, případně $\infty$. Časová složitost v nejhorším
+případě je
+\[
+T(n)=\max\{t(x)\mid x\text{ je vstup velikosti }n\}.
+\]
+Prostor běhu $s(x)$ je nejvyšší navštívená adresa minus nejnižší navštívená adresa plus
+jedna; prostorová složitost je
+\[
+S(n)=\max\{s(x)\mid x\text{ je vstup velikosti }n\}.
+\]
+Do času se obvykle nepočítá samotné načtení vstupu; do pracovního prostoru se nepočítá
+nezapisovaný vstup ani výstup, pokud se jen zapisuje a dál nečte. Pro cenu instrukcí je
+nutné omezit model paměťové buňky: jednotková cena omezuje šířku slova na $W$ bitů,
+logaritmická cena počítá bity operandů včetně adres a relativní logaritmická cena se
+chová jednotkově pro polynomiálně velká čísla, ale zdražuje extrémně velká čísla.
+
+Nejhorší případ bere maximum přes vstupy dané velikosti. Nejlepší případ bere minimum.
+Průměrný případ průměruje přes vstupy podle zvoleného rozdělení; bývá výstižný, ale
+těžší na odvození. Asymptoticky pro $f,g:\mathbb N\to\mathbb R$:
+$f\in O(g)$ právě tehdy, když existuje $c$ takové, že pro všechna až na konečně mnoho
+$n$ platí $f(n)\le c g(n)$; $f\in\Omega(g)$ analogicky znamená
+$f(n)\ge c g(n)$; $\Theta(g)=O(g)\cap\Omega(g)$.
+
+Třída P obsahuje rozhodovací problémy $L$, pro něž existuje algoritmus $A$ a polynom
+$p$ tak, že pro každý vstup $x$ doběhne $A(x)$ do $p(|x|)$ kroků a odpoví $L(x)$.
+Třída NP obsahuje problémy s polynomiálně ověřitelným krátkým certifikátem:
+existuje verifikátor $V\in P$ a polynom $g$ tak, že
+\[
+L(x)=1 \Leftrightarrow (\exists y,\ |y|\le g(|x|))\ V(x,y)=1.
+\]
+Platí $P\subseteq NP$, rovnost se neví. Polynomiální převod $A\le_P B$ je funkce
+$f:\{0,1\}^*\to\{0,1\}^*$ spočitatelná v polynomiálním čase taková, že
+$A(\alpha)=B(f(\alpha))$ pro všechna $\alpha$. Problém $L$ je NP-těžký, pokud
+$K\le_P L$ pro každý $K\in NP$, a NP-úplný, pokud je NP-těžký a zároveň $L\in NP$.
+
+BVS je binární strom s unikátními klíči $k(v)$, kde pro každý vrchol $v$ platí:
+každý klíč v levém podstromu $L(v)$ je menší než $k(v)$ a každý klíč v pravém podstromu
+$R(v)$ je větší než $k(v)$. AVL strom je hloubkově vyvážený BVS s podmínkou
+$|h(L(v))-h(R(v))|\le1$ v každém vrcholu. Topologické uspořádání orientovaného grafu
+$G=(V,E)$ je lineární uspořádání vrcholů takové, že pro každou hranu $uv\in E$ je
+$u\le v$.
+
+\noindent\bod{2}\ \textbf{Věty, algoritmy a vlastnosti.}
+Převoditelnost je reflexivní, tranzitivní, není antisymetrická a existují i
+nepřevoditelné dvojice problémů; jde o částečné kvaziuspořádání problémů. Pokud
+$A\le_P B$ a $B\in P$, pak $A\in P$. Pokud $A\le_P B$, $B\in NP$ a $A$ je NP-úplný,
+pak je $B$ NP-úplný. Typické NP-úplné problémy: SAT, CNF-SAT, 3-SAT, 3,3-SAT,
+obvodový SAT, nezávislá množina, klika, $k$-obarvitelnost pro $k\ge3$, Hamiltonovská
+cesta a kružnice, 3D-párování, součet podmnožiny, batoh, 2 loupežníci a nulajedničkové
+řešení soustavy lineárních rovnic v $\mathbb Z$. Klika se ptá na úplný podgraf na
+alespoň $k$ vrcholech. Nezávislá množina se ptá na množinu aspoň $k$ vrcholů, mezi
+nimiž nevede žádná hrana. SAT se ptá na splnitelnost CNF formule, 3-SAT na formule s
+nejvýše třemi literály v klauzuli, 3,3-SAT navíc s nejvýše třemi výskyty každé proměnné.
+3D-párování má množiny $A,B,C$ a kompatibilní trojice $T\subseteq A\times B\times C$ a
+ptá se na perfektní podmnožinu trojic, v níž se každý prvek účastní právě jedné trojice.
+
+Základní redukce: klika a nezávislá množina se převádějí doplňkem grafu, tedy prohozením
+hran a nehran. Při převodech SAT vyrábíme ekvisplnitelnou formuli. Převod SAT na 3-SAT
+štěpí dlouhou klauzuli pomocí nové proměnné, například
+$(\alpha\lor\beta)$ nahradí
+$(\alpha\lor\zeta)\land(\beta\lor\neg\zeta)$, kde $\alpha$ je začátek délky 2 a
+$\beta$ zbytek; počet štěpení je polynomiální v délce formule. Převod 3-SAT na
+3,3-SAT nahradí proměnnou s $k>3$ výskyty novými proměnnými $x_1,\ldots,x_k$ a
+vynutí jejich ekvivalenci cyklem implikací
+$x_1\Rightarrow x_2,\ldots,x_k\Rightarrow x_1$, takže každá nová proměnná má omezený
+počet výskytů. Varianta 3,3-SAT* navíc omezuje výskyty každého literálu na nejvýše dva.
+
+Převod 3-SAT na nezávislou množinu: pro každou z $k$ klauzulí vytvoříme trojúhelník
+vrcholů označených literály klauzule, u kratších klauzulí přebytečné vrcholy smažeme,
+a přidáme hrany mezi konfliktními literály. Formule je splnitelná právě tehdy, když má
+graf nezávislou množinu velikosti aspoň $k$: ze splňujícího ohodnocení vybereme v každé
+klauzuli pravdivý literál; naopak nezávislá množina velikosti $k$ vybírá právě jeden
+nekonfliktní literál z každé klauzule. Převod nezávislé množiny na 3-SAT: proměnná
+$x_j$ říká, zda je vrchol $j$ vybrán, každá hrana dává klauzuli
+$(\neg x_i\lor\neg x_j)$ a velikost $k$ se vynutí pomocnou tabulkou proměnných
+$y_{ij}$, v níž je v každém řádku právě jedna jednička, v každém sloupci nejvýše jedna
+jednička a implikace $y_{ij}\to x_j$ propojí tabulku s výběrem vrcholů.
+
+Rozděl a panuj: problém se rekurzivně dělí na nezávislé podproblémy, ty se řeší až do
+triviální konstantní velikosti a výsledky se skládají. Rekurenci lze řešit dosazováním,
+součtem nákladů po úrovních nebo Master theorem. Master theorem pro
+\[
+T(n)=aT(n/b)+\Theta(n^c),\qquad T(1)=1,
+\]
+kde $a\in\{1,2,\ldots\}$, $b>1$, $c\ge0$, říká:
+pokud $a/b^c=1$, pak $T(n)=\Theta(n^c\log n)$; pokud $a/b^c<1$, pak
+$T(n)=\Theta(n^c)$; pokud $a/b^c>1$, pak $T(n)=\Theta(n^{\log_b a})$.
+
+Mergesort: pro posloupnost délky nejvýše jedna vrátí vstup, jinak setřídí levou a pravou
+polovinu a lineárně je slije. Rekurence $T(n)=2T(n/2)+\Theta(n)$ dává
+$\Theta(n\log n)$, protože v každém z $\log n$ pater se slévá celkem $n$ prvků.
+Karacubovo násobení: pro $n$-ciferná čísla v základu $z$ napiš
+$x=az^{n/2}+b$, $y=cz^{n/2}+d$. Pak
+\[
+xy=ac z^n+(ad+bc)z^{n/2}+bd,\qquad
+ad+bc=(a+b)(c+d)-ac-bd.
+\]
+Stačí tři rekurzivní násobení, rekurence $T(n)=3T(n/2)+cn$ má řešení
+$\Theta(n^{\log_2 3})$; součtem pater
+$\sum_{i=0}^{\log_2 n} n(3/2)^i\in\Theta(n(3/2)^{\log_2 n})$.
+
+Operace v nevyvažovaném BVS: Find porovnává hledaný klíč s aktuálním vrcholem a jde
+vlevo nebo vpravo; Insert vloží uzel tam, kde by se klíč našel, pokud by ve stromu byl;
+Delete smaže nalezený vrchol, u jednoho syna připojí syna pod otce a u dvou synů vrchol
+prohodí s nejlevějším vrcholem v pravém podstromu, případně symetricky. Čas je úměrný
+výšce stromu, bez vyvažování může být lineární. Věta: AVL strom na $n$ vrcholech má
+hloubku $\Theta(\log n)$, proto operace po vyvážení rotacemi běží logaritmicky.
+
+BubbleSort opakovaně prochází pole zleva doprava, porovnává sousední prvky a prohodí je,
+jsou-li ve špatném pořadí; skončí po průchodu bez prohození. InsertSort udržuje levou
+část pole setříděnou, bere další prvek z nesetříděné části, posune větší prvky vpravo a
+vloží ho na správné místo. Quicksort: pro $n\le1$ vrátí vstup, jinak zvolí pivota $p$,
+rozdělí prvky na menší než $p$, rovné $p$ a větší než $p$, rekurzivně setřídí krajní
+části a spojí výsledek. Náhodný pivot dává střední čas $\Theta(n\log n)$; nejhorší čas
+je $\Theta(n^2)$. Zdůvodnění průměru: s pravděpodobností $1/2$ je pivot v prostředních
+dvou čtvrtinách pořadí, tedy skoromedián, a očekávaný počet pokusů na skoromedián je
+konstantní; po takovém kroku se největší podproblém zmenší na nejvýše $3/4$.
+
+Dolní odhad pro porovnávací třídění: rozhodovací strom algoritmu musí mít list pro
+každou z $n!$ permutací. Hloubka binárního stromu s $n!$ listy je aspoň
+$\log_2(n!)\ge \log_2(n^{n/2})=(n/2)\log n$, proto každý porovnávací třídicí algoritmus
+potřebuje $\Omega(n\log n)$ porovnání v nejhorším případě.
+
+BFS používá frontu. Začne otevřením počátečního vrcholu, opakovaně odebere vrchol z
+fronty, prohlédne sousedy, dosud nenavštívené označí jako otevřené a vloží do fronty, a
+zpracovaný vrchol zavře. Končí s prázdnou frontou, běží v $\Theta(n+m)$ a najde z
+počátečního vrcholu cesty s nejmenším počtem hran, tedy nejkratší cesty v grafech s
+jednotkovými délkami. DFS lze implementovat rekurzí nebo zásobníkem:
+otevři $v$, pro každou hranu $vw$ spusť DFS na neviděném $w$, nakonec $v$ zavři.
+Jedno DFS navštíví dosažitelné vrcholy, opakované DFS přes všechny neviděné vrcholy
+projde všechny komponenty; ekvivalentně lze přidat superzdroj. Složitost je
+$\Theta(n+m)$.
+
+Topologické třídění existuje pro DAG a může být nejednoznačné. Lze ho konstruovat
+postupným odtrháváním zdrojů: najít zdroj, dát ho do pořadí a odstranit. Efektivně se
+použije DFS: opakované DFS zavírá vrcholy v pořadí opačném topologickému uspořádání.
+
+Dijkstra hledá nejkratší cesty z počátečního vrcholu v grafu s kladnými, respektive
+nezápornými délkami hran. Inicializuje $h(v_0)=0$, ostatní $h(v)=+\infty$, otevře
+$v_0$, a dokud existují otevřené vrcholy, vybere otevřený vrchol s nejmenším $h$,
+uzavře ho a relaxuje následníky: pokud $h(w)>h(v)+l(v,w)$, sníží $h(w)$ a uloží
+předchůdce. Každý vrchol se zavře jednou. Bez haldy je hledání minima
+$\Theta(n^2)$. S abstraktní prioritní frontou je složitost
+$O(nT_I+mT_D+nT_X)$ pro Insert, Decrease a ExtractMin; s binární haldou
+$O((n+m)\log n)$, lepší husté varianty používají $d$-regulární nebo Fibonacciho haldy.
+
+Bellmanův-Fordův algoritmus je relaxační algoritmus pro grafy bez záporných cyklů.
+Obecný relaxační algoritmus inicializuje všechny vrcholy jako nenalezené s
+$h=+\infty$, otevře $v_0$ s $h(v_0)=0$, a dokud existují otevřené vrcholy, vezme jeden
+otevřený vrchol, relaxuje jeho následníky a vrchol uzavře. Bellman-Ford bere nejstarší
+otevřený vrchol z fronty. Fáze $F_0$ otevře $v_0$, fáze $F_i$ zavírá vrcholy otevřené ve
+$F_{i-1}$ a otevírá jejich následníky. Invariant: na konci $F_i$ je $h(v)$ délka
+nejkratšího $v_0v$-sledu s nejvýše $i$ hranami. Složitost je $\Theta(nm)$.
+
+Pro minimální kostru platí řezové lemma: je-li $G$ graf s unikátními vahami, $R$
+elementární řez a $e$ nejlehčí hrana řezu, pak $e$ leží v každé minimální kostře.
+Jarníkův algoritmus začne stromem $T$ s libovolným vrcholem $v_0$ a bez hran, opakovaně
+přidá nejlehčí hranu mezi $T$ a zbytkem grafu, dokud lze. Klasická implementace má
+$O(nm)$. Varianta podle Dijkstry udržuje haldu aktivních hran aktuálního řezu, přidává
+minimum a pro jeden vnější vrchol nechává jen nejlehčí aktivní hranu; s haldou běží
+$O(m\log n)$. Borůvkův algoritmus začne izolovanými vrcholy a v každé iteraci pro
+každou komponentu přidá nejlehčí hranu do zbytku grafu. Komponenty a hrany se zpracují
+v $O(m)$ na iteraci a po nejvýše $\lfloor\log n\rfloor$ iteracích skončí, tedy
+$O(m\log n)$.
+
+Fordův-Fulkersonův algoritmus pro toky: cesta je nenasycená, pokud všechny její hrany
+mají kladnou rezervu. Dokud existuje nenasycená cesta ze zdroje do stoku, spočti rezervu
+cesty jako minimum rezerv hran a uprav tok po cestě: v protisměru odečti, co lze, a
+zbytek přičti po směru. Pokud se algoritmus zastaví, vydá maximální tok. Pro racionální
+kapacity se zastaví a vydá maximální tok i minimální řez; racionální kapacity lze
+převést na celočíselné a operace z celých kapacit nevytvoří necelé toky. Pro iracionální
+kapacity může volba cest selhat. Důsledek: velikost maximálního toku je rovna kapacitě
+minimálního řezu. Síť s celočíselnými kapacitami má celočíselný maximální tok a
+Ford-Fulkerson ho najde.
+
+\noindent\bod{3}\ \textbf{Další detaily a exam-ready poznámky.}
+Při měření algoritmů je nutné říct, co je $n$, zda jde o nejhorší, nejlepší nebo
+průměrný případ, a jaký model ceny instrukcí používáme. U číselných úloh není totéž
+počet čísel a počet bitů vstupu. U prostorové složitosti se obvykle měří pracovní
+prostor, nikoli neměnný vstup a jednorázově zapisovaný výstup.
+
+Převody zachovávají ano i ne instance. Při důkazu NP-úplnosti nového problému $B$ se
+standardně ukáže $B\in NP$ a vezme se známý NP-úplný problém $A$, pro který se sestrojí
+$A\le_P B$. NP-těžký problém nemusí ležet v NP, například může být optimalizační nebo
+nerozhodnutelný.
+
+U grafových algoritmů značme $n=|V|$, $m=|E|$. BFS a DFS pracují v lineárním čase
+vzhledem k velikosti grafu. Dijkstra nesmí být použit na záporné hrany. Bellman-Ford
+zvládá záporné hrany, ale ne záporný cyklus dosažitelný ze zdroje, protože nejkratší
+cesta pak není dobře definovaná. U topologického třídění cyklus znemožňuje lineární
+uspořádání respektující orientované hrany.
 \end{odpoved}
 
 \begin{recall}
@@ -250,27 +605,196 @@ a bezpečné zacházení se zdroji a chybami.
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} Abstrakce skrývá detail, zapouzdření chrání stav
-přes viditelnost, polymorfismus dovolí volat stejnou operaci nad různými typy. V C\#
-jsou třídy, rozhraní, metody, položky, jednoduchá dědičnost tříd a vícenásobná
-implementace rozhraní. Typování je statické, dynamická vazba se používá u virtuálních
-metod.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} Hodnotové typy se typicky ukládají přímo a kopírují
-hodnotu, referenční typy se obsluhují přes referenci na objekt na haldě. Boxing zabalí
-hodnotový typ do objektu. Generika v C\# parametrizují třídy a metody typem, delegáti
-a lambda výrazy reprezentují funkce. Výjimky se propagují zásobníkem, \texttt{using}
-zajistí \texttt{Dispose} i při chybě.\par
-\noindent\bod{3}\ \textbf{Bonus:} Konstruktor inicializuje objekt a volá konstruktor
-předka, správu paměti řeší garbage collector, finalizátor není náhrada za uvolnění
-externího zdroje. Dynamický polymorfismus bývá přes tabulku virtuálních metod. C\#
-běží nad CLR, program se překládá do IL, typicky JIT do strojového kódu, knihovny
-mohou být staticky nebo dynamicky navázané. Vlákna sdílejí paměť, proto hrozí race
-conditions a používají se zámky. Diamantový problém řeší C\# vícenásobnou implementací
-rozhraní místo vícenásobné dědičnosti tříd. \texttt{ref}, \texttt{out} a \texttt{in}
-předávají argument odkazem (u \texttt{in} jen pro čtení); fungují pro hodnotové i
-referenční typy. \texttt{readonly} a schovaný setter pomáhají s imutabilitou.
-RAII v C++ váže zdroj na život objektu; \texttt{using} je \texttt{try/finally}
-s \texttt{Dispose}.
+\noindent\bod{1}\ \textbf{Definice.}
+Abstrakce odděluje rozhraní od implementačních detailů, zapouzdření chrání stav objektu
+pomocí viditelnosti a invariantů, polymorfismus dovoluje pracovat se stejným rozhraním
+nad různými konkrétními typy. V C\# i C++ existují třídy a struktury; v C++ musí
+deklarace končit středníkem a rozdíl \texttt{class}/\texttt{struct} neurčuje uložení,
+zatímco v C\# jsou \texttt{struct} hodnotové typy. C\# podporuje jednoduchou dědičnost
+tříd a vícenásobnou implementaci rozhraní. Rozhraní v C\# se konvenčně jmenuje s
+počátečním \texttt{I}, obsahuje metody a podobné členy včetně properties, ale ne fields.
+Instance samotného rozhraní neexistuje, existuje proměnná typu rozhraní, například
+\texttt{IPostovniZvire zvire = new Kachna();}. Třída může implementovat více rozhraní
+a rozhraní může dědit od jiného rozhraní. V C++ se rozhraní typicky modeluje
+dědičností s virtuálními metodami a při dědění lze určit viditelnost.
+
+Viditelnost v C\#: \texttt{public} znamená neomezený přístup, \texttt{private} přístup
+jen v daném typu včetně jeho vnořených typů, \texttt{protected} přístup v daném typu a
+potomcích. Výchozí viditelnost je \texttt{private} ve třídě a \texttt{public} v
+rozhraní. Statické typování zná typy proměnných při překladu a dovoluje statickou
+kontrolu metod. Dynamické typování určuje typ za běhu; chybné volání selže až za běhu,
+v C\# lze použít \texttt{dynamic}. Použití \texttt{object} nebo obecného rozhraní je
+slabší forma práce přes obecnější typ. Statický polymorfismus je přetížení metody nebo
+operátoru, případně zakrytí rodičovské metody. Dynamický polymorfismus používá
+virtuální metody a rozhoduje podle skutečné třídy instance; požadavek rozhraní může být
+uspokojen i virtuální metodou a metoda rozhraní může být implementována explicitně.
+
+Vícenásobná dědičnost přináší diamantový problém: pokud mají rodiče společného předka a
+oba implementují jeho metodu, není zřejmé, která implementace se má zavolat. C\# proto
+nepodporuje vícenásobnou dědičnost tříd, ale podporuje vícenásobnou implementaci
+rozhraní. U návrhu v C\# platí rozdíl mezi abstraktní metodou a rozhraním: rozhraní
+vynucuje veřejný kontrakt hned, abstraktní metoda může být i \texttt{protected};
+virtuální metoda slibuje rozšiřitelnost opt-out pomocí \texttt{sealed}, rozhraní opt-in;
+rozhraní nemá fields kvůli vícenásobné dědičnosti a abstraktní třída neřeší vícenásobné
+kontrakty stejně volně.
+
+Číselné typy C\# zahrnují \texttt{byte}, \texttt{sbyte}, \texttt{short},
+\texttt{ushort}, \texttt{int}, \texttt{uint}, \texttt{long}, \texttt{ulong},
+\texttt{nint}, \texttt{nuint}, \texttt{float}, \texttt{double} a \texttt{decimal};
+\texttt{nint}/\texttt{nuint} mají nativní velikost platformy. Výčtový typ se definuje
+například \texttt{enum Season \{ Spring, Summer, Autumn, Winter \}}, může mít zadaný
+podkladový integrální typ, například \texttt{: ushort}, a hodnoty položek lze explicitně
+určit. V C++ existují raw pointery, reference včetně \texttt{const} a rvalue referencí
+a smart pointery.
+
+C\# typy se základně dělí na pointery, hodnotové typy a referenční typy. Hodnotové typy
+zahrnují enumy a struktury včetně jednoduchých typů \texttt{Int32}, \texttt{Int64},
+\texttt{Double}, \texttt{Boolean}, \texttt{Char}, nullable typů a uživatelských
+\texttt{struct}. Referenční typy zahrnují třídy, například \texttt{string}, rozhraní,
+pole a delegáty. Proměnná hodnotového typu obsahuje hodnotu dané velikosti; u struktury
+může \texttt{new} jen zavolat konstruktor bez haldové alokace. Proměnná referenčního
+typu obsahuje adresu objektu na managed haldě, alokuje se typicky pomocí \texttt{new};
+skutečnou adresu nelze spoléhlivě získat, protože GC může objekty přesouvat.
+
+\noindent\bod{2}\ \textbf{Hlavní mechanismy a vlastnosti.}
+Managed halda C\# je spravovaná garbage collectorem, který nepoužívá prosté počítání
+referencí jako hlavní princip, ale graf dosažitelnosti. Objekt na haldě má typicky
+overhead kolem 16 B: syncblock a ukazatel na typ. Syncblock obsahuje informace pro
+zamykání, například vlastnící vlákno, počítadlo rekurzivního zamčení a seznam čekajících
+vláken, a také část pro condition variable se seznamem uspaných vláken. Ukazatel na typ
+vede zjednodušeně na instanci \texttt{System.Type}; na referenčních proměnných lze volat
+\texttt{GetType()}.
+
+Boxing nastane, když se hodnotový typ přiřadí do proměnné typu \texttt{object} nebo
+jiného referenčního obalu. Alokuje se instance hodnotového typu na GC haldě včetně
+overheadu. V C\# je například \texttt{int} zároveň \texttt{System.Int32}; v Javě jsou
+\texttt{int} a \texttt{Integer} odlišné typy. Unboxing z referenčního obalu získá zpět
+hodnotu. \texttt{object} není vhodný pro slabé typování; pokud chceme hodnotový typ
+sdílet referencí, bývá čistší jednoduchá třída. Imutabilita se podporuje \texttt{readonly}
+fieldy, do nichž se zapisuje jen v konstruktoru nebo inicializaci, skrytým setterem
+property a \texttt{readonly struct}.
+
+Tracking reference v C\# se používají u parametrů \texttt{ref}, \texttt{out} a
+\texttt{in}. \texttt{ref} se píše v hlavičce i při volání a vyžaduje inicializovanou
+proměnnou. \texttt{out} je na úrovni CIL podobné, ale volající proměnná nemusí být
+inicializovaná; ve funkci se s ní zachází jako s neinicializovanou a před normálním
+návratem musí být zapsána. Při výjimce zápis povinný není. \texttt{if (int.Parse(s, out
+int x))} deklaruje \texttt{x} před \texttt{if}. \texttt{in} předává readonly referenci a
+lze ho volat i bez klíčového slova; hodí se hlavně pro výkonnostní optimalizace velkých
+hodnotových typů. Podobná varianta je \texttt{ref readonly}. U referenčních typů obvykle
+tracking reference nedává smysl; výjimkou je například zvětšení pole, kdy chceme
+přiřadit novou referenci zpět volajícímu.
+
+Generický typ v C\# parametrizuje typ, například \texttt{class GenericList<T> \{\}}; při
+vytvoření instance se typový parametr uvádí, u generických metod ho často odvodí
+překladač. V C++ se statický polymorfismus často dělá šablonami, například
+\texttt{template<typename T> const T\& max(const T\& a, const T\& b)}; v C\# odpovídá
+generická metoda s případným omezením, například na \texttt{IComparable}. Funkce jako
+hodnoty se v C\# reprezentují delegáty. Delegátní typ lze definovat například
+\texttt{public delegate void Callback(string message);}, přiřadit metodu kompatibilní
+signatury a volat jej jako funkci. Delegát na instanční metodu obsahuje ukazatel na
+funkci a na \texttt{this}; u statické metody je \texttt{this} \texttt{null}. Delegáti jsou
+immutable, mohou být generičtí a existují předdefinované typy
+\texttt{Action<...>}, \texttt{Func<..., TResult>} a \texttt{Predicate<T>}. V C++ lze
+použít šablony, function pointery nebo \texttt{std::function}. Lambda v C\# má tvar
+\texttt{(parameters) => expression} nebo blok s příkazy; může být \texttt{static}, jinak
+může zachytávat proměnné z okolí podobně jako capture by reference, a je přiřaditelná do
+delegáta. V Javě se používají funkcionální rozhraní.
+
+Vícerozměrná pole v C\#: zubaté pole je pole polí, například \texttt{int[][] a}, každá
+řádka je samostatné pole a má vlastní overhead; obdélníkové pole se píše
+\texttt{int[,] a = new int[2, 3]} a indexuje \texttt{a[0, 1]}. Zubatá pole bývají
+rychlejší, obdélníková mohou být paměťově úspornější a lépe se zapisují. Indexer je
+speciální property, například \texttt{public T this[int i] \{ get ... set ... \}}.
+Nullable hodnotové typy mají \texttt{HasValue} a \texttt{Value}. C\# dovoluje přetížit
+operátory a definovat implicitní i explicitní konverze.
+
+Správa zdrojů: RAII v C++ znamená, že zdroj se získá v konstruktoru a uvolní v
+destruktoru, takže je uvolnění vázané na život objektu; typické příklady jsou
+\texttt{lock\_guard} pro zámek a smart pointery pro \texttt{new}/\texttt{delete}. V C\#
+slouží \texttt{using (var f = new FileStream(...)) \{...\}} jako syntaktická zkratka pro
+\texttt{try}/\texttt{finally}, ve \texttt{finally} se volá \texttt{Dispose}. Výjimky se
+vyhazují \texttt{throw new Ex(...)} a zachycují bloky \texttt{try}/\texttt{catch}/
+\texttt{finally}; více \texttt{catch} bloků rozlišuje typy výjimek a stejnou výjimku lze
+znovu vyhodit pomocí \texttt{throw;}.
+
+Alokace může být statická, na zásobníku nebo na haldě. Statická alokace vzniká během
+překladu pro data dostupná po celý běh programu. Zásobníková alokace vzniká při volání
+funkcí pro lokální proměnné, po návratu se uvolní, je rychlá, ale zásobník má omezenou
+velikost; v poznámkách je řečeno, že funguje zásobníkově, tedy LIFO. Halda se používá
+pro sdílené objekty, polymorfismus, velká data nebo situace, kdy velikost a životnost
+nevyhovují zásobníku. V C++ se haldová paměť získaná \texttt{new} musí právě jednou
+uvolnit \texttt{delete}, nebo se použijí smart pointery: \texttt{unique\_ptr} uvolní při
+opuštění scope, \texttt{shared\_ptr} počítá reference a uvolní při nule, cykly řeší
+\texttt{weak\_ptr}. V C existuje \texttt{malloc}/\texttt{free}. V C\# jsou instance
+referenčních typů a jejich fieldy na GC haldě.
+
+Konstruktor v C\# má viditelnost a název třídy a volá se s \texttt{new}. Konstruktor
+předka se volá přes \texttt{: base(args)} a volá se vždy, implicitně bez parametrů;
+konstruktor předka proběhne před konstruktorem potomka. V C++ je syntaxe podobná, jen
+se místo \texttt{base} píše název rodičovské třídy. Finalizátory v C\# jsou pro specifické
+uvolnění unmanaged zdrojů a nejsou běžnou náhradou \texttt{Dispose}. V C++ jsou
+destruktory zásadní pro vlastnictví zdrojů a kopírování objektů, viz rule of five; bázové
+třídy určené k polymorfnímu mazání mají mít virtuální destruktor.
+
+Vlákna v C\# reprezentuje \texttt{System.Threading.Thread}, ale vytváření vláken je
+drahé, proto se často používá \texttt{ThreadPool}. \texttt{Thread} dostane delegáta bez
+parametru nebo s jedním parametrem typu \texttt{object}, spouští se \texttt{Start()} a
+čeká se \texttt{Join()}. Race condition nastává, když výsledek závisí na pořadí událostí,
+které nemáme pod kontrolou. Základní řešení je mutual exclusion zámkem. V C\# lze použít
+\texttt{Monitor.Enter(obj)} a \texttt{Monitor.Exit(obj)} nebo zkratku
+\texttt{lock(obj) \{...\}}. Zámek je reentrantní pro stejné vlákno, takže se musí
+odemknout stejný počet krát. Syncblock existuje u referenčních objektů; jako zámek je
+vhodné používat soukromý field typu \texttt{object}, ne \texttt{lock(this)}. Condition
+variable v syncblocku umožňuje \texttt{Monitor.Wait(obj)}, \texttt{Pulse(obj)} a
+\texttt{PulseAll(obj)}; tyto operace musí být uvnitř \texttt{lock} bloku na stejném
+objektu. Semafor omezuje počet vláken, která mohou současně pracovat se zdrojem.
+
+Dynamický polymorfismus se implementuje tabulkou virtuálních metod. Každý typ s
+virtuálními metodami má VMT, při dědění se tabulka kopíruje a prodlužuje, u
+\texttt{override} se přepíše odkaz na implementaci. Volaná implementace tak závisí na
+skutečné třídě vytvořené instance, ne jen na statickém typu proměnné.
+
+Nativní běh znamená, že se zdrojový kód přeloží na strojový kód přímo spustitelný na
+dané platformě. Interpretovaný běh zpracovává kód interpretem. C++ překládá soubory
+\texttt{.cpp} do objektových souborů \texttt{.o}/\texttt{.obj} se strojovým kódem a
+linker je spojí do spustitelného souboru. Strojový kód cílí konkrétní platformu; pro
+jinou platformu je obvykle nutný nový překlad, i když existují techniky jako Apple fat
+binary, které nesou více verzí najednou a řeší hlavně zpětnou kompatibilitu. Překladač
+používá hlavičkové soubory knihoven.
+
+C\# používá soubory \texttt{.cs} a projekt \texttt{.csproj}; build systém spustí
+kompilátor \texttt{csc}, výstupem je assembly s CIL kódem. Ke spuštění je potřeba CLR,
+tedy virtual machine a runtime pro managed kód. CLR typicky používá JIT, který CIL
+překládá za běhu po metodách na strojový kód dané platformy; interpretace CIL by byla
+pomalá. Optimalizace dělá JIT, ale má omezený čas, aby start programu nebyl pomalý.
+Alternativou je AOT překlad, kdy je v executable kromě assembly i strojový kód pro
+podporovanou platformu, ale některé vlastnosti pak nemusí fungovat. Java je podobná:
+zdroj se překládá do Java bytecode a běží nad JVM. Všechny jazyky .NET se překládají do
+CIL. Proces sestavení nativního programu zahrnuje preprocesor, kompilátor, assembler a
+linker. Knihovna je statická nebo dynamická sada binárek; statickou knihovnu použije
+linker, dynamickou až loader. Loader načte program do paměti. V C\# velkou část řeší CLR
+a používají se DLL.
+
+\noindent\bod{3}\ \textbf{Doplňky, příklady a návrhové vzory.}
+Běhové prostředí procesu je vazba programu na operační systém. Program je soubor, proces
+je spuštěná instance spravovaná OS. OS poskytuje virtuální paměť, soubory, periferie a
+další systémové služby; v C\# je bezprostředním běhovým prostředím CLR nad OS.
+
+U rozhraní v C\# je vhodné psát \texttt{public} explicitně, i když členy rozhraní jsou
+defaultně veřejné. Názvy parametrů v metodách rozhraní dokumentují kontrakt. Veřejná
+metoda může vracet delegáta ukazujícího na privátní statickou metodu, protože viditelnost
+se řeší při vytvoření delegáta. U delegáta na instanční metodu struktury se \texttt{this}
+zkopíruje, tedy prakticky zaboxuje.
+
+Návrhové vzory z poznámek: Decorator obalí objekt, přijme původní objekt v konstruktoru
+a má stejné rozhraní, ale přidává chování. Adapter převádí rozhraní jedné třídy na
+rozhraní jiné, aby se objekt dal použít na místě očekávaného typu. Factory vyrábí
+instance, často podle parametrů; abstract factory používá virtuální vyráběcí metody a
+různé továrny vyrábějí související rodiny objektů. Visitor řeší speciální operace nad
+potomky společné báze: rozhraní visitora má metody pro jednotlivé typy, báze má
+\texttt{Accept(Visitor v)} a potomek \texttt{A} volá \texttt{v.VisitA(this)}. Místo
+\texttt{switch} podle typu tak dispatch zůstává objektový.
 \end{odpoved}
 
 \begin{recall}
@@ -354,29 +878,177 @@ a dává procesům iluze: vlastní CPU, vlastní adresový prostor a soubory jak
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} Počítač má CPU, registry, paměť a zařízení. Data i program
-jsou v paměti jako bity, adresa určuje místo v adresovém prostoru. Instrukce realizují
-přiřazení, větvení, cyklus a volání funkce přes čtení, zápis, skoky a práci se zásobníkem.
-OS běží v privilegovaném režimu, procesy běží uživatelsky.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} Řadič zařízení vystavuje porty nebo registry. PIO znamená,
-že procesor programově čte a zapisuje stav a data zařízení. Přerušení dovolí zařízení
-vyžádat obsluhu: hardware uloží minimální stav, skočí na obsluhu v jádře, OS uloží zbytek
-kontextu a po obsluze se pokračuje.
-Proces má vlastní adresový prostor a zdroje, vlákno je běžící tok s vlastním kontextem.
-Preemptivní multitasking přepíná OS, kooperativní čeká na dobrovolné předání.\par
-\noindent\bod{3}\ \textbf{Bonus:} Virtuální adresa se dělí na číslo stránky a offset,
-tabulka stránek mapuje stránku na rámec, offset se přenese. Virtuální adresové prostory
-chrání procesy mezi sebou. Soubory jsou pojmenované úložiště s rozhraním open, read,
-write, close. Race condition vzniká při závislosti na proložení vláken, kritickou sekci
-chrání vzájemné vyloučení, typicky zámek. Aktivní čekání točí CPU, pasivní čekání vlákno
-uspí. Harvardská architektura odděluje paměť kódu a dat, von Neumann má jednu paměť.
-Čísla se ukládají binárně, záporná typicky dvojkovým doplňkem, float jako znaménko,
-mantisa a exponent; endianita určuje pořadí bytů a zarovnání vkládá mezery do struktur.
-Syscall je řízený přechod do jádra; DMA přenáší data zařízení bez kopírování CPU.
-MMU překládá stránky a page fault řeší chybějící mapování. Scheduler používá stavy
-created, ready, running, blocked, terminated; algoritmy zahrnují FCFS, round robin,
-multilevel feedback queue a CFS. Semafor má čítač, mutex je binární zámek, barrier
-čeká na více vláken.
+\noindent\bod{1}\ \textbf{Definice.}
+Harvardská architektura odděluje procesor, kódovou paměť s instrukcemi, datovou paměť s
+proměnnými a vstupně-výstupní zařízení. CPU vykonává příkazy, z datové paměti čte a do
+ní zapisuje, zatímco kódová paměť je v základním modelu zapisována zvenku. Von Neumannova
+architektura má jednu operační paměť pro kód i data; program counter, také instruction
+pointer, ukazuje na instrukce a adresy proměnných leží v jiných oblastech. Výhoda je
+flexibilita a možnost zavést do RAM počáteční program z nevolatilní paměti, nevýhodou je
+i bezpečnostní riziko, pokud útočník uloží spustitelné byty do dat a zařídí jejich
+spuštění. Operační paměť RAM je volatilní.
+
+Data i programy se reprezentují binárně. Každému bytu paměti se přiřazuje adresa,
+typicky $n$-bitové unsigned číslo, a tím vzniká adresový prostor. Paměť 256 B má
+8bitový adresový prostor $0,\ldots,2^8-1$, 32bitový adresový prostor pokryje 4 GB a pro
+větší paměť je potřeba 64 bitů. Jednoduché číselné typy se ukládají ve dvojkové soustavě.
+Znaménková celá čísla se běžně ukládají ve dvojkovém doplňku: kladná jako unsigned,
+záporná jako negace absolutní hodnoty plus jedna, nejvyšší bit určuje znaménko a
+procesor potřebuje znaménkové porovnání. Floating point má tvar
+\[
+\text{value}=(-1)^{\text{sign}}\cdot\text{significand}\cdot
+2^{\text{exponent}-\text{bias}}.
+\]
+Endianita určuje pořadí bytů čísla v paměti. Text se ukládá pomocí kódování, základ je
+ASCII a běžně Unicode.
+
+Složené typy musí respektovat zarovnání. Moderní procesory často vyžadují, aby například
+4bajtový \texttt{int} ležel na adrese dělitelné čtyřmi. Celá struktura se zarovnává
+podle největšího relevantního typu nebo požadavku CPU, v mezerách vzniká padding a
+\texttt{sizeof} vrací velikost včetně mezer. Některé jazyky nebo překladače mohou
+přehazovat položky struktury, aby mezery omezily. Běžné konstrukce vyšších jazyků se na
+úrovni instrukcí skládají z čtení a zápisu paměti nebo registrů, aritmetických a
+logických operací, porovnání, podmíněných a nepodmíněných skoků, práce se zásobníkem a
+volání a návratu z funkce.
+
+Procesor má uživatelský neprivilegovaný režim pro aplikace a kernel mode, privilegovaný
+režim pro OS nebo jeho části. Uživatelský režim má omezený přístup ke zdrojům,
+systémovým registrům a instrukcím, kernel má plný přístup. Přechod do kernelu je možný
+jen jasně definovanými mechanismy, například systémovým voláním. Jádro OS inicializuje
+hardware, spravuje prostředky a spouští a obsluhuje programy. Architektury jádra:
+monolitické jádro má služby v kernelu a interní volání, typicky Linux; vrstvené jádro
+má vrstvy s rozhraními a každá používá jen vrstvu pod sebou; mikrokernel přesouvá služby
+do user space modulů komunikujících s jádrem, což zvyšuje rozšiřitelnost, spolehlivost a
+bezpečnost, ale může být pomalejší. Poznámky uvádějí Windows jako mikrokernelový směr s
+hardwarovou abstrakční vrstvou a službami běžícími i v kernel režimu.
+
+Program je pasivní soubor na disku. Loader ho načte do paměti a použije informaci v
+hlavičce, kde začíná vykonávání. Proces je instance programu vytvořená OS a datová
+struktura se zdroji, kódem, pamětí a dalšími prostředky. Vlákno je místo uvnitř procesu,
+kde se vykonávají instrukce; má vlastní program counter, zásobník a kontext procesoru,
+tedy uložené registry, když neběží. Fiber je lehčí jednotka bez celého kontextu a
+kooperativním plánováním. Neprivilegované procesy přistupují k prostředkům přes OS a
+mají virtuální paměť.
+
+Virtuální adresa je adresa, se kterou pracují instrukce procesu. Fyzická adresa je adresa
+v operační paměti. Překlad dělá MMU transparentně a velmi rychle. Dnešní hlavní
+mechanismus je stránkování, segmentace se už běžně nepoužívá. Virtuální adresový prostor
+je rozdělen na stránky, fyzický adresový prostor na stejně velké rámce. Virtuální adresa
+se dělí na číslo stránky a offset; tabulka stránek mapuje číslo stránky na číslo rámce a
+offset se přenese beze změny. Záznam tabulky obsahuje číslo rámce, atributy a příznak,
+zda stránka fyzicky existuje; při chybě vzniká page fault. Výhody virtuální paměti jsou
+větší adresový prostor a hlavně ochrana procesů, protože každý proces má vlastní
+mapování. Vlákna jednoho procesu adresový prostor sdílejí. Sdílená paměť mezi procesy je
+možná mapováním různých virtuálních adres na stejný fyzický rámec.
+
+\noindent\bod{2}\ \textbf{Mechanismy, algoritmy a postupy.}
+Řadič zařízení je hardwarová součástka komunikující se zařízením konkrétním protokolem.
+Ovladač zařízení je softwarová komponenta OS, která komunikuje s řadičem a poskytuje
+jednotné rozhraní OS a procesům. PIO, programem řízená obsluha, znamená, že CPU přes
+porty nebo registry řadiče čte stav a zapisuje příkazy a data; pro zadané porty se
+program skládá z testování stavového registru, čtení nebo zápisu datového registru a
+opakování podle protokolu zařízení.
+
+Zařízení lze obsluhovat pollingem, přerušením nebo DMA. Polling znamená, že CPU aktivně
+opakovaně čte stav zařízení, což je neefektivní. Přerušení znamená, že řadič vyšle
+signál, až je operace hotová; data však může stále kopírovat CPU. DMA přenáší data mezi
+zařízením a pamětí hardwarově bez průběžné účasti CPU a po dokončení vyvolá přerušení;
+scatter/gather dovoluje použít nesouvislé části paměti. Typy přerušení: externí
+hardwarové přes IRQ, které lze maskovat; hardwarová výjimka při problému s instrukcí;
+softwarové přerušení speciální instrukcí. Trap se volá po instrukci, například dělení
+nulou, zatímco fault vrací procesor do stavu před instrukcí, OS může problém opravit a
+instrukce se pustí znovu.
+
+Průběh přerušení: CPU zjistí zdroj přerušení a adresu handleru buď pevně, nebo přes
+tabulku, přeruší proud instrukcí, obvykle se přepne do privilegovaného režimu a vykonává
+handler v kernelu. Handler uloží stav CPU, provede obsluhu, obnoví stav a CPU pokračuje v
+původním proudu instrukcí. Systémové volání je řízený přechod z uživatelského kódu do
+jádra přes tenkou vrstvu nad OS; například výpis do konzole vyžaduje přepnutí do kernelu
+a zpět, proto se používá buffering.
+
+Překlad jednoúrovňovou stránkovací tabulkou: u 32bitové virtuální adresy s 12bitovým
+offsetem tvoří horních 20 bitů číslo stránky. Tím se indexuje stránkovací tabulka,
+záznam dá číslo rámce a atributy, a fyzická adresa vznikne připojením stejného offsetu k
+číslu rámce. Pokud záznam není platný, nastane page fault. Když dojde fyzická paměť,
+některá stránka se může odložit na disk; stránky mají stejnou velikost, což je praktičtější
+než staré segmenty různých velikostí.
+
+Sdílení procesoru řídí scheduler. Při přerušení běhu vlákna se provede context switch,
+uloží se registry včetně PC a obnoví se kontext jiného vlákna. Kooperativní multitasking
+vyžaduje dobrovolné předání řízení, často \texttt{yield}. Preemptivní multitasking dá
+vláknu time slice a po vypršení ho plánovač přeruší. Stavy vlákna: \texttt{created},
+\texttt{ready}, \texttt{running}, \texttt{blocked}, \texttt{terminated}, také zombie.
+Real-time scheduling pracuje s časem spuštění a deadlinem; hard deadline znamená, že po
+termínu nemá smysl pokračovat, soft deadline že pokračování ještě může mít hodnotu.
+Priorita může mít statickou složku při spuštění a dynamickou složku, která se ready
+vláknům časem zvyšuje a po spuštění se sníží na nulu.
+
+Plánovací algoritmy: FCFS je kooperativní FIFO fronta v pořadí příchodu. Shortest job
+first vyžaduje známý očekávaný čas běhu, existuje i longest job first. Round robin je
+preemptivní varianta podobná FCFS, ale po vyčerpání time slice se vlákno zařadí na konec
+fronty. Multilevel feedback queue má několik front s různou délkou time slice; horní
+fronty mají kratší kvantum, dlouho běžící vlákno klesá níže a vlákno, které se brzy
+zablokuje, může stoupat výše. Completely fair scheduler používá červeno-černý strom.
+
+Soubor je jednotka organizace dat a kolekce souvisejících informací na perzistentním
+úložišti; jádro OS nerozumí obecným formátům souborů. Interně je soubor unikátní číslo,
+pro lidi má jméno a cestu. Cesta je analogická virtuální adrese: musí se přeložit na
+konkrétní objekt souborového systému. Přípona nebo počáteční tečka mohou mít konvenční
+význam, ale nemusí odpovídat reálnému formátu. File handle je číslo specifické pro proces
+odkazující na soubor; \texttt{stdin}, \texttt{stdout}, \texttt{stderr} mají tradičně
+handles 0, 1, 2. Operace zahrnují vytvoření, smazání, změnu atributů, vyčištění cache,
+čtení a zápis.
+
+Buffering cachuje sektory disku a existuje ve více úrovních, například systémové a
+runtime cache. Sekvenční přístup se liší od náhodného. Alternativy jsou memory mapping a
+asynchronní přístup k souborům. Adresář je kolekce souborů, obvykle reprezentovaná také
+jako soubor; zrychluje hledání, navigaci a logické seskupení, může držet atributy souborů
+a má operace vytvořit, smazat, přejmenovat, najít název a vypsat obsah. Obvykle existuje
+kořenový adresář. Úložiště může být tradiční sekundární nebo externí, file system v RAM
+pro dočasné soubory, síťové úložiště nebo virtuální soubory jako \texttt{/dev/null}.
+Hard link znamená více adresářových záznamů na stejný fyzický soubor a OS musí počítat
+odkazy, aby smazání jednoho linku nesmazalo data předčasně. Symlink je speciální soubor
+obsahující cestu k jinému souboru. File system řeší překlad jmen, správu datových bloků,
+metadata souborů a adresáře; blok je několik sektorů. Může být lokální, například FAT
+nebo NTFS, nebo síťový, například NFS nebo CIFS/SMB.
+
+Race condition vzniká, když více vláken přistupuje ke sdílenému prostředku a výsledek
+závisí na plánování OS nebo procesoru. Řešení je atomizovat read-modify-write operaci
+nebo vymezit kritickou sekci a použít synchronizační primitivum. Kritická sekce je
+nejmenší kus kódu přistupující ke sdílenému prostředku, který nesmí používat více
+procesů nebo vláken současně. Vzájemné vyloučení, mutex, zajišťuje, že do kritické sekce
+nevstoupí více jednotek najednou; zámek se obvykle chápe pro vlákna, mutex pro procesy.
+Některé mutexy dovolují rekurzivní zamčení týmž procesem a vyžadují stejný počet
+odemčení.
+
+Synchronizační primitiva mohou čekat aktivně nebo pasivně. Aktivní čekání stále vykonává
+instrukce a testuje, zda lze vstoupit, pasivní čekání vlákno zablokuje. Hardwarová
+podpora zahrnuje atomické instrukce test-and-set a compare-and-swap. Spin-lock je
+aktivní čekání pomocí TSL nebo CAS a hodí se pro velmi krátké čekání. Semafor má čítač a
+frontu čekajících vláken a atomické operace UP a DOWN. Mutex je semafor s počítadlem
+jedna nebo příbuzné primitivum pro jediného držitele s operacemi LOCK a UNLOCK. Barrier
+zastaví vlákna, dokud se jich u stejné bariéry nesejde požadovaný počet.
+
+\noindent\bod{3}\ \textbf{Detaily a zkouškové příklady.}
+Při převodu instrukcí na konstrukty vyššího jazyka hledej vzory: přiřazení je výpočet
+hodnoty a uložení do adresy, podmínka je porovnání a podmíněný skok přes větev, cyklus je
+test se skokem zpět, volání funkce uloží návratovou adresu a argumenty podle konvence a
+návrat obnoví řízení. Opačný směr je stejný: z konstrukce vyššího jazyka popiš registry,
+adresy, skoky a zásobník.
+
+Virtuální adresové prostory chrání procesy navzájem, ale nevlákna jednoho procesu mezi
+sebou, protože vlákna sdílejí stejný adresový prostor. To je důvod, proč sdílená data
+mezi vlákny vyžadují synchronizaci. Sdílení mezi procesy je záměrná výjimka nastavená OS
+mapováním stránek.
+
+U PIO a přerušení je rozdíl v tom, kdo čeká. Při čistém pollingu čeká CPU opakovaným
+testem portu. Při přerušení může CPU dělat jinou práci a zařízení si vyžádá obsluhu.
+Při DMA CPU nastaví přenos, data přesouvá řadič a CPU řeší až dokončení nebo chybu.
+
+U souborů se nesmí směšovat jméno a identita. Jméno je cesta v adresářích, handle je
+procesový odkaz na otevřený soubor a hard link znamená, že více jmen může ukazovat na
+stejná data. Souborový systém poskytuje abstrakci bloků, jmen, adresářů, metadat a
+rozhraní pro aplikace.
 \end{odpoved}
 
 \begin{recall}

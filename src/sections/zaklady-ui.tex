@@ -53,14 +53,9 @@ Prohledávání je vhodné, když stav umíme brát jako uzel grafu a akci jako 
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} Prohledávací úloha je dána počátečním stavem, akcemi nebo přechodovým modelem, testem cíle a cenou cesty.
-\emph{Přípustná heuristika} splňuje $0\le h(n)\le h^*(n)$, tedy nikdy nepřeceňuje skutečnou optimální cenu do cíle.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Konzistentní heuristika} splňuje $h(n)\le c(n,a,n')+h(n')$ pro každý přechod a $h(G)=0$ pro cíl.
-Tree search rozbaluje cesty ve stromu možností, graph search si pamatuje uzavřené stavy. BFS je optimální pro jednotkové ceny, UCS pro nezáporné ceny, A$^*$ pro přípustnou heuristiku ve stromu a konzistentní heuristiku v grafu.\par
-\noindent\bod{3}\ \textbf{Bonus:} složitosti BFS $O(b^{d+1})$ čas i paměť, DFS čas $O(b^m)$ a paměť $O(bm)$ nebo $O(m)$ při backtrackingu. Dominance heuristiky: větší přípustná heuristika typicky expanduje méně uzlů.
-Agent může být reflexní, modelový nebo cílový; atomické stavy se hodí pro prohledávání,
-faktorizované pro CSP a plánování, strukturované pro predikátovou logiku. Greedy best-first
-search používá jen $h(n)$ a není obecně optimální ani úplný.
+\noindent\bod{1}\ \textbf{Definice:} Agent vnímá prostředí senzory a jedná aktuátory. Racionální agent volí akci maximalizující výkonovou míru. Simple reflex agent mapuje pozorování přímo na akci; model-based reflex agent z minulého stavu, minulé akce a nového pozorování udržuje stav a z něj volí akci; goal-based agent vybírá akci podle stavu a cíle. Reprezentace stavu může být atomická, kde je stav černá skříňka a hodí se pro prohledávání, faktorizovaná, kde je stav vektor hodnot a hodí se pro CSP, výrokovou logiku a plánování, nebo strukturovaná, kde svět tvoří objekty a vztahy a hodí se pro logiku prvního řádu. Problem-solving agent je goal-based agent s atomickými stavy: cíl je množina cílových stavů, akce jsou přechody a řešením je posloupnost akcí z počátečního stavu do cíle. Předpokládá se plně pozorovatelné, diskrétní, statické a deterministické prostředí. Dobře definovaný problém obsahuje počáteční stav, přechodový model $(state,action)\mapsto state$, test cíle a cenu cesty nebo kroků. Abstrakce prostředí je validní, pokud abstraktní řešení lze expandovat na reálné řešení, a užitečná, pokud je vykonání abstraktních akcí jednodušší než řešení původního problému.\par
+\noindent\bod{2}\ \textbf{Algoritmy a tvrzení:} Tree search drží frontier cest ve stromu možností. Graph search navíc ukládá uzavřené nebo už viděné stavy, obvykle v hash tabulce, protože stavový prostor může být nekonečný; tím předchází cyklům. Tree search lze spustit i na grafu s cykly, ale může se chovat patologicky; i na DAGu může opakovat stav, pokud do něj vedou dvě různé orientované cesty. BFS používá frontu a expanduje nejmělčí neexpandovaný uzel; je úplné pro konečně větvící grafy a optimální, pokud cena cesty je neklesající funkcí hloubky, typicky pro jednotkové ceny. DFS používá zásobník nebo rekurzi a expanduje nejhlubší neexpandovaný uzel; graph-search verze je úplná na konečném grafu, tree-search verze na grafu s cykly úplná není, obecně není optimální. Uniform-cost search je Dijkstrův algoritmus nad stavovým prostorem: používá prioritní frontu podle $g(n)$, ceny nejlevnější známé cesty ze startu do $n$, a je optimální pro nezáporné ceny s vhodnou dolní mezí kladného kroku. Best-first search vybírá uzel podle ohodnocení $f(n)$. Greedy best-first má $f(n)=h(n)$ a není obecně optimální ani úplný. A$^*$ má $f(n)=g(n)+h(n)$; při přípustné heuristice je optimální ve stromovém prohledávání, při konzistentní heuristice je optimální v grafovém prohledávání. Přípustnost znamená $0\le h(n)\le h^*(n)$, tedy heuristika nepřeceňuje optimální cenu do cíle. Konzistence znamená $h(n)\le c(n,a,n')+h(n')$ pro každý přechod a typicky $h(G)=0$ pro cíl. Konzistence implikuje přípustnost, opačně to neplatí. Pro konzistentní heuristiku hodnoty $f(n)$ neklesají podél libovolné cesty.\par
+\noindent\bod{3}\ \textbf{Detaily a příklady:} U Lloydovy patnáctky nejsou všechny permutace dosažitelné, protože se zachovává parita permutace. U BFS je časová i prostorová složitost $O(b^{d+1})$, kde $b$ je branching factor a $d$ hloubka nejbližšího cíle; hlavní potíž je paměť. U DFS je čas $O(b^m)$ a paměť $O(bm)$, kde $m$ je maximální hloubka; při backtrackingu, kdy se generuje vždy jen jeden následník místo všech najednou, stačí $O(m)$ paměti, ale ne každý stav umí generovat následníky po jednom. A$^*$ obvykle narazí na paměť dříve než na čas. Pokud heuristika $h_2$ dává pro všechny uzly aspoň tak velké hodnoty jako $h_1$ a je přípustná, říkáme, že $h_2$ dominuje $h_1$; pokud není výrazně dražší na výpočet, je obvykle lepší, protože vede k menšímu počtu expanzí. Důkaz optimality A$^*$ ve stromu s přípustnou heuristikou stojí na tom, že cílový uzel s neoptimální cestou nemůže být vybrán dříve než nějaký uzel na optimální cestě. V grafu je potřeba konzistence, jinak by se mohl uzavřít stav s později zlepšitelnou cenou.
 \end{odpoved}
 
 \begin{recall}
@@ -115,14 +110,9 @@ CSP má proměnné $X_i$, domény $D_i$ a podmínky jako relace na proměnných.
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} \emph{CSP} je trojice proměnných $X_i$, domén $D_i$ a podmínek jako relací nad proměnnými; výstupem je úplné přiřazení hodnot z domén splňující všechny podmínky.
-AC-3 škrtá hodnoty bez podpory u sousedních proměnných.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} Hrana $(X_i,X_j)$ je hranově konzistentní, když pro každé $x\in D_i$ existuje $y\in D_j$ splňující binární podmínku mezi $X_i$ a $X_j$.
-MAC je backtracking plus opakované spuštění AC po každém přiřazení. Přidej mini příklad $A<B$.\par
-\noindent\bod{3}\ \textbf{Bonus:} AC-3 pro binární podmínky má typicky složitost $O(cd^3)$, kde $c$ je počet podmínek a $d$ velikost domény. Hranová konzistence je jen lokální, proto sama negarantuje řešení.
-Forward checking po přiřazení čistí jen domény dosud nepřiřazených sousedů, AC navíc
-udržuje kompatibilitu mezi nepřiřazenými proměnnými. Obecnou $n$-ární podmínku lze převést
-na binární za cenu pomocných proměnných.
+\noindent\bod{1}\ \textbf{Definice:} Problém splňování omezujících podmínek, CSP, tvoří konečná množina proměnných, pro každou proměnnou konečná doména možných hodnot a konečná množina podmínek. Podmínka je relace na podmnožině proměnných, tedy podmnožina kartézského součinu jejich domén. Arita podmínky je počet proměnných, které omezuje. Přípustné řešení je úplné konzistentní přiřazení hodnot proměnným; úplné znamená, že každá proměnná má hodnotu, konzistentní znamená, že všechny podmínky jsou splněny. CSP lze řešit stromovým backtrackingem, kde se proměnné přiřazují v určitém pořadí; efektivitu zvyšuje vhodná volba pořadí a předběžné čištění hodnot, které už nemohou být součástí žádného řešení.\par
+\noindent\bod{2}\ \textbf{AC-3 a MAC:} Hranová konzistence se definuje pro binární podmínky; obecnou $n$-ární podmínku lze převést na soubor binárních podmínek, případně s pomocnými proměnnými. V síti podmínek jsou vrcholy proměnné a binární podmínka mezi $V_i,V_j$ odpovídá dvěma orientovaným hranám; více podmínek mezi stejnou dvojicí lze sloučit do jedné. Orientovaná hrana $(V_i,V_j)$ je hranově konzistentní právě tehdy, když pro každé $x\in D_i$ existuje $y\in D_j$ takové, že přiřazení $V_i=x,V_j=y$ splní všechny binární podmínky mezi $V_i,V_j$. Může platit konzistence $(V_i,V_j)$, ale ne $(V_j,V_i)$. CSP je hranově konzistentní, když je hranově konzistentní každá orientovaná hrana. AC-3 začne frontou všech orientovaných hran, opakovaně vyjme hranu $(V_i,V_j)$ a odstraní z $D_i$ hodnoty bez podpory v $D_j$. Pokud se $D_i$ změnila, vrátí do fronty všechny hrany směřující do $V_i$ kromě opačné hrany k právě zpracované. Prázdná doména znamená spor. MAC, maintaining arc consistency, kombinuje backtracking s AC: nejprve problém zkonzistentní, po každém přiřazení obnoví hranovou konzistenci. Této technice se říká také look ahead nebo constraint propagation.\par
+\noindent\bod{3}\ \textbf{Detaily a příklady:} Příklad čištění: při $a\in\{3,4,5,6,7\}$, $b\in\{1,2,3,4,5\}$ a podmínce $a<b$ nemají hodnoty $a=5,6,7$ podporu a hodnoty $b=1,2,3$ také ne, takže zůstanou $a\in\{3,4\}$ a $b\in\{4,5\}$. AC-3 má složitost $O(cd^3)$, kde $c$ je počet podmínek a $d$ velikost domény: kontrola jedné hrany stojí $O(d^2)$ a každá podmínka se může ve frontě objevit nejvýše $d$-krát, protože z domény lze odebrat nejvýše $d$ hodnot. Optimální algoritmy dosahují $O(cd^2)$. Hranová konzistence je lokální konzistence a negarantuje globální konzistenci ani existenci řešení. Forward checking je jednodušší a rychlejší než AC: po aktuálním přiřazení čistí domény dosud nepřiřazených proměnných. AC navíc udržuje vzájemnou kompatibilitu domén nepřiřazených proměnných. Kontroly FC a AC jsou polynomiální, zatímco backtrackingový strom se větví exponenciálně.
 \end{odpoved}
 
 \begin{recall}
@@ -165,11 +155,9 @@ CNF je konjunkce klauzulí, kde klauzule je disjunkce literálů. DNF je disjunk
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} vysvětli CNF, DNF, klauzuli, literál, Hornovu klauzuli a že důsledek lze testovat přes $KB\land\neg\alpha$.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} popiš kroky DPLL: jednotková propagace, čistý literál, koncové stavy, větvení. Uveď rozdíl mezi dopředným a zpětným řetězením.\par
-\noindent\bod{3}\ \textbf{Bonus:} napiš rezoluční pravidlo a vysvětli rezoluční zamítnutí. DPLL je v nejhorším exponenciální, ale jednotková propagace drasticky zmenšuje praxi.
-Dopředné řetězení lze implementovat počítadly nesplněných předpokladů pravidel; zpětné
-řetězení může být výrazně levnější, když dotaz míří jen na malou část báze znalostí.
+\noindent\bod{1}\ \textbf{Definice:} Výroková logika se používá k odvozování znalostí ze znalostní báze $KB$. Literál je proměnná nebo její negace. Klauzule je disjunkce literálů. CNF je konjunkce klauzulí, DNF je disjunkce konjunkcí literálů. Dotaz $\alpha$ se testuje jako sémantický důsledek $KB\models\alpha$; ekvivalentně je $KB\land\neg\alpha$ nesplnitelná. Hornova klauzule je disjunkce literálů, z nichž nejvýše jeden je pozitivní. Klauzule $\neg p\lor\neg q\lor\neg r\lor s$ odpovídá implikaci $p\land q\land r\Rightarrow s$. Hornovy báze umožňují efektivní dopředné a zpětné řetězení.\par
+\noindent\bod{2}\ \textbf{Algoritmy:} Literál $\ell$ má čistý výskyt ve formuli $\varphi$, pokud se $\ell$ ve $\varphi$ vyskytuje a opačný literál $\bar\ell$ se nevyskytuje. V DPLL se pro CNF opakuje jednotková propagace: pokud existuje jednotková klauzule $\ell$, nastaví se $\ell=1$, odstraní se všechny klauzule obsahující $\ell$ a z ostatních klauzulí se odstraní $\bar\ell$. Potom se čisté literály nastaví na $1$ a odstraní se klauzule, které obsahují daný čistý literál. Pokud nezůstane žádná klauzule, formule je splnitelná; pokud vznikne prázdná klauzule, formule je nesplnitelná. Jinak se vybere dosud neohodnocená proměnná $p$ a rekurzivně se zkouší větve $\varphi\land p$ a $\varphi\land\neg p$. Dopředné řetězení je data-driven: z faktů postupně spouští pravidla, například z $p$ zjednoduší $p\land q\land r\Rightarrow s$ na $q\land r\Rightarrow s$, a jakmile pravidlu nezbývá žádný předpoklad, přidá závěr $s$. Lze ho implementovat počítadly nesplněných předpokladů. Zpětné řetězení je goal-driven: pro cíl hledá pravidla, kde je cíl na pravé straně, a jejich předpoklady se stanou podcíli; končí na známých faktech. Používá se v Prologu.\par
+\noindent\bod{3}\ \textbf{Detaily a rezoluce:} Čistý literál neovlivní splnitelnost, ale může zmenšit množinu modelů, které algoritmus najde; v praxi se pravidlo čistých literálů nepoužívá tak často jako jednotková propagace. Jednotková propagace je hledání klauzulí o jedné proměnné a je analogická hranové konzistenci; větvení hodnot proměnných je tree search. DPLL má v nejhorším exponenciální čas. Forward chaining je speciální použití rezoluce, kdy rezolvujeme známé fakty s libovolnou klauzulí; může procházet mnoho klauzulí nesouvisejících s dotazem. Backward chaining rezolvuje to, co chceme zjistit, s klauzulemi a může být výrazně levnější, pokud dotaz zasahuje malou část báze. Obecná rezoluce pro důkaz dotazu převede $KB\land\neg\alpha$ do CNF na množinu klauzulí $S$. Z klauzulí $\varphi\lor p$ a $\psi\lor\neg p$ odvodí rezolventu $\varphi\lor\psi$. Zkouší se rezolvovat dvojice klauzulí; pokud vznikne prázdná klauzule, existuje rezoluční zamítnutí a platí $KB\models\alpha$. Pokud už nelze přidat žádnou novou rezolventu a prázdná klauzule nevznikla, $KB\models\alpha$ neplatí.
 \end{odpoved}
 
 \begin{recall}
@@ -233,14 +221,24 @@ kde $pa_i$ jsou hodnoty rodičů proměnné $X_i$.
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} \emph{Bayesovská síť} je DAG náhodných proměnných s tabulkami $P(X_i\mid Parents(X_i))$; společnou distribuci faktorizuje jako $\prod_i P(x_i\mid pa_i)$.
-Podmíněná nezávislost znamená $P(X\mid Y,Z)=P(X\mid Z)$.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} Marginál získáš vysčítáním skrytých proměnných, podmíněnou pravděpodobnost normalizací $P(X\mid e)=\alpha P(X,e)$.
-Popiš enumeraci, eliminaci proměnných a rozdíl mezi zamítáním a vážením věrohodností.\par
-\noindent\bod{3}\ \textbf{Bonus:} vysvětli, že konstrukce sítě závisí na pořadí proměnných a nejlepší je obvykle směr od příčin k důsledkům. Eliminace závisí na pořadí eliminovaných proměnných.
-Chain rule rozkládá sdruženou distribuci na součin podmíněných pravděpodobností.
-Naivní Bayes předpokládá podmíněnou nezávislost důsledků při známé příčině.
-Likelihood weighting fixuje evidenci a váží vzorky pravděpodobností evidence.
+\noindent\bod{1}\ \textbf{Definice:} Pravděpodobnostní uvažování umožňuje agentovi zacházet s nejistotou. Zdrojem nejistoty je částečná pozorovatelnost, kdy nelze snadno zjistit aktuální stav, a nedeterminismus, kdy není jistý výsledek akce. Agent si může udržovat belief state, tedy pravděpodobnostní distribuci přes možné stavy světa. Úplná sdružená distribuce obsahuje pravděpodobnosti všech kombinací hodnot proměnných a lze z ní získat libovolný dotaz výčtem. Marginál se získá vysčítáním skrytých hodnot, například $P(Y)=\sum_z P(Y\mid z)P(z)$ nebo obecně $P(X)=\sum_y P(X,y)$. Podmíněná pravděpodobnost se získá normalizací $P(Y\mid e)=P(Y\land e)/P(e)=\alpha P(Y\land e)$, kde $\alpha$ je normalizační konstanta. Bayesovo pravidlo je
+\[
+P(Y\mid X)=\frac{P(X\mid Y)P(Y)}{P(X)}=\alpha P(X\mid Y)P(Y).
+\]
+Umožňuje přejít z příčinného směru $P(\mathrm{effect}\mid\mathrm{cause})$, který bývá známý, na diagnostický směr $P(\mathrm{cause}\mid\mathrm{effect})$, který často chceme zjistit. Chain rule říká $P(x_1,\dots,x_n)=\prod_i P(x_i\mid x_{i-1},\dots,x_1)$ a plyne z product rule. Naivní bayesovský model předpokládá podmíněnou nezávislost důsledků při známé příčině:
+\[
+P(C,E_1,\dots,E_n)=P(C)\prod_i P(E_i\mid C).
+\]\par
+\noindent\bod{2}\ \textbf{Bayesovské sítě a exaktní inference:} Bayesovská síť je orientovaný acyklický graf, jehož vrcholy jsou náhodné proměnné, hrany vyjadřují přímé závislosti a u každého vrcholu je CPD tabulka $P(X_i\mid Parents(X_i))$. Pro každou kombinaci hodnot rodičů dává tabulka pravděpodobnosti hodnot dané proměnné; u binární proměnné stačí jeden sloupec, druhý se dopočte doplňkem do jedné. Síť reprezentuje úplnou sdruženou distribuci faktorizací
+\[
+P(x_1,\dots,x_n)=\prod_i P(x_i\mid pa_i).
+\]
+Konstrukce sítě začíná pořadím proměnných, potom se postupně přidávají hrany tak, aby rodiče nesli všechny nutné závislosti. Prakticky je lepší řadit proměnné od příčin k důsledkům, protože síť i CPD tabulky bývají menší a vyplňují se snáze. Při špatném pořadí, například MaryCalls, JohnCalls, Alarm, Burglary, Earthquake, vznikají hrany mezi důsledky a pozdějšími příčinami: MaryCalls ovlivní JohnCalls, obě volání vedou do Alarmu, Alarm do Burglary a Earthquake a Burglary do Earthquake, protože při známém alarmu a neexistenci vloupání roste pravděpodobnost zemětřesení. Exaktní inference počítá dotazy typu $P(X\mid e)=\alpha P(X,e)=\alpha\sum_y P(X,e,y)$, kde $e$ je evidence a $y$ skryté proměnné. Enumerace přímo sčítá přes skryté proměnné a hodnoty $P(X,e,y)$ určuje z CPD tabulek. Eliminace proměnných používá faktory, tedy tabulky odpovídající CPD nebo mezivýpočtům; faktory se násobí a proměnná se eliminuje vysčítáním přes její hodnoty. Například faktor $P(A,B,C)$ lze rozdělit na část pro $A$ a pro $\neg A$ a odpovídající řádky sečíst, čímž vznikne faktor nad $B,C$.\par
+\noindent\bod{3}\ \textbf{Aproximace a detaily:} Úplná sdružená distribuce je často příliš velká, ale podmíněné nezávislosti dovolují kompaktní reprezentaci. Při inferenci se některé větve výpočtu opakují, proto eliminace proměnných využívá dynamické programování. Aproximační inference se používá, když je síť velká nebo hustě propojená a přesný výpočet je drahý. Monte Carlo metody generují mnoho vzorků a odhadují pravděpodobnosti statisticky. Vzorky v Bayesovské síti se generují topologicky podle CPD tabulek. Rejection sampling pro dotaz $P(X\mid e)$ zahodí vzorky, v nichž evidence $e$ neplatí, a odhaduje
+\[
+P(X\mid e)\approx \frac{N(X,e)}{N(e)},
+\]
+kde $N(X,e)$ je počet vzorků splňujících $X$ i $e$ a $N(e)$ počet vzorků splňujících evidenci. Riziko je, že při málo pravděpodobné evidenci zahodíme téměř vše. Likelihood weighting evidenci zafixuje, generuje jen zbylé proměnné a vzorkům přidělí váhu podle pravděpodobnosti evidence, takže je nezahazuje; problém nastává, když jsou váhy velmi malé.
 \end{odpoved}
 
 \begin{recall}
@@ -301,14 +299,21 @@ Situační kalkulus popisuje situace vzniklé posloupností akcí, predikáty o 
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} \emph{HMM} je model se skrytými stavy $X_t$, pozorováními $E_t$, počáteční distribucí, přechody $P(X_t\mid X_{t-1})$ a senzorem $P(E_t\mid X_t)$.
-Situační kalkulus popisuje situace vzniklé posloupností akcí a funkci $Result(s,a)$.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} Markovův předpoklad: $X_t$ závisí na minulosti jen přes $X_{t-1}$; pozorování závisí jen na aktuálním stavu.
-Filtrace počítá $P(X_t\mid e_{1:t})$, predikce $P(X_{t+k}\mid e_{1:t})$, vyhlazování $P(X_k\mid e_{1:t})$ pro $k<t$ a Viterbi nejpravděpodobnější průchod.\par
-\noindent\bod{3}\ \textbf{Bonus:} uveď, že HMM je speciální případ dynamické Bayesovské sítě; DBN dovolí faktorizovat stav na více proměnných a tím zmenšit tabulky.
-Markovův předpoklad říká, že další stav závisí jen na předchozím; stacionarita znamená
-stejné přechodové tabulky v čase. Filtrace používá forward algoritmus, vyhlazování
-forward-backward a nejpravděpodobnější průchod Viterbiho algoritmus.
+\noindent\bod{1}\ \textbf{Definice:} Problém rámce vzniká při popisu měnícího se světa logikou: kdybychom pro každý časový krok používali časově anotované výrokové proměnné, museli bychom přidat mnoho axiomů říkajících, že se většina hodnot mezi kroky nemění sama od sebe. Situační kalkulus používá logiku prvního řádu. Svět se vyvíjí přes situace, počáteční situace je $s_0$ a situace po aplikaci akce $a$ v situaci $s$ je $\mathrm{Results}(s,a)$. Stavy jsou popsány relacemi mezi objekty; relace měnící se v čase dostávají argument situace, například $\mathrm{at}(\mathrm{robot},\mathrm{location},s)$, zatímco stálé relace, například $\mathrm{connected}(l,l')$, argument situace nepotřebují. Předpoklady akcí popisují possibility axiomy tvaru $\varphi(s)\Rightarrow \mathrm{Poss}(a,s)$, například $\mathrm{at}(a,l,s)\land\mathrm{connected}(l,l')\Rightarrow\mathrm{Poss}(\mathrm{go}(a,l,l'),s)$. Vlastnosti dalšího stavu popisují successor-state axiomy, které říkají, kdy fluent platí po akci: buď jej akce způsobila, nebo platil dříve a akce jej nezrušila. Plánování v situačním kalkulu se ptá, zda existuje situace, kde platí cílová podmínka.\par
+\noindent\bod{2}\ \textbf{Markovské modely a inference:} V časovém pravděpodobnostním modelu je stav světa popsán náhodnými proměnnými. Skryté proměnné $X_t$ popisují reálný stav, pozorovatelné proměnné $e_t$ popisují měření a čas $t$ je diskrétní. Zápis $X_{a:b}$ označuje posloupnost proměnných od času $a$ do $b$. Skrytý Markovův model je dvojice procesů $(X_n,e_n)$, kde $X_n$ je nepozorovatelný markovský proces. Přechodový model obecně popisuje $P(X_t\mid X_{0:t-1})$, ale Markovův předpoklad ho zjednoduší na závislost jen na $X_{t-1}$; stacionarita říká, že tabulky $P(X_t\mid X_{t-1})$ jsou stejné pro všechna $t$. Senzorový model obecně popisuje $P(e_t\mid X_{0:t},e_{1:t-1})$, ale sensor Markov assumption říká, že pozorování závisí jen na aktuálním stavu, tedy $P(e_t\mid X_t)$. Filtrace počítá aktuální stav z dosavadních pozorování:
+\[
+P(X_{t+1}\mid e_{1:t+1})=\alpha P(e_{t+1}\mid X_{t+1})\sum_{x_t}P(X_{t+1}\mid x_t)P(x_t\mid e_{1:t}).
+\]
+Je rekurzivní a používá forward algoritmus. Predikce počítá budoucí stav bez dalších měření:
+\[
+P(X_{t+k+1}\mid e_{1:t})=\sum_{x_{t+k}}P(X_{t+k+1}\mid x_{t+k})P(x_{t+k}\mid e_{1:t}).
+\]
+Po mixing time může distribuce predikcí konvergovat ke stacionárnímu rozdělení procesu. Vyhlazování počítá minulý stav s využitím pozdější evidence:
+\[
+P(X_k\mid e_{1:t})=\alpha P(X_k\mid e_{1:k})P(e_{k+1:t}\mid X_k),
+\]
+kde první člen je dopředná filtrace a druhý zpětný vliv budoucích pozorování; používá se forward-backward algoritmus. Nejpravděpodobnější vysvětlení hledá posloupnost $X_{1:t}$ maximalizující pravděpodobnost při evidenci, rekurzivně si pamatuje nejlepší cesty do stavů a používá Viterbiho algoritmus.\par
+\noindent\bod{3}\ \textbf{HMM a DBN:} Pokud je stav procesu popsán jedinou diskrétní proměnnou $X_t$ a pozorování jedinou proměnnou $E_t$, lze základní algoritmy pro HMM implementovat maticově. Dynamická Bayesovská síť reprezentuje časový pravděpodobnostní model s více stavovými proměnnými; zachycuje vztahy mezi minulou a současnou vrstvou a každá stavová proměnná má rodiče ve stejné nebo předchozí vrstvě podle Markovova předpokladu. HMM je speciální případ DBN. Naopak DBN lze zakódovat jako HMM tak, že jedna skrytá proměnná HMM nese celou n-tici hodnot stavových proměnných DBN. V HMM je tedy celý stav světa komprimován do jedné proměnné, zatímco DBN jej faktorizuje. Vztah DBN k HMM je podobný jako vztah běžné Bayesovské sítě k úplné sdružené distribuci: DBN je úspornější reprezentace.
 \end{odpoved}
 
 \begin{recall}
@@ -351,12 +356,9 @@ Mini příklad: operátor \emph{Přesuň(x,A,B)} má předpoklady $Na(x,A)$ a $V
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} plánovací problém = počáteční stav, cílová podmínka, operátory. Operátor = předpoklady a efekty. Plán = posloupnost akcí.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} vysvětli dopředné a zpětné plánování na mini příkladu s přesunem objektu. Řekni, proč faktorizovaný stav umožní pracovat s relevancí akcí.\par
-\noindent\bod{3}\ \textbf{Bonus:} uveď rozdíl proti obyčejnému prohledávání: stav není atomický, akce mají logickou strukturu a plánovač může využívat předpoklady a efekty místo slepé expanze.
-Plánování používá předpoklad uzavřeného světa; fluenty se akcemi mění, rigidní atomy ne.
-Akce je plně instanciovaný operátor a zpětné plánování používá jen akce relevantní pro cíl.
-Situační kalkulus řeší změny přes predikát proveditelnosti $Poss(a,s)$ a successor-state axiomy.
+\noindent\bod{1}\ \textbf{Definice:} V klasickém plánování je stav světa reprezentován množinou atomů, které platí; atomy, které ve stavu uvedeny nejsou, se považují za nepravdivé podle předpokladu uzavřeného světa. Pravdivost některých atomů se mění akcemi, těm se říká fluenty; jiné atomy jsou stálé, těm se říká rigid atoms. Schéma akce neboli operátor popisuje možnost agenta bez dosazení konkrétních objektů. Operátor je trojice název, předpoklady a důsledky. Název obsahuje také parametry operátoru, tedy proměnné používané v předpokladech a důsledcích. Předpoklady musí platit ve stavu, aby operátor šel použít. Důsledky jsou literály, typicky fluenty, které budou platit nebo přestanou platit po provedení operátoru. Akce je plně instanciovaný operátor, kde jsou za proměnné dosazeny konstanty. Doménový model je popis operátorů. Plánovací problém je trojice $(O,s_0,g)$, kde $O$ je doménový model, $s_0$ počáteční stav a $g$ cílová podmínka. Plán je posloupnost akcí, která z $s_0$ dovede do stavu splňujícího $g$.\par
+\noindent\bod{2}\ \textbf{Dopředné a zpětné plánování:} Plánování se realizuje prohledáváním stavového prostoru, který bývá velmi velký. Dopředné neboli progression planning postupuje od výchozího stavu k cíli: v každém stavu zkouší použitelné akce, aplikuje jejich efekty a hledá stav splňující cíl. Je přímočaré, ale prohledávací algoritmus potřebuje dobrou heuristiku, protože může generovat mnoho akcí irelevantních pro cíl. Zpětné neboli regression planning postupuje od cílové podmínky zpět: vybírá akce relevantní pro aktuální cíl a nahrazuje cíl jejich předpoklady doplněnými o zbylé požadavky cíle. Akce je relevantní pro cíl $g$ právě tehdy, když k cíli přispívá a její efekty nejsou s $g$ v konfliktu. Zpětné plánování má často menší větvení než dopředné, protože uvažuje jen relevantní akce, ale pracuje s množinami stavů nebo cílových podmínek místo individuálních stavů, a proto se pro něj hůře hledají dobré heuristiky.\par
+\noindent\bod{3}\ \textbf{Detaily a příklad:} Pro operátor \emph{Přesuň(x,A,B)} mohou být předpoklady $Na(x,A)$ a $Volne(B)$, efekty přidat $Na(x,B)$ a smazat $Na(x,A)$. Výsledek aplikace akce na stav vznikne tak, že se odstraní negativní efekty a přidají pozitivní efekty. Regresní množina pro cíl a akci říká, jaké podmínky musely platit před akcí, aby po ní cíl platil; zahrnuje předpoklady akce a části cíle, které akce sama nezajišťuje. Proti obyčejnému prohledávání není stav atomická černá skříňka, ale množina faktů, a akce mají logickou strukturu. Díky tomu lze využívat předpoklady, efekty, relevanci a regresi místo slepé expanze všech následníků.
 \end{odpoved}
 
 \begin{recall}
@@ -412,15 +414,17 @@ U(s)=\max_a \sum_{s'} P(s'\mid s,a)\bigl(R(s,a,s')+\gamma U(s')\bigr).
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} \emph{MDP} je pětice stavů $S$, akcí $A$, přechodů $P(s'\mid s,a)$, odměn $R(s,a,s')$ a diskontu $\gamma$; strategie $\pi(s)$ vybírá akci ve stavu.
-Cíl je maximalizovat očekávaný diskontovaný užitek.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} Bellmanova rovnice optimality:
-$U(s)=\max_a\sum_{s'}P(s'\mid s,a)(R(s,a,s')+\gamma U(s'))$.
-Iterace hodnot opakovaně aktualizuje $U$, iterace strategií střídá vyhodnocení a zlepšení strategie.\par
-\noindent\bod{3}\ \textbf{Bonus:} POMDP = MDP s částečnou pozorovatelností, rozhoduje se nad belief stavem. Iterace strategií bývá dražší v kroku vyhodnocení, ale často potřebuje méně iterací.
-Diskontovaný užitek trajektorie je konečný pro $\gamma<1$ a omezené odměny. Optimální
-strategie závisí na aktuálním stavu, ne na počátečním. Policy evaluation řeší Bellmanovy
-rovnice bez maxima, policy improvement vybírá lepší akce.
+\noindent\bod{1}\ \textbf{Definice:} Markovský rozhodovací proces řeší sekvenční rozhodování v plně pozorovatelném stochastickém prostředí. Obsahuje stavy, akce dostupné ve stavu $A(s)$, Markovův přechodový model $P(s'\mid s,a)$ a odměnu $R(s)$, kterou agent získá ve stavu $s$ a která je krátkodobá. Užitečnost nekonečné trajektorie je diskontovaný součet odměn
+\[
+U([s_0,s_1,s_2,\dots])=R(s_0)+\gamma R(s_1)+\gamma^2R(s_2)+\cdots,
+\]
+kde discount factor $\gamma\in(0,1)$ vyjadřuje, jak moc si ceníme budoucích odměn. Pro omezené odměny je užitek konečný, protože $U\le R_{\max}/(1-\gamma)$. Řešením MDP je policy neboli strategie, funkce $\pi:S\to A$, která doporučuje akci pro každý stav. Pevná posloupnost akcí nestačí, protože v nedeterministickém prostředí můžeme skončit v jiném stavu, než jsme čekali. Optimální strategie maximalizuje střední hodnotu užitku a nezávisí na počátečním stavu; pro další rozhodnutí je relevantní aktuální stav.\par
+\noindent\bod{2}\ \textbf{Bellman a algoritmy:} Opravdový užitek stavu je jeho okamžitá odměna plus diskontovaná střední hodnota užitku následného stavu. Proto platí Bellmanova rovnice optimality
+\[
+U(s)=R(s)+\gamma\max_a\sum_{s'}P(s'\mid s,a)U(s').
+\]
+Pokud je odměna vázaná na přechod, používá se ekvivalentní tvar se členem $R(s,a,s')$ uvnitř sumy. Předpokládáme, že známe odměny $R$ i přechodový model $P$, a chceme najít užitky $U$ nebo optimální strategii $\pi$. Soustava Bellmanových rovnic není lineární kvůli maximu, proto se často řeší aproximací. Value iteration nastaví počáteční odhady užitků, například nuly, opakovaně aplikuje Bellmanovu aktualizaci a iteruje do konvergence. Policy iteration využívá fakt, že strategie se často ustálí dříve než přesné užitky: střídá policy evaluation, kde pro pevnou strategii zmizí maximum a řeší se lineární Bellmanovy rovnice, a policy improvement, kde se v každém stavu vybere lepší akce podle současných užitků. Gaussova eliminace pro policy evaluation má složitost $O(n^3)$, u velkých stavových prostorů lze i evaluation dělat iterací hodnot. Policy iteration doběhne, protože strategií je konečně mnoho a každé zlepšení volí lepší strategii.\par
+\noindent\bod{3}\ \textbf{Detaily a POMDP:} Policy loss je vzdálenost užitku dané strategie od optimálního užitku. U value iteration cílem nemusí být dokonale přesný užitek, protože výsledná strategie může být stabilní dříve. POMDP přidává částečnou pozorovatelnost: stále máme přechodový model $P(s'\mid s,a)$, akce $A(s)$ a odměny $R(s)$, ale navíc senzorový model pro vztah mezi stavem a pozorováním. Agent místo reálných stavů používá belief states, tedy distribuce přes možné stavy. Modely přechodů a senzorů lze reprezentovat dynamickou Bayesovskou sítí; přidáním rozhodování a užitků vzniká dynamická rozhodovací síť. Řešení lze chápat jako generování stromu, kde se střídají vrstvy akcí a belief stavů, a používá se algoritmus podobný expected minimax.
 \end{odpoved}
 
 \begin{recall}
@@ -482,12 +486,9 @@ Minimax počítá hodnotu hry s nulovým součtem: v uzlu MAX bere maximum z pot
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} minimax = MAX maximalizuje, MIN minimalizuje. Alfa-beta prořezává větve bez změny výsledku. Nash = žádná jednostranně výhodná odchylka.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} ukaž výpočet malého stromu a jeden alfa-beta řez. Vysvětli vězňovo dilema a vyjmenuj základní typy aukcí.\par
-\noindent\bod{3}\ \textbf{Bonus:} dobré pořadí tahů dává alfa-beta velkou úsporu, v ideálním případě zhruba na efektivní hloubku poloviny stromu. U aukce druhé ceny zmiň pravdivé nabízení jako dominantní strategii v jednoduchém modelu.
-V hrách v normálním tvaru rozliš čisté a smíšené strategie, dominantní strategii,
-Pareto optimalitu a Nashovo ekvilibrium. Vickreyho aukce je obálková aukce druhé ceny;
-VCG zobecňuje pravdivé mechanismy pro víceparametrické aukce.
+\noindent\bod{1}\ \textbf{Definice:} Minimax řeší hry dvou hráčů s nulovým součtem a úplnou informací. Prochází strom hry, v listech nebo ve zvolené hloubce použije ohodnocení herní situace a potom hodnoty propaguje nahoru: v uzlu hráče MAX bere maximum ze synů, v uzlu hráče MIN minimum. Omezení hloubky je důležité u her s velkým větvením a vyžaduje vhodnou evaluační funkci. Výsledkem je optimální tah za předpokladu, že protihráč hraje optimálně, tedy podle nejhoršího scénáře. V teorii her v normálním tvaru hru tvoří hráči, jejich akce a užitkové funkce; hráči táhnou zároveň a každý provede jednu akci. Strategie může být čistá, tedy konkrétní akce, nebo smíšená, tedy pravděpodobnostní rozdělení přes akce. Strategický profil je množina strategií všech hráčů.\par
+\noindent\bod{2}\ \textbf{Vlastnosti, ekvilibria a aukce:} Alfa-beta prořezávání zrychluje minimax tím, že nevyhodnocuje větve, které už nemohou změnit rozhodnutí. Při rekurzi se předávají meze $\alpha$ a $\beta$: $\alpha$ je nejlepší zatím zajištěná hodnota pro MAX, $\beta$ nejlepší zatím zajištěná hodnota pro MIN. Pokud při hledání minima dostaneme prozatímní hodnotu menší než už dosažené maximum ve vyšší úrovni, další podvětve nemohou výsledek zlepšit pro MAX a řežou se; analogicky pro opačný případ. Alfa-beta nemění výsledek minimaxu a její účinnost závisí na pořadí tahů. Strategie $s_1$ dominuje $s_2$, pokud hráči dává větší užitek než $s_2$ bez ohledu na strategie ostatních; dominantní strategie dominuje všechny ostatní strategie. Nashovo ekvilibrium je strategický profil, v němž by žádný hráč jednostranně nezměnil strategii, kdyby znal strategie ostatních. Profil $s$ Pareto dominuje $s'$, pokud přechodem z $s'$ na $s$ si nikdo nepohorší a alespoň jeden hráč si polepší. Profil je Pareto optimální, pokud ho žádný jiný profil Pareto nedominuje. Existuje také korelované ekvilibrium. Dobrý aukční mechanismus maximalizuje výnos pro prodejce, vybere jako vítěze agenta, který si věc nejvíce cení, a dává zájemcům dominantní strategii. Anglická aukce je vzestupná: začíná na $b_{\min}$ a cena roste o krok $d$; dominantní strategie je přihazovat, dokud cena nepřekročí vlastní hodnotu. Holandská aukce začíná vysokou cenou a snižuje ji, dokud ji někdo nepřijme. Obálková aukce první ceny nechá vyhrát nejvyšší nabídku a vítěz platí svou nabídku; dominantní strategie obecně neexistuje, při odhadu maxima ostatních nabídek $b_0$ dává smysl nabídnout $b_0+\varepsilon$, pokud je to pod vlastní hodnotou. Obálková aukce druhé ceny, Vickreyho aukce, nechá vyhrát nejvyšší nabídku, ale vítěz platí druhou nejvyšší nabídku; dominantní strategie je nabídnout vlastní hodnotu. VCG mechanismus zobecňuje tento princip pro obecnější víceparametrické aukce.\par
+\noindent\bod{3}\ \textbf{Příklady a detaily:} Vězeňovo dilema má dva hráče, kteří mohou vypovídat, tedy defect, nebo odmítnout vypovídat, tedy cooperate. Pokud oba vypovídají, oba ztrácejí málo, například užitek $-5$. Pokud jeden vypovídá a druhý ne, vypovídající neztratí nic, užitek $0$, a druhý ztratí hodně, užitek $-10$. Pokud oba odmítnou, oba ztrácejí velmi málo, například $-1$. Vypovídat je čistá dominantní strategie, takže profil, kde oba vypovídají, je Nashovo ekvilibrium: nikomu se nevyplatí jednostranně změnit strategii. Zároveň je kolektivně horší než oboustranné odmítnutí, což ukazuje rozdíl mezi individuální racionalitou a Pareto lepším výsledkem. U alfa-beta je klíčová intuice, že často hledáme maximum z minim nebo minimum z maxim; jakmile je dílčí minimum už horší než alternativa z vyšší úrovně, jeho přesná hodnota není pro rozhodnutí relevantní.
 \end{odpoved}
 
 \begin{recall}
@@ -535,14 +536,39 @@ Učení s učitelem má dvojice vstup plus správný výstup a řeší klasifika
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} Učení s učitelem má dvojice vstup-výstup a učí predikci; učení bez učitele hledá strukturu bez štítků; zpětnovazební učení hledá strategii maximalizující očekávanou odměnu.
-Rozhodovací strom testuje atributy ve vnitřních uzlech a predikuje v listech; SVM hledá nadrovinu s maximálním marginem.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} popiš konstrukci stromu, princip marginu u SVM, Bayesovské učení přes posterior, EM jako E/M kroky, pasivní ADP/TD a aktivní Q-učení/SARSA.\par
-\noindent\bod{3}\ \textbf{Bonus:} zdůrazni rozdíl ADP vs. TD: ADP se učí model a řeší ho, TD se učí hodnoty přímo. Q-učení je off-policy s maximem přes další akce, SARSA je on-policy a používá další skutečně zvolenou akci.
-Přímý odhad utility průměruje reward-to-go, ale ignoruje Bellmanovy vazby. TD update:
-$U(s)\leftarrow U(s)+\alpha(R(s)+\gamma U(s')-U(s))$. Pro aktivní RL je exploration
-nutná, protože hladový agent může zůstat u špatně naučené akce; $Q(s,a)$ dovolí volit akci
-bez znalosti přechodového modelu.
+\noindent\bod{1}\ \textbf{Definice:} Učení bez učitele hledá vzory ve vstupu bez explicitní zpětné vazby nebo štítků. Zpětnovazební učení učí agenta z odměn a trestů podle chování v prostředí. Učení s učitelem učí funkci mapující vstupy na výstupy. Rozhodovací strom přijímá vektor hodnot atributů a vrací výslednou hodnotu; vnitřní vrchol odpovídá testu jednoho atributu, hrany výsledkům testu a list hodnotě, kterou klasifikační funkce vrací. Strom lze z tabulky příkladů postavit hladovou metodou rozděl a panuj, k dělení se používá entropie, a výhodou stromu je čitelné odůvodnění konkrétního rozhodnutí. Regrese je úloha učení s učitelem, kde položce $x$ přiřazujeme vhodnou funkční hodnotu $y$. SVM stojí na lineární separaci: pokud lze třídy oddělit nadrovinou, volí maximum margin separator, tedy nadrovinu nejdále od datových příkladů. Pokud lineární nadrovina nestačí, použije kernel function pro mapování do vícedimenzionálního prostoru, kde už příklady mohou být oddělitelné. SVM je neparametrická metoda; příklady nejblíže separátoru jsou support vectors a fakticky definují separátor.\par
+\noindent\bod{2}\ \textbf{Bayesovské učení, EM a pasivní RL:} V bayesovském učení máme množinu hypotéz a podle pozorování upravujeme jejich pravděpodobnosti. Maximálně věrohodná hypotéza je hypotéza s největší pravděpodobností naměřených dat:
+\[
+\arg\max_h p(\mathrm{data}\mid h)
+\quad\hbox{nebo}\quad
+\arg\max_h p_h(\mathrm{data}).
+\]
+U parametrizované hypotézy hledáme parametr maximalizující likelihood, často přes nulovou derivaci logaritmu pravděpodobnosti; tomu se říká maximum-likelihood parameter learning. Posterior hypotézy je
+\[
+p(h\mid\mathrm{data})=\frac{p(\mathrm{data}\mid h)p(h)}{\sum_{h'}p(\mathrm{data}\mid h')p(h')}.
+\]
+Pokud mají hypotézy stejné apriorní pravděpodobnosti, stačí likelihoody normalizovat. Bayesovsky optimální predikce pro výstup $z$ je
+\[
+p(z\mid\mathrm{data})=\sum_h p(z\mid h)p(h\mid\mathrm{data}).
+\]
+EM algoritmus se používá pro maximum-likelihood odhad, když ho nelze jednoduše spočítat kvůli skrytým proměnným. Začne náhodnými parametry a iteruje do konvergence: E-step dopočte střední hodnoty skrytých proměnných, M-step upraví parametry tak, aby maximalizovaly likelihood modelu. Příklad: z výšek bez pohlaví chceme odhadnout průměr mužů $\mu_0$ a žen $\mu_1$. Pohlaví je skrytá proměnná; v E-kroku spočteme pravděpodobnosti, že daná výška patří ženě nebo muži, a v M-kroku přepočteme $\mu_0,\mu_1$ jako vážené průměry výšek. Parametry mohou vyjít prohozené, protože EM je učení bez učitele a nezajišťuje interpretaci tříd. Pasivní zpětnovazební učení uvažuje agenta v MDP s pevně danou strategií $\pi$; učí se, jak je strategie dobrá, tedy utility funkci, a nezná přechodový model ani reward function. Přímý odhad utility používá běhy, traces, a pro každý stav průměruje reward-to-go, tedy odměnu současného a budoucích stavů, případně diskontovanou faktorem $\gamma$. Je to podobné učení s učitelem se stavem na vstupu a užitkem na výstupu, ale konverguje pomalu, protože ignoruje Bellmanovy vazby a hledá v příliš velkém prostoru hypotéz. ADP se učí přechodový model a odměny z pozorovaných přechodů a utility potom počítá z Bellmanových rovnic, například iterací hodnot; tím vynucuje konzistenci odhadů užitků. TD learning model nepotřebuje a při přechodu $s\to s'$ aktualizuje
+\[
+U^\pi(s)\leftarrow U^\pi(s)+\alpha\bigl(R(s)+\gamma U^\pi(s')-U^\pi(s)\bigr),
+\]
+kde $\alpha$ je learning rate. TD je model-free a konverguje pomaleji než ADP.\par
+\noindent\bod{3}\ \textbf{Aktivní RL a detaily:} Aktivní zpětnovazební učení učí strategii i utility funkci. Pouhé použití ADP může dát hladového agenta, který opakuje zažité akce a nezkouší nové. Optimální akce podle dosavadního modelu může vést k suboptimálním výsledkům, protože naučený model se liší od reálného prostředí, akce nejsou jen zdrojem odměn, ale i dat pro učení, a zlepšováním modelu mohou růst budoucí odměny. Je nutné vyvažovat exploration a exploitation. Pure exploration nevyužívá naučené znalosti, pure exploitation riskuje opakování špatně naučených vzorů. Základní intuice je prozkoumávat více na začátku a později víc využívat znalosti. Jednoduchá exploration policy zvolí náhodnou akci s pravděpodobností $1/t$ a jinak hladovou akci; konverguje k optimální strategii, ale může být velmi pomalá. Rozumnější je přidávat váhu akcím, které agent ještě nezkusil. Q-learning používá $Q(s,a)$, hodnotu provedení akce $a$ ve stavu $s$, a platí $U(s)=\max_a Q(s,a)$. Modelová rovnice je
+\[
+Q(s,a)=R(s)+\gamma\sum_{s'}P(s'\mid s,a)\max_{a'}Q(s',a'),
+\]
+ale bezmodelové Q-učení nepotřebuje znát $P$ a při přechodu ze $s$ akcí $a$ do $s'$ aktualizuje
+\[
+Q(s,a)\leftarrow Q(s,a)+\alpha\bigl(R(s)+\gamma\max_{a'}Q(s',a')-Q(s,a)\bigr).
+\]
+SARSA, state-action-reward-state-action, je varianta Q-učení s aktualizací
+\[
+Q(s,a)\leftarrow Q(s,a)+\alpha\bigl(R(s)+\gamma Q(s',a')-Q(s,a)\bigr),
+\]
+která se aplikuje po pětici $s,a,r,s',a'$, tedy po volbě další reálné akce $a'$. Pro hladového agenta, který vždy volí největší $Q$, jsou SARSA a základní Q-learning stejné. Rozdíl je u průzkumného agenta: SARSA je on-policy a bere v úvahu skutečně zvolenou akci, zatímco Q-learning je off-policy, učí se optimální strategii, i když se během učení používá jiná strategie. V aktivním učení je výhodnější učit se $Q$-hodnoty než samotné utility, protože k volbě nejlepší akce podle utility bychom potřebovali přechodové pravděpodobnosti, zatímco $Q(s,a)$ přímo říká, jak užitečné je danou akci provést.
 \end{odpoved}
 
 \begin{recall}

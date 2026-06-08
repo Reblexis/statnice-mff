@@ -41,22 +41,41 @@ i pro \textbf{nová} data. Nejde o to namemorovat trénink, ale \emph{generalizo
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} \emph{Klasifikace} učí funkci $h:X\to Y$ s diskrétními třídami, \emph{regrese} učí $h:X\to\mathbb R^k$.
-\emph{MLE} volí hypotézu nebo parametry $\hat h=\arg\max_h P(D\mid h)$.
-Accuracy $=\frac{TP+TN}{TP+TN+FP+FN}$, precision $=\frac{TP}{TP+FP}$, recall $=\frac{TP}{TP+FN}$, $F1=\frac{2PR}{P+R}$.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Generalizační chyba} = chyba na nových datech. \emph{Přeučení}
-= model sedí na šumu trénovacích dat (malá trénovací, velká testovací chyba). Bráníme se:
-\emph{regularizací} (L2 = penalizuje velké váhy $\lambda\|w\|_2^2$, hladší model; L1 = $\lambda\|w\|_1$,
-navíc dělá řídké váhy, tj.\ výběr příznaků), \emph{včasným zastavením} trénování a více daty.
-\emph{Křížová validace} (k-fold): data rozdělím na $k$ částí, postupně každou použiju jako test,
-průměruju - spolehlivější odhad chyby než jediné rozdělení.\par
-\noindent\bod{3}\ \textbf{Bonus:} Regrese se hodnotí například $MSE=\frac1n\sum_i(y_i-\hat y_i)^2$ a $RMSE=\sqrt{MSE}$.
-Minimalizace záporné log-věrohodnosti je často přesně ta loss funkce.
-\emph{Prokletí dimenzionality}: v mnoha rozměrech jsou data řídká a vzdálenosti ztrácejí smysl, je
-třeba exponenciálně víc dat. NLL je běžná klasifikační loss pro pravděpodobnostní modely.
-ROC mění práh a kreslí TPR proti FPR, AUC je plocha pod ní; senzitivita = recall,
-specificita = true negative rate. Hyperparametry se ladí na validační sadě, ne na testu.
-Redukce příznaků: filter je nezávislý na modelu, wrapper vybírá podle výkonu modelu.
+\noindent\bod{1}\ \textbf{Minimum:} \emph{Klasifikace} přiřazuje položce $x$ vhodnou třídu nebo množinu tříd; základní případ je binární klasifikace do tříd pozitivní/negativní. \emph{Regrese} přiřazuje položce $x$ reálnou funkční hodnotu $y$.
+U binární klasifikace: $TP$ je správně pozitivní, $FP$ falešně pozitivní, $FN$ falešně negativní, $TN$ správně negativní.
+\[
+\mathrm{accuracy}=\frac{TP+TN}{TP+TN+FP+FN},\quad
+P=\frac{TP}{TP+FP},\quad
+R=\frac{TP}{TP+FN},\quad
+F_1=\frac{2PR}{P+R}.
+\]
+U regrese je základní metrika $\mathrm{MSE}=\frac1N\sum_{i=1}^N(y_i-t_i)^2$, kde $y_i$ je predikce a $t_i$ skutečná hodnota.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} Pro pravděpodobnostní klasifikaci se používá
+\[
+\mathrm{NLL}=-\sum_{i=1}^N\log p_i(t_i)=-\sum_{i=1}^N\log p(t_i\mid x_i),
+\]
+kde $p_i$ je rozdělení tříd vrácené modelem pro $x_i$ a $t_i$ je skutečná třída. \emph{Confusion matrix} má řádky a sloupce označené skutečnými a predikovanými třídami (pořadí je nutné uvést); buňka obsahuje počet testovacích příkladů s danou kombinací a diagonála obsahuje správné predikce. Accuracy klame při nevyvážených třídách, proto se často sledují precision, recall a F-míra.
+\[
+F_\beta=\frac{(\beta^2+1)PR}{\beta^2P+R}
+=\frac{TP+\beta^2TP}{TP+FP+\beta^2(TP+FN)}.
+\]
+ROC křivka vzniká posouváním prahu pro pozitivní výsledek: na ose $x$ je $\mathrm{FPR}=\frac{FP}{FP+TN}$, na ose $y$ je $\mathrm{TPR}=\frac{TP}{TP+FN}=R$. Náhodný klasifikátor má diagonálu a AUC $0{,}5$, dokonalý klasifikátor má bod vlevo nahoře $(0,1)$ a AUC $1$. Senzitivita je TPR, specificita je $\mathrm{TNR}=\frac{TN}{TN+FP}$; obecně mají metriky typu rate ve jmenovateli všechny instance se stejnou skutečnou třídou jako čitatel.\par
+\noindent\bod{3}\ \textbf{Bonus:} Testovací data měří generalizaci na datech, která model neviděl, a nesmí se použít při trénování ani ladění hyperparametrů. Při ladění se používá train-dev-test split: parametry se učí na trénovací sadě, hyperparametry na vývojové/validační sadě a finální odhad výkonu na testu. Křížová validace rozdělí data na $n$ dílů, $n$-krát trénuje na $n-1$ dílech a vyhodnocuje na zbylém dílu; výsledkem je průměr skóre.
+Při maximální věrohodnosti fixujeme data a hledáme váhy
+\[
+L(w)=p_{\mathrm{model}}(X;w)=\prod_i p_{\mathrm{model}}(x_i;w),\qquad
+w_{\mathrm{MLE}}=\arg\max_w p_{\mathrm{model}}(X;w).
+\]
+U klasifikace řádku $x$ model popisuje $p_{\mathrm{model}}(t\mid x;w)$.
+\emph{Underfitting} znamená příliš slabý model. \emph{Overfitting} znamená špatnou generalizaci, protože se model příliš přizpůsobil tréninku. Generalizační chyba je výkon na nových datech, typicky test nebo křížová validace. Pokud se validační/testovací chyba po počátečním přibližování začne vzdalovat od trénovací chyby, model se přeučuje; pokud se ani nezačne zlepšovat, je model slabý nebo je třeba trénovat déle.
+\emph{Regularizace} přičítá k loss penalizaci vah, omezuje efektivní kapacitu a preferuje menší změny modelu:
+\[
+L^1:\lambda\sum_j |w_j|,\qquad
+L^2:\lambda\sum_jw_j^2=\lambda\|w\|^2
+\quad\text{nebo}\quad \frac\lambda2\|w\|^2.
+\]
+Váha biasu se obvykle neregularizuje. Proti přeučení pomáhá L2 regularizace, early stopping při růstu validační chyby a rozumný learning rate nebo schedule.
+\emph{Prokletí dimenzionality}: s počtem příznaků roste exponenciálně množství dat potřebná k dobré generalizaci, protože chceme vzorky pro mnoho kombinací příznaků. Redukce dimenzí: \emph{filter} vybírá příznaky nezávisle na modelu statisticky (konzistence, korelace se třídami a nekorelace mezi příznaky, vzdálenost tříd, vzájemná informace), \emph{wrapper} trénuje model a vybírá příznaky podle jeho výkonu.
 \end{odpoved}
 
 \begin{recall}
@@ -96,14 +115,17 @@ většiny svých $k$ nejbližších trénovacích bodů. Nic se netrénuje - jen
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} Pro nový bod najdi $k$ nejbližších trénovacích bodů (podle vzdálenosti,
-typicky euklidovské) a přiřaď \emph{většinovou} třídu (u regrese průměr).\par
-\noindent\bod{2}\ \textbf{+ k tomu:} Žádné trénování (líné učení), veškerá práce je při dotazu.
-Malé $k$ = citlivé na šum (přeučení), velké $k$ = hladší, ale rozmazává hranice. $k$ se volí
-křížovou validací. Nutné škálovat příznaky.\par
-\noindent\bod{3}\ \textbf{Bonus:} Trpí prokletím dimenzionality a je pomalé při mnoha datech
-(dotaz prochází vše). Váhy sousedů mohou být uniformní, nepřímo úměrné vzdálenosti
-nebo softmax ze záporných vzdáleností; vzdálenosti se často počítají $p$-normou.
+\noindent\bod{1}\ \textbf{Minimum:} kNN je instance-based a líné učení: při trénování si uloží data, při dotazu najde $k$ nejbližších trénovacích bodů podle zvolené vzdálenosti. V klasifikaci s uniformními vahami hlasují sousedé a vyhrává nejčastější třída, remízu lze rozhodnout náhodně. V regresi se predikuje průměr nebo vážený průměr targetů sousedů.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} Obecná predikce s vahami je
+\[
+t=\sum_i \frac{w_i}{\sum_j w_j}\,t_i.
+\]
+Pro regresi je to vážený průměr hodnot $t_i$. Pro klasifikaci lze $t_i$ chápat jako one-hot vektor třídy, vzorcem dostaneme odhad pravděpodobností tříd a zvolíme největší složku. Váhy mohou být \emph{uniform} (všichni sousedé stejně), \emph{inverse} (nepřímo úměrné vzdálenosti) nebo \emph{softmax} ze záporných vzdáleností.\par
+\noindent\bod{3}\ \textbf{Bonus:} Vzdálenost se často počítá pomocí $p$-normy
+\[
+\|x\|_p=\sqrt[p]{\sum_i |x_i|^p},\qquad d(x,y)=\|x-y\|_p,
+\]
+typicky pro $p\in\set{1,2,3,\infty}$. Malé $k$ je citlivé na šum a vede k přeučení, velké $k$ hranice vyhlazuje a může podtrénovat; $k$ se volí validací. Příznaky je nutné škálovat, jinak dominuje rozměr s velkým rozsahem. Nevýhody: drahá predikce přes mnoho uložených bodů a silné prokletí dimenzionality.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -141,16 +163,40 @@ odchylek byl co nejmenší.
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} Model $y = w^\top x + b$. Minimalizujeme \emph{MSE}
-$\frac1n\sum_i (y_i - w^\top x_i-b)^2$, ekvivalentně L2 chybu $\|Xw-y\|_2^2$ (metoda nejmenších čtverců).\par
-\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Analytické řešení} (normální rovnice):
-$\hat w = (X^\top X)^{-1} X^\top y$, kde sloupec jedniček v $X$ pokryje intercept $b$.
-Funguje přímo jen při regulární $X^\top X$; při singularitě se používá pseudoinverze
-nebo regularizace a u velkých dat je vzorec drahý.\par
-\noindent\bod{3}\ \textbf{Bonus:} \emph{SGD} - místo přesného vzorce iterativně:
-$w \leftarrow w - \eta\,\nabla_w \text{loss}$ počítané po malých dávkách dat; nutné u velkých dat.
-$\eta$ = rychlost učení (moc velká diverguje, moc malá je pomalá). Batch GD používá
-všechna data, online SGD jeden řádek, minibatch kompromis; bias se pokryje sloupcem jedniček.
+\noindent\bod{1}\ \textbf{Minimum:} Lineární regrese predikuje $y=x^Tw$; bias reprezentujeme přidáním sloupce jedniček do $X$ a další složky do $w$. Metoda nejmenších čtverců minimalizuje
+\[
+E(w)=\frac12\sum_i (x_i^Tw-t_i)^2
+=\frac12\|Xw-t\|^2.
+\]
+\par
+\noindent\bod{2}\ \textbf{+ k tomu:} Derivace podle váhy $w_j$ je
+\[
+\frac{\partial E}{\partial w_j}
+=\sum_i x_{ij}(x_i^Tw-t_i).
+\]
+V optimu chceme nulovou derivaci pro všechna $j$, tedy
+\[
+X^T(Xw-t)=0,\qquad X^TXw=X^Tt.
+\]
+Je-li $X^TX$ invertibilní, normální rovnice dávají analytické řešení
+\[
+w=(X^TX)^{-1}X^Tt.
+\]
+Když je matice singulární nebo příliš velká, používá se pseudoinverze, regularizace nebo iterativní optimalizace.\par
+\noindent\bod{3}\ \textbf{Bonus:} Gradient descent minimalizuje chybovou funkci $E(w)$ iterací
+\[
+w\leftarrow w-\alpha\nabla_wE(w),
+\]
+kde $\alpha$ je learning rate. Batch gradient descent počítá gradient ze všech dat, stochastic/online z jednoho náhodného řádku a minibatch SGD z $B$ náhodných nezávislých řádků. Minibatch algoritmus: inicializuj $w$ náhodně nebo nulou, opakuj do konvergence nebo zastavení, vyber minibatch indexů $\mathbb B$ uniformně náhodně nebo po epochách přes náhodné minibatche, aktualizuj
+\[
+w\leftarrow w-\alpha\frac1{|\mathbb B|}
+\sum_{i\in\mathbb B}\bigl((x_i^Tw-t_i)x_i\bigr)-\alpha\lambda w.
+\]
+Tato aktualizace odpovídá loss
+\[
+E(w)=\frac1{|\mathbb B|}\sum_{i\in\mathbb B}\frac12(x_i^Tw-t_i)^2
++\frac\lambda2\|w\|^2.
+\]
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -188,15 +234,49 @@ sigmoid, aby vyšla \emph{pravděpodobnost} třídy mezi 0 a 1.
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} $P(y{=}1\mid x) = \sigma(w^\top x + b)$, kde
-$\sigma(z) = \frac{1}{1+e^{-z}}$. Klasifikuji podle prahu 0,5.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} Trénuje se maximalizací věrohodnosti = minimalizací
-\emph{cross-entropy (log-loss)} gradientním sestupem (analytické řešení neexistuje).
-Hranice je lineární.\par
-\noindent\bod{3}\ \textbf{Bonus:} Více tříd přes \emph{softmax}
-$P(y{=}k) = \frac{e^{z_k}}{\sum_j e^{z_j}}$ (zobecnění sigmoidu); loss opět cross-entropy.
-Softmax je invariantní k přičtení konstanty ke všem skóre a binární sigmoid je jeho speciální případ.
-Lineární softmax má konvexní rozhodovací oblasti.
+\noindent\bod{1}\ \textbf{Minimum:} Logistická regrese je klasifikátor. Pro binární třídy $\set{0,1}$ má sigmoid
+\[
+\sigma(x)=\frac1{1+e^{-x}},
+\]
+lineární složku $\bar y(x;w)=x^Tw$ a predikci
+\[
+y(x;w)=\sigma(\bar y(x;w))=\sigma(x^Tw)=P(t=1\mid x;w).
+\]
+Třídu získáme prahem nebo zaokrouhlením; bias je další váha po přidání konstantního příznaku.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} Pro target $t\in\set{0,1}$ platí
+\[
+p(t\mid x;w)=\sigma(x^Tw)^t(1-\sigma(x^Tw))^{1-t}.
+\]
+Trénuje se maximalizací věrohodnosti, ekvivalentně minimalizací NLL/cross-entropy, obvykle minibatch SGD. Algoritmus: inicializuj $w$, opakuj do konvergence, vyber minibatch $\mathbb B$ a aktualizuj
+\[
+w\leftarrow w-\alpha\frac1{|\mathbb B|}
+\sum_{i\in\mathbb B}(\sigma(x_i^Tw)-t_i)x_i-\alpha\lambda w.
+\]
+Gradient má stejný tvar jako u lineární regrese, $(y(x_i)-t_i)x_i$, jen $y$ je sigmoid.\par
+\noindent\bod{3}\ \textbf{Bonus:} Vícetřídní logistická regrese klasifikuje do jedné z $K$ tříd. Parametry jsou váhová matice $W$ (sloupce odpovídají třídám, řádky příznakům) a jeden bias pro každou třídu. Softmax je
+\[
+\mathrm{softmax}(z)_i=\frac{e^{z_i}}{\sum_j e^{z_j}},
+\qquad
+\mathrm{softmax}(z+c)_i=\mathrm{softmax}(z)_i.
+\]
+Predikce je
+\[
+p(C_i\mid x;W)=y(x;W)_i
+=\mathrm{softmax}(\bar y(x;W))_i
+=\mathrm{softmax}(x^TW)_i,
+\]
+což normalizuje skóre na pravděpodobnosti se součtem $1$. Sigmoid je speciální případ softmaxu, například
+\[
+\sigma(x)=\mathrm{softmax}([x,0])_0=\frac{e^x}{e^x+e^0}.
+\]
+Lineární softmax má konvexní rozhodovací oblasti. Minibatch SGD pro targety $\set{0,\dots,K-1}$ používá one-hot vektor $1_{t_i}$:
+\[
+W\leftarrow W-\alpha\frac1{|\mathbb B|}
+\sum_{i\in\mathbb B}
+\left((\mathrm{softmax}(x_i^TW)-1_{t_i})x_i^T\right)^T
+-\alpha\lambda W.
+\]
+Binární gradient je $(y(x)-t)x$, vícetřídní gradient je $((y(x)-1_t)x^T)^T$.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -234,16 +314,26 @@ po kterých jsou výsledné skupiny co \emph{nejčistší} (jedna třída).
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} \emph{Rozhodovací strom} má ve vnitřním uzlu test příznaku, hrany podle výsledku testu a v listu predikci.
-\emph{Entropie} uzlu je $H(S)=-\sum_c p_c\log p_c$ a \emph{Gini nečistota} je $G(S)=1-\sum_c p_c^2$.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} V každém uzlu vyber dělení, které nejvíc \emph{zvýší čistotu} -
-\emph{informační zisk} je pokles entropie po rozdělení. Rekurzivně až do
-čistých listů / zastavovacího kritéria.\par
-\noindent\bod{3}\ \textbf{Bonus:} Plně narostlý strom se přeučí $\Rightarrow$ \emph{prořezávání}
-(pre-pruning: zastav brzy podle hloubky/min.\ vzorků; post-pruning: ořež větve, které nezlepší
-chybu na validaci). Výhoda: interpretovatelnost. CART dělí list na dva a vybírá split
-s největším poklesem kritéria; pro regresi se používá squared error a list predikuje průměr.
-Reduced error pruning zruší větev, pokud tím neklesne validační přesnost.
+\noindent\bod{1}\ \textbf{Minimum:} Rozhodovací strom má ve vnitřním vrcholu test příznaku a hodnotu/práh rozhraní, hrany odpovídají výsledku testu a list predikuje podle dat v listu. Každému vrcholu $\mathcal T$ náleží množina indexů $I_\mathcal T$. Při regresi list predikuje průměr targetů, při klasifikaci většinovou třídu.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} Kritéria větvení měří nehomogenitu vrcholu. Pro regresi se používá squared error
+\[
+c_{\mathrm{SE}}(\mathcal T)=
+\sum_{i\in I_\mathcal T}(t_i-\hat t_\mathcal T)^2,
+\]
+kde $\hat t_\mathcal T$ je průměr targetů ve vrcholu. Pro klasifikaci je Gini impurity
+\[
+c_{\mathrm{Gini}}(\mathcal T)=
+|I_\mathcal T|\sum_k p_\mathcal T(k)(1-p_\mathcal T(k)),
+\]
+což je očekávaná chybovost náhodné klasifikace podle rozdělení tříd ve vrcholu. V binární klasifikaci odpovídá skoro squared error ztrátě. Entropické kritérium je
+\[
+c_{\mathrm{entropy}}(\mathcal T)
+=|I_\mathcal T|H(p_\mathcal T)
+=-|I_\mathcal T|\sum_k p_\mathcal T(k)\log p_\mathcal T(k),
+\]
+ve kterém vynecháme třídy s nulovou pravděpodobností; lze ho odvodit z NLL. Dělení volíme tak, aby co nejvíc snížilo kritérium, tedy maximalizovalo čistotu.\par
+\noindent\bod{3}\ \textbf{Bonus:} CART začíná jedním listem s trénovacími daty. Vybraný list rozdělí na vnitřní vrchol a dva nové listy. Split volí tak, aby $c_{\mathcal T_L}+c_{\mathcal T_R}-c_\mathcal T$ bylo co nejmenší, tedy aby pokles kritéria byl co největší. Lze omezit maximální hloubku, minimální počet dat v děleném listu a maximální počet listů. Obvykle se dělí do hloubky; při omezeném počtu listů je vhodné dělit listy s největším zlepšením. Minimalizací dělicího kritéria minimalizujeme nejlepší dosažitelnou hodnotu loss pro daný strom.
+Prořezávání zjednodušuje strom a omezuje přeučení; může být top-down nebo bottom-up. Reduced error pruning je bottom-up: na validačních datech měříme accuracy a zkoušíme rušit větvení ve vnitřních vrcholech; pokud přesnost neklesne, větev nahradíme listem s většinovou třídou.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -285,18 +375,60 @@ Mezi dvě třídy chceme proložit \textbf{co nejširší ulici} (pruh bez bodů
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} \emph{SVM} hledá nadrovinu $w^\top x+b=0$ oddělující třídy s maximálním marginem; pro kanonické škálování je šířka marginu $\frac{2}{\|w\|}$.
-Klasifikace je $\operatorname{sign}(w^\top x+b)$.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Podpůrné vektory} = body na okraji marginu
-(u měkkého marginu i uvnitř marginu / chybně klasifikované), jen ty určují hranici.
-Neseparabilní data: \emph{měkký margin} se slack $\xi_i$ a penaltou $C\sum\xi_i$ ($C$ = kompromis
-úzký margin vs.\ chyby). \emph{Jádro} $K(x,x')$ nahradí skalární součin a oddělí data ve vyšší dimenzi
-bez explicitní transformace (RBF, polynom).\par
-\noindent\bod{3}\ \textbf{Bonus:} úloha $\min\tfrac12\|w\|^2$ za $y_i(w^\top x_i+b)\ge 1$;
-více tříd přes one-vs-rest nebo one-vs-one. V duálu je $w$ lineární kombinace trénovacích
-bodů a predikce má tvar $\sum_i a_i t_i K(x,x_i)+b$. Soft-margin používá slack proměnné
-$\xi_i$ a hinge loss $\max(0,1-t_i y(x_i))$; větší $C$ znamená slabší regularizaci.
-RBF kernel $e^{-\gamma\|x-z\|^2}$ dává vysokou podobnost blízkým bodům.
+\noindent\bod{1}\ \textbf{Minimum:} SVM je binární klasifikátor pro třídy $\set{-1,1}$. Pro hard-margin hledá dělicí nadrovinu s maximálním marginem. Uvažujeme mapování příznaků $\varphi$ a skóre
+\[
+y(x)=\varphi(x)^Tw+b.
+\]
+Protože $w,b$ lze škálovat, zvolí se kanonické škálování, ve kterém nejbližší body splňují $t_iy(x_i)=1$. Hard-margin úloha je
+\[
+\arg\min_{w,b}\frac12\|w\|^2
+\quad\text{za podmínek}\quad
+t_iy(x_i)\ge 1\ \text{pro všechna }i.
+\]
+Klasifikace je podle znaménka skóre a šířka marginu je $\frac{2}{\|w\|}$.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} SVM je jádrová metoda a v duální formulaci neparametrický model: místo explicitních vah pracuje s koeficienty u trénovacích dat, protože optimální $w$ je lineární kombinace trénovacích bodů. Omezená optimalizace se řeší přes Lagrangián a KKT podmínky, tradičně s multiplikátory $a_i$. Důležitá podmínka je
+\[
+a_i(t_iy(x_i)-1)=0.
+\]
+Proto se při predikci použijí jen body s $a_i>0$, tedy body na okraji marginu, nazývané podpůrné vektory. Predikce v duálu je
+\[
+y(x)=\sum_i a_it_iK(x,x_i)+b.
+\]
+Soft-margin SVM řeší lineárně neseparabilní data: zavede slack proměnné $\xi_i\ge 0$ a nahradí podmínku
+\[
+t_iy(x_i)\ge 1
+\quad\text{podmínkou}\quad
+t_iy(x_i)\ge 1-\xi_i.
+\]
+Podpůrné vektory jsou pak body na marginu i body s kladným $\xi_i$, tedy uvnitř marginu nebo chybně klasifikované.\par
+\noindent\bod{3}\ \textbf{Bonus:} Pro porušení marginu platí
+\[
+\xi_i=\max(0,1-t_iy(x_i)),
+\]
+což je hinge loss. Soft-margin lze zapsat jako
+\[
+\arg\min_{w,b}\ C\sum_i\mathcal L_{\mathrm{hinge}}(t_i,y(x_i))
++\frac12\|w\|^2.
+\]
+Parametr $C$ má opačný efekt než běžná regularizační konstanta: větší $C$ silněji trestá chyby a znamená slabší regularizaci. V duálu se proti hard-margin navíc objeví horní omezení $a_i\le C$. K trénování se používá sequential minimal optimization, která postupně zlepšuje Lagrangián přes vybrané koeficienty $a_i,a_j$ a bias.
+Kernel je funkce
+\[
+K(x,z)=\varphi(x)^T\varphi(z),
+\]
+tedy skalární součin transformovaných příznaků bez explicitního výpočtu $\varphi$. Například pro příznaky řádů $0$ až $3$ může platit $\varphi(x)^T\varphi(z)=1+x^Tz+(x^Tz)^2+(x^Tz)^3$. Homogenní polynomiální kernel stupně $d$ je
+\[
+K(x,z)=(\gamma x^Tz)^d,
+\]
+nehomogenní polynomiální kernel stupně nejvýše $d$ je
+\[
+K(x,z)=(\gamma x^Tz+1)^d,
+\]
+a Gaussian RBF kernel je
+\[
+K(x,z)=e^{-\gamma\|x-z\|^2}.
+\]
+RBF vrací $1$ pro stejné vektory, téměř $0$ pro velmi vzdálené vektory, něco mezi pro blízké vektory; $\gamma$ určuje, co už je daleko, a lze ho chápat jako rozšířenou podobnost kNN. Kernely se používají tam, kde chceme data transformovat do vyšší dimenze, aby byla lineárně separabilní.
+Více tříd se řeší kombinací binárních klasifikátorů. One-versus-rest natrénuje $K$ klasifikátorů "třída proti zbytku" a vybírá největší skóre nebo pravděpodobnost, ale vyžaduje kalibraci a u SVM se tak běžně nedělá. One-versus-one trénuje klasifikátor pro každou dvojici tříd; klasifikátorů je více, ale každý vidí méně dat, a predikce probíhá většinovým hlasováním.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -322,15 +454,9 @@ Více slabších modelů dohromady často předčí jeden velký - „moudrost d
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} \emph{Bagging} trénuje modely \emph{paralelně} na náhodných
-podvýběrech dat (bootstrap) a \emph{průměruje/hlasuje} - snižuje \emph{rozptyl}.
-\emph{Boosting} staví modely \emph{sekvenčně}, každý opravuje chyby předchozích - často snižuje
-\emph{bias}, ale je citlivější na šum.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Náhodný les} = bagging rozhodovacích stromů + v každém
-uzlu se uvažuje jen náhodná podmnožina příznaků (dekoreluje stromy). Robustní, málo ladění.\par
-\noindent\bod{3}\ \textbf{Bonus:} Boosting (např.\ AdaBoost) zvyšuje váhu špatně klasifikovaných
-příkladů; silný, ale citlivější na šum/přeučení než bagging. AdaBoost váží i slabé
-klasifikátory podle přesnosti. Náhodný les při regresi průměruje stromy a při klasifikaci hlasuje.
+\noindent\bod{1}\ \textbf{Minimum:} Ensembly kombinují více modelů. \emph{Bagging} trénuje modely nezávisle, typicky na bootstrap vzorcích, tedy náhodných výběrech trénovacích dat s opakováním. Predikce se kombinuje průměrováním u regrese nebo hlasováním u klasifikace. \emph{Boosting} trénuje modely sekvenčně a každý další model se snaží opravit chyby předchozích.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} AdaBoost postupně trénuje slabé klasifikátory, například mělké rozhodovací stromy nebo pařezy, na vážených trénovacích datech. V každé iteraci zvýší váhy špatně klasifikovaných příkladů, aby na ně další klasifikátor více mířil. Slabým klasifikátorům zároveň přiřazuje váhy podle jejich accuracy, takže přesnější modely mají větší vliv na finální hlasování.\par
+\noindent\bod{3}\ \textbf{Bonus:} Náhodný les je bagging rozhodovacích stromů plus náhodnost v příznacích. Pro každý strom vybere náhodný bootstrap vzorek dat a v každém vrcholu uvažuje jen náhodnou podmnožinu příznaků pro dělení. Při regresi průměruje hodnoty stromů, při klasifikaci hlasuje. Jeden strom se rychle trénuje a je dobře interpretovatelný jako série rozhodnutí, zatímco les je obvykle přesnější a lépe generalizuje, ale predikce je méně přímo interpretovatelná.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -357,18 +483,30 @@ a porovnáme s tím, co by dělala náhoda za platnosti \emph{nulové hypotézy}
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} \emph{Nulová hypotéza} $H_0$ = „žádný efekt“. Test dá
-\emph{p-hodnotu}; když $p < \alpha$ (typicky 0,05), $H_0$ zamítáme.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} \emph{t-test} porovnává \emph{střední hodnoty}:
-jednovýběrový (průměr vs.\ daná konstanta), dvouvýběrový (dva průměry proti sobě); předpokládá
-nezávislá pozorování a zhruba normální data (Welchova varianta nepotřebuje stejné rozptyly).
-\emph{Chí-kvadrát test dobré shody} porovnává \emph{pozorované vs.\ očekávané
-četnosti} kategorií: $\chi^2 = \sum \frac{(O-E)^2}{E}$.\par
-\noindent\bod{3}\ \textbf{Bonus:} chyba I.\ druhu = zamítnu platné $H_0$ (= $\alpha$);
-chyba II.\ druhu = nezamítnu neplatné $H_0$. Jednovýběrový t-test používá $n-1$ stupňů
-volnosti, dvouvýběrový porovnává průměry dvou populací přes směrodatnou chybu; párový
-t-test testuje rozdíly dvojic jako jednovýběrový. Chí-kvadrát dobré shody má
-počet kategorií minus jedna, případně minus počet odhadnutých parametrů, stupňů volnosti.
+\noindent\bod{1}\ \textbf{Minimum:} Statistický test pracuje s nulovou hypotézou $H_0$ a testovou statistikou, jejíž rozdělení známe za platnosti $H_0$. Hypotézu zamítáme, když vypočtená hodnota spadne do kritického oboru, ekvivalentně když je p-hodnota menší než zvolená hladina $\alpha$.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} Jednovýběrový Studentův t-test dává intervalový odhad a test pro střední hodnotu, když neznáme rozptyl $\sigma^2$. Pro test $H_0$ s hodnotou $\theta_0$ používá statistiku
+\[
+T=\frac{\overline{X_n}-\theta_0}{\bar\sigma/\sqrt n},
+\]
+která má za platnosti $H_0$ t-rozdělení s $n-1$ stupni volnosti. Intervalový odhad pro parametr $\theta$ se spočte z bodového odhadu $\hat\theta$, například výběrového průměru pro $\mu$, a
+\[
+\delta=\frac{\bar\sigma}{\sqrt n}\cdot \Psi^{-1}_{n-1}(1-\alpha/2),
+\qquad
+[\hat\theta-\delta,\hat\theta+\delta],
+\]
+kde $\Psi^{-1}_{n-1}$ je kvantil t-rozdělení. Stupňů volnosti je $n-1$, protože při fixním průměru lze z $n-1$ hodnot dopočítat poslední.\par
+\noindent\bod{3}\ \textbf{Bonus:} Dvouvýběrový t-test porovnává střední hodnoty dvou nezávisle samplovaných populací, například $H_0:\mu_X=\mu_Y$, i s různými počty vzorků. Používá
+\[
+T=\frac{\overline{X_n}-\overline{Y_m}}{\mathrm{se}},
+\qquad
+\mathrm{se}=\sqrt{\frac{\sigma_X^2}{n}+\frac{\sigma_Y^2}{m}},
+\]
+případně interval přes $\delta=\mathrm{se}\cdot\Phi^{-1}(1-\alpha/2)$. Párový t-test se používá pro související dvojice dat: vezmeme rozdíly $R_i=Y_i-X_i$ a použijeme jednovýběrový test na rozdíly.
+Pearsonův chí-kvadrát test dobré shody porovnává pozorované četnosti $O_i$ a očekávané četnosti $E_i$ kategorií. Testová statistika je
+\[
+\chi^2=\sum_i\frac{(E_i-O_i)^2}{E_i}.
+\]
+Typická úloha je spravedlivost kostky; pro šest kategorií použijeme $\chi^2$ rozdělení s pěti stupni volnosti. Obecně $H_0$ říká, že pozorované četnosti odpovídají očekávaným, a pokud $H_0$ platí, má statistika $\chi^2$ rozdělení s $n-1$ stupni volnosti pro $n$ kategorií. $H_0$ zamítáme, když je statistika větší než kritická hodnota.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -408,18 +546,27 @@ nebo směry, kde se data nejvíc mění (PCA).
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} \emph{k-means} minimalizuje $\sum_{j=1}^k\sum_{x_i\in C_j}\|x_i-\mu_j\|^2$, kde $\mu_j$ je centroid shluku.
-\emph{PCA} hledá ortogonální směry maximalizující rozptyl projekce; jsou to vlastní vektory kovarianční matice s největšími vlastními čísly.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} \emph{k-means}: zvol $k$ center, opakuj \{přiřaď body
-nejbližšímu centru; přepočítej centra jako průměry\} až do ustálení. \emph{Hierarchické
-shlukování}: postupně slučuj nejbližší shluky (aglomerativně) $\Rightarrow$ \emph{dendrogram},
-$k$ není třeba dopředu.\par
-\noindent\bod{3}\ \textbf{Bonus:} PCA = vlastní vektory kovarianční matice (největší vlastní čísla =
-nejvíc rozptylu). k-means: nutné zvolit $k$ a citlivý na počáteční centra (k-means++).
-k-means minimalizuje součet čtverců vzdáleností ke centroidům a konverguje k lokálnímu optimu.
-Hierarchické shlukování může být aglomerativní nebo divisivní, dendrogram se řeže podle
-požadovaného počtu shluků. SVD $X=U\Sigma V^\top$ dává nízkohodnostní aproximace; PCA
-centruje data a bere první sloupce $V$.
+\noindent\bod{1}\ \textbf{Minimum:} Učení bez učitele nemá targety. k-means dělí body $x_1,\dots,x_N$ do $K$ shluků s centroidy $\mu_1,\dots,\mu_K$ a optimalizuje
+\[
+J=\sum_{i=1}^N\sum_{k=1}^K z_{i,k}\|x_i-\mu_k\|^2,
+\]
+kde $z_{i,k}$ indikuje přiřazení bodu $x_i$ do shluku $k$. PCA redukuje dimenzi hledáním směrů největšího rozptylu; získáme je ze SVD centrované datové matice nebo jako vlastní vektory kovarianční matice.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} Algoritmus k-means: na vstupu jsou body a počet shluků $K$. Inicializuj středy náhodně ze vstupních bodů nebo pomocí kmeans++. Pak opakuj do konvergence: každý bod přiřaď shluku s nejbližším středem a každý střed aktualizuj jako průměr bodů přiřazených do daného shluku. kmeans++ vybere první střed náhodně a každý další z nepoužitých bodů s pravděpodobností úměrnou druhé mocnině vzdálenosti k nejbližšímu už zvolenému středu. Přiřazovací krok loss nezvyšuje a aktualizace centroidů loss nezvyšuje, proto k-means konverguje k lokálnímu optimu. Použití: shlukování dat bez targetů, například podobné barvy pixelů nebo skupiny zákazníků.\par
+\noindent\bod{3}\ \textbf{Bonus:} Hierarchické shlukování může být aglomerativní (spojování menších shluků) nebo divisivní (dělení velkých shluků). Aglomerativní postup začíná s každým bodem jako singletonem a opakovaně slučuje nejpodobnější shluky, dokud nedostane cílový počet shluků. Podobnost shluků lze měřit vzdáleností centroidů, vzdálenostmi bodů, průměry vzdáleností a podobně. Divisivní DIANA začne jedním shlukem se všemi body, najde bod nejvíce odlišný od ostatních a oddělí ho, poté do nového shluku postupně přidává další body, pokud jsou mu blíže než původnímu shluku. V každé fázi se jeden shluk rozdělí na dva, dokud není každý bod sám. Výsledkem je dendrogram, který lze zaříznout na vhodném počtu shluků. PDDP používá princip PCA a dělí shluky projekcí na hlavní komponenty. Hierarchické algoritmy jsou většinou hladové, takže negarantují optimum.
+SVD: pro matici $X\in\mathbb R^{m\times n}$ s hodností $r$ platí
+\[
+X=U\Sigma V^T,
+\]
+kde $U\in\mathbb R^{m\times m}$ a $V\in\mathbb R^{n\times n}$ jsou ortonormální a $\Sigma\in\mathbb R^{m\times n}$ je diagonální s nezápornými sestupně seřazenými singulárními čísly. Rozklad lze psát
+\[
+X=\sigma_1u_1v_1^T+\sigma_2u_2v_2^T+\dots+\sigma_ru_rv_r^T.
+\]
+Protože existuje nejvýše $r$ nenulových singulárních čísel, lze použít redukovanou SVD s $\Sigma$ rozměru $r\times r$, $U$ rozměru $m\times r$ a $V^T$ rozměru $r\times n$ bez ztráty informace. Pro aproximaci hodnosti $k<r$ necháme jen $k$ největších singulárních čísel a ostatní zahodíme.
+PCA dimenze $M$ z datové matice $X$: spočti průměr řádků $\bar x$, proveď SVD matice $X-\bar x$, nech prvních $M$ řádků $V^T$ (ekvivalentně $M$ sloupců $V$) a nové komponenty získej jako $XV$, matici $N\times M$. Funguje to proto, že SVD centrovaných dat dává vlastní vektory kovarianční matice
+\[
+\mathrm{cov}(X)=\frac1N(X-\bar x)^T(X-\bar x).
+\]
+Vlastní vektory lze hledat power iteration: ulož $S=\mathrm{cov}(X)$, pro každou komponentu začni náhodným vektorem, opakovaně ho násob zleva maticí $S$ a normalizuj, dokud nekonverguje, a po nalezení komponenty odečti od $S$ člen $\lambda_iv_iv_i^T$, kde $\lambda_i$ je norma vektoru před poslední normalizací. PCA se používá k aproximaci matic, snížení šumu, redukci dimenze, extrakci příznaků, vizualizaci a v doporučovacích systémech; geometricky postupně hledá osy s největším rozptylem.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]

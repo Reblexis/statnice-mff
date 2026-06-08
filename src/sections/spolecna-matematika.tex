@@ -25,22 +25,69 @@ tečny). \emph{Integrál} = orientovaná plocha pod grafem. Derivace a integrál
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} $\lim a_n=L \iff \forall\varepsilon>0\ \exists n_0\ \forall n\ge n_0:\ |a_n-L|<\varepsilon$.
-$\lim_{x\to a}f(x)=L \iff \forall\varepsilon>0\ \exists\delta>0:\ 0<|x-a|<\delta \Rightarrow |f(x)-L|<\varepsilon$.
-Spojitost v $a$: $\lim_{x\to a}f(x)=f(a)$; nespojitost v $a$ nastane, když $f(a)$ není definována, limita neexistuje nebo se nerovná $f(a)$.
-Derivace $f'(a)=\lim_{h\to0}\frac{f(a+h)-f(a)}{h}$.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Věta o dvou policajtech}: sevřená posloupnost má limitu
-jako její meze. \emph{Geometrická řada} $\sum q^n=\frac{1}{1-q}$ pro $|q|<1$, harmonická
-$\sum\frac1n$ diverguje. \emph{l'Hospital}: pro typ $\frac00$ nebo $\frac\infty\infty$
-lze za podmínek věty nahradit podílem derivací. Průběh: $f'>0$ roste, $f''>0$ konvexní,
-kandidáty na extrém dávají body s $f'=0$ nebo kde derivace není definovaná. \emph{Newton-Leibniz}:
-\emph{primitivní funkce} na intervalu $I$ splňuje $F'=f$ na $I$ a $\int_a^b f = F(b)-F(a)$.
-\emph{Riemannův integrál} je limita součtů $\sum_i f(\xi_i)(x_i-x_{i-1})$, pokud při zjemnění dělení existuje a nezávisí na volbě $\xi_i$.\par
-\noindent\bod{3}\ \textbf{Bonus:} \emph{Taylor} $f(x)\approx\sum\frac{f^{(k)}(a)}{k!}(x-a)^k$.
-Aplikace integrálu: objem rotačního tělesa $\pi\int f(x)^2\,dx$, délka křivky
-$\int\sqrt{1+f'(x)^2}\,dx$, povrch rotační plochy
-$2\pi\int f(x)\sqrt{1+f'(x)^2}\,dx$. Integrální kritérium: pro nezápornou
-nerostoucí $f$ konverguje $\sum f(k)$ právě když je nevlastní integrál konečný.
+\noindent\bod{1}\ \textbf{Definice:} Posloupnost s hodnotami v $M$ je zobrazení
+$\mathbb N\to M$. Pro reálnou posloupnost $(a_n)$ a $L\in\mathbb R^*$ píšeme
+$a_n\to L$, právě když pro každé okolí cíle jsou všechny členy od jistého indexu uvnitř;
+pro vlastní $L\in\mathbb R$ tedy
+$\forall\varepsilon>0\ \exists n_0\ \forall n\ge n_0:\ |a_n-L|<\varepsilon$.
+Vlastní limita znamená konvergenci, jinak posloupnost diverguje; limita je nejvýše jedna.
+Řada $\sum_{n=1}^{\infty}a_n$ je dána částečnými součty $s_n=\sum_{k=1}^n a_k$;
+konverguje, pokud $(s_n)$ má vlastní limitu, a tato limita je součet řady. Okolí
+$a\in\mathbb R$ je $U(a,\delta)=(a-\delta,a+\delta)$, prstencové okolí je bez bodu
+$a$; pro $\pm\infty$ se používají intervaly typu $(1/\delta,+\infty)$. Limita funkce
+$\lim_{x\to a}f(x)=A$ znamená, že pro každé okolí $A$ existuje prstencové okolí $a$,
+z něhož všechny hodnoty $f(x)$ leží v okolí $A$. Jednostranné limity se definují
+pravým nebo levým prstencovým okolím; oboustranná limita existuje právě tehdy, když
+existují a shodují se obě jednostranné limity. Spojitost v bodě je
+$\lim_{x\to a}f(x)=f(a)$; spojitost na intervalu znamená spojitost ve vnitřních bodech
+a příslušnou jednostrannou spojitost v krajních bodech. Derivace v bodě $b$ je
+$f'(b)=\lim_{h\to0}\frac{f(b+h)-f(b)}h=\lim_{x\to b}\frac{f(x)-f(b)}{x-b}$;
+vlastní derivace znamená diferencovatelnost. Primitivní funkce $F$ k $f$ na $(a,b)$
+splňuje $F'=f$ a je určena až na konstantu.\par
+\noindent\bod{2}\ \textbf{Věty, pravidla a algoritmy:} Aritmetika limit posloupností i funkcí:
+z limit $a,b$ plynou limity součtu, součinu a podílu, pokud je pravá strana definována
+a jmenovatel je od jistého místa nenulový. Neurčité výrazy jsou zejména součet nekonečen
+různých znamének, $0\cdot\infty$, podíl nekonečen a dělení reálného čísla nulou.
+Je-li $(a_n)$ omezená a $b_n\to0$, pak $a_nb_n\to0$ i bez existence $\lim a_n$.
+Uspořádání: z $\lim a_n=a< b=\lim b_n$ plyne od jistého indexu $a_n<b_n$; naopak
+$a_n\le b_n$ od jistého indexu dává $\lim a_n\le\lim b_n$. Stejně pro funkce v
+prstencovém okolí. Věta o dvou policajtech: z $a_n\le c_n\le b_n$ a
+$a_n,b_n\to A\in\mathbb R$ plyne $c_n\to A$; pro nevlastní limity stačí jednostranné
+sevření. Pro funkce platí analogie $f\le h\le g$ a stejné limity $f,g$. Limita složené
+funkce: jestliže $g(x)\to B$ pro $x\to A$, $f(y)\to C$ pro $y\to B$ a buď je $f$
+spojitá v $B$, nebo $g$ v prstencovém okolí $A$ nenabývá hodnotu $B$, pak
+$f(g(x))\to C$. Věta o mezihodnotách: spojitá $f:[a,b]\to\mathbb R$ nabývá každé
+hodnoty mezi $f(a)$ a $f(b)$. Weierstrassova věta: spojitá funkce na $[a,b]$ nabývá
+maxima i minima. l'Hospitalovo pravidlo: pro $a\in\mathbb R^*$, vlastní derivace
+$f,g$ na $P(a,\delta)$ a $g'\ne0$, pokud $f,g\to0$ nebo $|g|\to+\infty$ a
+$f'/g'\to A\in\mathbb R^*$, pak $f/g\to A$. Vyšetření průběhu: lokální extrém ve
+vnitřním bodě může nastat jen při $f'=0$ nebo neexistenci derivace; $f'>0,\ge0,<0,\le0,=0$
+na vnitřku intervalu dává rostoucí, neklesající, klesající, nerostoucí, konstantní funkci.
+Podle druhé derivace je funkce ryze konvexní pro $f''>0$, konvexní pro $f''\ge0$,
+ryze konkávní pro $f''<0$ a konkávní pro $f''\le0$. Newtonův integrál je
+$(N)\int_a^b f=[F]_a^b=F(b^-)-F(a^+)$. Per partes: $\int u'v=uv-\int uv'$.
+Riemannův integrál: pro dělení $D=(a_0,\ldots,a_k)$, $I_i=[a_i,a_{i+1}]$,
+$s(f,D)=\sum |I_i|m_i$, $S(f,D)=\sum |I_i|M_i$; dolní integrál je supremum dolních sum,
+horní integrál infimum horních sum a integrál existuje, když se rovnají. Pokud existují
+Riemannův i Newtonův integrál, jsou si rovny. Integrální kritérium: pro nezápornou
+nerostoucí $f$ konverguje $\sum_{k=1}^{\infty} f(k)$ právě tehdy, když
+$\lim_{b\to+\infty}\int_1^b f<+\infty$.\par
+\noindent\bod{3}\ \textbf{Vzorce, případy a aplikace:} Geometrická řada
+$\sum_{n=0}^{\infty}q^n$ má částečný součet $s_n=(q^n-1)/(q-1)$ pro $q\ne1$ a součet
+$1/(1-q)$ pro $-1<q<1$; pro $q\ge1$ diverguje k $+\infty$ a pro $q\le-1$ součet
+neexistuje. Harmonická řada $\sum 1/n$ diverguje, přestože $1/n\to0$; obecně
+$\sum 1/n^s$ konverguje pro $s>1$ a diverguje pro $s\le1$. I při ostrých nerovnostech
+členů mohou být limity stejné, například $1-1/n<1$. Taylorův polynom řádu $n$:
+$T_n^{f,a}(x)=\sum_{i=0}^n\frac{f^{(i)}(a)}{i!}(x-a)^i$, kde nultý člen je $f(a)$.
+Taylorova řada je $\sum_{n=0}^{\infty}\frac{f^{(n)}(a)}{n!}(x-a)^n$ a tam, kde sečte
+na funkci, dává $f(x)$. Pro neklesající $f$ na $[1,n]$ platí
+$\sum_{k=1}^{n-1}f(k)\le\int_1^n f\le\sum_{k=2}^{n}f(k)$, což se používá k odhadům
+konečných i nekonečných součtů. Obsah oblasti pod grafem nezáporné funkce je
+$\int_a^b f$. Rotací oblasti pod $f$ kolem osy $x$ vznikne těleso s objemem
+$\pi\int_a^b f(t)^2\,dt$ a povrchem
+$2\pi\int_a^b f(t)\sqrt{1+(f'(t))^2}\,dt$. Délka křivky grafu $f$ od $a$ do $b$ je
+$\int_a^b\sqrt{1+(f'(t))^2}\,dt$. Substituce se používá tak, že se změní proměnná i
+meze určitého integrálu; per partes převádí integrál součinu na jednodušší integrál.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -73,26 +120,107 @@ maticí). Hodně pojmů jsou jen různé pohledy na totéž: hodnost, dimenze ob
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} \emph{Hodnost} matice je dimenze prostoru generovaného jejími sloupci, ekvivalentně počet pivotů.
-\emph{Báze} vektorového prostoru je lineárně nezávislá generující množina; \emph{dimenze} je počet prvků libovolné báze.
-\emph{Vlastní číslo a vektor}: $Ax=\lambda x$ pro $x\neq0$. Matice je regulární $\iff$ má inverzi $\iff$ $\det\neq0$ $\iff$ plná hodnost.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Gaussova eliminace} řeší soustavy i počítá hodnost/inverzi.
-\emph{Jádro} = řešení $Ax=0$; platí $\dim\ker + \mathrm{rank} = n$. Vlastní čísla jsou kořeny char.\ polynomu $\det(A-\lambda I)=0$.
-\emph{Podobné matice}: $B=S^{-1}AS$ pro regulární $S$; zachovávají hodnost, determinant, vlastní čísla, stopu a charakteristický polynom.
-\emph{Pozitivně definitní} reálná symetrická matice splňuje $x^\top Ax>0$ pro všechna $x\neq0$.
-\emph{Skalární součin} dává normu a kolmost;
-\emph{Gram-Schmidt} vyrobí ortonormální bázi. Souřadnice vektoru vůči ortonormální bázi jsou
-\emph{Fourierovy koeficienty} $\langle u|v_i\rangle$ (a \emph{ortogonální projekce} na podprostor
-je součet $\sum_i \langle u|v_i\rangle v_i$). Pythagorova věta a Cauchy-Schwarzova nerovnost $|\langle u|v\rangle|\le\|u\|\|v\|$.\par
-\noindent\bod{3}\ \textbf{Bonus:} \emph{Diagonalizace} $A=S\Lambda S^{-1}$ (sloupce $S$ = vlastní
-vektory). Symetrické matice mají reálná vl.\ čísla a ortogonální diagonalizaci $A=Q\Lambda Q^\top$.
-Reálná symetrická matice je \emph{pozitivně definitní} ($x^\top Ax>0$ pro $x\neq0$)
-$\iff$ má kladná vl.\ čísla $\iff$ existuje Choleského rozklad $A=LL^\top$.
-Grupa má asociativní operaci, neutrální a inverzní prvky; těleso má sčítání a násobení
-kompatibilní distributivitou, konečné těleso má řád mocniny prvočísla. Permutace se skládá
-z cyklů, rozkládá na transpozice a má znaménko. Souřadnice a matice lineárního zobrazení
-závisí na bázi; matice přechodu je regulární. Ortogonální matice zachovává skalární součin
-a délky. Determinant měří orientovaný objem, je multiplikativní a stopa je součet vlastních čísel.
+\noindent\bod{1}\ \textbf{Definice:} Binární operace na $X$ je zobrazení $X\times X\to X$.
+Grupa $(G,\circ)$ má asociativní operaci, neutrální prvek $e$ a ke každému $a$ inverzní
+prvek $b$ s $a\circ b=b\circ a=e$; je abelovská, pokud je operace komutativní. Podgrupa
+$(H,\bullet)\le(G,\circ)$ splňuje $H\subseteq G$ a operace se shodují na $H$. Permutace
+na $[n]$ je bijekce $[n]\to[n]$; skládání je $(q\circ p)(i)=q(p(i))$, permutační matice
+má $(P)_{ij}=1$ právě pro $p(i)=j$, cyklus $(1,2,3,4)$ posílá $1$ na $2$, $2$ na $3$,
+$3$ na $4$, $4$ na $1$, transpozice je cyklus délky $2$. Těleso $\mathbb K$ má sčítání
+a násobení tak, že $(\mathbb K,+)$ a $(\mathbb K\setminus\{0\},\cdot)$ jsou abelovské
+grupy a platí distributivita. Charakteristika je nejmenší $n$ s $1+\cdots+1=0$, nebo
+$0$, když takové $n$ neexistuje. Soustava má tvar $Ax=b$, rozšířená matice je $(A|b)$,
+homogenní soustava je $Ax=0$. Elementární řádkové úpravy jsou násobení řádku nenulovým
+skalárem a přičtení řádku k jinému; z nich plyne přičtení násobku řádku a záměna řádků.
+REF má nenulové řádky seřazené podle počátečních nul a nulové řádky dole; první nenulový
+prvek řádku je pivot. RREF má pivoty rovné $1$ a nuly nad i pod pivoty. Hodnost je počet
+pivotů v libovolném REF. Inverzní matice $A^{-1}$ splňuje $AA^{-1}=I_n$; regulární matice
+má inverzi, singulární ji nemá. Vektorový prostor $V$ nad $\mathbb K$ je abelovská grupa
+$(V,+)$ s násobením skalárem splňujícím asociativitu skalárů, $1u=u$ a obě distributivity.
+Podprostor je neprázdná podmnožina uzavřená na součet a násobení skalárem. Lineární
+kombinace je $\sum\alpha_i v_i$, lineární nezávislost znamená
+$\sum\alpha_i v_i=o\Rightarrow\alpha_i=0$. Lineární obal $\mathrm{span}(X)$ je průnik
+všech podprostorů obsahujících $X$, ekvivalentně množina všech lineárních kombinací z $X$.
+Báze je lineárně nezávislá generující množina, dimenze je velikost libovolné báze a
+souřadnice v bázi $X=(v_1,\ldots,v_n)$ jsou koeficienty v zápisu $u=\sum\alpha_i v_i$.
+Lineární zobrazení splňuje $f(u+v)=f(u)+f(v)$ a $f(\alpha u)=\alpha f(u)$; obraz a jádro
+jsou $f(U)$ a $\ker f=\{u:f(u)=o\}$. Skalární součin nad $\mathbb C$ je pozitivně definitní,
+hermitovsky symetrický a lineární v prvním argumentu; nad $\mathbb R$ je symetrický.
+Norma je $\|u\|=\sqrt{\langle u|u\rangle}$ a kolmost je $\langle u|v\rangle=0$.\par
+\noindent\bod{2}\ \textbf{Věty, pravidla a algoritmy:} Každou permutaci lze rozložit na
+transpozice; znaménko je $\mathrm{sgn}(p)=(-1)^{\text{počet inverzí}}$, stejně
+$(-1)^{\text{počet transpozic}}$. $\mathbb Z_p$ je těleso právě pro prvočíslo $p$;
+konečné těleso má řád $p^k$ a konečná tělesa mohou mít i neprvočíselný řád, například
+$GF(4)$. Řádkové úpravy nemění množinu řešení soustavy. Gaussova eliminace převádí
+matici do REF: volí se pivot, vhodnými násobky se nulují prvky pod ním a pokračuje se
+ve zbytku matice. Gaussova-Jordanova eliminace pokračuje do RREF: pivotové řádky se
+vydělí pivotem a odspodu se nulují prvky nad pivoty. Je-li pivot v posledním sloupci
+rozšířené matice, soustava nemá řešení. Pokud $x^0$ řeší $Ax=b$, pak
+$\bar x\mapsto x^0+\bar x$ je bijekce mezi řešeními $A\bar x=0$ a $Ax=b$; obecné řešení
+je $y+\sum p_i\bar x_i$, kde $p_i$ jsou volné parametry. Pro čtvercovou $A$ jsou
+ekvivalentní: $A$ je regulární, $\mathrm{rank}(A)=n$, $A\sim\sim I_n$, soustava
+$Ax=0$ má jen nulové řešení. Inverzi počítáme
+$(A|I_n)\sim\sim(I_n|A^{-1})$, selhání znamená singularitu. Lemma o výměně: je-li
+$y_1,\ldots,y_n$ systém generátorů a $x=\sum\alpha_i y_i$ s $\alpha_k\ne0$, lze $y_k$
+nahradit $x$ a stále dostat systém generátorů. Steinitzova věta: je-li
+$x_1,\ldots,x_m$ lineárně nezávislý systém a $y_1,\ldots,y_n$ generuje $V$, pak
+$m\le n$ a lze doplnit $x_1,\ldots,x_m$ některými $y_i$ na systém generátorů. Průnik
+podprostorů je podprostor. Pro $A\in\mathbb K^{m\times n}$ platí
+$\dim\ker A+\mathrm{rank}(A)=n$ a dimenze řádkového i sloupcového prostoru je hodnost.
+Lineární zobrazení je určeno obrazy báze. Matice $[f]_{X,Y}$ má ve sloupcích souřadnice
+$[f(u_i)]_Y$ a $[f(w)]_Y=[f]_{X,Y}[w]_X$. Pro složení platí
+$[g\circ f]_{B,D}=[g]_{C,D}[f]_{B,C}$. Matice přechodu je $[id]_{X,Y}$,
+$[u]_Y=[id]_{X,Y}[u]_X$, je regulární, inverzní je přechod zpět a prakticky
+$[id]_{X,Y}=Y^{-1}X$. Isomorfismus je bijektivní lineární zobrazení; inverze je opět
+isomorfismus, isomorfní prostory mají stejnou dimenzi a $f$ je isomorfismus právě tehdy,
+když jeho matice v bázích je regulární. Cauchyho-Schwarzova nerovnost:
+$|\langle u|v\rangle|\le\|u\|\|v\|$; trojúhelníková nerovnost:
+$\|u+v\|\le\|u\|+\|v\|$; pro kolmé vektory platí Pythagoras
+$\|u+v\|^2=\|u\|^2+\|v\|^2$. Gram-Schmidt: z báze $u_i$ vytvoří ortonormální bázi
+$v_i$ předpisem $w_i=u_i-\sum_{j<i}\langle u_i|v_j\rangle v_j$,
+$v_i=w_i/\|w_i\|$. Ortonormální báze dává Fourierův rozvoj
+$u=\sum_i\langle u|v_i\rangle v_i$. Ortogonální projekce na podprostor s ON bází
+$v_i$ je $p(u)=\sum_i\langle u|v_i\rangle v_i$ a je lineární. Ortogonální matice
+$Q$ splňuje $Q^TQ=I$, tedy $Q^{-1}=Q^T$; právě tehdy její sloupce tvoří ON bázi.
+Ortogonální matice i její transpozice a inverze zachovávají skalární součin, normy,
+úhly a délky, součin ortogonálních matic je ortogonální.\par
+\noindent\bod{3}\ \textbf{Vzorce, případy a aplikace:} Sloupcový prostor
+$\mathcal S(A)=\{Ax:x\in\mathbb K^n\}\subseteq\mathbb K^m$, řádkový prostor
+$\mathcal R(A)=\{A^Ty:y\in\mathbb K^m\}\subseteq\mathbb K^n$, jádro
+$\ker A=\{x:Ax=0\}$. Jednotková matice má $(I_n)_{ij}=1$ právě pro $i=j$,
+transpozice splňuje $(A^T)_{ij}=a_{ji}$, symetrická matice splňuje $A^T=A$ a
+součin matic je $(AB)_{ij}=\sum_{k=1}^n a_{ik}b_{kj}$. Determinant:
+$\det A=\sum_{p\in S_n}\mathrm{sgn}(p)\prod_{i=1}^n a_{i,p(i)}$,
+$\det(AB)=\det A\det B$, $\det A=\det A^T$, regularita je ekvivalentní
+$\det A\ne0$, pro regulární $A$ je $\det(A^{-1})=(\det A)^{-1}$. Laplaceův rozvoj
+podle $i$-tého řádku: $\det A=\sum_{j=1}^n a_{ij}(-1)^{i+j}\det A^{ij}$, kde
+$A^{ij}$ vznikne odstraněním řádku $i$ a sloupce $j$. Geometricky $|\det A|$ měří
+objem rovnoběžnostěnu ze sloupců a faktor změny objemu lineárním zobrazením. Vlastní
+číslo $A\in\mathbb C^{n\times n}$ je $\lambda$, pro něž existuje $x\ne o$ s
+$Ax=\lambda x$; vlastní vektor určuje invariantní směr a $\lambda$ škálování v tomto
+směru. Charakteristický polynom je $p_A(t)=\det(A-tI_n)$, vlastní čísla jsou jeho
+kořeny včetně algebraických násobností, geometrická násobnost $\lambda$ je
+$n-\mathrm{rank}(A-\lambda I_n)$ a je nejvýše algebraická. Determinant je součin
+vlastních čísel a stopa jejich součet; $A$ je regulární právě tehdy, když $0$ není
+vlastní číslo; $A^T$ má stejná vlastní čísla, ale obecně jiné vlastní vektory. Pro
+regulární $A$ má $A^{-1}$ vlastní čísla $\lambda_i^{-1}$ se stejnými vlastními vektory;
+$A^2$, $\alpha A$ a $A+\alpha I$ mění vlastní čísla na $\lambda_i^2$, $\alpha\lambda_i$
+a $\lambda_i+\alpha$. Podobnost: $A=SBS^{-1}$ pro regulární $S$; zachovává vlastní
+čísla a počty vlastních vektorů. $A$ je diagonalizovatelná právě tehdy, když má $n$
+lineárně nezávislých vlastních vektorů; pak $A=S\Lambda S^{-1}$ a $A^2=S\Lambda^2S^{-1}$.
+Různá vlastní čísla zaručují diagonalizovatelnost. Reálná symetrická matice má reálná
+vlastní čísla a ortogonální spektrální rozklad $A=Q\Lambda Q^T$. Symetrická $A$ je
+pozitivně semidefinitní, když $x^TAx\ge0$ pro všechna $x$, a pozitivně definitní, když
+$x^TAx>0$ pro $x\ne o$. Ekvivalentně má nezáporná, respektive kladná vlastní čísla,
+a existuje $U$ s $A=U^TU$; v definitním případě má $U$ hodnost $n$. Nesymetrickou matici
+lze pro kvadratickou formu symetrizovat na $(A+A^T)/2$. Součet pozitivně definitních
+matic je pozitivně definitní, kladný násobek také, pozitivně definitní matice je regulární
+a její inverze je pozitivně definitní. Skalární součin na $\mathbb R^n$ má tvar
+$\langle x|y\rangle=x^TAy$ právě pro pozitivně definitní $A$. Pozitivní definitnost lze
+testovat Gaussovou eliminací bez výměn řádků a se sledováním kladných pivotů. Choleského
+věta: pro každou pozitivně definitní $A\in\mathbb R^{n\times n}$ existuje jediná dolní
+trojúhelníková $L$ s kladnou diagonálou tak, že $A=LL^T$; soustavu $Ax=b$ pak řešíme
+dvěma trojúhelníkovými soustavami $Ly=b$ a $L^Tx=y$.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -123,20 +251,68 @@ opravuje dvojí započítání; \emph{Hallova věta} říká, kdy lze každého 
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} \emph{Ekvivalence} je relace reflexivní, symetrická a tranzitivní; její třídy tvoří rozklad množiny.
-\emph{Částečné uspořádání} je relace reflexivní, antisymetrická a tranzitivní.
-\emph{Bijekce} = prostá i na. Počet funkcí $A\to B$ je $|B|^{|A|}$.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} V částečném uspořádání je \emph{řetězec} po dvou porovnatelná podmnožina a \emph{antiřetězec} po dvou neporovnatelná podmnožina;
-\emph{Dilworthova věta} dává vztah šířky a pokrytí řetězci.
-\emph{Inkluze-exkluze}: $|A\cup B|=|A|+|B|-|A\cap B|$ (obecně se střídají
-znaménka). \emph{Binomická věta}: $(a+b)^n=\sum\binom nk a^k b^{n-k}$ (kombinační čísla =
-Pascalův trojúhelník).\par
-\noindent\bod{3}\ \textbf{Bonus:} \emph{Hallova věta}: bipartitní graf má párování pokrývající $A$
-$\iff$ pro každou $X\subseteq A$ platí $|N(X)|\ge|X|$ (Hallova podmínka); související
-\emph{Kőnigova věta}: max.\ párování = min.\ vrcholové pokrytí v bipartitním grafu. Aplikace inkluze-exkluze:
-počet surjekcí, Eulerova funkce, problém šatnářky. Počet prostých funkcí $N\to M$ je
-$m^{\underline n}$ a bijekcí na $n$ prvcích je $n!$. V konečné neprázdné ČUM existují
-minimální a maximální prvky, výška krát šířka je aspoň $|X|$.
+\noindent\bod{1}\ \textbf{Definice:} Binární relace mezi $X,Y$ je podmnožina
+$X\times Y$; relace na $X$ je podmnožina $X^2$ a píšeme $xRy\equiv(x,y)\in R$.
+Inverzní relace je $R^{-1}=\{(y,x):(x,y)\in R\}$, složení $T=R\circ S$ splňuje
+$xTz\equiv\exists y:xRy\land ySz$ a diagonála je $\Delta_X=\{(x,x):x\in X\}$.
+Reflexivita je $\Delta_X\subseteq R$, symetrie $R=R^{-1}$, antisymetrie
+$R\cap R^{-1}\subseteq\Delta_X$ a tranzitivita $R\circ R\subseteq R$. Ekvivalence je
+reflexivní, symetrická a tranzitivní; třída prvku je $R[x]=\{y:xRy\}$. Rozklad množiny
+$X$ je systém neprázdných po dvou disjunktních podmnožin se sjednocením $X$. Částečné
+uspořádání je reflexivní, antisymetrická a tranzitivní relace; lineární uspořádání má
+každé dva prvky porovnatelné. Ostré uspořádání $a<b$ znamená $a\le b$ a $a\ne b$,
+je ireflexivní, antisymetrické a tranzitivní. Nejmenší prvek splňuje $x\le y$ pro
+všechna $y$, minimální prvek nemá žádné $y<x$; duálně pro největší a maximální.
+Řetězec je podmnožina po dvou porovnatelných prvků, antiřetězec po dvou neporovnatelných.
+Funkce $X\to Y$ je relace s právě jedním obrazem pro každé $x$; je prostá, když různé
+prvky mají různé obrazy, surjektivní na $Y$, když každý $y$ má vzor, a bijektivní, když
+má každý $y$ právě jeden vzor. Permutace je bijekce $[n]\to[n]$, pevný bod splňuje
+$\pi(i)=i$. Kombinační číslo je
+$\binom nk=\frac{n^{\underline k}}{k!}=\frac{n!}{k!(n-k)!}$, kde
+$m^{\underline n}=m(m-1)\cdots(m-n+1)$. Párování v grafu je množina hran bez společných
+vrcholů; perfektní párování pokrývá všechny vrcholy. SRR v hypergrafu $H=(V,E)$ je
+prostá funkce $r:E\to V$ s $r(e)\in e$.\par
+\noindent\bod{2}\ \textbf{Věty, pravidla a algoritmy:} Třídy ekvivalence jsou neprázdné,
+dvě třídy jsou stejné nebo disjunktní a množina tříd určuje ekvivalenci jednoznačně;
+ekvivalence a rozklady si tak odpovídají. Konečná neprázdná uspořádaná množina má
+minimální a maximální prvek. Výška $\omega(X,\le)$ je délka nejdelšího řetězce, šířka
+$\alpha(X,\le)$ délka nejdelšího antiřetězce a pro konečnou ČUM platí
+$\alpha\omega\ge |X|$, tedy $\max(\alpha,\omega)\ge\sqrt{|X|}$. Počet funkcí
+$N\to M$ pro $|N|=n$, $|M|=m$ je $m^n$, počet prostých funkcí je
+$m^{\underline n}$, bijekcí na $n$ prvcích je $n!$ a $|X^k|=|X|^k$. Počet surjekcí
+$X\to Y$ pro $n\ge m>0$ je
+$\sum_{k=0}^m(-1)^k\binom mk(m-k)^n$. Permutací na $[n]$ je $n!$. Základní identity:
+$\binom nk=\binom n{n-k}$,
+$\binom{n-1}{k-1}+\binom{n-1}{k}=\binom nk$ a binomická věta
+$(x+y)^n=\sum_{i=0}^n\binom ni x^{n-i}y^i$; z ní plyne
+$\sum_{k=0}^n\binom nk=2^n$, důkaz $(x^n)'=nx^{n-1}$ přes limitu diference a
+$e=\lim(1+1/n)^n$. Princip inkluze a exkluze:
+$|\bigcup_{i=1}^nA_i|=\sum_{k=1}^n(-1)^{k+1}
+\sum_{I\in\binom{[n]}k}|\bigcap_{i\in I}A_i|$. Důkaz počítá příspěvek jednoho prvku,
+který leží právě v $t$ množinách: dostane
+$\sum_{k=1}^t(-1)^{k+1}\binom tk=1$ z $(1-1)^t=0$. Hallova věta pro bipartitní graf
+s partitami $A,B$: existuje párování velikosti $|A|$ právě tehdy, když pro každé
+$X\subseteq A$ platí $|N(X)|\ge |X|$. Nutnost je zřejmá ze spárovaných sousedů;
+postačitelnost lze dokázat přes Kőnigovu-Egerváryho větu, že maximum párování se rovná
+minimu vrcholového pokrytí v bipartitním grafu. Hypergrafová Hallova věta: $H=(V,E)$
+má SRR právě tehdy, když pro každé $F\subseteq E$ platí
+$|\bigcup_{e\in F}e|\ge |F|$; převod vede přes incidenční bipartitní graf. Maximální
+párování, a tedy i SRR, lze najít v polynomiálním čase.\par
+\noindent\bod{3}\ \textbf{Vzorce, případy a aplikace:} Příklady relací jsou prázdná,
+univerzální a diagonální relace; příklady ekvivalencí jsou rovnost, shodnost modulo $K$
+a geometrická podobnost. Hasseův diagram zachycuje ČUM, větší prvky jsou výše; z
+nejmenšího prvku je cesta ke všem ostatním, minimální prvek nemá nic pod sebou. Pro
+problém šatnářky označme $A_i=\{\pi\in S_n:\pi(i)=i\}$; počet permutací bez pevného
+bodu je
+$\mathrm{D}(n)=n!\sum_{k=0}^n\frac{(-1)^k}{k!}$ a pravděpodobnost je
+$\sum_{k=0}^n\frac{(-1)^k}{k!}\approx e^{-1}$. Eulerova funkce $\varphi(n)$ počítá
+čísla z $[n]$ nesoudělná s $n$; pro rozklad
+$n=p_1^{e_1}\cdots p_k^{e_k}$ platí
+$\varphi(n)=n\prod_{i=1}^k(1-\frac1{p_i})$, což plyne z PIE na množiny čísel dělitelných
+$p_i$. Počet surjekcí se odvodí z počtu všech funkcí $m^n$ odečtením funkcí, které
+vynechají aspoň jeden prvek cílové množiny. Pokud v hypergrafu existuje $k$ hyperhran,
+jejichž sjednocení má méně než $k$ vrcholů, SRR neexistuje; Hall říká, že tato překážka
+je jediná.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -183,20 +359,77 @@ Grafy = vrcholy a hrany. Mnoho úloh = „dá se projít / spojit / obarvit / pr
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} \emph{Strom} je souvislý graf bez kružnic, ekvivalentně souvislý graf na $n$ vrcholech s $n-1$ hranami.
-\emph{Bipartitní graf} má rozklad $V=A\dot\cup B$ tak, že každá hrana vede mezi $A$ a $B$, ekvivalentně nemá lichou kružnici.
-\emph{Barevnost} $\chi(G)$ je nejmenší počet barev vrcholů tak, aby konce každé hrany měly různé barvy.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Silně souvislý} orientovaný graf má orientovanou cestu mezi každou uspořádanou dvojicí vrcholů; \emph{kondenzace} je DAG silných komponent.
-\emph{Eulerovský tah} projde každou hranu právě jednou, eulerovský graf má uzavřený eulerovský tah. \emph{Rovinný graf} lze nakreslit bez křížení hran;
-pro souvislý rovinný graf platí Eulerova formule $v-e+f=2$ a pro jednoduchý rovinný graf s $v\ge3$ plyne max.\ $3v-6$ hran.
-\emph{Tok} v síti respektuje kapacity a zachování toku; hodnota max.\ toku se rovná kapacitě min.\ řezu.\par
-\noindent\bod{3}\ \textbf{Bonus:} \emph{Mengerova věta}: pro dva různé vrcholy (u vrcholové verze typicky nesousední) je maximum hranově
-(resp.\ vnitřně vrcholově) disjunktních cest rovno velikosti minimálního hranového (resp.\ vrcholového) separátoru.
-Slabě souvislý orientovaný graf má souvislý podkladový graf.
-Eulerovský graf je souvislý a všechny stupně jsou sudé; v orientovaném grafu potřebuje
-vyvážené vstupní a výstupní stupně a souvislý podklad po odstranění izolovaných vrcholů.
-\emph{Ford-Fulkerson} opakuje zlepšující cesty v reziduální síti. Kuratowski: nerovinný graf obsahuje dělení $K_5$ nebo
-$K_{3,3}$; rovinný graf bez trojúhelníků má nejvýše $2v-4$ hran.
+\noindent\bod{1}\ \textbf{Definice:} Graf je $G=(V,E)$, kde $V$ je konečná neprázdná
+množina vrcholů a $E\subseteq\binom V2$ množina hran. Izomorfismus grafů je bijekce
+vrcholů zachovávající sousednost; izomorfie je ekvivalence. Podgraf $G'=(V',E')$
+splňuje $V'\subseteq V$, $E'\subseteq E$; indukovaný podgraf $G[A]$ má všechny hrany
+původního grafu uvnitř $A$. Okolí $N_G(v)$ je množina sousedů, stupeň je počet incidentních
+hran, $k$-regulární graf má všechny stupně $k$ a skóre je posloupnost stupňů. Doplněk
+má stejné vrcholy a právě chybějící hrany. Bipartitní graf má rozklad $V=L\dot\cup P$
+a všechny hrany vedou mezi partitami. Základní grafy: úplný $K_n$, úplný bipartitní
+$K_{m,n}$, prázdný $E_n$, cesta $P_n$ s vrcholy $\{0,\ldots,n\}$ a hranami
+$\{i,i+1\}$, kružnice $C_n$ pro $n\ge3$ s hranami $\{i,(i+1)\bmod n\}$. Souvislost
+znamená cestu mezi každými dvěma vrcholy; dosažitelnost je ekvivalence a její třídy
+indukují komponenty. Vzdálenost $d_G(u,v)$ je minimum délek cest v souvislém grafu.
+Sled může opakovat vrcholy i hrany, tah neopakuje hrany; eulerovský tah obsahuje všechny
+hrany a eulerovský graf má uzavřený eulerovský tah. Strom je souvislý acyklický graf,
+les je acyklický graf, list má stupeň $1$. Rovinné nakreslení nemá křížení hran,
+stěny jsou oblasti roviny včetně vnější a graf je rovinný, pokud takové nakreslení má.
+Obarvení $k$ barvami je $c:V\to[k]$ s různými barvami na koncích hran; barevnost
+$\chi(G)$ je minimální $k$. Klika je množina po dvou sousedních vrcholů, klikovost
+$\kappa(G)$ je největší $k$ s podgrafem $K_k$, nezávislá množina nemá vnitřní hranu.
+Hranový řez je $F\subseteq E$ s nesouvislým $G-F$; vrcholový řez je $A\subseteq V$
+s nesouvislým $G-A$. Orientovaný graf má $E\subseteq V^2\setminus\Delta_V$; podkladový
+graf zapomene orientace, vstupní a výstupní stupeň počítají hrany do a z vrcholu,
+vyvážený vrchol má oba stupně stejné. Slabá souvislost je souvislost podkladového grafu,
+silná souvislost je orientovaná cesta pro každou uspořádanou dvojici. Toková síť je
+$(V,E,z,s,c)$ se zdrojem $z$, stokem $s$ a kapacitami $c:E\to[0,+\infty)$; tok
+$f:E\to[0,+\infty)$ splňuje $0\le f(e)\le c(e)$ a Kirchhoffův zákon ve vrcholech mimo
+$z,s$.\par
+\noindent\bod{2}\ \textbf{Věty, pravidla a algoritmy:} Dosažitelnost je ekvivalence a
+graf je souvislý právě tehdy, když má jednu komponentu. Grafová vzdálenost je metrika:
+je nezáporná, nulová právě na diagonále, symetrická a splňuje trojúhelníkovou nerovnost.
+Eulerovský neorientovaný graf je právě souvislý graf se všemi stupni sudými. Každý strom
+s aspoň dvěma vrcholy má aspoň dva listy; je-li $v$ list, pak $G$ je strom právě tehdy,
+když $G-v$ je strom. Strom na $v$ vrcholech má $v-1$ hran. Ekvivalentní charakteristiky
+stromů: souvislý a acyklický; mezi každými dvěma vrcholy je právě jedna cesta; je souvislý
+a smazání libovolné hrany ho rozpojí; je acyklický a přidání libovolné hrany vytvoří
+cyklus; je souvislý a má $|E|=|V|-1$. Eulerova formule pro souvislý rovinný graf:
+$v+f=e+2$. Důkaz jde indukcí podle hran: strom má jednu stěnu, a při odstranění hrany
+ležící na cyklu se sníží $e$ i $f$ o $1$. Maximální rovinný graf je triangulace, proto
+pro jednoduchý rovinný graf s $v\ge3$ platí $e\le3v-6$; průměrný stupeň je menší než
+$6$. Bez trojúhelníků platí $e\le2v-4$, průměrný stupeň je menší než $4$ a existuje
+vrchol stupně nejvýše $3$. Kuratowského věta: graf je rovinný právě tehdy, když neobsahuje
+podgraf izomorfní dělení $K_5$ nebo $K_{3,3}$. Pro barevnost platí
+$H\subseteq G\Rightarrow\chi(H)\le\chi(G)$, $\chi(K_n)=n$, cesty a sudé kružnice mají
+barevnost $2$, liché kružnice $3$, stromy jsou $2$-obarvitelné a rovinné grafy jsou
+$4$-obarvitelné. Dále $\chi(G)\le2$ právě tehdy, když $G$ je bipartitní, právě tehdy,
+když neobsahuje lichou kružnici, a vždy $\chi(G)\ge\kappa(G)$. Mengerova hranová
+$xy$-verze: mezi různými $x,y$ existuje $k$ hranově disjunktních cest právě tehdy,
+když neexistuje hranový $xy$-řez velikosti menší než $k$; globálně je graf hranově
+$k$-souvislý právě tehdy, když mezi každými dvěma vrcholy existuje $k$ hranově disjunktních
+cest. Vrcholová verze: pro různé nesousední $x,y$ existuje $k$ navzájem vnitřně vrcholově
+disjunktních cest právě tehdy, když neexistuje vrcholový $xy$-řez velikosti menší než
+$k$; globálně obdobně pro vrcholovou $k$-souvislost. Pro orientované grafy platí:
+vyvážený a slabě souvislý právě tehdy, když je eulerovský, právě tehdy, když je vyvážený
+a silně souvislý. Maximální tok existuje v každé konečné síti: množina toků je kompaktní
+podmnožina $\mathbb R^m$ a velikost toku je spojitá. Minimaxová věta o toku a řezu:
+hodnota maximálního toku se rovná kapacitě minimálního řezu.\par
+\noindent\bod{3}\ \textbf{Vzorce, případy a aplikace:} Operace s grafy zahrnují přidání
+a odebrání vrcholu nebo hrany, dělení hrany a kontrakci hrany. Topologický graf je graf
+spolu s konkrétním nakreslením; hranice stěny je uzavřený sled. Grafy $K_5$ a
+$K_{3,3}$ nejsou rovinné. Vrcholová souvislost $k_v(G)$ je největší $k$, pro který je
+$G$ vrcholově $k$-souvislý; pro $K_n$ je $k_v(K_n)=n-1$ a pro neúplný graf je to velikost
+nejmenšího vrcholového řezu. Hranová souvislost $k_e(G)$ je velikost nejmenšího hranového
+řezu. V orientovaném grafu je součet vstupních stupňů roven součtu výstupních stupňů a
+počtu hran; silná souvislost implikuje slabou. Velikost toku je
+$w(f)=f[\mathrm{Out}(z)]-f[\mathrm{In}(z)]$, kde $f[A]=\sum_{e\in A}f(e)$. Řez v síti
+je množina hran, kterou protne každá orientovaná cesta ze zdroje do stoku. Rezerva hrany
+$uv$ ve Ford-Fulkersonově metodě je $r(uv)=c(uv)-f(uv)+f(vu)$; nasycená hrana má nulovou
+rezervu. Algoritmus opakuje: najdi nenasycenou cestu ze zdroje do stoku, vezmi minimum
+rezerv na cestě, v protisměru nejdřív odečti existující tok a zbytek přičti po směru.
+Pro celočíselné kapacity vrátí celočíselný maximální tok, racionální kapacity lze převést
+na celočíselné a pro iracionální kapacity se běh může pokazit.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -238,22 +471,88 @@ míra rozkolísanosti. \emph{CLV} říká, proč se všude objevuje normální r
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} \emph{Pravděpodobnostní prostor} je trojice $(\Omega,\mathcal F,P)$, kde $\mathcal F$ je $\sigma$-algebra jevů a $P(\Omega)=1$ je spočetně aditivní.
-\emph{Podmíněná pravděpodobnost} pro $P(B)>0$ je $P(A|B)=\frac{P(A\cap B)}{P(B)}$.
-\emph{Bayes} $P(A|B)=\frac{P(B|A)P(A)}{P(B)}$. \emph{Střední hodnota} $E[X]=\sum x_i p_i$
-(resp.\ $\int x f(x)$).\par
-\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Linearita} $E[X+Y]=E[X]+E[Y]$ (vždy). \emph{Rozptyl}
-$\mathrm{var}(X)=E[X^2]-E[X]^2$; obecně
-$\mathrm{var}(X+Y)=\mathrm{var}X+\mathrm{var}Y+2\mathrm{cov}(X,Y)$, pro nezávislé kovariance zmizí.
-\emph{Markovova nerovnost}: pro $X\ge0$ a $a>0$ platí $P(X\ge a)\le E[X]/a$.\par
-\noindent\bod{3}\ \textbf{Bonus:} \emph{Zákon velkých čísel}: průměr $\to E[X]$. \emph{CLV}: pro nezávislé stejně rozdělené veličiny se střední hodnotou $\mu$ a rozptylem $\sigma^2>0$ platí
-$\frac{\sum_{i=1}^n X_i-n\mu}{\sigma\sqrt n}\Rightarrow N(0,1)$.
-\emph{Test hypotéz}: chyba 1.\ druhu =
-zamítnu platnou $H_0$ (hladina $\alpha$), 2.\ druhu = nezamítnu neplatnou.
-Konkrétní rozdělení: Bernoulli, geometrické, binomické, Poissonovo, uniformní,
-exponenciální a normální. Bodové odhady řeší nestrannost, konzistenci, bias a MSE;
-tvoří se metodou momentů nebo MLE. Konfidenční interval má spolehlivost $1-\alpha$,
-p-hodnota je nejmenší hladina, na níž zamítáme.
+\noindent\bod{1}\ \textbf{Definice:} Pravděpodobnostní prostor je
+$(\Omega,\mathcal F,P)$, kde $\Omega$ je množina elementárních jevů, $\mathcal F$ je
+prostor jevů obsahující $\emptyset,\Omega$, uzavřený na doplněk a spočetná sjednocení,
+a $P:\mathcal F\to[0,1]$ splňuje $P(\Omega)=1$ a spočetnou aditivitu na po dvou disjunktních
+jevech. Klasický prostor je konečný s uniformní pravděpodobností, diskrétní připouští
+neuniformní pravděpodobnosti, geometrický má pravděpodobnost úměrnou míře oblasti a
+spojitý popisuje neuniformní hustoty. Jevy $A,B$ jsou nezávislé, když
+$P(A\cap B)=P(A)P(B)$; rodina je nezávislá, když totéž platí pro každou konečnou podrodinu,
+a po dvou nezávislá, když to platí jen pro dvojice. Podmíněná pravděpodobnost pro
+$P(B)>0$ je $P(A|B)=P(A\cap B)/P(B)$. Náhodná veličina je funkce na $\Omega$; diskrétní
+veličina má pravděpodobnostní funkci $p_X(x)=P(X=x)$, distribuční funkce je
+$F_X(x)=P(X\le x)$ a spojitá veličina má hustotu $f_X\ge0$ s
+$F_X(x)=\int_{-\infty}^x f_X(t)\,dt$ a $\int_{-\infty}^{\infty}f_X=1$. Střední hodnota je
+$\mathbb E X=\sum_x xP(X=x)$ nebo $\int x f_X(x)\,dx$; rozptyl je
+$\mathrm{var}(X)=\mathbb E((X-\mathbb EX)^2)$ a směrodatná odchylka
+$\sigma_X=\sqrt{\mathrm{var}(X)}$. Kovariance je
+$\mathrm{cov}(X,Y)=\mathbb E((X-\mathbb EX)(Y-\mathbb EY))$ a korelace
+$\rho(X,Y)=\mathrm{cov}(X,Y)/(\sigma_X\sigma_Y)$.\par
+\noindent\bod{2}\ \textbf{Věty, pravidla a algoritmy:} Základní pravidla:
+$P(A)+P(A^c)=1$, $A\subseteq B\Rightarrow P(B\setminus A)=P(B)-P(A)$ a $P(A)\le P(B)$,
+$P(A\cup B)=P(A)+P(B)-P(A\cap B)$ a Booleova nerovnost
+$P(\bigcup_i A_i)\le\sum_iP(A_i)$. Řetězové pravidlo:
+$P(A_1\cap\cdots\cap A_n)=P(A_1)P(A_2|A_1)\cdots P(A_n|A_1\cap\cdots\cap A_{n-1})$.
+Věta o úplné pravděpodobnosti pro rozklad $B_i$: $P(A)=\sum_iP(B_i)P(A|B_i)$.
+Bayesův vzorec:
+$P(B_j|A)=\frac{P(B_j)P(A|B_j)}{\sum_iP(B_i)P(A|B_i)}$. Distribuční funkce je
+neklesající, zprava spojitá, má limity $0$ v $-\infty$ a $1$ v $+\infty$ a
+$P(a<X\le b)=F_X(b)-F_X(a)$. Pravidlo naivního statistika:
+$\mathbb E(g(X))=\sum_xg(x)P(X=x)$ nebo $\int g(x)f_X(x)\,dx$; pro dvě veličiny
+$\mathbb E(g(X,Y))=\sum_x\sum_y g(x,y)P(X=x,Y=y)$. Linearita:
+$\mathbb E(aX+bY)=a\mathbb EX+b\mathbb EY$ vždy; pro nezávislé $X,Y$ platí
+$\mathbb E(XY)=\mathbb EX\,\mathbb EY$. Podmíněná střední hodnota je
+$\mathbb E(X|B)=\sum_xxP(X=x|B)$ a celková střední hodnota
+$\mathbb EX=\sum_iP(B_i)\mathbb E(X|B_i)$. Markovova nerovnost:
+pro $X\ge0$ a $a>0$ je $P(X\ge a)\le\mathbb EX/a$. Pro rozptyl platí
+$\mathrm{var}(X)=\mathbb E(X^2)-(\mathbb EX)^2$ a
+$\mathrm{var}(aX+b)=a^2\mathrm{var}(X)$. Dále
+$\mathrm{cov}(X,Y)=\mathbb E(XY)-\mathbb EX\,\mathbb EY$, nezávislost implikuje nulovou
+kovarianci, $\mathrm{cov}(X,X)=\mathrm{var}(X)$ a kovariance je lineární v argumentu.
+Pro $X=\sum_iX_i$ platí
+$\mathrm{var}(X)=\sum_i\sum_j\mathrm{cov}(X_i,X_j)$; pro nezávislé veličiny je rozptyl
+součtu součtem rozptylů. Silný zákon velkých čísel: pro nezávislé stejně rozdělené
+$X_i$ s průměrem $\mu$ platí $\bar X_n\to\mu$ skoro jistě. Slabý zákon:
+$P(|\bar X_n-\mu|>\varepsilon)\to0$, tedy $\bar X_n\xrightarrow P\mu$. Centrální limitní
+věta: pro stejně rozdělené nezávislé veličiny se střední hodnotou $\mu$ a rozptylem
+$\sigma^2>0$ má
+$Y_n=\frac{(X_1+\cdots+X_n)-n\mu}{\sigma\sqrt n}$ limitní rozdělení $N(0,1)$, tj.
+$F_{Y_n}(x)\to\Phi(x)$.\par
+\noindent\bod{3}\ \textbf{Vzorce, případy a aplikace:} Bernoulliho rozdělení
+$\mathrm{Ber}(p)$: $P(X=1)=p$, $P(X=0)=1-p$, $\mathbb EX=p$,
+$\mathrm{var}(X)=p(1-p)$. Geometrické $\mathrm{Geom}(p)$ pro první úspěch:
+$P(X=k)=(1-p)^{k-1}p$, $\mathbb EX=1/p$, $\mathrm{var}(X)=(1-p)/p^2$. Binomické
+$\mathrm{Bin}(n,p)$: $P(X=k)=\binom nkp^k(1-p)^{n-k}$, $\mathbb EX=np$,
+$\mathrm{var}(X)=np(1-p)$. Poissonovo $\mathrm{Pois}(\lambda)$:
+$P(X=k)=\lambda^ke^{-\lambda}/k!$, je limitou $\mathrm{Bin}(n,\lambda/n)$,
+$\mathbb EX=\mathrm{var}(X)=\lambda$. Uniformní $U(a,b)$:
+$f(x)=1/(b-a)$, $F(x)=(x-a)/(b-a)$ uvnitř intervalu, $\mathbb EX=(a+b)/2$,
+$\mathrm{var}(X)=(b-a)^2/12$. Exponenciální $\mathrm{Exp}(\lambda)$:
+$f(x)=\lambda e^{-\lambda x}$, $F(x)=1-e^{-\lambda x}$ pro $x\ge0$,
+$\mathbb EX=1/\lambda$, $\mathrm{var}(X)=1/\lambda^2$. Normální $N(0,1)$ má
+$\varphi(x)=\frac1{\sqrt{2\pi}}e^{-x^2/2}$; obecné $N(\mu,\sigma^2)$ má hustotu
+$\frac1{\sigma\sqrt{2\pi}}e^{-\frac12((x-\mu)/\sigma)^2}$ a standardizace
+$(X-\mu)/\sigma\sim N(0,1)$. Součet konečně mnoha nezávislých normálních veličin je
+normální se součtem středních hodnot a rozptylů. Pravidlo $3\sigma$ dává přibližně
+$0.68$, $0.95$, $0.997$ pro intervaly $\mu\pm\sigma$, $\mu\pm2\sigma$, $\mu\pm3\sigma$.
+Bodový odhad $\hat\theta_n$ pro $g(\theta)$ je nestranný, když
+$\mathbb E\hat\theta_n=g(\theta)$, asymptoticky nestranný, když se k tomu limita blíží,
+a konzistentní, když $\hat\theta_n\xrightarrow P g(\theta)$. Bias je
+$\mathbb E\hat\theta_n-\theta$, MSE je $\mathbb E((\hat\theta_n-\theta)^2)$ a
+$\mathrm{MSE}=\mathrm{bias}^2+\mathrm{var}(\hat\theta_n)$. Metoda momentů klade
+teoretické momenty $m_r(\theta)=\mathbb E(X^r)$ rovny výběrovým momentům
+$n^{-1}\sum_iX_i^r$; $m_1=\mu$, $m_2=\sigma^2+\mu^2$. MLE volí
+$\hat\theta_{ML}=\arg\max_\theta L(x;\theta)$, často přes logaritmus $\ell$; například
+pro $k$ leváků z $n$ je $L=\theta^k(1-\theta)^{n-k}$ a derivujeme
+$k\log\theta+(n-k)\log(1-\theta)$. Konfidenční interval $[D,H]$ má spolehlivost
+$1-\alpha$, když $P(D\le\theta\le H)=1-\alpha$; pro normální aproximaci
+$\hat\theta\pm z_{\alpha/2}\mathrm{se}$, kde $z_{\alpha/2}=\Phi^{-1}(1-\alpha/2)$.
+Testování: zvolí se testová statistika $T$, nulová hypotéza $H_0$, alternativa a kritický
+obor $W$; chybu 1. druhu tvoří zamítnutí platné $H_0$ s pravděpodobností $\alpha$,
+chybu 2. druhu nezamítnutí neplatné $H_0$ s pravděpodobností $\beta$, síla je $1-\beta$.
+$p$-hodnota je nejmenší hladina, na níž by se $H_0$ zamítla, tedy pravděpodobnost při
+$H_0$ vidět naměřenou nebo extrémnější hodnotu statistiky.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -283,20 +582,86 @@ rezoluce, příp.\ Hilbertovský kalkul); věty o kompaktnosti a úplnosti; rozh
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
-\noindent\bod{1}\ \textbf{Minimum:} \emph{Tautologie} = pravdivá ve všech ohodnoceních;
-\emph{splnitelná} = pravdivá aspoň v jednom. $T\models\varphi$: $\varphi$ platí v každém modelu $T$.
-\emph{CNF} = konjunkce klauzulí, \emph{DNF} = disjunkce konjunkcí.\par
-\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Rezoluce} (na CNF): z klauzulí $C\lor\ell$ a $D\lor\neg\ell$
-odvodí $C\lor D$; spor = prázdná klauzule (důkaz nesplnitelnosti). \emph{Tablo} = systematické
-hledání modelu. \emph{Věta o úplnosti}: $T\models\varphi \iff T\vdash\varphi$.\par
-\noindent\bod{3}\ \textbf{Bonus:} \emph{Kompaktnost}: teorie má model $\iff$ každá konečná část má
-model. \emph{Skolemizace} odstraní existenční kvantifikátory. \emph{Rozhodnutelnost}: výroková
-logika je rozhodnutelná (SAT), predikátová obecně ne; \emph{rekurzivně axiomatizovaná kompletní}
-teorie je rozhodnutelná, ale např.\ Peanova aritmetika kompletní není.
-PNF má kvantifikátory v prefixu; Horn-SAT je lineární přes jednotkovou propagaci.
-Extenze je konzervativní, když nepřidá nové důsledky ve starém jazyce. Tablo je
-sporné, když se uzavřou všechny větve; korektnost a úplnost spojují důkaz s platností.
-Gödel: dost silná bezesporná rekurzivně axiomatizovaná aritmetika je nekompletní.
+\noindent\bod{1}\ \textbf{Definice:} Výrokový jazyk je určen neprázdnou množinou
+výrokových proměnných $\mathbb P$. Predikátový jazyk je dán signaturou
+$\langle\mathcal R,\mathcal F\rangle$ s relačními a funkčními symboly včetně konstant,
+aritami a případně rovností; obsahuje proměnné, logické spojky, kvantifikátory a závorky.
+Struktura je $\mathcal A=\langle A,\mathcal R^\mathcal A,\mathcal F^\mathcal A\rangle$
+s neprázdnou doménou $A$, interpretacemi relačních symbolů jako relací na $A$ a funkčních
+symbolů jako funkcí na $A$. Term je proměnná, konstanta nebo $f(t_1,\ldots,t_n)$.
+Atomická formule je $R(t_1,\ldots,t_n)$ nebo rovnost termů; formule vznikají z atomů
+negací, binárními spojkami a kvantifikátory. Výskyt proměnné je vázaný kvantifikátorem,
+jinak volný; otevřená formule nemá kvantifikátory, sentence nemá volné proměnné. Term
+$t$ je substituovatelný za $x$ ve $\varphi$, když nahrazením volných výskytů $x$ nevznikne
+zachycení proměnné z $t$; instance se značí $\varphi(x/t)$. Literál je atom nebo jeho
+negace, opačný literál je $\bar\ell$, klauzule je disjunkce literálů, prázdná klauzule
+$\square$ není splněna, CNF je konjunkce klauzulí a prázdná CNF je $\top$. DNF je disjunkce
+elementárních konjunkcí literálů a prázdná DNF je $\bot$. Hornova formule je konjunkce
+klauzulí s nejvýše jedním pozitivním literálem. PNF má všechny kvantifikátory v prefixu
+a otevřené jádro. Model výrokové logiky je ohodnocení proměnných; model predikátové
+teorie je struktura, ve které platí všechny axiomy. Tautologie je formule pravdivá ve
+všech modelech, splnitelná v aspoň jednom, lživá v žádném a nezávislá vzhledem k teorii,
+když v některém modelu teorie platí a v jiném ne. Důsledek $T\models\varphi$ znamená,
+že $\varphi$ platí v každém modelu $T$.\par
+\noindent\bod{2}\ \textbf{Věty, pravidla a algoritmy:} PNF se získá vytahováním
+kvantifikátorů před formuli, s přejmenováním proměnných podle potřeby; při průchodu
+negací se $\forall$ a $\exists$ prohodí a u implikace se levá strana chová jako negovaná.
+Sémantický převod na DNF vezme modely a pro každý napíše elementární konjunkci; převod
+na CNF vezme nemodely a každou klauzulí jeden zakáže. Syntaktický převod odstraní implikace
+a ekvivalence, přesune negace k literálům a použije distributivitu. Horn-SAT: pokud jsou
+opačné jednotkové klauzule, formule není splnitelná; pokud není jednotková klauzule, je
+splnitelná nastavením zbytku na $0$; jinak nastav jednotkový literál $\ell$ na $1$,
+odstraň klauzule obsahující $\ell$ a odstraň $\bar\ell$ z ostatních klauzulí. Horn-SAT
+je lineární. DPLL opakuje jednotkovou propagaci a čisté literály, potom skončí na prázdné
+formuli jako splnitelné nebo prázdné klauzuli jako nesplnitelné, jinak větví podle proměnné
+$p$ na $\varphi\land p$ a $\varphi\land\neg p$; obecně je exponenciální. Rezoluce z
+$\varphi\lor p$ a $\psi\lor\neg p$ odvodí $\varphi\lor\psi$; prázdná klauzule znamená
+spor. Pro důkaz $\varphi$ z $T$ hledáme rezoluční zamítnutí $T\cup\{\neg\varphi\}$.
+Formální důkaz je konečný syntaktický objekt z axiomů a pravidel; korektnost říká
+$T\vdash\varphi\Rightarrow T\models\varphi$, úplnost opačný směr. Tablo je strom s
+položkami $\mathrm T\varphi$ a $\mathrm F\varphi$; důkaz $\varphi$ z $T$ je sporné
+tablo z $T$ s kořenem $\mathrm F\varphi$, zamítnutí má kořen $\mathrm T\varphi$. Větev
+je sporná, když obsahuje $\mathrm T\psi$ i $\mathrm F\psi$; tablo je sporné, když jsou
+sporné všechny větve. Věta o kompaktnosti: teorie má model právě tehdy, když každá její
+konečná část má model. Věta o úplnosti: sémantický důsledek a dokazatelnost se shodují,
+tedy $T\models\varphi$ právě tehdy, když $T\vdash\varphi$. Extenze $T'$ teorie $T$ v
+větším jazyce splňuje zahrnutí důsledků staré teorie; jednoduchá extenze nemění jazyk.
+Konzervativní extenze nepřidá nové důsledky ve starém jazyce, sémanticky lze každý model
+$T$ expandovat na model $T'$. Extenze o definice je konzervativní, každý model staré
+teorie má jednoznačnou expanzi a každá nová formule je v $T'$ ekvivalentní starojazykové.
+Skolemizace PNF sentence s různými vázanými proměnnými odstraňuje existenční kvantifikátor
+$\exists y_i$ a nahrazuje $y_i$ termem $f_i(x_1,\ldots,x_{n_i})$ podle předchozích
+univerzálních proměnných.\par
+\noindent\bod{3}\ \textbf{Vzorce, případy a aplikace:} Pro bezespornou výrokovou teorii
+$T$ nad $n$ proměnnými a s $m$ modely platí: neekvivalentních výroků nad jazykem je
+$2^{2^n}$; pravdivých v $T$ i lživých v $T$ je vždy $2^{2^n-m}$; nezávislých je
+$2^{2^n}-2\cdot2^{2^n-m}$. Jednoduchých extenzí až na ekvivalenci je $2^m$, jedna je
+sporná, kompletních jednoduchých extenzí je $m$, $T$-neekvivalentních výroků je $2^m$,
+pravdivá a lživá třída jsou po jedné a nezávislých tříd je $2^m-2$. Aplikace kompaktnosti:
+spočetně nekonečný graf je bipartitní právě tehdy, když každý konečný podgraf je bipartitní;
+nestandardní model přirozených čísel vznikne přidáním konstanty větší než každý standardní
+numerál. První Gödelova věta: každá bezesporná rekurzivně axiomatizovaná extenze Robinsonovy
+aritmetiky má sentenci pravdivou ve standardních $\mathbb N$, ale nedokazatelnou v teorii;
+je-li standardní model modelem $T$, teorie není kompletní. $\mathrm{Th}(\underline{\mathbb N})$
+není rekurzivně axiomatizovatelná. Rosserův trik dává v každé bezesporné rekurzivně
+axiomatizované extenzi Robinsonovy aritmetiky nezávislou sentenci. Druhá Gödelova věta:
+každá bezesporná rekurzivně axiomatizovaná extenze Peanovy aritmetiky nedokáže vlastní
+$\mathit{Con}_T$; pokud je ZFC bezesporná, ZFC nedokáže $\mathit{Con}_{ZFC}$. Teorie je
+sporná právě tehdy, když nemá model, platí v ní spor nebo v ní platí všechny formule.
+Kompletní teorie je bezesporná a každou sentenci rozhoduje; ekvivalentně má právě jeden
+model až na elementární ekvivalenci. Struktury jsou elementárně ekvivalentní, když mají
+stejnou teorii. Teorie je rozhodnutelná, pokud algoritmus vždy rozhodne $T\models\varphi$,
+a částečně rozhodnutelná, pokud pro platné důsledky doběhne s odpovědí ano. Rekurzivně
+axiomatizovaná teorie má algoritmus pro členství mezi axiomy; taková teorie je částečně
+rozhodnutelná a je-li kompletní, je rozhodnutelná. Konečná struktura v konečném jazyce
+s rovností má rekurzivně axiomatizovatelnou teorii. Pokud je $T$ rekurzivně axiomatizovaná
+a má rekurzivně spočetnou kompletaci, je rozhodnutelná. Nerozhodnutelnost: neexistuje
+algoritmus pro rozhodnutí, zda diofantická rovnice $p(\bar x)=q(\bar x)$ s přirozenými
+koeficienty má přirozené řešení, a neexistuje algoritmus rozhodující logickou platnost
+libovolné predikátové formule. Rozhodnutelné jsou například teorie čisté rovnosti,
+unárního predikátu, hustých lineárních uspořádání, komutativních grup, Booleových algeber,
+následníka s nulou a Presburgerova aritmetika. Nerozhodnutelné jsou Robinsonova a Peanova
+aritmetika, ZFC a teorie obecných grup.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
