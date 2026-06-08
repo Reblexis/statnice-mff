@@ -443,9 +443,20 @@ $\sum_{i=0}^{\log_2 n} n(3/2)^i\in\Theta(n(3/2)^{\log_2 n})$.
 Operace v nevyvažovaném BVS: Find porovnává hledaný klíč s aktuálním vrcholem a jde
 vlevo nebo vpravo; Insert vloží uzel tam, kde by se klíč našel, pokud by ve stromu byl;
 Delete smaže nalezený vrchol, u jednoho syna připojí syna pod otce a u dvou synů vrchol
-prohodí s nejlevějším vrcholem v pravém podstromu, případně symetricky. Čas je úměrný
-výšce stromu, bez vyvažování může být lineární. Věta: AVL strom na $n$ vrcholech má
-hloubku $\Theta(\log n)$, proto operace po vyvážení rotacemi běží logaritmicky.
+prohodí s nejlevějším vrcholem v pravém podstromu, případně symetricky. Následník klíče
+$x$ je nejmenší klíč větší než $x$: při průchodu stromem si pamatuj poslední vrchol s
+klíčem větším než $x$ a při porovnání jdi vlevo, jinak vpravo; pokud hledáš následníka
+existujícího uzlu s pravým podstromem, je to minimum v tomto pravém podstromu. Čas je
+úměrný výšce stromu, bez vyvažování může být lineární. Věta: AVL strom na $n$ vrcholech
+má hloubku $\Theta(\log n)$, proto operace po vyvážení rotacemi běží logaritmicky.
+
+Minimová binární halda je skoro úplný binární strom uložený v poli, kde otec prvku na
+indexu $i$ je na $\lfloor(i-1)/2\rfloor$ a synové jsou na $2i+1,2i+2$. Platí haldové
+uspořádání: klíč otce je nejvýše klíč syna. ExtractMin uloží kořen jako odpověď,
+přesune poslední prvek do kořene a probublá ho dolů výměnou s menším synem, dokud
+haldové uspořádání neplatí. Insert vloží prvek na konec a probublá ho nahoru. Obě
+operace stojí $O(\log n)$. Heapsort postaví haldu v $O(n)$ a potom $n$-krát odebere
+minimum, celkem $O(n\log n)$ a s in-place max-haldou bez pomocného pole.
 
 BubbleSort opakovaně prochází pole zleva doprava, porovnává sousední prvky a prohodí je,
 jsou-li ve špatném pořadí; skončí po průchodu bez prohození. InsertSort udržuje levou
@@ -472,9 +483,30 @@ Jedno DFS navštíví dosažitelné vrcholy, opakované DFS přes všechny nevid
 projde všechny komponenty; ekvivalentně lze přidat superzdroj. Složitost je
 $\Theta(n+m)$.
 
-Topologické třídění existuje pro DAG a může být nejednoznačné. Lze ho konstruovat
+V DFS orientovaného grafu se hrany klasifikují podle stavů a časů vrcholů. Stromová
+hrana vede do nově objeveného vrcholu, zpětná hrana vede do otevřeného předka,
+dopředná hrana vede do již uzavřeného potomka a příčná hrana vede mezi různými větvemi
+DFS lesa. Orientovaný graf je acyklický právě tehdy, když DFS nenajde zpětnou hranu;
+cyklus proto nemůže být složen jen ze zpětných hran, protože zpětná hrana sama s cestou
+ve stromu cyklus uzavírá a další zpětné hrany by nemohly tvořit konzistentní sestup a
+návrat.
+
+Topologické třídění existuje právě pro DAG a může být nejednoznačné. Lze ho konstruovat
 postupným odtrháváním zdrojů: najít zdroj, dát ho do pořadí a odstranit. Efektivně se
 použije DFS: opakované DFS zavírá vrcholy v pořadí opačném topologickému uspořádání.
+V DAGu leží vrchol $x$ na nějaké orientované cestě z $u$ do $v$ právě tehdy, když je
+$x$ dosažitelný z $u$ a $v$ je dosažitelný z $x$. Proto stačí jedno DFS/BFS z $u$ a
+jedno DFS/BFS z $v$ v obráceném grafu a vzít průnik označených vrcholů; čas je
+$\Theta(n+m)$.
+
+Silně souvislá komponenta orientovaného grafu je maximální množina vrcholů, kde je
+každý vrchol dosažitelný z každého jiného. Kosarajův algoritmus: proveď DFS v $G$ a
+seřaď vrcholy podle klesajícího času uzavření; potom v obráceném grafu $G^R$ spouštěj
+DFS v tomto pořadí a každé nové DFS dá jednu silně souvislou komponentu. Tarjanův
+algoritmus najde komponenty také jedním DFS pomocí hodnot lowlink. Oba běží
+v $\Theta(n+m)$. Kondenzace komponent je DAG. Vrchol je "dobrý" ve smyslu dosažitelné
+části grafu právě tehdy, když jeho komponenta je v kondenzaci koncová, tedy nemá hranu
+do jiné komponenty.
 
 Dijkstra hledá nejkratší cesty z počátečního vrcholu v grafu s kladnými, respektive
 nezápornými délkami hran. Inicializuje $h(v_0)=0$, ostatní $h(v)=+\infty$, otevře
@@ -512,7 +544,11 @@ kapacity se zastaví a vydá maximální tok i minimální řez; racionální ka
 převést na celočíselné a operace z celých kapacit nevytvoří necelé toky. Pro iracionální
 kapacity může volba cest selhat. Důsledek: velikost maximálního toku je rovna kapacitě
 minimálního řezu. Síť s celočíselnými kapacitami má celočíselný maximální tok a
-Ford-Fulkerson ho najde.
+Ford-Fulkerson ho najde. Pokud se vždy bere nejkratší zlepšující cesta v reziduální
+síti podle počtu hran, jde o Edmondsův-Karpův algoritmus a čas je $O(nm^2)$. Kapacity
+vrcholů se převedou rozštěpením vrcholu $v$ na $v_{\mathrm{in}}$ a $v_{\mathrm{out}}$,
+hranou $v_{\mathrm{in}}v_{\mathrm{out}}$ s kapacitou vrcholu a přepojením původních
+vstupních a výstupních hran.
 
 \noindent\bod{3}\ \textbf{Další detaily a exam-ready poznámky.}
 Při měření algoritmů je nutné říct, co je $n$, zda jde o nejhorší, nejlepší nebo

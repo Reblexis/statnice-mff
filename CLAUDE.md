@@ -80,6 +80,30 @@ Robotika (Téma 2), NLP (Téma 4), all other specializations; therefore no neura
 nets / deep learning, networks, databases, RSA/FFT, computational geometry, etc.
 The scope box is in `main.tex` (`\ref{sec:rozsah}`).
 
+## Focus when editing notes (from analysis of 20 real exams)
+
+Evidence: `zkousky/` (20 exams 2019-2026), `zkousky/ANALYZA-ZKOUSEK.md`,
+`COMPLETENESS-EXAMS.md`. The front section of the PDF ("Co a jak hodně se učit")
+summarizes this for the learner; keep it in sync if findings change.
+
+- **Definitions are the most-tested, cheapest points** ("Definujte" 68x). Every topic's
+  `\bod{1}` must be a PRECISE exam-ready definition/theorem statement. Never downgrade
+  these to vague intuition.
+- **Question anatomy** (from solved "Nástin řešení"): (1) precise definition/statement,
+  (2) construction/pseudocode/small computation, (3) edge case/complexity/application.
+  Depth needed = definition + main procedure/algorithm + one example; NOT long proofs.
+- **Specialization (UI-SU) is conceptual** ("popište/vysvětlete/nemusíte počítat/zakreslete").
+  Favor principles + ability to explain/sketch; include the few computational patterns that
+  appear (one EM update, metrics from a confusion matrix). The 7/12 floor lives here -> most depth.
+- **Common math/CS**: definition + one worked computation is enough (5/12 floor) -> breadth
+  over depth; do not over-invest in long derivations.
+- **Highest-yield recurring topics**: informatics = automata (regular/CFG/PDA/Chomsky), graph
+  algorithms (BFS/DFS, topo sort, MST, flows), heaps/BSTs, sorting, OS memory/virtual-memory/
+  sync/devices; math = linear algebra, single-variable analysis, graph basics, probability +
+  information theory, logic definitions; UI-SU = evaluation metrics, regression, clustering,
+  decision trees, ensembles, SVM/PCA, Bayes nets/HMM/EM, CSP/search, games/MDP.
+- Anchor depth to what the exams' solution sketches actually require.
+
 ## Build
 
 ```bash
