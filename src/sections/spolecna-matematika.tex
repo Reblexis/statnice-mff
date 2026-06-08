@@ -19,18 +19,19 @@ obsahy, objemy a povrchy rotačních útvarů, délka křivky).
 \ucivo
 \begin{intuice}
 \emph{Limita} = kam se hodnoty blíží. \emph{Derivace} = okamžitá rychlost změny (sklon
-tečny). \emph{Integrál} = plocha pod grafem. Derivace a integrál jsou navzájem inverzní
+tečny). \emph{Integrál} = orientovaná plocha pod grafem. Derivace a integrál jsou navzájem inverzní
 (základní věta analýzy).
 \end{intuice}
 
 \begin{odpoved}
 \setlength{\parskip}{2pt}
 \noindent\bod{1}\ \textbf{Minimum:} $\lim a_n = L$: od jistého $n$ jsou členy libovolně blízko $L$.
-Derivace $f'(a)=\lim_{h\to0}\frac{f(a+h)-f(a)}{h}$. Riemannův integrál = plocha pod grafem.\par
+Derivace $f'(a)=\lim_{h\to0}\frac{f(a+h)-f(a)}{h}$. Riemannův integrál = orientovaná plocha pod grafem.\par
 \noindent\bod{2}\ \textbf{+ k tomu:} \emph{Věta o dvou policajtech}: sevřená posloupnost má limitu
 jako její meze. \emph{Geometrická řada} $\sum q^n=\frac{1}{1-q}$ pro $|q|<1$, harmonická
-$\sum\frac1n$ diverguje. \emph{l'Hospital}: $\frac00,\frac\infty\infty \Rightarrow$ podíl derivací.
-Průběh: $f'>0$ roste, $f''>0$ konvexní, extrém kde $f'=0$. \emph{Newton-Leibniz}:
+$\sum\frac1n$ diverguje. \emph{l'Hospital}: pro typ $\frac00$ nebo $\frac\infty\infty$
+lze za podmínek věty nahradit podílem derivací. Průběh: $f'>0$ roste, $f''>0$ konvexní,
+kandidáty na extrém dávají body s $f'=0$ nebo kde derivace není definovaná. \emph{Newton-Leibniz}:
 $\int_a^b f = F(b)-F(a)$.\par
 \noindent\bod{3}\ \textbf{Bonus:} \emph{Taylor} $f(x)\approx\sum\frac{f^{(k)}(a)}{k!}(x-a)^k$.
 Aplikace integrálu: objem rotačního tělesa $\pi\int f(x)^2\,dx$, délka křivky
@@ -76,8 +77,8 @@ obrazu). Matice je \emph{regulární} $\iff$ má inverzi $\iff$ $\det\neq0$ $\if
 \emph{Gram-Schmidt} vyrobí ortonormální bázi.\par
 \noindent\bod{3}\ \textbf{Bonus:} \emph{Diagonalizace} $A=S\Lambda S^{-1}$ (sloupce $S$ = vlastní
 vektory). Symetrické matice mají reálná vl.\ čísla a ortogonální diagonalizaci $A=Q\Lambda Q^\top$.
-\emph{Pozitivně definitní} ($x^\top Ax>0$) $\iff$ kladná vl.\ čísla $\iff$ existuje Choleského
-rozklad $A=LL^\top$.
+Reálná symetrická matice je \emph{pozitivně definitní} ($x^\top Ax>0$ pro $x\neq0$)
+$\iff$ má kladná vl.\ čísla $\iff$ existuje Choleského rozklad $A=LL^\top$.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -166,10 +167,11 @@ Grafy = vrcholy a hrany. Mnoho úloh = „dá se projít / spojit / obarvit / pr
 $n-1$ hran. \emph{Bipartitní} = vrcholy lze obarvit 2 barvami (žádná hrana uvnitř části)
 $\iff$ bez liché kružnice.\par
 \noindent\bod{2}\ \textbf{+ k tomu:} \emph{Rovinný graf}: \emph{Eulerova formule} $v-e+f=2$;
-plyne max.\ $3v-6$ hran. \emph{Barevnost} $\ge$ klikovost. \emph{Tok}: respektuje kapacity a
+pro jednoduchý rovinný graf s $v\ge3$ plyne max.\ $3v-6$ hran. \emph{Barevnost} $\ge$ klikovost. \emph{Tok}: respektuje kapacity a
 zachování; \emph{Ford-Fulkerson} = opakuj zlepšující cesty v reziduální síti; max tok = min řez.\par
-\noindent\bod{3}\ \textbf{Bonus:} \emph{Mengerova věta}: počet hranově (vrcholově) disjunktních
-cest = velikost minimálního hranového (vrcholového) řezu. Orientovaný graf: silně souvislý =
+\noindent\bod{3}\ \textbf{Bonus:} \emph{Mengerova věta}: pro dva vrcholy je maximum hranově
+(vrcholově) disjunktních cest rovno velikosti minimálního hranového (vrcholového) separátoru.
+Orientovaný graf: silně souvislý =
 cesta mezi každými dvěma vrcholy v obou směrech.
 \end{odpoved}
 \begin{recall}
@@ -179,7 +181,7 @@ cesta mezi každými dvěma vrcholy v obou směrech.
   \item Jak funguje Ford-Fulkerson a co je max-flow = min-cut?
 \end{itemize}
 \end{recall}
-\past{Eulerova formule platí pro souvislý rovinný graf. Bipartitní $\iff$ bez liché kružnice.}
+\past{Eulerova formule platí pro souvislý rovinný graf; odhad $3v-6$ navíc předpokládá jednoduchost a $v\ge3$. Bipartitní $\iff$ bez liché kružnice.}
 
 % ============================================================
 \subsection{Pravděpodobnost a statistika}
@@ -216,9 +218,10 @@ míra rozkolísanosti. \emph{CLV} říká, proč se všude objevuje normální r
 \emph{Bayes} $P(A|B)=\frac{P(B|A)P(A)}{P(B)}$. \emph{Střední hodnota} $E[X]=\sum x_i p_i$
 (resp.\ $\int x f(x)$).\par
 \noindent\bod{2}\ \textbf{+ k tomu:} \emph{Linearita} $E[X+Y]=E[X]+E[Y]$ (vždy). \emph{Rozptyl}
-$\mathrm{var}(X)=E[X^2]-E[X]^2$; pro nezávislé $\mathrm{var}(X+Y)=\mathrm{var}X+\mathrm{var}Y$.
-\emph{Markovova nerovnost} $P(X\ge a)\le E[X]/a$.\par
-\noindent\bod{3}\ \textbf{Bonus:} \emph{Zákon velkých čísel}: průměr $\to E[X]$. \emph{CLV}: průměr
+$\mathrm{var}(X)=E[X^2]-E[X]^2$; obecně
+$\mathrm{var}(X+Y)=\mathrm{var}X+\mathrm{var}Y+2\mathrm{cov}(X,Y)$, pro nezávislé kovariance zmizí.
+\emph{Markovova nerovnost}: pro $X\ge0$ a $a>0$ platí $P(X\ge a)\le E[X]/a$.\par
+\noindent\bod{3}\ \textbf{Bonus:} \emph{Zákon velkých čísel}: průměr $\to E[X]$. \emph{CLV}: normovaný součet
 mnoha nezávislých veličin má přibližně normální rozdělení. \emph{Test hypotéz}: chyba 1.\ druhu =
 zamítnu platnou $H_0$ (hladina $\alpha$), 2.\ druhu = nezamítnu neplatnou.
 \end{odpoved}
@@ -255,7 +258,7 @@ rezoluce, příp.\ Hilbertovský kalkul); věty o kompaktnosti a úplnosti; rozh
 \emph{CNF} = konjunkce klauzulí, \emph{DNF} = disjunkce konjunkcí.\par
 \noindent\bod{2}\ \textbf{+ k tomu:} \emph{Rezoluce} (na CNF): z klauzulí $C\lor\ell$ a $D\lor\neg\ell$
 odvodí $C\lor D$; spor = prázdná klauzule (důkaz nesplnitelnosti). \emph{Tablo} = systematické
-hledání modelu. \emph{Věta o úplnosti}: dokazatelné $=$ platné.\par
+hledání modelu. \emph{Věta o úplnosti}: $T\models\varphi \iff T\vdash\varphi$.\par
 \noindent\bod{3}\ \textbf{Bonus:} \emph{Kompaktnost}: teorie má model $\iff$ každá konečná část má
 model. \emph{Skolemizace} odstraní existenční kvantifikátory. \emph{Rozhodnutelnost}: výroková
 logika je rozhodnutelná (SAT), predikátová obecně ne.

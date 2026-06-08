@@ -381,8 +381,10 @@ nebo směry, kde se data nejvíc mění (PCA).
   \foreach \p in {(2.6,2.3),(3.0,1.9),(2.4,2.0),(2.9,2.5),(3.1,2.1)} \fill[defblue] \p circle (2.2pt);
   \node[gapred,font=\bfseries] at (0.62,0.72) {$\times$};
   \node[gapred,font=\bfseries] at (2.8,2.16) {$\times$};
-  \node[font=\scriptsize,gapred] at (1.7,0.2) {$\times$ = centroidy};
-  \draw[->,thick,defblue] (1.4,0.7) -- (2.6,2.0) node[midway,sloped,above,font=\scriptsize]{hlavní komponenta};
+  \node[font=\scriptsize,gapred] at (1.6,0.05) {$\times$ = centroidy (k-means)};
+  \draw[->,thick,orange!80!black] (1.2,0.55) -- (2.75,2.15);
+  \node[orange!70!black,font=\scriptsize,anchor=west] at (3.25,1.15) {směr maximálního};
+  \node[orange!70!black,font=\scriptsize,anchor=west] at (3.25,0.8) {rozptylu = PCA};
 \end{tikzpicture}
 \end{center}
 

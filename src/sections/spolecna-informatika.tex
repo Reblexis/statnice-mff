@@ -146,7 +146,7 @@ strukturu a umět odhadnout složitost. U společné části stačí mít mapu p
     child {node {10}}
     child {node {14}}};
 \node[draw=none,anchor=west,font=\scriptsize,align=left] at (3.1,-0.8)
-  {BST: vlevo menší, vpravo větší\\AVL: výšky podstromů se liší nejvýše o 1};
+  {BST: vlevo menší, vpravo větší\\AVL: v každém uzlu rozdíl výšek nejvýše 1};
 \end{tikzpicture}
 \end{center}
 
@@ -346,7 +346,8 @@ přiřazení, větvení, cyklus a volání funkce přes čtení, zápis, skoky a
 OS běží v privilegovaném režimu, procesy běží uživatelsky.\par
 \noindent\bod{2}\ \textbf{+ k tomu:} Řadič zařízení vystavuje porty nebo registry. PIO znamená,
 že procesor programově čte a zapisuje stav a data zařízení. Přerušení dovolí zařízení
-vyžádat obsluhu: hardware uloží kontext, skočí na obsluhu v jádře a po obsluze pokračuje.
+vyžádat obsluhu: hardware uloží minimální stav, skočí na obsluhu v jádře, OS uloží zbytek
+kontextu a po obsluze se pokračuje.
 Proces má vlastní adresový prostor a zdroje, vlákno je běžící tok s vlastním kontextem.
 Preemptivní multitasking přepíná OS, kooperativní čeká na dobrovolné předání.\par
 \noindent\bod{3}\ \textbf{Bonus:} Virtuální adresa se dělí na číslo stránky a offset,
