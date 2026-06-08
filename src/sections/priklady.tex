@@ -1,0 +1,107 @@
+\section{Vzorové výpočty a kódové vzory (drily na 2. a 3. bod)}
+
+{\small Vzorová řešení zkoušek skoro vždy chtějí ve 2.\ a 3.\ podotázce \emph{provést}
+výpočet nebo napsat kód. Tady je u nejčastějších typů jeden krátký vzor postupu. Nauč se
+\textbf{postup}, ne konkrétní čísla; pak ho zopakuj na zkouškovém zadání.}
+
+\subsection{Matematika: typové výpočty}
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\textbf{Určitý integrál a extrém} (analýza): $\int_0^1 (x^2+1)\,dx
+=\bigl[\tfrac{x^3}{3}+x\bigr]_0^1=\tfrac13+1=\tfrac43$. Hledání minima $g(p)=p+\tfrac1p$ na
+$p>0$: $g'(p)=1-\tfrac1{p^2}=0\Rightarrow p=1$; $g''(p)=\tfrac{2}{p^3}>0$, tedy minimum,
+$g(1)=2$.\par
+\noindent\textbf{Vlastní čísla a diagonalizace} $A=\begin{psmallmatrix}2&1\\1&2\end{psmallmatrix}$:
+$\det(A-\lambda I)=(2-\lambda)^2-1=0\Rightarrow \lambda\in\{1,3\}$. Pro $\lambda=3$ je vlastní
+vektor $(1,1)$, pro $\lambda=1$ je $(1,-1)$. Pak $A=S\Lambda S^{-1}$ s
+$S=\begin{psmallmatrix}1&1\\1&-1\end{psmallmatrix}$, $\Lambda=\begin{psmallmatrix}3&0\\0&1\end{psmallmatrix}$.\par
+\noindent\textbf{Gram-Schmidt} $u_1=(1,1,0),u_2=(1,0,1)$: $v_1=u_1$;
+$w_2=u_2-\tfrac{\langle u_2|v_1\rangle}{\langle v_1|v_1\rangle}v_1=(1,0,1)-\tfrac12(1,1,0)
+=(\tfrac12,-\tfrac12,1)$; pak znormuj $v_1,w_2$.\par
+\noindent\textbf{Eulerova formule} (rovinný graf): souvislý rovinný graf má $v-e+f=2$;
+z toho pro jednoduchý graf bez trojúhelníků $e\le 2v-4$, obecně $e\le 3v-6$ (dosadíš a
+ověříš, zda graf může být rovinný).
+\end{odpoved}
+
+\subsection{Pravděpodobnost a statistika: typové výpočty}
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\textbf{Bayes / E-krok (responsibility)}: model $P(C{=}1)=0.6$,
+$P(\text{blue}|1)=0.6$, $P(\text{no}|1)=0.4$; $P(C{=}2)=0.4$, $P(\text{blue}|2)=0.4$,
+$P(\text{no}|2)=0.6$. Pro pozorování (blue, no):
+$r_1\propto 0.6\cdot0.6\cdot0.4=0.144$, $r_2\propto 0.4\cdot0.4\cdot0.6=0.096$, takže
+$\gamma_1=\tfrac{0.144}{0.144+0.096}=0.6$ (M-krok pak váží data těmito $\gamma$).\par
+\noindent\textbf{Chí-kvadrát test dobré shody}: pozorováno $(30,10)$, očekáváno $(20,20)$:
+$\chi^2=\tfrac{(30-20)^2}{20}+\tfrac{(10-20)^2}{20}=5+5=10$, $\mathrm{df}=k-1=1$; porovnej s
+kritickou hodnotou na hladině $\alpha$.\par
+\noindent\textbf{Markovova nerovnost}: pro $X\ge0$ s $E[X]=2$ je $P(X\ge8)\le 2/8=0.25$.
+\end{odpoved}
+
+\subsection{Strojové učení a UI: typové výpočty}
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\textbf{Entropie a informační zisk} (dělení stromu): uzel se 6 příklady, 3 ano /
+3 ne $\Rightarrow H=-\tfrac12\log_2\tfrac12-\tfrac12\log_2\tfrac12=1$ bit (Gini $=1-2\cdot0.25=0.5$).
+Dělení podle $A$: $A{=}0\!:\{3\text{ ano}\}$ ($H{=}0$), $A{=}1\!:\{3\text{ ne}\}$ ($H{=}0$),
+vážená entropie $0$, \emph{informační zisk} $=1-0=1$ (dokonalé dělení).\par
+\noindent\textbf{Matice záměn} (TP$=40$, FP$=10$, FN$=20$, TN$=30$): accuracy
+$=\tfrac{40+30}{100}=0.70$, precision $=\tfrac{40}{50}=0.80$, recall $=\tfrac{40}{60}\approx0.67$,
+$F_1=\tfrac{2\cdot0.8\cdot0.67}{0.8+0.67}\approx0.73$. Rekonstrukce z metrik: z recall a počtu
+pozitivních dopočítáš TP a FN, z precision pak FP.\par
+\noindent\textbf{k-means (1 iterace)}: body $A(1,1),B(2,1),C(4,3),D(5,4)$, centra
+$c_1{=}(1,1),c_2{=}(5,4)$. Přiřazení: $A,B\to c_1$, $C,D\to c_2$. Nová centra:
+$c_1=\tfrac{A+B}2=(1.5,1)$, $c_2=\tfrac{C+D}2=(4.5,3.5)$; opakuj do ustálení.\par
+\noindent\textbf{AC-3 (1 krok)}: $X,Y\in\{1,2,3\}$, podmínka $X<Y$. Hrana $(X,Y)$: pro $X{=}3$
+není $Y{>}3 \Rightarrow$ smaž $3$ z $X$, $X\in\{1,2\}$. Hrana $(Y,X)$: pro $Y{=}1$ není
+$X{<}1\Rightarrow$ smaž $1$ z $Y$, $Y\in\{2,3\}$.
+\end{odpoved}
+
+\subsection{Informatika: kódové vzory (C\#)}
+{\small Vzory ukazují kostru; na zkoušce piš v C\#. Vlastní psaní kódu si pár krát vyzkoušej.}
+
+\noindent\textbf{Čtení dat z binárního souboru} (big-endian, práce s bajty):
+\begin{verbatim}
+// 16bit unsigned big-endian z bufferu na pozici i
+int ReadU16BE(byte[] b, int i) => (b[i] << 8) | b[i + 1];
+// 16bit signed: dvojkový doplněk
+short ReadS16BE(byte[] b, int i) => (short)((b[i] << 8) | b[i + 1]);
+
+class Reader {
+    private byte[] data; private int attrCount;
+    public Reader(BinaryFile f) {        // konstruktor načte hlavičku
+        byte[] h = new byte[2]; f.readBytes(0, h, 2);
+        attrCount = ReadU16BE(h, 0);
+    }
+    public int Attributes() => attrCount;
+}
+\end{verbatim}
+
+\noindent\textbf{Producent-konzument se semafory} (synchronizace vláken):
+\begin{verbatim}
+SemaphoreSlim empty = new(capacity);   // volná místa v bufferu
+SemaphoreSlim full  = new(0);          // obsazená místa
+object mtx = new();
+Queue<int> buf = new();
+
+void Produce(int x) {
+    empty.Wait();                      // počkej na volné místo
+    lock (mtx) { buf.Enqueue(x); }
+    full.Release();                    // přibyla položka
+}
+int Consume() {
+    full.Wait();                       // počkej na položku
+    int x; lock (mtx) { x = buf.Dequeue(); }
+    empty.Release();                   // uvolnilo se místo
+    return x;
+}
+\end{verbatim}
+
+\noindent\textbf{Návrhový vzor Visitor} (oddělení operace od struktury):
+\begin{verbatim}
+interface IVisitor { void Visit(Circle c); void Visit(Square s); }
+interface IShape   { void Accept(IVisitor v); }
+class Circle : IShape { public void Accept(IVisitor v) => v.Visit(this); }
+class Square : IShape { public void Accept(IVisitor v) => v.Visit(this); }
+// nová operace = nový IVisitor, beze změny tříd tvarů
+\end{verbatim}
