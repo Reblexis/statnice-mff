@@ -74,7 +74,9 @@ obrazu). Matice je \emph{regulární} $\iff$ má inverzi $\iff$ $\det\neq0$ $\if
 \noindent\bod{2}\ \textbf{+ k tomu:} \emph{Gaussova eliminace} řeší soustavy i počítá hodnost/inverzi.
 \emph{Jádro} = řešení $Ax=0$; platí $\dim\ker + \mathrm{rank} = n$. \emph{Vlastní číslo}: $Ax=\lambda x$
 ($x\neq0$), kořeny char.\ polynomu $\det(A-\lambda I)=0$. \emph{Skalární součin} dává normu a kolmost;
-\emph{Gram-Schmidt} vyrobí ortonormální bázi.\par
+\emph{Gram-Schmidt} vyrobí ortonormální bázi. Souřadnice vektoru vůči ortonormální bázi jsou
+\emph{Fourierovy koeficienty} $\langle u|v_i\rangle$ (a \emph{ortogonální projekce} na podprostor
+je jejich součet). Pythagorova věta a Cauchy-Schwarzova nerovnost $|\langle u|v\rangle|\le\|u\|\|v\|$.\par
 \noindent\bod{3}\ \textbf{Bonus:} \emph{Diagonalizace} $A=S\Lambda S^{-1}$ (sloupce $S$ = vlastní
 vektory). Symetrické matice mají reálná vl.\ čísla a ortogonální diagonalizaci $A=Q\Lambda Q^\top$.
 Reálná symetrická matice je \emph{pozitivně definitní} ($x^\top Ax>0$ pro $x\neq0$)
@@ -112,10 +114,13 @@ opravuje dvojí započítání; \emph{Hallova věta} říká, kdy lze každého 
 \noindent\bod{1}\ \textbf{Minimum:} \emph{Ekvivalence} = reflexivní + symetrická + tranzitivní;
 rozkládá množinu na třídy. \emph{Bijekce} = prostá i na. Počet funkcí $A\to B$ je $|B|^{|A|}$.\par
 \noindent\bod{2}\ \textbf{+ k tomu:} \emph{Částečné uspořádání}: řetězec (po dvou porovnatelné),
-antiřetězec (žádné dva). \emph{Inkluze-exkluze}: $|A\cup B|=|A|+|B|-|A\cap B|$ (obecně se střídají
-znaménka). \emph{Binomická věta}: $(a+b)^n=\sum\binom nk a^k b^{n-k}$.\par
+antiřetězec (žádné dva); \emph{Dilworthova věta} dává vztah šířky a pokrytí řetězci.
+\emph{Inkluze-exkluze}: $|A\cup B|=|A|+|B|-|A\cap B|$ (obecně se střídají
+znaménka). \emph{Binomická věta}: $(a+b)^n=\sum\binom nk a^k b^{n-k}$ (kombinační čísla =
+Pascalův trojúhelník).\par
 \noindent\bod{3}\ \textbf{Bonus:} \emph{Hallova věta}: bipartitní graf má párování pokrývající $A$
-$\iff$ pro každou $X\subseteq A$ platí $|N(X)|\ge|X|$ (Hallova podmínka). Aplikace inkluze-exkluze:
+$\iff$ pro každou $X\subseteq A$ platí $|N(X)|\ge|X|$ (Hallova podmínka); ekvivalentně
+\emph{Kőnig-Egerváryho věta}: max.\ párování = min.\ vrcholové pokrytí. Aplikace inkluze-exkluze:
 počet surjekcí, Eulerova funkce, problém šatnářky.
 \end{odpoved}
 \begin{recall}
@@ -261,7 +266,8 @@ odvodí $C\lor D$; spor = prázdná klauzule (důkaz nesplnitelnosti). \emph{Tab
 hledání modelu. \emph{Věta o úplnosti}: $T\models\varphi \iff T\vdash\varphi$.\par
 \noindent\bod{3}\ \textbf{Bonus:} \emph{Kompaktnost}: teorie má model $\iff$ každá konečná část má
 model. \emph{Skolemizace} odstraní existenční kvantifikátory. \emph{Rozhodnutelnost}: výroková
-logika je rozhodnutelná (SAT), predikátová obecně ne.
+logika je rozhodnutelná (SAT), predikátová obecně ne; \emph{kompletní} teorie (rozhoduje o každé
+formuli) jsou rozhodnutelné, ale např.\ Peanova aritmetika kompletní není.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
