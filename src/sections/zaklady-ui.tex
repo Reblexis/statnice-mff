@@ -56,6 +56,9 @@ Prohledávání je vhodné, když stav umíme brát jako uzel grafu a akci jako 
 \noindent\bod{1}\ \textbf{Minimum:} definuj stav, akce, počáteční stav, test cíle a cenu. Vysvětli rozdíl tree search vs. graph search a pojmenuj DFS, BFS, UCS, A$^*$.\par
 \noindent\bod{2}\ \textbf{+ k tomu:} u každého algoritmu řekni datovou strukturu frontier a optimálnost: BFS pro jednotkové ceny, UCS pro nezáporné ceny, A$^*$ pro přípustnou heuristiku ve stromu a konzistentní heuristiku v grafu.\par
 \noindent\bod{3}\ \textbf{Bonus:} složitosti BFS $O(b^{d+1})$ čas i paměť, DFS čas $O(b^m)$ a paměť $O(bm)$ nebo $O(m)$ při backtrackingu. Dominance heuristiky: větší přípustná heuristika typicky expanduje méně uzlů.
+Agent může být reflexní, modelový nebo cílový; atomické stavy se hodí pro prohledávání,
+faktorizované pro CSP a plánování, strukturované pro predikátovou logiku. Greedy best-first
+search používá jen $h(n)$ a není obecně optimální ani úplný.
 \end{odpoved}
 
 \begin{recall}
@@ -113,6 +116,9 @@ CSP má proměnné $X_i$, domény $D_i$ a podmínky jako relace na proměnných.
 \noindent\bod{1}\ \textbf{Minimum:} CSP = proměnné, domény, podmínky, úplné konzistentní přiřazení. AC-3 škrtá hodnoty bez podpory u sousedních proměnných.\par
 \noindent\bod{2}\ \textbf{+ k tomu:} popiš frontu orientovaných hran v AC-3 a MAC jako backtracking plus opakované spuštění AC po každém přiřazení. Přidej mini příklad $A<B$.\par
 \noindent\bod{3}\ \textbf{Bonus:} AC-3 pro binární podmínky má typicky složitost $O(cd^3)$, kde $c$ je počet podmínek a $d$ velikost domény. Hranová konzistence je jen lokální, proto sama negarantuje řešení.
+Forward checking po přiřazení čistí jen domény dosud nepřiřazených sousedů, AC navíc
+udržuje kompatibilitu mezi nepřiřazenými proměnnými. Obecnou $n$-ární podmínku lze převést
+na binární za cenu pomocných proměnných.
 \end{odpoved}
 
 \begin{recall}
@@ -158,6 +164,8 @@ CNF je konjunkce klauzulí, kde klauzule je disjunkce literálů. DNF je disjunk
 \noindent\bod{1}\ \textbf{Minimum:} vysvětli CNF, DNF, klauzuli, literál, Hornovu klauzuli a že důsledek lze testovat přes $KB\land\neg\alpha$.\par
 \noindent\bod{2}\ \textbf{+ k tomu:} popiš kroky DPLL: jednotková propagace, čistý literál, koncové stavy, větvení. Uveď rozdíl mezi dopředným a zpětným řetězením.\par
 \noindent\bod{3}\ \textbf{Bonus:} napiš rezoluční pravidlo a vysvětli rezoluční zamítnutí. DPLL je v nejhorším exponenciální, ale jednotková propagace drasticky zmenšuje praxi.
+Dopředné řetězení lze implementovat počítadly nesplněných předpokladů pravidel; zpětné
+řetězení může být výrazně levnější, když dotaz míří jen na malou část báze znalostí.
 \end{odpoved}
 
 \begin{recall}
@@ -223,6 +231,9 @@ P(x_1,\dots,x_n)=\prod_i P(x_i\mid parents(x_i)).
 \noindent\bod{1}\ \textbf{Minimum:} řekni úplná sdružená distribuce, nezávislost, Bayesovo pravidlo, vysčítání a normalizace. Bayesovská síť = DAG plus podmíněné tabulky.\par
 \noindent\bod{2}\ \textbf{+ k tomu:} napiš faktorizaci sítě a ukaž ji na malé síti. Popiš enumeraci, eliminaci proměnných a rozdíl mezi zamítáním a vážením věrohodností.\par
 \noindent\bod{3}\ \textbf{Bonus:} vysvětli, že konstrukce sítě závisí na pořadí proměnných a nejlepší je obvykle směr od příčin k důsledkům. Eliminace závisí na pořadí eliminovaných proměnných.
+Chain rule rozkládá sdruženou distribuci na součin podmíněných pravděpodobností.
+Naivní Bayes předpokládá podmíněnou nezávislost důsledků při známé příčině.
+Likelihood weighting fixuje evidenci a váží vzorky pravděpodobností evidence.
 \end{odpoved}
 
 \begin{recall}
@@ -286,6 +297,9 @@ Situační kalkulus popisuje situace vzniklé posloupností akcí, predikáty o 
 \noindent\bod{1}\ \textbf{Minimum:} situační kalkulus = logika akcí a situací, problém rámce = jak nevyjmenovat všechny nezměněné fakty. HMM = skrytý stav, pozorování, přechodový a senzorový model.\par
 \noindent\bod{2}\ \textbf{+ k tomu:} rozliš filtraci, predikci, vyhlazování a nejpravděpodobnější průchod. Nakresli řetěz $X_1\to X_2\to X_3$ s pozorováními $E_t$.\par
 \noindent\bod{3}\ \textbf{Bonus:} uveď, že HMM je speciální případ dynamické Bayesovské sítě; DBN dovolí faktorizovat stav na více proměnných a tím zmenšit tabulky.
+Markovův předpoklad říká, že další stav závisí jen na předchozím; stacionarita znamená
+stejné přechodové tabulky v čase. Filtrace používá forward algoritmus, vyhlazování
+forward-backward a nejpravděpodobnější průchod Viterbiho algoritmus.
 \end{odpoved}
 
 \begin{recall}
@@ -331,6 +345,9 @@ Mini příklad: operátor \emph{Přesuň(x,A,B)} má předpoklady $Na(x,A)$ a $V
 \noindent\bod{1}\ \textbf{Minimum:} plánovací problém = počáteční stav, cílová podmínka, operátory. Operátor = předpoklady a efekty. Plán = posloupnost akcí.\par
 \noindent\bod{2}\ \textbf{+ k tomu:} vysvětli dopředné a zpětné plánování na mini příkladu s přesunem objektu. Řekni, proč faktorizovaný stav umožní pracovat s relevancí akcí.\par
 \noindent\bod{3}\ \textbf{Bonus:} uveď rozdíl proti obyčejnému prohledávání: stav není atomický, akce mají logickou strukturu a plánovač může využívat předpoklady a efekty místo slepé expanze.
+Plánování používá předpoklad uzavřeného světa; fluenty se akcemi mění, rigidní atomy ne.
+Akce je plně instanciovaný operátor a zpětné plánování používá jen akce relevantní pro cíl.
+Situační kalkulus řeší změny přes possibility a successor-state axiomy.
 \end{odpoved}
 
 \begin{recall}
@@ -389,6 +406,9 @@ U(s)=\max_a \sum_{s'} P(s'\mid s,a)\bigl(R(s,a,s')+\gamma U(s')\bigr).
 \noindent\bod{1}\ \textbf{Minimum:} MDP = stavy, akce, přechody, odměny, strategie. Cíl je maximalizovat očekávaný diskontovaný užitek.\par
 \noindent\bod{2}\ \textbf{+ k tomu:} napiš Bellmanovu rovnici a popiš iteraci hodnot i iteraci strategií. Uveď malý přechod se dvěma možnými následníky.\par
 \noindent\bod{3}\ \textbf{Bonus:} POMDP = MDP s částečnou pozorovatelností, rozhoduje se nad belief stavem. Iterace strategií bývá dražší v kroku vyhodnocení, ale často potřebuje méně iterací.
+Diskontovaný užitek trajektorie je konečný pro $\gamma<1$ a omezené odměny. Optimální
+strategie závisí na aktuálním stavu, ne na počátečním. Policy evaluation řeší Bellmanovy
+rovnice bez maxima, policy improvement vybírá lepší akce.
 \end{odpoved}
 
 \begin{recall}
@@ -453,6 +473,9 @@ Minimax počítá hodnotu hry s nulovým součtem: v uzlu MAX bere maximum z pot
 \noindent\bod{1}\ \textbf{Minimum:} minimax = MAX maximalizuje, MIN minimalizuje. Alfa-beta prořezává větve bez změny výsledku. Nash = žádná jednostranně výhodná odchylka.\par
 \noindent\bod{2}\ \textbf{+ k tomu:} ukaž výpočet malého stromu a jeden alfa-beta řez. Vysvětli vězňovo dilema a vyjmenuj základní typy aukcí.\par
 \noindent\bod{3}\ \textbf{Bonus:} dobré pořadí tahů dává alfa-beta velkou úsporu, v ideálním případě zhruba na efektivní hloubku poloviny stromu. U aukce druhé ceny zmiň pravdivé nabízení jako dominantní strategii v jednoduchém modelu.
+V hrách v normálním tvaru rozliš čisté a smíšené strategie, dominantní strategii,
+Pareto optimalitu a Nashovo ekvilibrium. Vickreyho aukce je obálková aukce druhé ceny;
+VCG zobecňuje pravdivé mechanismy pro víceparametrické aukce.
 \end{odpoved}
 
 \begin{recall}
@@ -503,6 +526,10 @@ Učení s učitelem má dvojice vstup plus správný výstup a řeší klasifika
 \noindent\bod{1}\ \textbf{Minimum:} rozliš učení s učitelem, bez učitele a zpětnovazební. Definuj rozhodovací strom, regresi, SVM a RL slovníkem vstup, výstup, cíl.\par
 \noindent\bod{2}\ \textbf{+ k tomu:} popiš konstrukci stromu, princip marginu u SVM, Bayesovské učení přes posterior, EM jako E/M kroky, pasivní ADP/TD a aktivní Q-učení/SARSA.\par
 \noindent\bod{3}\ \textbf{Bonus:} zdůrazni rozdíl ADP vs. TD: ADP se učí model a řeší ho, TD se učí hodnoty přímo. Q-učení je off-policy s maximem přes další akce, SARSA je on-policy a používá další skutečně zvolenou akci.
+Přímý odhad utility průměruje reward-to-go, ale ignoruje Bellmanovy vazby. TD update:
+$U(s)\leftarrow U(s)+\alpha(R(s)+\gamma U(s')-U(s))$. Pro aktivní RL je exploration
+nutná, protože hladový agent může zůstat u špatně naučené akce; $Q(s,a)$ dovolí volit akci
+bez znalosti přechodového modelu.
 \end{odpoved}
 
 \begin{recall}

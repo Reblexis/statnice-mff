@@ -53,7 +53,10 @@ průměruju - spolehlivější odhad chyby než jediné rozdělení.\par
 (z matice záměn); regrese: MSE/RMSE. \emph{Maximální věrohodnost (MLE)}: parametry volíme tak, aby
 data byla nejpravděpodobnější; minimalizace záporné log-věrohodnosti je často přesně ta loss funkce.
 \emph{Prokletí dimenzionality}: v mnoha rozměrech jsou data řídká a vzdálenosti ztrácejí smysl, je
-třeba exponenciálně víc dat.
+třeba exponenciálně víc dat. NLL je běžná klasifikační loss pro pravděpodobnostní modely.
+ROC mění práh a kreslí TPR proti FPR, AUC je plocha pod ní; senzitivita = recall,
+specificita = true negative rate. Hyperparametry se ladí na validační sadě, ne na testu.
+Redukce příznaků: filter je nezávislý na modelu, wrapper vybírá podle výkonu modelu.
 \end{odpoved}
 
 \begin{recall}
@@ -99,7 +102,8 @@ typicky euklidovské) a přiřaď \emph{většinovou} třídu (u regrese průmě
 Malé $k$ = citlivé na šum (přeučení), velké $k$ = hladší, ale rozmazává hranice. $k$ se volí
 křížovou validací. Nutné škálovat příznaky.\par
 \noindent\bod{3}\ \textbf{Bonus:} Trpí prokletím dimenzionality a je pomalé při mnoha datech
-(dotaz prochází vše).
+(dotaz prochází vše). Váhy sousedů mohou být uniformní, nepřímo úměrné vzdálenosti
+nebo softmax ze záporných vzdáleností; vzdálenosti se často počítají $p$-normou.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -144,7 +148,8 @@ $\hat w = (X^\top X)^{-1} X^\top y$, kde sloupec jedniček v $X$ pokryje interce
 Funguje, dokud $X^\top X$ není moc velká / singulární.\par
 \noindent\bod{3}\ \textbf{Bonus:} \emph{SGD} - místo přesného vzorce iterativně:
 $w \leftarrow w - \eta\,\nabla_w \text{loss}$ počítané po malých dávkách dat; nutné u velkých dat.
-$\eta$ = rychlost učení (moc velká diverguje, moc malá je pomalá).
+$\eta$ = rychlost učení (moc velká diverguje, moc malá je pomalá). Batch GD používá
+všechna data, online SGD jeden řádek, minibatch kompromis; bias se pokryje sloupcem jedniček.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -189,6 +194,8 @@ $\sigma(z) = \frac{1}{1+e^{-z}}$. Klasifikuji podle prahu 0,5.\par
 Hranice je lineární.\par
 \noindent\bod{3}\ \textbf{Bonus:} Více tříd přes \emph{softmax}
 $P(y{=}k) = \frac{e^{z_k}}{\sum_j e^{z_j}}$ (zobecnění sigmoidu); loss opět cross-entropy.
+Softmax je invariantní k přičtení konstanty ke všem skóre a binární sigmoid je jeho speciální případ.
+Lineární softmax má konvexní rozhodovací oblasti.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -233,7 +240,9 @@ kritéria: \emph{informační zisk} (pokles \emph{entropie}) nebo \emph{Gini ind
 čistých listů / zastavovacího kritéria.\par
 \noindent\bod{3}\ \textbf{Bonus:} Plně narostlý strom se přeučí $\Rightarrow$ \emph{prořezávání}
 (pre-pruning: zastav brzy podle hloubky/min.\ vzorků; post-pruning: ořež větve, které nezlepší
-chybu na validaci). Výhoda: interpretovatelnost.
+chybu na validaci). Výhoda: interpretovatelnost. CART dělí list na dva a vybírá split
+s největším poklesem kritéria; pro regresi se používá squared error a list predikuje průměr.
+Reduced error pruning zruší větev, pokud tím neklesne validační přesnost.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -283,7 +292,10 @@ Neseparabilní data: \emph{měkký margin} se slack $\xi_i$ a penaltou $C\sum\xi
 úzký margin vs.\ chyby). \emph{Jádro} $K(x,x')$ nahradí skalární součin a oddělí data ve vyšší dimenzi
 bez explicitní transformace (RBF, polynom).\par
 \noindent\bod{3}\ \textbf{Bonus:} úloha $\min\tfrac12\|w\|^2$ za $y_i(w^\top x_i+b)\ge 1$;
-více tříd přes one-vs-rest nebo one-vs-one.
+více tříd přes one-vs-rest nebo one-vs-one. V duálu je $w$ lineární kombinace trénovacích
+bodů a predikce má tvar $\sum_i a_i t_i K(x,x_i)+b$. Soft-margin používá slack proměnné
+$\xi_i$ a hinge loss $\max(0,1-t_i y(x_i))$; větší $C$ znamená slabší regularizaci.
+RBF kernel $e^{-\gamma\|x-z\|^2}$ dává vysokou podobnost blízkým bodům.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -316,7 +328,8 @@ podvýběrech dat (bootstrap) a \emph{průměruje/hlasuje} - snižuje \emph{rozp
 \noindent\bod{2}\ \textbf{+ k tomu:} \emph{Náhodný les} = bagging rozhodovacích stromů + v každém
 uzlu se uvažuje jen náhodná podmnožina příznaků (dekoreluje stromy). Robustní, málo ladění.\par
 \noindent\bod{3}\ \textbf{Bonus:} Boosting (např.\ AdaBoost) zvyšuje váhu špatně klasifikovaných
-příkladů; silný, ale citlivější na šum/přeučení než bagging.
+příkladů; silný, ale citlivější na šum/přeučení než bagging. AdaBoost váží i slabé
+klasifikátory podle přesnosti. Náhodný les při regresi průměruje stromy a při klasifikaci hlasuje.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -350,7 +363,10 @@ jednovýběrový (průměr vs.\ daná konstanta), dvouvýběrový (dva průměry
 zhruba normální data. \emph{Chí-kvadrát test dobré shody} porovnává \emph{pozorované vs.\ očekávané
 četnosti} kategorií: $\chi^2 = \sum \frac{(O-E)^2}{E}$.\par
 \noindent\bod{3}\ \textbf{Bonus:} chyba I.\ druhu = zamítnu platné $H_0$ (= $\alpha$);
-chyba II.\ druhu = nezamítnu neplatné $H_0$.
+chyba II.\ druhu = nezamítnu neplatné $H_0$. Jednovýběrový t-test používá $n-1$ stupňů
+volnosti, dvouvýběrový porovnává průměry dvou populací přes směrodatnou chybu; párový
+t-test testuje rozdíly dvojic jako jednovýběrový. Chí-kvadrát dobré shody má obvykle
+počet kategorií minus jedna stupňů volnosti.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -398,6 +414,10 @@ shlukování}: postupně slučuj nejbližší shluky (aglomerativně) $\Rightarr
 $k$ není třeba dopředu.\par
 \noindent\bod{3}\ \textbf{Bonus:} PCA = vlastní vektory kovarianční matice (největší vlastní čísla =
 nejvíc rozptylu). k-means: nutné zvolit $k$ a citlivý na počáteční centra (k-means++).
+k-means minimalizuje součet čtverců vzdáleností ke centroidům a konverguje k lokálnímu optimu.
+Hierarchické shlukování může být aglomerativní nebo divisivní, dendrogram se řeže podle
+požadovaného počtu shluků. SVD $X=U\Sigma V^\top$ dává nízkohodnostní aproximace; PCA
+centruje data a bere první sloupce $V$.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]

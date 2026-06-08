@@ -75,7 +75,10 @@ $\{a^n b^n\mid n\ge0\}$, ale ne pro dvě nezávislá počítání jako $a^n b^n 
 \noindent\bod{3}\ \textbf{Bonus:} Typ 0 gramatiky odpovídají rekurzivně spočetným jazykům
 a Turingovým strojům. Existují algoritmicky nerozhodnutelné problémy, klasicky problém
 zastavení. U zařazování jazyka zkus sestrojit automat nebo gramatiku, případně říct, proč
-nižší třída nestačí.
+nižší třída nestačí. Pumping lemma a Myhill-Nerodeova věta slouží k důkazu neregularity;
+pro CFL existuje pumping lemma a Chomského normální tvar. PDA přijímá koncovým stavem
+nebo prázdným zásobníkem, obě varianty jsou ekvivalentní. Regulární jazyky jsou uzavřené
+na doplněk, průnik a sjednocení, CFL ne na průnik obecně.
 \end{odpoved}
 
 \begin{recall}
@@ -165,7 +168,11 @@ odhad $\Omega(n\log n)$.\par
 BFS je fronta a vzdálenosti v neohodnoceném grafu, DFS je zásobník a časy průchodu.
 Topologické třídění funguje pro DAG. Dijkstra vyžaduje nezáporné hrany, Bellman-Ford
 zvládá záporné hrany, Jarník a Borůvka řeší MST, Ford-Fulkerson zlepšuje tok po
-reziduálních cestách.
+reziduálních cestách. Master theorem pro $T(n)=aT(n/b)+\Theta(n^c)$ porovnává
+$a/b^c$; Karacuba násobí dlouhá čísla v $O(n^{\log_2 3})$. NP převody jsou
+reflexivní a tranzitivní; typické NP-úplné problémy jsou SAT, 3-SAT, klika,
+nezávislá množina, $k$-obarvitelnost, Hamiltonovská kružnice, batoh a součet podmnožiny.
+AVL má hloubku $\Theta(\log n)$, porovnávací třídění má dolní mez $\Omega(n\log n)$.
 \end{odpoved}
 
 \begin{recall}
@@ -256,7 +263,12 @@ předka, správu paměti řeší garbage collector, finalizátor není náhrada 
 externího zdroje. Dynamický polymorfismus bývá přes tabulku virtuálních metod. C\#
 běží nad CLR, program se překládá do IL, typicky JIT do strojového kódu, knihovny
 mohou být staticky nebo dynamicky navázané. Vlákna sdílejí paměť, proto hrozí race
-conditions a používají se zámky.
+conditions a používají se zámky. Diamantový problém řeší C\# vícenásobnou implementací
+rozhraní místo vícenásobné dědičnosti tříd. \texttt{ref}, \texttt{out} a \texttt{in}
+jsou tracking reference pro hodnotové typy; \texttt{readonly} a schovaný setter dávají
+imutabilitu. RAII v C++ váže zdroj na život objektu; \texttt{using} je \texttt{try/finally}
+s \texttt{Dispose}. Návrhové vzory: adapter převádí rozhraní, decorator obaluje objekt,
+factory vyrábí instance, visitor přesouvá operaci mimo hierarchii tříd.
 \end{odpoved}
 
 \begin{recall}
@@ -355,7 +367,14 @@ tabulka stránek mapuje stránku na rámec, offset se přenese. Virtuální adre
 chrání procesy mezi sebou. Soubory jsou pojmenované úložiště s rozhraním open, read,
 write, close. Race condition vzniká při závislosti na proložení vláken, kritickou sekci
 chrání vzájemné vyloučení, typicky zámek. Aktivní čekání točí CPU, pasivní čekání vlákno
-uspí.
+uspí. Harvardská architektura odděluje paměť kódu a dat, von Neumann má jednu paměť.
+Čísla se ukládají binárně, záporná typicky dvojkovým doplňkem, float jako znaménko,
+mantisa a exponent; endianita určuje pořadí bytů a zarovnání vkládá mezery do struktur.
+Syscall je řízený přechod do jádra; DMA přenáší data zařízení bez kopírování CPU.
+MMU překládá stránky a page fault řeší chybějící mapování. Scheduler používá stavy
+created, ready, running, blocked, terminated; algoritmy zahrnují FCFS, round robin,
+multilevel feedback queue a CFS. Semafor má čítač, mutex je binární zámek, barrier
+čeká na více vláken.
 \end{odpoved}
 
 \begin{recall}

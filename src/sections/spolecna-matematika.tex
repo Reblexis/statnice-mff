@@ -35,7 +35,9 @@ kandidáty na extrém dávají body s $f'=0$ nebo kde derivace není definovaná
 $\int_a^b f = F(b)-F(a)$.\par
 \noindent\bod{3}\ \textbf{Bonus:} \emph{Taylor} $f(x)\approx\sum\frac{f^{(k)}(a)}{k!}(x-a)^k$.
 Aplikace integrálu: objem rotačního tělesa $\pi\int f(x)^2\,dx$, délka křivky
-$\int\sqrt{1+f'(x)^2}\,dx$.
+$\int\sqrt{1+f'(x)^2}\,dx$, povrch rotační plochy
+$2\pi\int f(x)\sqrt{1+f'(x)^2}\,dx$. Integrální kritérium: pro nezápornou
+nerostoucí $f$ konverguje $\sum f(k)$ právě když je nevlastní integrál konečný.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -81,6 +83,11 @@ je jejich součet). Pythagorova věta a Cauchy-Schwarzova nerovnost $|\langle u|
 vektory). Symetrické matice mají reálná vl.\ čísla a ortogonální diagonalizaci $A=Q\Lambda Q^\top$.
 Reálná symetrická matice je \emph{pozitivně definitní} ($x^\top Ax>0$ pro $x\neq0$)
 $\iff$ má kladná vl.\ čísla $\iff$ existuje Choleského rozklad $A=LL^\top$.
+Grupa má asociativní operaci, neutrální a inverzní prvky; těleso má sčítání a násobení
+kompatibilní distributivitou, konečné těleso má řád mocniny prvočísla. Permutace se skládá
+z cyklů, rozkládá na transpozice a má znaménko. Souřadnice a matice lineárního zobrazení
+závisí na bázi; matice přechodu je regulární. Ortogonální matice zachovává skalární součin
+a délky. Determinant měří orientovaný objem, je multiplikativní a stopa je součet vlastních čísel.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -121,7 +128,9 @@ Pascalův trojúhelník).\par
 \noindent\bod{3}\ \textbf{Bonus:} \emph{Hallova věta}: bipartitní graf má párování pokrývající $A$
 $\iff$ pro každou $X\subseteq A$ platí $|N(X)|\ge|X|$ (Hallova podmínka); ekvivalentně
 \emph{Kőnig-Egerváryho věta}: max.\ párování = min.\ vrcholové pokrytí. Aplikace inkluze-exkluze:
-počet surjekcí, Eulerova funkce, problém šatnářky.
+počet surjekcí, Eulerova funkce, problém šatnářky. Počet prostých funkcí $N\to M$ je
+$m^{\underline n}$ a bijekcí na $n$ prvcích je $n!$. ČUM má minimální a maximální prvky,
+výška krát šířka je aspoň $|X|$.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -177,7 +186,10 @@ zachování; \emph{Ford-Fulkerson} = opakuj zlepšující cesty v reziduální s
 \noindent\bod{3}\ \textbf{Bonus:} \emph{Mengerova věta}: pro dva vrcholy je maximum hranově
 (vrcholově) disjunktních cest rovno velikosti minimálního hranového (vrcholového) separátoru.
 Orientovaný graf: silně souvislý =
-cesta mezi každými dvěma vrcholy v obou směrech.
+cesta mezi každými dvěma vrcholy v obou směrech, slabě souvislý = souvislý podkladový graf.
+Eulerovský graf je souvislý a všechny stupně jsou sudé; v orientovaném grafu potřebuje
+vyvážené vstupní a výstupní stupně. Kuratowski: nerovinný graf obsahuje dělení $K_5$ nebo
+$K_{3,3}$; rovinný graf bez trojúhelníků má nejvýše $2v-4$ hran.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -229,6 +241,10 @@ $\mathrm{var}(X+Y)=\mathrm{var}X+\mathrm{var}Y+2\mathrm{cov}(X,Y)$, pro nezávis
 \noindent\bod{3}\ \textbf{Bonus:} \emph{Zákon velkých čísel}: průměr $\to E[X]$. \emph{CLV}: normovaný součet
 mnoha nezávislých veličin má přibližně normální rozdělení. \emph{Test hypotéz}: chyba 1.\ druhu =
 zamítnu platnou $H_0$ (hladina $\alpha$), 2.\ druhu = nezamítnu neplatnou.
+Konkrétní rozdělení: Bernoulli, geometrické, binomické, Poissonovo, uniformní,
+exponenciální a normální. Bodové odhady řeší nestrannost, konzistenci, bias a MSE;
+tvoří se metodou momentů nebo MLE. Konfidenční interval má spolehlivost $1-\alpha$,
+p-hodnota je nejmenší hladina, na níž zamítáme.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
@@ -268,6 +284,10 @@ hledání modelu. \emph{Věta o úplnosti}: $T\models\varphi \iff T\vdash\varphi
 model. \emph{Skolemizace} odstraní existenční kvantifikátory. \emph{Rozhodnutelnost}: výroková
 logika je rozhodnutelná (SAT), predikátová obecně ne; \emph{kompletní} teorie (rozhoduje o každé
 formuli) jsou rozhodnutelné, ale např.\ Peanova aritmetika kompletní není.
+PNF má kvantifikátory v prefixu; Horn-SAT je lineární přes jednotkovou propagaci.
+Extenze je konzervativní, když nepřidá nové důsledky ve starém jazyce. Tablo je
+sporné, když se uzavřou všechny větve; korektnost a úplnost spojují důkaz s platností.
+Gödel: dost silná bezesporná rekurzivně axiomatizovaná aritmetika je nekompletní.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
