@@ -1,0 +1,518 @@
+\section{Část III: Specializace - Základy umělé inteligence}
+
+\subsection{Řešení úloh prohledáváním}
+\priorita{vysoká}{zelená (2 body)}
+
+\begin{tema}
+\textbf{Řešení úloh prohledáváním}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item formulace úlohy
+  \item stromové vs. grafové prohledávání
+  \item neinformované prohledávání (DFS, BFS, uniform-cost search)
+  \item informované prohledávání (algoritmus A*, přípustné a konzistentní heuristiky)
+\end{itemize}
+\end{tema}
+
+\ucivo
+\begin{intuice}
+Prohledávání je vhodné, když stav umíme brát jako uzel grafu a akci jako hranu. Odpověď u zkoušky má vždy říct: jak problém formuluji, jak držím frontier, podle čeho vybírám další uzel a kdy je řešení optimální.
+\end{intuice}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, node distance=9mm and 15mm,
+  every node/.style={circle,draw,minimum size=7mm,font=\scriptsize,inner sep=0pt}]
+  \node (s) {S};
+  \node (a) [below left=of s] {A};
+  \node (b) [below=of s] {B};
+  \node (c) [below right=of s] {C};
+  \node (d) [below left=of a] {D};
+  \node (e) [below right=of a] {E};
+  \node (g) [below=of c,fill=intugreen!15] {G};
+  \draw[->] (s) -- node[above left,draw=none,font=\scriptsize]{$1$} (a);
+  \draw[->] (s) -- node[right,draw=none,font=\scriptsize]{$4$} (b);
+  \draw[->] (s) -- node[above right,draw=none,font=\scriptsize]{$2$} (c);
+  \draw[->] (a) -- (d);
+  \draw[->] (a) -- (e);
+  \draw[->] (c) -- node[right,draw=none,font=\scriptsize]{$2$} (g);
+  \node[draw=none,align=left,font=\scriptsize,anchor=west] at (3.0,-0.5)
+    {BFS: S,A,B,C,D,E,G\\DFS: S,A,D,E,B,C,G\\UCS: podle $g(n)$\\A*: podle $g(n)+h(n)$};
+\end{tikzpicture}
+\end{center}
+
+\begin{defbox}{formulace úlohy}
+Úloha je dána počátečním stavem, množinou akcí nebo přechodovým modelem, testem cíle a cenou cesty. Stromové prohledávání si pamatuje cesty ve stromu možností, grafové prohledávání navíc uzavírá již navštívené stavy, aby se netočilo v cyklech.
+\end{defbox}
+
+\begin{itemize}[leftmargin=1.2em,itemsep=1pt,topsep=1pt]
+  \item \textbf{BFS}: fronta, bere nejmělčí uzel. Je úplné pro konečné větvení a optimální při stejných cenách kroků.
+  \item \textbf{DFS}: zásobník nebo rekurze, jde do hloubky. Má malou paměť, ale není obecně optimální a ve stromové verzi se může zacyklit.
+  \item \textbf{Uniform-cost search}: prioritní fronta podle dosavadní ceny $g(n)$. Je Dijkstra nad stavovým prostorem, optimální pro nezáporné ceny.
+  \item \textbf{A$^*$}: vybírá minimum $f(n)=g(n)+h(n)$. Přípustná heuristika nikdy nepřeceňuje cenu do cíle. Konzistentní heuristika splňuje $h(n)\le c(n,a,n')+h(n')$ a dává optimalitu i v grafovém prohledávání bez znovuotevírání uzlů.
+\end{itemize}
+\klic{BFS = hloubka, DFS = paměť, UCS = skutečná cena, A$^*$ = skutečná cena plus odhad.}
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} definuj stav, akce, počáteční stav, test cíle a cenu. Vysvětli rozdíl tree search vs. graph search a pojmenuj DFS, BFS, UCS, A$^*$.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} u každého algoritmu řekni datovou strukturu frontier a optimálnost: BFS pro jednotkové ceny, UCS pro nezáporné ceny, A$^*$ pro přípustnou heuristiku ve stromu a konzistentní heuristiku v grafu.\par
+\noindent\bod{3}\ \textbf{Bonus:} složitosti BFS $O(b^{d+1})$ čas i paměť, DFS čas $O(b^m)$ a paměť $O(bm)$ nebo $O(m)$ při backtrackingu. Dominance heuristiky: větší přípustná heuristika typicky expanduje méně uzlů.
+\end{odpoved}
+
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Jakých pět částí má formulace problému prohledáváním?
+  \item Kdy je BFS optimální a kdy nestačí?
+  \item Jaký je rozdíl mezi přípustnou a konzistentní heuristikou?
+  \item Co se stane, když DFS pustíš jako tree search na graf s cyklem?
+\end{itemize}
+\end{recall}
+\past{Neříkej, že A$^*$ je vždy optimální. Potřebuje správnou heuristiku a u grafového prohledávání se typicky požaduje konzistence.}
+
+\subsection{Splňování omezujících podmínek (CSP)}
+\priorita{vysoká}{zelená (2 body)}
+
+\begin{tema}
+\textbf{Splňování omezujících podmínek}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item problém splňování podmínek
+  \item hranová konzistence (algoritmus AC-3)
+  \item algoritmus hledání řešení (MAC)
+\end{itemize}
+\end{tema}
+
+\ucivo
+\begin{intuice}
+CSP neřeší cestu akcí, ale tabulku hodnot: každé proměnné chceme dát hodnotu tak, aby všechny podmínky seděly. Velký zisk je škrtat nemožné hodnoty dřív, než rozvětvíme backtracking.
+\end{intuice}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, node distance=16mm,
+  var/.style={circle,draw,minimum size=8mm,font=\small},
+  dom/.style={draw=none,font=\scriptsize,align=center}]
+  \node[var] (a) {$A$};
+  \node[var] (b) [right=of a] {$B$};
+  \node[var] (c) [below=of a] {$C$};
+  \draw (a) -- node[above,draw=none,font=\scriptsize]{$A<B$} (b);
+  \draw (a) -- node[left,draw=none,font=\scriptsize]{$A\ne C$} (c);
+  \draw (b) -- node[right,draw=none,font=\scriptsize]{$B\ne C$} (c);
+  \node[dom,anchor=west] at (3.3,0.1) {před AC-3:\\$D_A=\{3,4,5\}$\\$D_B=\{1,2,3,4\}$};
+  \node[dom,anchor=west] at (3.3,-1.25) {po hraně $A<B$:\\$D_A=\{3\}$\\$D_B=\{4\}$};
+\end{tikzpicture}
+\end{center}
+
+\begin{defbox}{CSP a hranová konzistence}
+CSP má proměnné $X_i$, domény $D_i$ a podmínky jako relace na proměnných. Řešení je úplné přiřazení hodnot, které splní všechny podmínky. Hrana $(X_i,X_j)$ je hranově konzistentní, když pro každou hodnotu $x\in D_i$ existuje hodnota $y\in D_j$, která splní binární podmínku mezi $X_i$ a $X_j$.
+\end{defbox}
+
+\textbf{AC-3}: vlož všechny orientované hrany do fronty. Vyber $(X_i,X_j)$ a smaž z $D_i$ hodnoty bez podpory v $D_j$. Pokud se $D_i$ změnila, vrať do fronty všechny hrany $(X_k,X_i)$ kromě právě opačné. Prázdná doména znamená neúspěch. Jinak dostaneš lokálně vyčištěný CSP, ne nutně hotové řešení.
+
+\textbf{MAC}: backtracking nad proměnnými, po každém přiřazení se znovu udržuje hranová konzistence. Tím se často odhalí spor dřív než hluboko ve stromu.
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} CSP = proměnné, domény, podmínky, úplné konzistentní přiřazení. AC-3 škrtá hodnoty bez podpory u sousedních proměnných.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} popiš frontu orientovaných hran v AC-3 a MAC jako backtracking plus opakované spuštění AC po každém přiřazení. Přidej mini příklad $A<B$.\par
+\noindent\bod{3}\ \textbf{Bonus:} AC-3 pro binární podmínky má typicky složitost $O(cd^3)$, kde $c$ je počet podmínek a $d$ velikost domény. Hranová konzistence je jen lokální, proto sama negarantuje řešení.
+\end{odpoved}
+
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Co přesně znamená, že hodnota má podporu v sousední doméně?
+  \item Proč je hrana v CSP orientovaná, i když podmínka mezi proměnnými je binární?
+  \item Jak se liší forward checking, AC-3 a MAC?
+  \item Proč může být CSP hranově konzistentní a přesto nemít řešení?
+\end{itemize}
+\end{recall}
+\past{Nezaměň hranovou konzistenci s globální konzistencí. AC-3 škrtá zjevně nemožné hodnoty, ale nemusí najít celé přiřazení.}
+
+\subsection{Logické uvažování}
+\priorita{vysoká}{zelená (2 body)}
+
+\begin{tema}
+\textbf{Logické uvažování}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item základy výrokové logiky (konjunktivní a disjunktivní normální forma)
+  \item algoritmus DPLL
+  \item dopředné a zpětné řetězení (Hornovské klauzule)
+  \item rezoluce
+\end{itemize}
+\end{tema}
+
+\ucivo
+\begin{intuice}
+Logické uvažování převádí znalosti na formule a otázku na test důsledku. Prakticky chceš umět dvě cesty: SAT přes DPLL a odvozování přes Hornovy klauzule nebo rezoluci.
+\end{intuice}
+
+\begin{defbox}{normální formy a klauzule}
+CNF je konjunkce klauzulí, kde klauzule je disjunkce literálů. DNF je disjunkce konjunkcí literálů. Hornova klauzule má nejvýše jeden pozitivní literál, například $\neg p\lor\neg q\lor r$, což odpovídá pravidlu $p\land q\Rightarrow r$.
+\end{defbox}
+
+\textbf{DPLL} rozhoduje splnitelnost CNF. Opakuj jednotkovou propagaci, nastav čisté literály tak, aby splnily své klauzule, zkontroluj konec: žádné klauzule znamenají SAT, prázdná klauzule znamená UNSAT. Když není rozhodnuto, vyber proměnnou a větvi na pravda/nepravda.
+
+\textbf{Řetězení}: dopředné řetězení jde od faktů k novým faktům, je data-driven. Zpětné řetězení jde od cíle k podcílům, je goal-driven. Obojí je levné a přirozené pro Hornovy klauzule.
+
+\textbf{Rezoluce}: pro dotaz $\alpha$ testuj nesplnitelnost $KB\land\neg\alpha$ v CNF. Z klauzulí $(A\lor p)$ a $(B\lor\neg p)$ odvoď $(A\lor B)$. Když vznikne prázdná klauzule, $KB\models\alpha$.
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} vysvětli CNF, DNF, klauzuli, literál, Hornovu klauzuli a že důsledek lze testovat přes $KB\land\neg\alpha$.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} popiš kroky DPLL: jednotková propagace, čistý literál, koncové stavy, větvení. Uveď rozdíl mezi dopředným a zpětným řetězením.\par
+\noindent\bod{3}\ \textbf{Bonus:} napiš rezoluční pravidlo a vysvětli rezoluční zamítnutí. DPLL je v nejhorším exponenciální, ale jednotková propagace drasticky zmenšuje praxi.
+\end{odpoved}
+
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Co udělá DPLL s jednotkovou klauzulí?
+  \item Jak přepíšeš $\neg p\lor\neg q\lor r$ jako pravidlo?
+  \item Proč se při důkazu dotazu přidává $\neg\alpha$?
+  \item Kdy je výhodnější zpětné řetězení než dopředné?
+\end{itemize}
+\end{recall}
+\past{Nepleť DPLL a rezoluci: DPLL hledá ohodnocení CNF, rezoluce odvozuje nové klauzule a hledá prázdnou klauzuli.}
+
+\subsection{Pravděpodobnostní uvažování}
+\priorita{vysoká}{zelená (2 body)}
+
+\begin{tema}
+\textbf{Pravděpodobnostní uvažování}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item základy teorie pravděpodobnosti (úplná sdružená distribuce, nezávislost, Bayesovo pravidlo)
+  \item pravděpodobnostní uvažování (vysčítání, normalizace)
+  \item Bayesovské sítě
+  \item konstrukce a vztah k úplné sdružené distribuci
+  \item exaktní odvozování (enumerace, eliminace proměnných)
+  \item aproximační odvozování (Monte Carlo, zamítání, vážení věrohodností)
+\end{itemize}
+\end{tema}
+
+\ucivo
+\begin{intuice}
+Pravděpodobnost je způsob, jak uvažovat při nejistotě. Úplná sdružená distribuce umí odpovědět na všechno, ale je obrovská. Bayesovská síť ji komprimuje pomocí podmíněných nezávislostí.
+\end{intuice}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, node distance=11mm and 16mm,
+  every node/.style={draw,rounded corners=1pt,minimum width=12mm,minimum height=6mm,font=\scriptsize}]
+  \node (b) {Vloupání};
+  \node (e) [right=of b] {Zemětř.};
+  \node (a) [below right=of b] {Alarm};
+  \node (j) [below left=of a] {Jan volá};
+  \node (m) [below right=of a] {Marie volá};
+  \draw[->] (b) -- (a);
+  \draw[->] (e) -- (a);
+  \draw[->] (a) -- (j);
+  \draw[->] (a) -- (m);
+  \node[draw=none,align=left,anchor=west,font=\scriptsize] at (4.1,-0.8)
+    {$P(B,E,A,J,M)=$\\$P(B)P(E)P(A\mid B,E)$\\$\cdot P(J\mid A)P(M\mid A)$};
+\end{tikzpicture}
+\end{center}
+
+\begin{defbox}{Bayesovská síť}
+Bayesovská síť je orientovaný acyklický graf náhodných proměnných a tabulky $P(X_i\mid Parents(X_i))$. Společná distribuce se faktorizuje jako
+\[
+P(x_1,\dots,x_n)=\prod_i P(x_i\mid parents(x_i)).
+\]
+\end{defbox}
+
+\textbf{Základní počty}: z úplné sdružené distribuce získáš marginál vysčítáním skrytých proměnných, například $P(X)=\sum_y P(X,y)$. Podmíněnou pravděpodobnost získáš normalizací: $P(X\mid e)=\alpha P(X,e)$. Bayesovo pravidlo je $P(H\mid e)=\alpha P(e\mid H)P(H)$.
+
+\textbf{Inference v síti}: enumerace přímo sčítá přes skryté proměnné. Eliminace proměnných průběžně tvoří faktory a sčítá jen jednou, takže šetří opakovanou práci. Aproximace generuje vzorky: Monte Carlo obecně, zamítání zahodí vzorky neslučitelné s evidencí, vážení věrohodností vzorky nezahazuje, ale váží je pravděpodobností evidence.
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} řekni úplná sdružená distribuce, nezávislost, Bayesovo pravidlo, vysčítání a normalizace. Bayesovská síť = DAG plus podmíněné tabulky.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} napiš faktorizaci sítě a ukaž ji na malé síti. Popiš enumeraci, eliminaci proměnných a rozdíl mezi zamítáním a vážením věrohodností.\par
+\noindent\bod{3}\ \textbf{Bonus:} vysvětli, že konstrukce sítě závisí na pořadí proměnných a nejlepší je obvykle směr od příčin k důsledkům. Eliminace závisí na pořadí eliminovaných proměnných.
+\end{odpoved}
+
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Jak dostaneš $P(X\mid e)$ z $P(X,e)$?
+  \item Co přesně faktorizuje Bayesovská síť?
+  \item Proč je eliminace proměnných úspornější než čistá enumerace?
+  \item Jaký je rozdíl mezi zamítáním a vážením věrohodností?
+\end{itemize}
+\end{recall}
+\past{Neříkej, že chybějící hrana znamená obyčejnou nezávislost. V Bayesovské síti jde hlavně o podmíněné nezávislosti vzhledem k rodičům a evidenci.}
+
+\subsection{Reprezentace znalostí}
+\priorita{vysoká}{zelená (2 body)}
+
+\begin{tema}
+\textbf{Reprezentace znalostí}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item situační kalkulus, problém rámce
+  \item Markovské modely
+  \item filtrace, predikce, vyhlazování, nejpravděpodobnější průchod
+  \item skryté Markovské modely (HMM) vs. dynamické Bayesovské sítě
+\end{itemize}
+\end{tema}
+
+\ucivo
+\begin{intuice}
+Reprezentace znalostí řeší, jak zapsat svět tak, aby nad ním šlo odvozovat. Situační kalkulus je logický zápis změn po akcích, Markovské modely jsou pravděpodobnostní zápis vývoje stavu v čase.
+\end{intuice}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, node distance=12mm and 13mm,
+  hidden/.style={circle,draw,minimum size=7mm,font=\scriptsize},
+  obs/.style={rectangle,draw,minimum size=6mm,font=\scriptsize}]
+  \node[hidden] (x1) {$X_1$};
+  \node[hidden] (x2) [right=of x1] {$X_2$};
+  \node[hidden] (x3) [right=of x2] {$X_3$};
+  \node[obs] (e1) [below=of x1] {$E_1$};
+  \node[obs] (e2) [below=of x2] {$E_2$};
+  \node[obs] (e3) [below=of x3] {$E_3$};
+  \draw[->] (x1) -- (x2);
+  \draw[->] (x2) -- (x3);
+  \draw[->] (x1) -- (e1);
+  \draw[->] (x2) -- (e2);
+  \draw[->] (x3) -- (e3);
+  \node[draw=none,anchor=west,align=left,font=\scriptsize] at (4.0,-0.7)
+    {HMM:\\skrytý stav $X_t$\\pozorování $E_t$};
+\end{tikzpicture}
+\end{center}
+
+\begin{defbox}{situační kalkulus a HMM}
+Situační kalkulus popisuje situace vzniklé posloupností akcí, predikáty o situacích a akci $Result(s,a)$. Problém rámce je otázka, jak stručně zapsat, co se akcí nemění. HMM má skrytý stav $X_t$, pozorování $E_t$, přechod $P(X_t\mid X_{t-1})$ a senzorový model $P(E_t\mid X_t)$.
+\end{defbox}
+
+\textbf{Markovské úlohy}: filtrace počítá $P(X_t\mid e_{1:t})$, tedy aktuální stav po dosavadních pozorováních. Predikce počítá budoucí stav $P(X_{t+k}\mid e_{1:t})$. Vyhlazování zpřesňuje minulý stav $P(X_k\mid e_{1:t})$ pro $k<t$. Nejpravděpodobnější průchod hledá nejpravděpodobnější posloupnost skrytých stavů, typicky Viterbiho algoritmem.
+
+\textbf{HMM vs. dynamická Bayesovská síť}: HMM má jednu skrytou stavovou proměnnou na čas. Dynamická Bayesovská síť rozkládá stav na více proměnných a dovolí bohatší závislosti mezi nimi.
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} situační kalkulus = logika akcí a situací, problém rámce = jak nevyjmenovat všechny nezměněné fakty. HMM = skrytý stav, pozorování, přechodový a senzorový model.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} rozliš filtraci, predikci, vyhlazování a nejpravděpodobnější průchod. Nakresli řetěz $X_1\to X_2\to X_3$ s pozorováními $E_t$.\par
+\noindent\bod{3}\ \textbf{Bonus:} uveď, že HMM je speciální případ dynamické Bayesovské sítě; DBN dovolí faktorizovat stav na více proměnných a tím zmenšit tabulky.
+\end{odpoved}
+
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Co je problém rámce v jedné větě?
+  \item Jaký dotaz odpovídá filtraci a jaký vyhlazování?
+  \item Co hledá Viterbiho algoritmus?
+  \item Proč je DBN obecnější než HMM?
+\end{itemize}
+\end{recall}
+\past{Nezaměň filtraci s vyhlazováním: filtrace odhaduje současnost z minulých pozorování, vyhlazování zpětně zpřesňuje minulost i pomocí pozdější evidence.}
+
+\subsection{Automatické plánování}
+\priorita{vysoká}{zelená (2 body)}
+
+\begin{tema}
+\textbf{Automatické plánování}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item formulace plánovacího problému (definice operátoru)
+  \item dopředné a zpětné plánování
+\end{itemize}
+\end{tema}
+
+\ucivo
+\begin{intuice}
+Plánování je prohledávání nad faktorizovaným stavem. Místo černé skříňky používáme fakta, předpoklady akcí a efekty akcí, takže lze rozumněji vybírat relevantní kroky.
+\end{intuice}
+
+\begin{defbox}{plánovací problém a operátor}
+Klasický plánovací problém má počáteční stav jako množinu faktů, cíl jako podmínku na fakta a operátory. Operátor má preconditions, tedy kdy ho lze použít, a effects, tedy co přidá nebo smaže ve stavu. Plán je posloupnost operátorů, která z počátečního stavu vyrobí stav splňující cíl.
+\end{defbox}
+
+Mini příklad: operátor \emph{Přesuň(x,A,B)} má předpoklady $Na(x,A)$ a $Volne(B)$, efekty přidat $Na(x,B)$ a smazat $Na(x,A)$. Dopředné plánování začíná v počátečním stavu a zkouší použitelné akce. Zpětné plánování začíná cílem a hledá akce, které by cíl mohly splnit, přičemž jejich předpoklady se stanou novými podcíli.
+
+\begin{itemize}[leftmargin=1.2em,itemsep=1pt,topsep=1pt]
+  \item \textbf{Dopředné}: jednoduché simulování akcí, ale může zkoušet mnoho irelevantních kroků.
+  \item \textbf{Zpětné}: soustředí se na cíl, ale musí řešit, zda vybrané akce jsou vzájemně slučitelné.
+  \item \textbf{Kdy použít}: dopředné je přirozené, když je málo použitelných akcí; zpětné, když cíl silně omezuje relevantní akce.
+\end{itemize}
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} plánovací problém = počáteční stav, cílová podmínka, operátory. Operátor = předpoklady a efekty. Plán = posloupnost akcí.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} vysvětli dopředné a zpětné plánování na mini příkladu s přesunem objektu. Řekni, proč faktorizovaný stav umožní pracovat s relevancí akcí.\par
+\noindent\bod{3}\ \textbf{Bonus:} uveď rozdíl proti obyčejnému prohledávání: stav není atomický, akce mají logickou strukturu a plánovač může využívat předpoklady a efekty místo slepé expanze.
+\end{odpoved}
+
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Jaké části má operátor?
+  \item Co je stav v klasickém plánování?
+  \item Jak se liší dopředné a zpětné plánování?
+  \item Proč je plánování vhodné pro faktorizované stavy?
+\end{itemize}
+\end{recall}
+\past{Neodpovídej jen obecně "hledání cesty". U plánování musí zaznít preconditions, effects a cíl jako podmínka na fakta.}
+
+\subsection{Markovské rozhodovací procesy (MDP)}
+\priorita{vysoká}{zelená (2 body)}
+
+\begin{tema}
+\textbf{Markovské rozhodovací procesy (MDP)}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item formulace problému (výpočet užitku, strategie)
+  \item Bellmanova rovnice
+  \item iterace hodnot, iterace strategií
+  \item POMDP (základní definice)
+\end{itemize}
+\end{tema}
+
+\ucivo
+\begin{intuice}
+MDP je plánování, kde akce nejsou jisté. Agent volí akci podle stavu, dostane odměnu a pravděpodobnostně přejde do dalšího stavu. Hledáme strategii s nejvyšším očekávaným diskontovaným užitkem.
+\end{intuice}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, node distance=22mm,
+  st/.style={circle,draw,minimum size=9mm,font=\small}]
+  \node[st] (s0) {$S_0$};
+  \node[st] (s1) [right=of s0] {$S_1$};
+  \node[st,fill=intugreen!15] (g) [right=of s1] {$G$};
+  \draw[->] (s0) to[bend left=15] node[above,draw=none,font=\scriptsize]{$a:0.8, r=1$} (s1);
+  \draw[->] (s0) to[loop above] node[above,draw=none,font=\scriptsize]{$0.2$} (s0);
+  \draw[->] (s1) -- node[above,draw=none,font=\scriptsize]{$a:1, r=5$} (g);
+  \draw[->] (s1) to[loop below] node[below,draw=none,font=\scriptsize]{$b:1, r=0$} (s1);
+  \node[draw=none,align=left,anchor=west,font=\scriptsize] at (-0.7,-1.4)
+    {$U(S_0)\leftarrow \max_a \sum_{s'}P(s'\mid S_0,a)[R+\gamma U(s')]$};
+\end{tikzpicture}
+\end{center}
+
+\begin{defbox}{MDP}
+MDP je čtveřice stavů, akcí, přechodových pravděpodobností $P(s'\mid s,a)$ a odměn $R(s,a,s')$, často s diskontem $\gamma$. Strategie $\pi(s)$ říká, jakou akci zvolit ve stavu $s$. Užitečnost stavu je očekávaný součet budoucích diskontovaných odměn.
+\end{defbox}
+
+\textbf{Bellmanova rovnice optimality}:
+\[
+U(s)=\max_a \sum_{s'} P(s'\mid s,a)\bigl(R(s,a,s')+\gamma U(s')\bigr).
+\]
+\textbf{Iterace hodnot}: opakovaně aktualizuj $U(s)$ Bellmanovou rovnicí a nakonec z ní vyčti strategii. \textbf{Iterace strategií}: střídá vyhodnocení současné strategie a její zlepšení výběrem lepší akce. \textbf{POMDP}: stav není přímo pozorovaný, agent udržuje belief, tedy distribuci přes možné stavy.
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} MDP = stavy, akce, přechody, odměny, strategie. Cíl je maximalizovat očekávaný diskontovaný užitek.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} napiš Bellmanovu rovnici a popiš iteraci hodnot i iteraci strategií. Uveď malý přechod se dvěma možnými následníky.\par
+\noindent\bod{3}\ \textbf{Bonus:} POMDP = MDP s částečnou pozorovatelností, rozhoduje se nad belief stavem. Iterace strategií bývá dražší v kroku vyhodnocení, ale často potřebuje méně iterací.
+\end{odpoved}
+
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Co je strategie v MDP?
+  \item Kde v Bellmanově rovnici vystupuje nejistota?
+  \item Jak se liší iterace hodnot a iterace strategií?
+  \item Co je belief stav u POMDP?
+\end{itemize}
+\end{recall}
+\past{Nepleť MDP s HMM: v MDP agent volí akce a optimalizuje odměny, v HMM hlavně odhaduje skrytý stav z pozorování.}
+
+\subsection{Hry a teorie her}
+\priorita{vysoká}{zelená (2 body)}
+
+\begin{tema}
+\textbf{Hry a teorie her}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item algoritmy Minimax a alfa-beta prořezávání
+  \item základy teorie her (vězňovo dilema, Nashovo ekvilibrium)
+  \item mechanism design (typy aukcí)
+\end{itemize}
+\end{tema}
+
+\ucivo
+\begin{intuice}
+Ve hrách neoptimalizuješ proti přírodě, ale proti jinému agentovi. Minimax předpokládá, že soupeř hraje proti nám co nejlépe. Alfa-beta jen šetří práci, výsledek minimaxu nemění.
+\end{intuice}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, level distance=10mm,
+  level 1/.style={sibling distance=34mm},
+  level 2/.style={sibling distance=15mm},
+  every node/.style={font=\scriptsize}]
+  \node[circle,draw] {MAX}
+    child {node[circle,draw] {MIN}
+      child {node[draw] {$3$}}
+      child {node[draw] {$5$}}
+    }
+    child {node[circle,draw] {MIN}
+      child {node[draw] {$2$}}
+      child {node[draw,gray] {$9$} edge from parent[gray,dashed]}
+      edge from parent node[above,draw=none]{$\alpha=3$}
+    };
+  \node[draw=none,align=left,anchor=west] at (2.6,-1.0)
+    {vpravo: po hodnotě 2\\MIN už nemůže zlepšit MAX\\větev 9 se řeže};
+\end{tikzpicture}
+\end{center}
+
+\begin{defbox}{minimax, Nashovo ekvilibrium}
+Minimax počítá hodnotu hry s nulovým součtem: v uzlu MAX bere maximum z potomků, v uzlu MIN minimum. Nashovo ekvilibrium je profil strategií, kde se žádnému hráči nevyplatí jednostranně změnit strategii.
+\end{defbox}
+
+\textbf{Alfa-beta}: drží $\alpha$ jako nejlepší zatím zajištěnou hodnotu pro MAX a $\beta$ jako nejlepší zatím zajištěnou hodnotu pro MIN. Když je jasné, že větev nemůže ovlivnit rozhodnutí předka, neprohledává se.
+
+\textbf{Vězňovo dilema}: každý má individuální motivaci zradit, i když oboustranná spolupráce je společně lepší. Ukazuje rozdíl mezi individuální racionalitou a kolektivním výsledkem.
+
+\textbf{Aukce}: anglická je vzestupná, holandská sestupná, první cena znamená platbu vlastní nabídky, druhá cena typicky motivuje nabídnout skutečnou hodnotu.
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} minimax = MAX maximalizuje, MIN minimalizuje. Alfa-beta prořezává větve bez změny výsledku. Nash = žádná jednostranně výhodná odchylka.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} ukaž výpočet malého stromu a jeden alfa-beta řez. Vysvětli vězňovo dilema a vyjmenuj základní typy aukcí.\par
+\noindent\bod{3}\ \textbf{Bonus:} dobré pořadí tahů dává alfa-beta velkou úsporu, v ideálním případě zhruba na efektivní hloubku poloviny stromu. U aukce druhé ceny zmiň pravdivé nabízení jako dominantní strategii v jednoduchém modelu.
+\end{odpoved}
+
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Jak se počítá hodnota v MAX a MIN uzlu?
+  \item Proč alfa-beta nemění výsledek minimaxu?
+  \item Co znamená Nashovo ekvilibrium?
+  \item Jaký je rozdíl mezi aukcí první a druhé ceny?
+\end{itemize}
+\end{recall}
+\past{Neříkej, že alfa-beta je jiná strategie hraní. Je to optimalizace výpočtu stejného minimaxového rozhodnutí.}
+
+\subsection{Strojové učení (přehledově)}
+\priorita{vysoká}{zelená (2 body)}
+
+\begin{tema}
+\textbf{Strojové učení}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item základní druhy učení (s učitelem, bez učitele, zpětnovazební)
+  \item rozhodovací stromy (definice, konstrukce)
+  \item regrese, SVM (základní principy)
+  \item Bayesovské učení, EM algoritmus
+  \item zpětnovazební učení
+  \item pasivní učení (definice, metody ADP a TD)
+  \item aktivní učení (definice, explorace vs. exploitace, Q-učení, SARSA)
+\end{itemize}
+\end{tema}
+
+\ucivo
+\begin{intuice}
+Tady se nečeká detail celé specializace Strojové učení, ale mapa pojmů v kontextu UI. Bezpečná odpověď vždy řekne typ úlohy, co se učí, z jakých dat a jak se pozná dobrý výsledek.
+\end{intuice}
+
+\begin{defbox}{základní druhy učení}
+Učení s učitelem má dvojice vstup plus správný výstup a řeší klasifikaci nebo regresi. Učení bez učitele hledá strukturu bez cílových štítků. Zpětnovazební učení má agenta, akce, odměny a učí strategii z interakce s prostředím.
+\end{defbox}
+
+\textbf{Rozhodovací strom}: vnitřní uzel testuje atribut, hrana odpovídá výsledku testu a list dává predikci. Konstrukce vybírá test, který nejlépe rozdělí data, typicky podle informačního zisku nebo Gini nečistoty, a zastavuje nebo prořezává kvůli přeučení.
+
+\textbf{Regrese a SVM}: regrese predikuje spojitou hodnotu, typicky minimalizuje chybu. SVM hledá oddělující nadrovinu s maximálním marginem; pro neseparabilní data používá měkký margin a pro nelineární hranice jádra.
+
+\textbf{Bayesovské učení a EM}: Bayesovské učení kombinuje prior a věrohodnost na posterior $P(h\mid data)$. EM řeší skryté proměnné střídáním E-kroku, který dopočítá očekávání skrytých přiřazení, a M-kroku, který zlepší parametry.
+
+\textbf{Zpětnovazební učení}: pasivní učení hodnotí pevně danou strategii. ADP odhaduje model přechodů a odměn a pak řeší MDP. TD aktualizuje hodnoty z rozdílu mezi po sobě jdoucími odhady. Aktivní učení současně volí akce: musí vyvažovat exploraci a exploitaci. Q-učení je off-policy aktualizace hodnot akcí, SARSA je on-policy aktualizace podle skutečně provedeného přechodu $(s,a,r,s',a')$.
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} rozliš učení s učitelem, bez učitele a zpětnovazební. Definuj rozhodovací strom, regresi, SVM a RL slovníkem vstup, výstup, cíl.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} popiš konstrukci stromu, princip marginu u SVM, Bayesovské učení přes posterior, EM jako E/M kroky, pasivní ADP/TD a aktivní Q-učení/SARSA.\par
+\noindent\bod{3}\ \textbf{Bonus:} zdůrazni rozdíl ADP vs. TD: ADP se učí model a řeší ho, TD se učí hodnoty přímo. Q-učení je off-policy s maximem přes další akce, SARSA je on-policy a používá další skutečně zvolenou akci.
+\end{odpoved}
+
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Jak rozlišíš klasifikaci a regresi?
+  \item Co je list a co vnitřní uzel v rozhodovacím stromu?
+  \item Co se děje v E-kroku a M-kroku EM algoritmu?
+  \item Jaký je rozdíl mezi Q-učením a SARSA?
+\end{itemize}
+\end{recall}
+\past{Nezajížděj mimo oficiální přehled: žádné hluboké učení, NLP ani robotika. Tady stačí základní principy uvedených metod.}

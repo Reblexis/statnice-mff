@@ -8,100 +8,98 @@
 \centering
 \vspace*{2.2cm}
 {\color{mffblue}\rule{\linewidth}{1.2pt}}\\[0.5cm]
-{\Huge\bfseries\color{mffblue} Příprava na bakalářské státnice\par}
-\vspace{0.5cm}
+{\Huge\bfseries\color{mffblue} Státnice: rychlá příprava na trojku\par}
+\vspace{0.4cm}
 {\LARGE Informatika - Umělá inteligence\par}
-\vspace{0.2cm}
+\vspace{0.15cm}
 {\Large zaměření \textbf{Strojové učení}\par}
 \vspace{0.3cm}
-{\color{mffblue}\rule{\linewidth}{1.2pt}}\\[1.2cm]
+{\color{mffblue}\rule{\linewidth}{1.2pt}}\\[1.0cm]
 
-{\large MFF UK \textbullet{} studijní plán 2025/2026\par}
-\vspace{0.3cm}
-{\normalsize Kompletní studijní text postavený na poznámkách \emph{notes-ipp} (Vít Kološ),\\
-strukturovaný a auditovaný proti oficiálním požadavkům SZZ (verze 28.\,7.\,2025).\par}
+{\normalsize Lean studijní text optimalizovaný na \textbf{nejméně času k jistému průchodu}
+(známka 3, $>$98 \%).\\ Strukturováno přesně podle oficiálních požadavků
+(\texttt{pozadavky/detailni-pozadavky.pdf}).\par}
 
 \vfill
-\begin{infobox}[title={Jak tento dokument číst}]
+\begin{infobox}[title={Jak tento text funguje}]
 \begin{itemize}[leftmargin=1.2em]
-  \item Obsah jednotlivých okruhů je \textbf{věrně převzatý z poznámek notes-ipp} (submodul repozitáře) a odborně nezměněný.
-  \item Pořadí a členění kopíruje \textbf{oficiální požadavky} (\texttt{pozadavky/detailni-pozadavky.pdf}, závazný zdroj). Rozsah je přesně zaměření Strojové učení, nic navíc - viz \ref{sec:rozsah}.
-  \item Sekce \ref{sec:audit} (\nameref{sec:audit}) ověřuje bod po bodu, že je pokryté \emph{každé} požadované téma, a vypisuje místa, která poznámky jen naznačují.
-  \item \colorbox{practiceyellow!18}{\textbf{Žluté rámečky}} = poznámky odkazují na vlastní procvičení (výpočetní dovednost, ne definiční mezera).
-  \item \colorbox{gapred!12}{\textbf{Červené rámečky}} = téma v poznámkách chybí nebo je jen alternativou; ověř/doplň.
+  \item Každé téma má dvě části: šedý box \textsc{Téma} = \textbf{oficiální požadavek doslova}
+  (co se může zkoušet), a pod ním \emph{Učivo} = naše stručné, intuitivní vysvětlení.
+  \item \colorbox{defblue!12}{\textbf{Odpověď podle bodů}} ukazuje, co stačí říct na 1 / 2 / 3 body.
+  \textbf{Cíl pro průchod je zelená = 2 body.}
+  \item \colorbox{orange!18}{\textbf{Vyzkoušej se}} = otázky na aktivní vybavování;
+  \colorbox{gapred!12}{\textbf{Pozor}} = častá past.
+  \item Obrázky jsou tam, kde ušetří čas. Text je \textbf{přepsaný pro pochopení}, ne opsaný z poznámek.
 \end{itemize}
 \end{infobox}
-
-\vspace{0.6cm}
+\vspace{0.5cm}
 {\small Viktor Číhal \textbullet{} sestaveno 8.\,6.\,2026\par}
 \end{titlepage}
 
 \tableofcontents
 \clearpage
 
-% ===================== STRUKTURA ZKOUŠKY =====================
-\section{Struktura a hodnocení zkoušky}
-\label{sec:struktura}
+% ===================== STRATEGIE =====================
+\section{Strategie: jak projít s minimem času}
 
-\begin{infobox}[title={Formát odborné části SZZ (písemná forma)}]
-\begin{itemize}[leftmargin=1.2em]
-  \item Zadáno je typicky \textbf{8 otázek}: 2 ze společné matematiky, 2 ze společné informatiky, 4 z okruhů specializace (Základy UI + Strojové učení).
-  \item Za každou odpověď \textbf{0-3 body}.
-  \item K úspěchu je nutné získat \textbf{min.\ 5 bodů ze společných okruhů} a \textbf{min.\ 7 bodů ze specializace}.
-  \item Známka podle součtu (max 24): od \textbf{12\,b} dobře, od \textbf{16\,b} velmi dobře, od \textbf{20\,b} výborně.
-  \item Zkouška má \textbf{přehledový charakter}: důraz na pochopení principů, přesné definice a terminologii, \emph{ne} na složité důkazy.
-\end{itemize}
+\begin{infobox}[title={Bodový rozpočet (proč to stačí)}]
+8 otázek po 0-3 bodech. \textbf{Průchod (známka 3)} = aspoň 12 bodů celkem \textbf{a} aspoň
+5 ze společných okruhů (4 otázky) \textbf{a} aspoň 7 ze specializace (4 otázky).
 \end{infobox}
 
-\noindent\textbf{Co to znamená pro přípravu na známku „výborně“ (A):} potřebuješ stabilně dávat blízko plný počet bodů, tj.\ u každé otázky umět \emph{přesnou definici}, \emph{klíčové tvrzení/větu} a \emph{hlavní myšlenku} (proč to platí, k čemu to je). Tomu odpovídá i forma tohoto textu - hutné definice a tvrzení, ne dlouhé důkazy.
+\begin{itemize}[leftmargin=1.3em]
+  \item \textbf{Specializace je klíčová} (potřebuješ 7/12, tj.\ průměr 1,75 na otázku). Sem dej
+  většinu času (ML + Základy UI $\approx$ 60 \%). Společné okruhy mají nízký floor 5/12
+  ($\approx$ 1,25 na otázku) - stačí breadth, ne hloubka.
+  \item \textbf{Hlavní riziko je nula z přidělené otázky}, ne chybějící důkaz. Proto měj u
+  \emph{každého} tématu aspoň „kostru na 1 bod“. Žádné nuly $\Rightarrow$ pravděpodobnost
+  průchodu jde nad 98 \%.
+  \item \textbf{Trénuj nad hranici} (cíl $\sim$16/24), protože 5+7=12 nemá rezervu.
+  \item \textbf{Vynech} (bezpečně): dlouhé důkazy, plná odvození, jazykové varianty mimo zvolený
+  jazyk, vše mimo rozsah. Detaily viz sekce \ref{sec:rozsah}.
+\end{itemize}
 
-\begin{center}
-\begin{tabular}{@{}lll@{}}
+\subsection{Rubrika zvládnutí (sebehodnocení)}
+\begin{center}\small
+\begin{tabular}{@{}cl@{}}
 \toprule
-\textbf{Okruh} & \textbf{Počet témat} & \textbf{Část zkoušky} \\
+\textbf{stav} & \textbf{co umíš} \\
 \midrule
-Společná matematika & 6 & společný okruh - 2 otázky \\
-Společná informatika & 4 & společný okruh - 2 otázky \\
-Základy umělé inteligence & 1 (rozsáhlé) & specializace - povinné \\
-Strojové učení & 1 (rozsáhlé) & specializace - vlastní zaměření \\
+\textcolor{gapred}{$\bullet$}\ červená (0) & ani definici \\
+\textcolor{orange!80!black}{$\bullet$}\ žlutá (1) & definice + pár pojmů \\
+\textcolor{intugreen}{$\bullet$}\ zelená (2) & definice + algoritmus/věta + příklad + intuice \quad\textbf{(cíl)} \\
+\textcolor{defblue}{$\bullet$}\ modrá (3) & zelená + přesné podmínky/detail (jen u nejdůležitějších) \\
 \bottomrule
 \end{tabular}
 \end{center}
+\noindent Cíl: každé téma aspoň žlutě; specializace $\sim$85 \% zeleně; nejdůležitější modely modře.
+Podrobná strategie a rozpočet času: \texttt{STRATEGY.md} v repozitáři.
 
-% ===================== JAK SE UCIT =====================
-\section{Jak se efektivně učit}
-\label{sec:uceni}
+% ===================== ROZSAH =====================
+\section{Rozsah: co se učit a co ne}
+\label{sec:rozsah}
+Závazný zdroj: \texttt{pozadavky/detailni-pozadavky.pdf}. Pro zaměření \textbf{Strojové učení}
+se zkouší: společná matematika (6 témat), společná informatika (4 témata), a ze specializace
+\emph{Základy UI} (téma 1) a \emph{Strojové učení} (téma 3).
 
-\begin{infobox}[title={Praktický režim přípravy}]
-\begin{enumerate}[leftmargin=1.5em]
-  \item Nejdřív si otevři oficiální checklist a ke každému bodu najdi odpovídající nadpis v tomto PDF. Cílem prvního průchodu není pamatovat si detaily, ale vědět, kde co leží.
-  \item U každého tématu si napiš vlastní třířádkovou odpověď: definice, hlavní věta nebo algoritmus, typický příklad použití.
-  \item Žluté rámečky řeš odděleně jako příklady na papír. Nejsou to mezery v textu, ale bez vlastního výpočtu z nich body snadno utečou.
-  \item Před zkouškou trénuj odpovědi v režimu 10 minut na otázku. Nejprve kostra odpovědi, potom přesné pojmy a až nakonec důkazy nebo odvození.
-  \item U specializace propojuj témata: pravděpodobnost, lineární algebra a optimalizace se vracejí v Bayesovských sítích, SVM, regresi, PCA i reinforcement learningu.
-\end{enumerate}
+\begin{gapbox}
+\textbf{Záměrně NEzahrnuto} (nezkouší se, neuč se): Robotika a NLP; neuronové sítě a hluboké
+učení (perceptron, MLP, CNN, word2vec patří k NLP); počítačové sítě, databáze a SQL, grafika,
+softwarové inženýrství, RSA/FFT a pokročilé algoritmy, výpočetní geometrie.
+\end{gapbox}
+
+\clearpage
+% ===================== SPECIALIZACE =====================
+\input{sections/zaklady-ui}
+\clearpage
+\input{sections/strojove-uceni}
+
+\clearpage
+\section*{Společná matematika a informatika}
+\addcontentsline{toc}{section}{Společná matematika a informatika (připravuje se)}
+\begin{infobox}[title={Připravuje se}]
+Společné okruhy (matematika + informatika) jsou nižší priorita (floor 5/12) a doplní se ve
+stejném formátu. Do té doby použij oficiální požadavky a poznámky v submodulu \texttt{notes-ipp}.
 \end{infobox}
-
-\noindent\textbf{Doporučené pořadí:} matematika kvůli definicím a značení, společná informatika kvůli algoritmům a praktickým úlohám, potom Základy UI a nakonec Strojové učení. U každého okruhu si nech poslední průchod jen na slabá místa z auditu a na vlastní krátké odpovědi.
-
-% ===================== AUDIT POKRYTÍ =====================
-\input{audit}
-
-% ===================== ČÁSTI =====================
-\clearpage
-\section{Část I: Společná matematika}
-\input{parts/spolecna-matematika}
-
-\clearpage
-\section{Část II: Společná informatika}
-\input{parts/spolecna-informatika}
-
-\clearpage
-\section{Část III: Specializace - Základy umělé inteligence}
-\input{parts/zaklady-umele-inteligence}
-
-\clearpage
-\section{Část IV: Specializace - Strojové učení}
-\input{parts/strojove-uceni}
 
 \end{document}

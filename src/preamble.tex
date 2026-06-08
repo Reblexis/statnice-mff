@@ -1,7 +1,7 @@
-% ---------------------------------------------------------------------------
+% -------------
 % Preambule pro přípravu na bakalářské státnice (MFF UK, Informatika / UI / SU)
 % Sazba: pdflatex (UTF-8, čeština). Build: latexmk -pdf src/main.tex
-% ---------------------------------------------------------------------------
+% -------------
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
@@ -23,7 +23,7 @@
 \usepackage{parskip}
 \usepackage{hyperref}
 
-% --- chybějící / nestandardní makra z poznámek (psány pro webový renderer) ---
+% - chybějící / nestandardní makra z poznámek (psány pro webový renderer) -
 \newcommand{\gt}{>}
 \newcommand{\lt}{<}
 \providecommand{\set}[1]{\{\,#1\,\}}
@@ -33,7 +33,7 @@
 \providecommand{\quotedblbase}{\glqq}
 \providecommand{\quotesinglbase}{\glq}
 
-% --- hlubší zanoření seznamů (poznámky jdou až do ~7 úrovní) ---
+% - hlubší zanoření seznamů (poznámky jdou až do ~7 úrovní) -
 \setlistdepth{9}
 \setlist{leftmargin=1.25em, itemsep=1.2pt, topsep=2.5pt, parsep=0pt}
 \setlist[itemize,1]{label=\textbullet}
@@ -54,7 +54,7 @@
 \setlist[itemize,8]{label=$\triangleright$}
 \setlist[itemize,9]{label=$-$}
 
-% --- barvy a styl nadpisů ---
+% - barvy a styl nadpisů -
 \definecolor{mffblue}{RGB}{27,54,93}
 \definecolor{mffaccent}{RGB}{0,90,156}
 \definecolor{practiceyellow}{RGB}{180,120,0}
@@ -71,7 +71,7 @@
   pdfauthor={Viktor Číhal}, bookmarksnumbered=true,
 }
 
-% --- callout boxy ---
+% - callout boxy -
 % Procvičit: místo, kde poznámky odkazují na vlastní procvičení (není to mezera).
 \newtcolorbox{practicebox}{
   enhanced, breakable, colback=practiceyellow!7, colframe=practiceyellow,
@@ -99,9 +99,59 @@
 \setcounter{secnumdepth}{3}
 \renewcommand{\arraystretch}{1.25}
 
-% --- méně přetékajících řádků u dlouhých kódových úseků ---
+% - méně přetékajících řádků u dlouhých kódových úseků -
 \emergencystretch=3em
 \makeatletter
 \g@addto@macro\ttfamily{\hyphenchar\font=`\-}  % dovol dělení i ve strojopisu
 \makeatother
 \hbadness=10000  % netiskni varování o podtečení
+
+% =====================================================================
+% DESIGN pro studijní šablonu: TÉMA (oficiální) vs Učivo (přepsané),
+% definice, intuice, odpovědní žebřík 1/2/3 body, vyzkoušej se, past.
+% =====================================================================
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,calc,backgrounds,fit,shapes.geometric}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+
+\definecolor{temagray}{RGB}{90,90,95}
+\definecolor{defblue}{RGB}{0,90,156}
+\definecolor{intugreen}{RGB}{40,120,70}
+
+% TÉMA = doslovné znění oficiálního požadavku (anchor / ground truth)
+\newtcolorbox{tema}{enhanced, breakable, sharp corners=south,
+  colback=temagray!8, colframe=temagray, boxrule=0pt, leftrule=3pt,
+  left=8pt, right=8pt, top=4pt, bottom=5pt, before skip=10pt, after skip=2pt,
+  fonttitle=\bfseries\footnotesize\color{temagray},
+  title={\textsc{Téma}\, \textnormal{\footnotesize(oficiální požadavek - co musíš umět)}}}
+
+% Učivo = naše vysvětlení (přepsané pro pochopení, ne z poznámek doslova)
+\newcommand{\ucivo}{\par\vspace{1pt}\noindent{\footnotesize\itshape\color{intugreen!60!black}Učivo (jak na to):}\par\nopagebreak\vspace{1pt}}
+
+\newtcolorbox{defbox}[1]{enhanced, breakable, colback=defblue!6, colframe=defblue,
+  boxrule=0.6pt, arc=1.5pt, left=6pt, right=6pt, top=2pt, bottom=2pt,
+  before skip=4pt, after skip=4pt,
+  fonttitle=\bfseries\footnotesize, coltitle=defblue, title={Definice: #1}}
+
+\newtcolorbox{intuice}{enhanced, breakable, colback=intugreen!7, colframe=intugreen,
+  boxrule=0.6pt, arc=1.5pt, left=6pt, right=6pt, top=2pt, bottom=2pt,
+  before skip=4pt, after skip=4pt,
+  fonttitle=\bfseries\footnotesize, coltitle=intugreen, title={Intuice}}
+
+\newcommand{\klic}[1]{\par\smallskip\noindent\textbf{\color{defblue}$\blacktriangleright$\ Klíč:}~#1\par\smallskip}
+
+% odpovědní žebřík: co stačí na 1 / 2 / 3 body
+\newcommand{\bod}[1]{\tikz[baseline=-0.55ex]\node[circle,fill=defblue,text=white,inner sep=1.3pt,font=\bfseries\scriptsize]{#1};}
+\newtcolorbox{odpoved}{enhanced, breakable, colback=defblue!4, colframe=defblue!60,
+  boxrule=0.6pt, arc=1.5pt, left=6pt, right=6pt, top=2pt, bottom=3pt,
+  before skip=4pt, after skip=4pt, fonttitle=\bfseries\footnotesize, coltitle=defblue,
+  title={Odpověď podle bodů \textnormal{\footnotesize(cíl pro průchod: zelená = 2 body)}}}
+\newtcolorbox{recall}{enhanced, breakable, colback=orange!7, colframe=orange!75!black,
+  boxrule=0.6pt, arc=1.5pt, left=6pt, right=6pt, top=2pt, bottom=2pt,
+  before skip=4pt, after skip=4pt, fonttitle=\bfseries\footnotesize, coltitle=orange!60!black,
+  title={Vyzkoušej se \textnormal{\footnotesize(zakryj text a odpověz nahlas)}}}
+\newcommand{\past}[1]{\par\smallskip\noindent\textbf{\color{gapred}Pozor (častá past):}~#1\par\smallskip}
+
+% štítek priority/cíle pod nadpisem tématu
+\newcommand{\priorita}[2]{\noindent{\footnotesize\colorbox{intugreen!18}{\textbf{priorita: #1}}\ \colorbox{defblue!12}{\textbf{cíl: #2}}}\par\smallskip}

@@ -30,34 +30,46 @@ consequences for how to shape the material:
 Owner: Viktor Číhal. GitHub account: **Reblexis** (private repo
 `github.com/Reblexis/statnice-mff`). Local unix user is `cihalvi`.
 
+## Approach (current)
+
+The deliverable is a LEAN, hand-authored study PDF (not a verbatim copy of the
+notes). Each topic is REWRITTEN for clarity/intuition and laid out by a fixed
+template (see `src/sections/*`): a gray `tema` box with the official requirement
+VERBATIM, then `\ucivo` explanation, an `intuice` box, a TikZ diagram where it
+helps, an `odpoved` answer-ladder (1/2/3 points), a `recall` box, and a `\past`
+trap line. Goal: minimum time to pass. notes-ipp is now only a reference, not the
+source of the text.
+
 ## What is stored where
 
 ```
 pozadavky/
   detailni-pozadavky.pdf   <-- AUTHORITATIVE source of truth (official MFF
-                               "Témata bakalářské SZZ", v2025-07-28, all
-                               specializations). Anchor every decision to this.
-  SZZ_strojove_uceni.pdf        condensed derived overview (same content)
-  mff_statnice_...pdf           condensed derived overview (same content)
-notes-ipp/                 git submodule = study notes by Vít Kološ
-                           (github.com/vitkolos/notes-ipp). The PDF is built
-                           FROM notes-ipp/statnice/*.md. Content is authoritative
-                           study material; do NOT edit the submodule.
+                               "Témata bakalářské SZZ", v2025-07-28). Anchor to this.
+  SZZ_strojove_uceni.pdf, mff_statnice_...pdf   condensed derived overviews
+notes-ipp/                 git submodule (vitkolos/notes-ipp). REFERENCE only now;
+                           do NOT edit the submodule.
 src/
-  build.py     Markdown -> LaTeX converter. Reads notes-ipp/statnice/*.md,
-               writes src/parts/*.tex. Also injects yellow "Procvičit" callout
-               boxes (CALLOUTS dict) and drops dead cross-file links.
-  preamble.tex packages, macros (\gt \lt \set \braket), list nesting, callout
-               box definitions (practicebox / gapbox / infobox), styling.
-  main.tex     master doc: title page, exam structure+grading, "Jak se
-               efektivně učit", \input{audit}, then the 4 parts.
-  audit.tex    hand-written coverage audit: scope section, per-topic checklist,
-               practice spots, the Hilbert exception.
-  parts/       GENERATED LaTeX from the notes. Do not hand-edit (overwritten by make).
-CODEX-REVIEW.md  Codex's independent coverage verification.
-statnice-priprava.pdf  the deliverable (committed at repo root).
+  main.tex       the lean deliverable: title, strategy, scope, then \input sections/*
+  preamble.tex   packages + ALL design macros (tema, defbox, intuice, odpoved+\bod,
+                 recall, \past, \priorita; infobox/gapbox; tikz+pgfplots). Edit
+                 design here; do not redefine macros in sections.
+  sections/
+    zaklady-ui.tex       Část III (authored; co-authored with Codex)
+    strojove-uceni.tex   Část IV (authored)
+    (spolecna-matematika.tex, spolecna-informatika.tex  = TODO, common areas)
+  build.py, parts/, audit.tex   LEGACY notes->LaTeX pipeline (superseded by
+                 sections/; kept only in git history if removed). Not used by main.
+STRATEGY.md          agreed pass strategy (synthesis of Claude + Codex)
+STRATEGY-CODEX.md    Codex's raw strategy analysis
+CODEX-REVIEW.md      Codex's earlier coverage verification of the old doc
+statnice-priprava.pdf  the deliverable (committed at repo root)
 Makefile, README.md, .gitignore
 ```
+
+## Build order / status
+Specialization first (it carries the 7/12 floor): Část III + IV are done. Common
+math + informatika (Část I + II) are TODO in the same template, lighter depth.
 
 ## Exam scope (what to include / exclude)
 
@@ -66,31 +78,32 @@ společná informatika (4), Téma 1 = Základy UI, Téma 3 = Strojové učení. 
 contains exactly these four parts. Deliberately OUT of scope (do not add):
 Robotika (Téma 2), NLP (Téma 4), all other specializations; therefore no neural
 nets / deep learning, networks, databases, RSA/FFT, computational geometry, etc.
-Verified that the notes contain no out-of-scope topics. See `\ref{sec:rozsah}`
-in audit.tex.
+The scope box is in `main.tex` (`\ref{sec:rozsah}`).
 
 ## Build
 
 ```bash
-make            # build.py then latexmk; outputs statnice-priprava.pdf
-make distclean  # remove all generated files
+make            # latexmk on src/main.tex; outputs statnice-priprava.pdf
+make distclean  # remove generated files
 ```
-Requires TeX Live (pdflatex, latexmk) and Python 3. Engine is pdflatex with
+Requires TeX Live (pdflatex, latexmk, pgfplots, tikz). Engine is pdflatex with
 UTF-8 + babel czech. After cloning, run `git submodule update --init --recursive`.
 
 ## Conventions / constraints
 
-- The notes content is faithful and odborně unchanged. To change generated
-  output, edit `build.py`, never `src/parts/*.tex` directly. To change scope,
-  edit the requirement-derived audit, not the notes.
-- NO en-dashes or em-dashes (the owner dislikes them). Use a hyphen. build.py
-  already maps any source dashes to hyphens; keep authored .tex dash-free.
-- Callout boxes: yellow `practicebox` = computational skill the notes leave to
-  self-practice (not a gap); red `gapbox` = missing / alternative / out-of-scope;
-  blue `infobox` = info/summary.
-- After any change, run `make` and confirm zero LaTeX errors before committing.
-- Coverage status: every required sub-topic is in the notes. Only Hilbert
-  calculus is absent (an alternative to tablo/resolution, both covered). Seven
-  spots are self-practice skills, all marked.
-- C# is the strongest language in the programming-languages notes; if the exam
-  answer will be in Java, supplement Java specifics.
+- Content is REWRITTEN for clarity (not copied from notes). It may differ from
+  notes-ipp; correctness against the official requirements is what matters.
+- Edit content in `src/sections/*`; edit shared design/macros in `preamble.tex`
+  (do not redefine boxes inside sections).
+- NO en-dashes or em-dashes anywhere in prose (use a hyphen). WARNING: never run
+  a blind `s/--/-/` over .tex - inside `tikzpicture` `--` is the path operator and
+  must stay; only `-` belongs in prose. Check `pdftotext main.pdf - | grep` for
+  dash chars after changes.
+- Per topic use: `tema` (official verbatim) / `\ucivo` / `intuice` / TikZ diagram /
+  `odpoved` ladder with `\bod{1..3}` / `recall` / `\past`. Specialization = full
+  template; common math = lighter (tema + ladder).
+- Stay in scope (see Exam scope). Specialization carries the 7/12 floor, so depth
+  goes there; common areas only need breadth (5/12 floor).
+- After any change, run `make`, confirm zero LaTeX errors AND zero dash chars in
+  the PDF before committing.
+- C# is the strongest language in the notes; if answering in Java, supplement Java.

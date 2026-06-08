@@ -1,0 +1,407 @@
+\section{Část IV: Specializace - Strojové učení}
+
+{\small Toto je \textbf{nejdůležitější} okruh: vlastní zaměření a vázaná podmínka
+(ze specializace potřebuješ aspoň 7/12). Cíl: každé téma aspoň \emph{zeleně} (2 body),
+nejdůležitější modely (lineární/logistická regrese, SVM, stromy, k-means, PCA) i \emph{modře}.}
+
+% ============================================================
+\subsection{Učení s učitelem (základní pojmy, evaluace, regularizace)}
+\priorita{vysoká}{modrá (3 body) - rámec pro celý okruh}
+
+\begin{tema}
+\textbf{Učení s učitelem:} klasifikace a regrese jako základní typy úloh;
+standardní evaluační metriky; ohodnocení modelu (testovací data, křížová validace,
+maximální věrohodnost); přeučení a regularizace (generalizační chyba, včasné zastavení
+trénování, L2 a L1 regularizace); prokletí dimenzionality.
+\end{tema}
+
+\ucivo
+\begin{intuice}
+Z trénovacích dvojic (vstup, správný výstup) hledáme funkci, která dobře předpoví výstup
+i pro \textbf{nová} data. Nejde o to namemorovat trénink, ale \emph{generalizovat}.
+\end{intuice}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[width=8.4cm,height=4.4cm,xlabel={\footnotesize složitost modelu},
+  ylabel={\footnotesize chyba},xtick=\empty,ytick=\empty,domain=0.35:5,samples=120,
+  axis lines=left,legend style={font=\scriptsize,at={(0.98,0.98)},anchor=north east},
+  clip=false,every axis y label/.style={at={(ticklabel cs:1)},rotate=90,anchor=south}]
+  \addplot[thick,defblue,smooth]{0.95*exp(-0.8*x)+0.06};
+  \addlegendentry{trénovací chyba}
+  \addplot[thick,intugreen,smooth]{0.95*exp(-0.8*x)+0.06+0.05*(x-1.1)^2};
+  \addlegendentry{chyba na nových datech}
+  \draw[gapred,dashed] (axis cs:2.1,0) -- (axis cs:2.1,1.0);
+  \node[gapred,font=\scriptsize,anchor=south] at (axis cs:2.1,1.0) {optimum};
+  \node[font=\scriptsize,anchor=west] at (axis cs:3.2,0.75) {přeučení $\rightarrow$};
+\end{axis}
+\end{tikzpicture}\\[-2pt]
+{\scriptsize Příliš jednoduchý model = podtrénování; příliš složitý = přeučení. Hledáme dno zelené křivky.}
+\end{center}
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} \emph{klasifikace} = výstup je třída, \emph{regrese} = výstup je číslo.
+Model trénujeme na trénovacích datech a hodnotíme na \emph{oddělených testovacích} datech.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Generalizační chyba} = chyba na nových datech. \emph{Přeučení}
+= model sedí na šumu trénovacích dat (malá trénovací, velká testovací chyba). Bráníme se:
+\emph{regularizací} (L2 = penalizuje velké váhy $\lambda\|w\|_2^2$, hladší model; L1 = $\lambda\|w\|_1$,
+navíc dělá řídké váhy, tj.\ výběr příznaků), \emph{včasným zastavením} trénování a více daty.
+\emph{Křížová validace} (k-fold): data rozdělím na $k$ částí, postupně každou použiju jako test,
+průměruju - spolehlivější odhad chyby než jediné rozdělení.\par
+\noindent\bod{3}\ \textbf{Bonus:} \emph{metriky} - klasifikace: accuracy, precision, recall, F1
+(z matice záměn); regrese: MSE/RMSE. \emph{Maximální věrohodnost (MLE)}: parametry volíme tak, aby
+data byla nejpravděpodobnější; minimalizace záporné log-věrohodnosti je často přesně ta loss funkce.
+\emph{Prokletí dimenzionality}: v mnoha rozměrech jsou data řídká a vzdálenosti ztrácejí smysl, je
+třeba exponenciálně víc dat.
+\end{odpoved}
+
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Jak poznám přeučení z trénovací a testovací chyby?
+  \item Jaký je rozdíl mezi L1 a L2 regularizací?
+  \item K čemu je k-fold křížová validace a proč je lepší než jedno rozdělení?
+  \item Co znamená precision vs recall?
+\end{itemize}
+\end{recall}
+\past{Model se nikdy nelaďí (ani nevybírá) podle testovacích dat - na to je validační sada. Vysoká accuracy u nevyvážených tříd klame (proto F1).}
+
+% ============================================================
+\subsection{Učení založené na příkladech - k nejbližších sousedů (kNN)}
+\priorita{střední}{zelená (2 body)}
+
+\begin{tema}
+\textbf{Učení založené na příkladech:} algoritmus k-nejbližších sousedů.
+\end{tema}
+
+\ucivo
+\begin{intuice}
+„Řekni mi, kdo jsou tvoji sousedé, a já ti řeknu, kdo jsi.“ Nový bod dostane třídu podle
+většiny svých $k$ nejbližších trénovacích bodů. Nic se netrénuje - jen se pamatují data.
+\end{intuice}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+  \foreach \p in {(0.4,0.5),(0.8,1.1),(1.2,0.6),(0.6,1.6)} \fill[intugreen] \p circle (2.6pt);
+  \foreach \p in {(2.6,2.4),(3.0,1.9),(2.2,2.0),(3.1,2.6)} \fill[defblue] \p +(-2.6pt,-2.6pt) rectangle +(2.6pt,2.6pt);
+  \fill[gapred] (1.8,1.5) circle (3pt); \node[gapred,font=\scriptsize,above] at (1.8,1.6){?};
+  \draw[gapred,dashed] (1.8,1.5) circle (0.95cm);
+  \node[font=\scriptsize] at (3.3,0.7) {$k=3$: 2 koleček};
+  \node[font=\scriptsize] at (3.3,0.35) {1 čtvereček $\Rightarrow$ kolečko};
+\end{tikzpicture}
+\end{center}
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} Pro nový bod najdi $k$ nejbližších trénovacích bodů (podle vzdálenosti,
+typicky euklidovské) a přiřaď \emph{většinovou} třídu (u regrese průměr).\par
+\noindent\bod{2}\ \textbf{+ k tomu:} Žádné trénování (líné učení), veškerá práce je při dotazu.
+Malé $k$ = citlivé na šum (přeučení), velké $k$ = hladší, ale rozmazává hranice. $k$ se volí
+křížovou validací. Nutné škálovat příznaky.\par
+\noindent\bod{3}\ \textbf{Bonus:} Trpí prokletím dimenzionality a je pomalé při mnoha datech
+(dotaz prochází vše).
+\end{odpoved}
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Co se stane při $k=1$ a co při $k$ = počet všech bodů?
+  \item Proč je nutné příznaky normalizovat?
+\end{itemize}
+\end{recall}
+\past{kNN nic „nenatrénuje“ - náročný je až dotaz. A bez škálování dominuje příznak s velkým rozsahem.}
+
+% ============================================================
+\subsection{Lineární regrese}
+\priorita{vysoká}{modrá (3 body)}
+
+\begin{tema}
+\textbf{Lineární regrese:} analytické řešení metodou nejmenších čtverců; trénování pomocí
+stochastic gradient descent.
+\end{tema}
+
+\ucivo
+\begin{intuice}
+Proložíme daty \textbf{přímku} (obecně nadrovinu) tak, aby součet \emph{čtverců} svislých
+odchylek byl co nejmenší.
+\end{intuice}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[width=7.6cm,height=4cm,xtick=\empty,ytick=\empty,axis lines=left,
+  xlabel={\footnotesize $x$},ylabel={\footnotesize $y$},clip=false]
+  \addplot[only marks,mark=*,mark size=1.3pt,defblue] coordinates
+    {(0.5,1.1)(1,1.4)(1.5,1.6)(2,2.4)(2.5,2.3)(3,3.1)(3.5,3.0)(4,3.9)};
+  \addplot[thick,gapred,domain=0.3:4.2]{0.78*x+0.6};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} Model $y = w^\top x + b$. Minimalizujeme \emph{MSE}
+$\sum_i (y_i - w^\top x_i)^2$ (metoda nejmenších čtverců).\par
+\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Analytické řešení} (normální rovnice):
+$\hat w = (X^\top X)^{-1} X^\top y$, kde sloupec jedniček v $X$ pokryje intercept $b$.
+Funguje, dokud $X^\top X$ není moc velká / singulární.\par
+\noindent\bod{3}\ \textbf{Bonus:} \emph{SGD} - místo přesného vzorce iterativně:
+$w \leftarrow w - \eta\,\nabla_w \text{loss}$ počítané po malých dávkách dat; nutné u velkých dat.
+$\eta$ = rychlost učení (moc velká diverguje, moc malá je pomalá).
+\end{odpoved}
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Jak zní normální rovnice a kdy ji nelze (rozumně) použít?
+  \item Co řídí parametr $\eta$ u SGD?
+\end{itemize}
+\end{recall}
+\past{Nejmenší čtverce trestají odlehlé body kvadraticky - jsou citlivé na outliery.}
+
+% ============================================================
+\subsection{Logistická regrese}
+\priorita{vysoká}{modrá (3 body)}
+
+\begin{tema}
+\textbf{Logistická regrese:} binární klasifikace (sigmoid, metody trénování);
+klasifikace do více tříd (softmax, metody trénování).
+\end{tema}
+
+\ucivo
+\begin{intuice}
+Navzdory názvu je to \textbf{klasifikátor}: lineární skóre $w^\top x$ protlačíme funkcí
+sigmoid, aby vyšla \emph{pravděpodobnost} třídy mezi 0 a 1.
+\end{intuice}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[width=7.6cm,height=3.6cm,axis lines=left,domain=-6:6,samples=100,
+  xlabel={\footnotesize $z=w^\top x+b$},ytick={0,0.5,1},ylabel={\footnotesize $P(y{=}1)$},
+  ymin=-0.05,ymax=1.05,every axis y label/.style={at={(ticklabel cs:1.05)}}]
+  \addplot[thick,defblue]{1/(1+exp(-x))};
+  \draw[gapred,dashed](axis cs:-6,0.5)--(axis cs:6,0.5);
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} $P(y{=}1\mid x) = \sigma(w^\top x + b)$, kde
+$\sigma(z) = \frac{1}{1+e^{-z}}$. Klasifikuji podle prahu 0,5.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} Trénuje se maximalizací věrohodnosti = minimalizací
+\emph{cross-entropy (log-loss)} gradientním sestupem (analytické řešení neexistuje).
+Hranice je lineární.\par
+\noindent\bod{3}\ \textbf{Bonus:} Více tříd přes \emph{softmax}
+$P(y{=}k) = \frac{e^{z_k}}{\sum_j e^{z_j}}$ (zobecnění sigmoidu); loss opět cross-entropy.
+\end{odpoved}
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Proč se nepoužívá MSE, ale cross-entropy?
+  \item Čím se liší sigmoid a softmax?
+\end{itemize}
+\end{recall}
+\past{Logistická regrese je klasifikace, ne regrese. Hranice je lineární (na nelineární potřebuješ příznaky navíc nebo jádro).}
+
+% ============================================================
+\subsection{Rozhodovací stromy}
+\priorita{vysoká}{zelená (2 body)}
+
+\begin{tema}
+\textbf{Rozhodovací stromy:} algoritmus učení a kritéria větvení; prořezávání.
+\end{tema}
+
+\ucivo
+\begin{intuice}
+Posloupnost otázek typu „je příznak $>$ práh?“. Každá otázka rozdělí data; chceme otázky,
+po kterých jsou výsledné skupiny co \emph{nejčistší} (jedna třída).
+\end{intuice}
+
+\begin{center}
+\begin{tikzpicture}[level distance=10mm,every node/.style={font=\scriptsize},
+  level 1/.style={sibling distance=34mm},level 2/.style={sibling distance=18mm}]
+\node[draw,rounded corners]{$x_1 < 3$?}
+  child{node[draw,rounded corners]{$x_2 < 1$?}
+    child{node[draw,fill=intugreen!20]{A} edge from parent node[left]{ano}}
+    child{node[draw,fill=defblue!20]{B} edge from parent node[right]{ne}}
+    edge from parent node[left]{ano}}
+  child{node[draw,fill=defblue!20]{B} edge from parent node[right]{ne}};
+\end{tikzpicture}
+\end{center}
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} Strom dělí data podmínkami na příznacích; v listech je predikce
+(třída/hodnota). Staví se hladově shora.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} V každém uzlu vyber dělení, které nejvíc \emph{zvýší čistotu} -
+kritéria: \emph{informační zisk} (pokles \emph{entropie}) nebo \emph{Gini index}. Rekurzivně až do
+čistých listů / zastavovacího kritéria.\par
+\noindent\bod{3}\ \textbf{Bonus:} Plně narostlý strom se přeučí $\Rightarrow$ \emph{prořezávání}
+(pre-pruning: zastav brzy podle hloubky/min.\ vzorků; post-pruning: ořež větve, které nezlepší
+chybu na validaci). Výhoda: interpretovatelnost.
+\end{odpoved}
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Co měří entropie / Gini a co je informační zisk?
+  \item Proč a jak se strom prořezává?
+\end{itemize}
+\end{recall}
+\past{Hluboký strom se skoro vždy přeučí. Stromy také snadno preferují příznaky s mnoha hodnotami.}
+
+% ============================================================
+\subsection{Metoda podpůrných vektorů (SVM)}
+\priorita{vysoká}{zelená (2 body)}
+
+\begin{tema}
+\textbf{Metoda podpůrných vektorů:} klasifikátor pro lineárně separabilní třídy;
+klasifikátor pro lineárně neseparabilní třídy; jádrové funkce; klasifikace do více tříd.
+\end{tema}
+
+\ucivo
+\begin{intuice}
+Mezi dvě třídy chceme proložit \textbf{co nejširší ulici} (pruh bez bodů). Hranice vede středem.
+Širší ulice = lepší generalizace.
+\end{intuice}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.82]
+  \fill[defblue!7] (-0.2,4.2) -- (4.2,-0.2) -- (4.2,1.8) -- (1.8,4.2) -- cycle;
+  \draw[very thick] (0,4) -- (4,0) node[below right,font=\scriptsize]{$w^\top x+b=0$};
+  \draw[dashed] (-0.2,3.2) -- (3.2,-0.2);
+  \draw[dashed] (0.8,4.2) -- (4.2,0.8);
+  \foreach \p in {(0.6,0.6),(1.2,0.5),(0.5,1.2),(1.0,1.0)} \fill[intugreen] \p circle (2.4pt);
+  \foreach \p in {(3.3,3.3),(2.9,3.6),(3.6,3.0),(3.2,2.9)} \fill[defblue] \p +(-2.4pt,-2.4pt) rectangle +(2.4pt,2.4pt);
+  \draw[red,thick] (1.5,1.5) circle (4pt); \fill[intugreen] (1.5,1.5) circle (2.4pt);
+  \draw[red,thick] (2.5,2.5) +(-2.4pt,-2.4pt) rectangle +(2.4pt,2.4pt); \fill[defblue] (2.5,2.5) +(-2.4pt,-2.4pt) rectangle +(2.4pt,2.4pt);
+  \node[red,font=\scriptsize] at (3.7,3.9) {podpůrné vektory};
+  \draw[<->,thick] (1.9,1.1) -- (1.1,1.9) node[midway,sloped,above,font=\scriptsize]{margin $\frac{2}{\|w\|}$};
+\end{tikzpicture}
+\end{center}
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} Najdi nadrovinu oddělující třídy s \emph{největším marginem};
+klasifikace $\operatorname{sign}(w^\top x+b)$.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Podpůrné vektory} = body na okraji marginu
+(u měkkého marginu i uvnitř marginu / chybně klasifikované), jen ty určují hranici.
+Neseparabilní data: \emph{měkký margin} se slack $\xi_i$ a penaltou $C\sum\xi_i$ ($C$ = kompromis
+úzký margin vs.\ chyby). \emph{Jádro} $K(x,x')$ nahradí skalární součin a oddělí data ve vyšší dimenzi
+bez explicitní transformace (RBF, polynom).\par
+\noindent\bod{3}\ \textbf{Bonus:} úloha $\min\tfrac12\|w\|^2$ za $y_i(w^\top x_i+b)\ge 1$;
+více tříd přes one-vs-rest nebo one-vs-one.
+\end{odpoved}
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Co jsou podpůrné vektory a co dělá parametr $C$?
+  \item Proč jádro umožní oddělit neseparabilní data?
+\end{itemize}
+\end{recall}
+\past{Velké $C$ není „lepší“ - úzký margin se přeučí. Jádro nemění SVM, jen skalární součin.}
+
+% ============================================================
+\subsection{Kombinace více modelů (ensembly)}
+\priorita{vysoká}{zelená (2 body)}
+
+\begin{tema}
+\textbf{Kombinace více modelů:} bagging a boosting; metoda náhodných lesů.
+\end{tema}
+
+\ucivo
+\begin{intuice}
+Více slabších modelů dohromady často předčí jeden velký - „moudrost davu“. Liší se tím,
+\emph{jak} je spojíme.
+\end{intuice}
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} \emph{Bagging} trénuje modely \emph{paralelně} na náhodných
+podvýběrech dat (bootstrap) a \emph{průměruje/hlasuje} - snižuje \emph{rozptyl}.
+\emph{Boosting} staví modely \emph{sekvenčně}, každý opravuje chyby předchozích - často snižuje
+\emph{bias}, ale je citlivější na šum.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Náhodný les} = bagging rozhodovacích stromů + v každém
+uzlu se uvažuje jen náhodná podmnožina příznaků (dekoreluje stromy). Robustní, málo ladění.\par
+\noindent\bod{3}\ \textbf{Bonus:} Boosting (např.\ AdaBoost) zvyšuje váhu špatně klasifikovaných
+příkladů; silný, ale citlivější na šum/přeučení než bagging.
+\end{odpoved}
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Bagging vs boosting: paralelně/sekvenčně, snižuje rozptyl/bias?
+  \item Čím se náhodný les liší od prostého baggingu stromů?
+\end{itemize}
+\end{recall}
+\past{Boosting nezaměňuj s baggingem: boosting je sekvenční a typicky cílí hlavně na bias, bagging paralelní na rozptyl.}
+
+% ============================================================
+\subsection{Statistické testy}
+\priorita{střední}{zelená (2 body)}
+
+\begin{tema}
+\textbf{Statistické testy:} studentův t-test (jednovýběrový a dvouvýběrový);
+chí-kvadrát test (test dobré shody).
+\end{tema}
+
+\ucivo
+\begin{intuice}
+Ptáme se: je pozorovaný rozdíl \textbf{reálný}, nebo jen náhoda? Spočteme testovou statistiku
+a porovnáme s tím, co by dělala náhoda za platnosti \emph{nulové hypotézy}.
+\end{intuice}
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} \emph{Nulová hypotéza} $H_0$ = „žádný efekt“. Test dá
+\emph{p-hodnotu}; když $p < \alpha$ (typicky 0,05), $H_0$ zamítáme.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} \emph{t-test} porovnává \emph{střední hodnoty}:
+jednovýběrový (průměr vs.\ daná konstanta), dvouvýběrový (dva průměry proti sobě); předpokládá
+zhruba normální data. \emph{Chí-kvadrát test dobré shody} porovnává \emph{pozorované vs.\ očekávané
+četnosti} kategorií: $\chi^2 = \sum \frac{(O-E)^2}{E}$.\par
+\noindent\bod{3}\ \textbf{Bonus:} chyba I.\ druhu = zamítnu platné $H_0$ (= $\alpha$);
+chyba II.\ druhu = nezamítnu neplatné $H_0$.
+\end{odpoved}
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Co je p-hodnota a kdy zamítám $H_0$?
+  \item Kdy t-test a kdy chí-kvadrát?
+\end{itemize}
+\end{recall}
+\past{Malá p-hodnota neznamená „velký efekt“, jen „těžko vysvětlitelný náhodou“.}
+
+% ============================================================
+\subsection{Učení bez učitele (shlukování, PCA)}
+\priorita{vysoká}{zelená (2 body)}
+
+\begin{tema}
+\textbf{Učení bez učitele:} shlukování (algoritmus k-means); hierarchické shlukování;
+redukce dimenzionality (analýza hlavních komponent, PCA).
+\end{tema}
+
+\ucivo
+\begin{intuice}
+Nemáme správné odpovědi, jen data. Hledáme v nich \emph{strukturu}: přirozené skupiny (shlukování)
+nebo směry, kde se data nejvíc mění (PCA).
+\end{intuice}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+  \foreach \p in {(0.4,0.5),(0.8,1.0),(0.6,0.4),(1.0,0.8),(0.3,0.9)} \fill[intugreen] \p circle (2.2pt);
+  \foreach \p in {(2.6,2.3),(3.0,1.9),(2.4,2.0),(2.9,2.5),(3.1,2.1)} \fill[defblue] \p circle (2.2pt);
+  \node[gapred,font=\bfseries] at (0.62,0.72) {$\times$};
+  \node[gapred,font=\bfseries] at (2.8,2.16) {$\times$};
+  \node[font=\scriptsize,gapred] at (1.7,0.2) {$\times$ = centroidy};
+  \draw[->,thick,defblue] (1.4,0.7) -- (2.6,2.0) node[midway,sloped,above,font=\scriptsize]{hlavní komponenta};
+\end{tikzpicture}
+\end{center}
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} \emph{Shlukování} = rozděl data do skupin podle podobnosti.
+\emph{PCA} = najdi pár směrů, které zachytí nejvíc rozptylu, a do nich data promítni (zmenšení dimenze).\par
+\noindent\bod{2}\ \textbf{+ k tomu:} \emph{k-means}: zvol $k$ center, opakuj \{přiřaď body
+nejbližšímu centru; přepočítej centra jako průměry\} až do ustálení. \emph{Hierarchické
+shlukování}: postupně slučuj nejbližší shluky (aglomerativně) $\Rightarrow$ \emph{dendrogram},
+$k$ není třeba dopředu.\par
+\noindent\bod{3}\ \textbf{Bonus:} PCA = vlastní vektory kovarianční matice (největší vlastní čísla =
+nejvíc rozptylu). k-means: nutné zvolit $k$ a citlivý na počáteční centra (k-means++).
+\end{odpoved}
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Jaké dva kroky k-means opakuje?
+  \item Co maximalizují hlavní komponenty a jak souvisí s kovarianční maticí?
+  \item Výhoda hierarchického shlukování oproti k-means?
+\end{itemize}
+\end{recall}
+\past{k-means hledá zhruba kulové, podobně velké shluky a vyžaduje předem $k$; na protáhlé/různě husté shluky selhává.}

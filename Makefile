@@ -1,20 +1,16 @@
-.PHONY: all build clean distclean
+.PHONY: all clean distclean
 
-# Vygeneruje LaTeX z poznámek a zkompiluje PDF.
-all: build
+# Zkompiluje lean studijní PDF (hand-authored sekce v src/sections/).
+all:
 	cd src && latexmk -pdf -interaction=nonstopmode main.tex
 	cp src/main.pdf statnice-priprava.pdf
 	@echo "Hotovo: statnice-priprava.pdf"
+	@echo "Kontrola pomlček (musí být 0):"
+	@pdftotext statnice-priprava.pdf - | grep -c "[–—]" || true
 
-# Jen převod poznámek (Markdown -> LaTeX fragmenty).
-build:
-	python3 src/build.py
-
-# Smaže pomocné soubory sazby (PDF i vygenerované fragmenty ponechá).
 clean:
 	cd src && latexmk -c
 
-# Smaže úplně vše vygenerované.
 distclean:
 	cd src && latexmk -C
-	rm -f src/parts/*.tex statnice-priprava.pdf
+	rm -f statnice-priprava.pdf
