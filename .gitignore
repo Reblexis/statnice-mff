@@ -15,3 +15,6 @@ __pycache__/
 *.pyc
 
 src/pilot.pdf
+
+# podcast intermediate clips (regenerable)
+podcast/clips/
