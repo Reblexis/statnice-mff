@@ -1,0 +1,270 @@
+\section{Část I: Společná matematika}
+
+{\small Nižší priorita: ze společných okruhů (matematika + informatika) stačí 5/12.
+Cíl je \textbf{breadth, ne hloubka} - u každého tématu umět definice a hlavní pojmy
+(žlutá/zelená), aby z žádné přidělené otázky nebyla nula. Dlouhé důkazy nejsou potřeba.}
+
+% ============================================================
+\subsection{Základy diferenciálního a integrálního počtu}
+\priorita{střední}{žlutá-zelená (1-2 body)}
+
+\begin{tema}
+Posloupnosti a jejich limity (aritmetika limit, věta o dvou policajtech); řady
+(geometrická, harmonická); limita funkce a spojitost (nabývání mezihodnot a maxima);
+derivace (l'Hospital, průběh funkce: extrémy, monotonie, konvexita; Taylorův polynom);
+integrály (primitivní funkce, Riemannův/Newtonův integrál; aplikace: odhady součtů řad,
+obsahy, objemy a povrchy rotačních útvarů, délka křivky).
+\end{tema}
+
+\ucivo
+\begin{intuice}
+\emph{Limita} = kam se hodnoty blíží. \emph{Derivace} = okamžitá rychlost změny (sklon
+tečny). \emph{Integrál} = plocha pod grafem. Derivace a integrál jsou navzájem inverzní
+(základní věta analýzy).
+\end{intuice}
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} $\lim a_n = L$: od jistého $n$ jsou členy libovolně blízko $L$.
+Derivace $f'(a)=\lim_{h\to0}\frac{f(a+h)-f(a)}{h}$. Riemannův integrál = plocha pod grafem.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Věta o dvou policajtech}: sevřená posloupnost má limitu
+jako její meze. \emph{Geometrická řada} $\sum q^n=\frac{1}{1-q}$ pro $|q|<1$, harmonická
+$\sum\frac1n$ diverguje. \emph{l'Hospital}: $\frac00,\frac\infty\infty \Rightarrow$ podíl derivací.
+Průběh: $f'>0$ roste, $f''>0$ konvexní, extrém kde $f'=0$. \emph{Newton-Leibniz}:
+$\int_a^b f = F(b)-F(a)$.\par
+\noindent\bod{3}\ \textbf{Bonus:} \emph{Taylor} $f(x)\approx\sum\frac{f^{(k)}(a)}{k!}(x-a)^k$.
+Aplikace integrálu: objem rotačního tělesa $\pi\int f(x)^2\,dx$, délka křivky
+$\int\sqrt{1+f'(x)^2}\,dx$.
+\end{odpoved}
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Kdy konverguje geometrická řada a jaký má součet?
+  \item Co poznám z $f'$ a co z $f''$?
+  \item Jak souvisí Riemannův integrál s primitivní funkcí?
+\end{itemize}
+\end{recall}
+\past{Harmonická řada diverguje, i když členy jdou k nule. l'Hospital jen na neurčité výrazy.}
+
+% ============================================================
+\subsection{Algebra a lineární algebra}
+\priorita{střední}{žlutá-zelená (1-2 body)}
+
+\begin{tema}
+Algebraické struktury (grupy, permutace, tělesa včetně konečných); soustavy lineárních
+rovnic (Gaussova a Gauss-Jordanova eliminace); matice (hodnost, regulární a inverzní);
+vektorové prostory (lineární nezávislost, báze, dimenze, Steinitzova věta, podprostory);
+lineární zobrazení (obraz, jádro, isomorfismus); skalární součin (norma, Cauchy-Schwarz,
+ortonormální báze, Gram-Schmidt, ortogonální projekce a matice); determinanty (Laplaceův
+rozvoj, geometrie); vlastní čísla a vektory (charakteristický polynom, diagonalizace,
+spektrální rozklad, symetrické matice); pozitivně (semi)definitní matice (Choleského rozklad).
+\end{tema}
+
+\ucivo
+\begin{intuice}
+Lineární algebra studuje \emph{vektorové prostory} a \emph{lineární zobrazení} (= násobení
+maticí). Hodně pojmů jsou jen různé pohledy na totéž: hodnost, dimenze obrazu, počet pivotů.
+\end{intuice}
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} \emph{Báze} = lineárně nezávislá množina, která generuje
+prostor; její velikost = \emph{dimenze}. \emph{Hodnost} matice = počet pivotů (= dimenze
+obrazu). Matice je \emph{regulární} $\iff$ má inverzi $\iff$ $\det\neq0$ $\iff$ plná hodnost.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Gaussova eliminace} řeší soustavy i počítá hodnost/inverzi.
+\emph{Jádro} = řešení $Ax=0$; platí $\dim\ker + \mathrm{rank} = n$. \emph{Vlastní číslo}: $Ax=\lambda x$
+($x\neq0$), kořeny char.\ polynomu $\det(A-\lambda I)=0$. \emph{Skalární součin} dává normu a kolmost;
+\emph{Gram-Schmidt} vyrobí ortonormální bázi.\par
+\noindent\bod{3}\ \textbf{Bonus:} \emph{Diagonalizace} $A=S\Lambda S^{-1}$ (sloupce $S$ = vlastní
+vektory). Symetrické matice mají reálná vl.\ čísla a ortogonální diagonalizaci $A=Q\Lambda Q^\top$.
+\emph{Pozitivně definitní} ($x^\top Ax>0$) $\iff$ kladná vl.\ čísla $\iff$ existuje Choleského
+rozklad $A=LL^\top$.
+\end{odpoved}
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Co znamená, že je matice regulární (vyjmenuj ekvivalentní podmínky)?
+  \item Jak najdu vlastní čísla a co je vlastní vektor?
+  \item Co je pozitivně definitní matice a jak souvisí s vlastními čísly?
+\end{itemize}
+\end{recall}
+\past{Vlastní čísla $=$ kořeny char.\ polynomu, ne prvky na diagonále (pokud matice není trojúhelníková).}
+
+% ============================================================
+\subsection{Diskrétní matematika}
+\priorita{střední}{žlutá-zelená (1-2 body)}
+
+\begin{tema}
+Relace a jejich vlastnosti (reflexivita, symetrie, antisymetrie, tranzitivita); ekvivalence
+a rozkladové třídy; částečná uspořádání (řetězec, antiřetězec, výška a šířka a věta o jejich
+vztahu); funkce (prostá, na, bijekce; počty funkcí mezi konečnými množinami); permutace;
+kombinační čísla a binomická věta; princip inkluze a exkluze (důkaz a aplikace); Hallova
+věta o systému různých reprezentantů (vztah k párování v bipartitním grafu, polynomiální algoritmus).
+\end{tema}
+
+\ucivo
+\begin{intuice}
+Hodně z toho je „počítání možností“ a struktura na konečných množinách. \emph{Inkluze-exkluze}
+opravuje dvojí započítání; \emph{Hallova věta} říká, kdy lze každého spárovat.
+\end{intuice}
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} \emph{Ekvivalence} = reflexivní + symetrická + tranzitivní;
+rozkládá množinu na třídy. \emph{Bijekce} = prostá i na. Počet funkcí $A\to B$ je $|B|^{|A|}$.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Částečné uspořádání}: řetězec (po dvou porovnatelné),
+antiřetězec (žádné dva). \emph{Inkluze-exkluze}: $|A\cup B|=|A|+|B|-|A\cap B|$ (obecně se střídají
+znaménka). \emph{Binomická věta}: $(a+b)^n=\sum\binom nk a^k b^{n-k}$.\par
+\noindent\bod{3}\ \textbf{Bonus:} \emph{Hallova věta}: bipartitní graf má párování pokrývající $A$
+$\iff$ pro každou $X\subseteq A$ platí $|N(X)|\ge|X|$ (Hallova podmínka). Aplikace inkluze-exkluze:
+počet surjekcí, Eulerova funkce, problém šatnářky.
+\end{odpoved}
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Jaké tři vlastnosti dělají z relace ekvivalenci?
+  \item Jak zní Hallova podmínka?
+  \item Kolik je funkcí (a kolik bijekcí) mezi konečnými množinami?
+\end{itemize}
+\end{recall}
+\past{Antisymetrie neznamená „není symetrická“. Bijekce mezi $A,B$ existuje jen při $|A|=|B|$.}
+
+% ============================================================
+\subsection{Teorie grafů}
+\priorita{střední}{zelená (2 body), vděčné téma}
+
+\begin{tema}
+Základní pojmy (izomorfismus, stupeň vrcholu, doplněk, bipartitní graf); příklady (úplný,
+cesty, kružnice); souvislost, komponenty, vzdálenost; stromy (charakteristiky); rovinné grafy
+(Eulerova formule a max.\ počet hran); barevnost (vztah barevnosti a klikovosti); hranová a
+vrcholová souvislost (Mengerova věta); orientované grafy (silná a slabá souvislost); toky v
+sítích (definice, existence max.\ toku, Ford-Fulkerson pro celočíselné kapacity).
+\end{tema}
+
+\ucivo
+\begin{intuice}
+Grafy = vrcholy a hrany. Mnoho úloh = „dá se projít / spojit / obarvit / protlačit tok?“.
+\end{intuice}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, node distance=11mm and 17mm,
+   every node/.style={circle,draw,minimum size=6mm,font=\small,inner sep=0pt}]
+  \node (s) {$s$};
+  \node (a) [above right=of s] {$a$};
+  \node (b) [below right=of s] {$b$};
+  \node (t) [below right=of a] {$t$};
+  \tikzset{every edge/.style={draw,->,font=\scriptsize}}
+  \draw (s) edge node[above left]{$3$} (a);
+  \draw (s) edge node[below left]{$2$} (b);
+  \draw (a) edge node[left]{$1$} (b);
+  \draw (a) edge node[above right]{$2$} (t);
+  \draw (b) edge node[below right]{$3$} (t);
+\end{tikzpicture}\\[-2pt]
+{\scriptsize Síť s kapacitami. Max tok = min řez (zde 4).}
+\end{center}
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} \emph{Strom} = souvislý graf bez kružnic, na $n$ vrcholech má
+$n-1$ hran. \emph{Bipartitní} = vrcholy lze obarvit 2 barvami (žádná hrana uvnitř části)
+$\iff$ bez liché kružnice.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Rovinný graf}: \emph{Eulerova formule} $v-e+f=2$;
+plyne max.\ $3v-6$ hran. \emph{Barevnost} $\ge$ klikovost. \emph{Tok}: respektuje kapacity a
+zachování; \emph{Ford-Fulkerson} = opakuj zlepšující cesty v reziduální síti; max tok = min řez.\par
+\noindent\bod{3}\ \textbf{Bonus:} \emph{Mengerova věta}: počet hranově (vrcholově) disjunktních
+cest = velikost minimálního hranového (vrcholového) řezu. Orientovaný graf: silně souvislý =
+cesta mezi každými dvěma vrcholy v obou směrech.
+\end{odpoved}
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Kolik hran má strom a jak poznám bipartitní graf?
+  \item Co říká Eulerova formule a kolik nejvíc hran má rovinný graf?
+  \item Jak funguje Ford-Fulkerson a co je max-flow = min-cut?
+\end{itemize}
+\end{recall}
+\past{Eulerova formule platí pro souvislý rovinný graf. Bipartitní $\iff$ bez liché kružnice.}
+
+% ============================================================
+\subsection{Pravděpodobnost a statistika}
+\priorita{střední}{žlutá-zelená (1-2 body)}
+
+\begin{tema}
+Pravděpodobnostní prostor, jevy, nezávislost, podmíněná pravděpodobnost, Bayesův vzorec;
+náhodné veličiny (diskrétní i spojité), distribuční funkce, hustota/pravděpodobnostní funkce;
+střední hodnota (linearita, Markovova nerovnost); rozptyl (vzorec pro součet); konkrétní
+rozdělení (geometrické, binomické, Poissonovo, normální, exponenciální); limitní věty (zákon
+velkých čísel, centrální limitní věta); bodové a intervalové odhady; testování hypotéz (chyby
+1.\ a 2.\ druhu, hladina významnosti).
+\end{tema}
+
+\ucivo
+\begin{intuice}
+Pravděpodobnost popisuje nejistotu. \emph{Střední hodnota} = dlouhodobý průměr, \emph{rozptyl} =
+míra rozkolísanosti. \emph{CLV} říká, proč se všude objevuje normální rozdělení.
+\end{intuice}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[width=6.6cm,height=3cm,axis lines=left,domain=-3.4:3.4,samples=80,
+  xtick=\empty,ytick=\empty,clip=false]
+  \addplot[thick,defblue]{exp(-x^2/2)};
+\end{axis}
+\end{tikzpicture}\\[-4pt]
+{\scriptsize Normální rozdělení (Gaussova křivka): limita součtu mnoha nezávislých vlivů (CLV).}
+\end{center}
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} \emph{Podmíněná} $P(A|B)=\frac{P(A\cap B)}{P(B)}$.
+\emph{Bayes} $P(A|B)=\frac{P(B|A)P(A)}{P(B)}$. \emph{Střední hodnota} $E[X]=\sum x_i p_i$
+(resp.\ $\int x f(x)$).\par
+\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Linearita} $E[X+Y]=E[X]+E[Y]$ (vždy). \emph{Rozptyl}
+$\mathrm{var}(X)=E[X^2]-E[X]^2$; pro nezávislé $\mathrm{var}(X+Y)=\mathrm{var}X+\mathrm{var}Y$.
+\emph{Markovova nerovnost} $P(X\ge a)\le E[X]/a$.\par
+\noindent\bod{3}\ \textbf{Bonus:} \emph{Zákon velkých čísel}: průměr $\to E[X]$. \emph{CLV}: průměr
+mnoha nezávislých veličin má přibližně normální rozdělení. \emph{Test hypotéz}: chyba 1.\ druhu =
+zamítnu platnou $H_0$ (hladina $\alpha$), 2.\ druhu = nezamítnu neplatnou.
+\end{odpoved}
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Jak zní Bayesův vzorec?
+  \item Kdy platí $\mathrm{var}(X+Y)=\mathrm{var}X+\mathrm{var}Y$?
+  \item Co říká centrální limitní věta?
+\end{itemize}
+\end{recall}
+\past{Linearita střední hodnoty platí vždy, ale součet rozptylů jen pro nezávislé veličiny.}
+
+% ============================================================
+\subsection{Logika}
+\priorita{střední}{žlutá-zelená (1-2 body)}
+
+\begin{tema}
+Syntaxe (výroková a predikátová logika, normální tvary CNF/DNF/PNF, převody, použití pro SAT
+a rezoluci); sémantika (model teorie, splnitelnost, tautologie, důsledek); extenze teorií
+(konzervativnost, skolemizace); dokazatelnost (formální důkaz, dokazovací systémy: tablo,
+rezoluce, příp.\ Hilbertovský kalkul); věty o kompaktnosti a úplnosti; rozhodnutelnost.
+\end{tema}
+
+\ucivo
+\begin{intuice}
+\emph{Syntaxe} = forma formulí, \emph{sémantika} = jejich pravdivost v modelech. \emph{Dokazatelnost}
+(syntaktická) a \emph{platnost} (sémantická) spojuje věta o úplnosti.
+\end{intuice}
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} \emph{Tautologie} = pravdivá ve všech ohodnoceních;
+\emph{splnitelná} = pravdivá aspoň v jednom. $T\models\varphi$: $\varphi$ platí v každém modelu $T$.
+\emph{CNF} = konjunkce klauzulí, \emph{DNF} = disjunkce konjunkcí.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} \emph{Rezoluce} (na CNF): z klauzulí $C\lor\ell$ a $D\lor\neg\ell$
+odvodí $C\lor D$; spor = prázdná klauzule (důkaz nesplnitelnosti). \emph{Tablo} = systematické
+hledání modelu. \emph{Věta o úplnosti}: dokazatelné $=$ platné.\par
+\noindent\bod{3}\ \textbf{Bonus:} \emph{Kompaktnost}: teorie má model $\iff$ každá konečná část má
+model. \emph{Skolemizace} odstraní existenční kvantifikátory. \emph{Rozhodnutelnost}: výroková
+logika je rozhodnutelná (SAT), predikátová obecně ne.
+\end{odpoved}
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Rozdíl mezi tautologií, splnitelností a důsledkem?
+  \item Jak funguje rezoluční pravidlo a co dokazuje prázdná klauzule?
+  \item Co říká věta o úplnosti?
+\end{itemize}
+\end{recall}
+\past{Nezaměňuj „splnitelná“ (aspoň jeden model) a „tautologie“ (všechny modely). Rezoluce dokazuje nesplnitelnost (hledá spor).}

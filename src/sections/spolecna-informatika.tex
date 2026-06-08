@@ -1,0 +1,369 @@
+\section{Část II: Společná informatika}
+
+{\small Společná informatika je floor pro společné okruhy: cíl je umět každé téma
+bez nuly a rychle poskládat zelenou odpověď. Tady stačí kostra, definice, jeden příklad
+a hlavní pasti.}
+
+% ============================================================
+\subsection{Automaty a jazyky}
+\priorita{střední}{zelená (2 body)}
+
+\begin{tema}
+\textbf{Automaty a jazyky}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Regulární jazyky
+  \item regulární gramatiky
+  \item deterministický a nedeterministický konečný automat
+  \item regulární výrazy
+  \item Bezkontextové jazyky
+  \item bezkontextové gramatiky, jazyk generovaný gramatikou
+  \item zásobníkový automat, třída jazyků přijímaných zásobníkovými automaty
+  \item Rekurzivně spočetné jazyky
+  \item gramatika typu 0
+  \item Turingův stroj
+  \item algoritmicky nerozhodnutelné problémy
+  \item Chomského hierarchie
+  \item schopnost zařazení konkrétního jazyka do Chomského hierarchie (zpravidla sestrojení odpovídajícího automatu či gramatiky)
+\end{itemize}
+\end{tema}
+
+\ucivo
+\begin{intuice}
+Jazyk je množina slov. Čím silnější model výpočtu dovolím, tím složitější jazyky umím
+popsat: regulární přes konečnou paměť, bezkontextové přes zásobník, rekurzivně spočetné
+přes Turingův stroj.
+\end{intuice}
+
+\begin{center}
+\begin{minipage}{0.43\linewidth}
+\centering
+\begin{tikzpicture}[>=Stealth, node distance=12mm,
+  every node/.style={circle,draw,minimum size=7mm,font=\scriptsize,inner sep=0pt}]
+  \node (q0) {$q_0$};
+  \node[double,right=of q0] (q1) {$q_1$};
+  \draw[->] (-0.9,0) -- (q0);
+  \draw[->] (q0) edge[loop above] node[draw=none,font=\scriptsize]{$b$} (q0);
+  \draw[->] (q0) -- node[above,draw=none,font=\scriptsize]{$a$} (q1);
+  \draw[->] (q1) edge[loop above] node[draw=none,font=\scriptsize]{$a,b$} (q1);
+\end{tikzpicture}\\[-1pt]
+{\scriptsize DFA pro slova obsahující aspoň jedno $a$.}
+\end{minipage}\hfill
+\begin{minipage}{0.49\linewidth}
+\centering
+\begin{tikzpicture}[scale=0.82, every node/.style={font=\scriptsize}]
+  \draw[fill=defblue!6,draw=defblue] (0,0) ellipse (2.45cm and 1.45cm);
+  \draw[fill=intugreen!10,draw=intugreen] (0,0) ellipse (1.85cm and 1.05cm);
+  \draw[fill=orange!12,draw=orange!80!black] (0,0) ellipse (1.18cm and 0.68cm);
+  \draw[fill=gapred!8,draw=gapred] (0,0) ellipse (0.55cm and 0.32cm);
+  \node at (0,0) {reg.};
+  \node at (0,0.63) {bezkontextové};
+  \node at (0,1.06) {kontextové};
+  \node at (0,1.43) {typ 0 / RE};
+\end{tikzpicture}\\[-1pt]
+{\scriptsize Chomského hierarchie jako vnořené třídy.}
+\end{minipage}
+\end{center}
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} Regulární jazyk pozná konečný automat a popíše regulární
+výraz nebo regulární gramatika. DFA má jeden přechod pro stav a znak, NFA může mít více
+přechodů nebo $\varepsilon$-kroky, ale poznává stejnou třídu jazyků.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} Bezkontextový jazyk generuje CFG s pravidly
+$A\to\alpha$ a přijímá ho zásobníkový automat. Zásobník dá paměť pro vnoření, například
+$\{a^n b^n\mid n\ge0\}$, ale ne pro dvě nezávislá počítání jako $a^n b^n c^n$.\par
+\noindent\bod{3}\ \textbf{Bonus:} Typ 0 gramatiky odpovídají rekurzivně spočetným jazykům
+a Turingovým strojům. Existují algoritmicky nerozhodnutelné problémy, klasicky problém
+zastavení. U zařazování jazyka zkus sestrojit automat nebo gramatiku, případně říct, proč
+nižší třída nestačí.
+\end{odpoved}
+
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Čím se liší DFA a NFA a proč mají stejnou vyjadřovací sílu?
+  \item Jaký automat přijímá bezkontextové jazyky a k čemu je zásobník?
+  \item Kam v hierarchii patří regulární, bezkontextové a rekurzivně spočetné jazyky?
+  \item Uveď příklad nerozhodnutelného problému.
+\end{itemize}
+\end{recall}
+\past{Neříkej, že NFA je silnější než DFA. Je pohodlnější, ale pro konečné automaty popisuje stejnou třídu jazyků.}
+
+% ============================================================
+\subsection{Algoritmy a datové struktury}
+\priorita{střední}{zelená (2 body)}
+
+\begin{tema}
+\textbf{Algoritmy a datové struktury}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Časová složitost algoritmů
+  \item časová a prostorová složitost algoritmu
+  \item měření velikosti dat
+  \item složitost v nejlepším, nejhorším a průměrném případě
+  \item asymptotická notace
+  \item Třídy složitosti
+  \item třídy P a NP
+  \item převoditelnost problémů, NP-těžkost a NP-úplnost
+  \item příklady NP-úplných problémů a převodů mezi nimi
+  \item Metoda rozděl a panuj
+  \item princip rekurzivního dělení problému na podproblémy
+  \item výpočet složitosti pomocí rekurentních rovnic
+  \item Master theorem (kuchařková věta) (bez důkazu)
+  \item aplikace
+  \item Mergesort
+  \item násobení dlouhých čísel
+  \item Binarní vyhledávací stromy
+  \item definice vyhledávacího stromu
+  \item operace s nevyvažovanými stromy
+  \item AVL stromy (definice)
+  \item Třídění
+  \item primitivní třídicí algoritmy (Bubblesort, Insertsort)
+  \item Quicksort
+  \item dolní odhad složitosti porovnávacích třídicích algoritmů
+  \item Grafové algoritmy
+  \item prohledávání do šířky a do hloubky
+  \item topologické třídění orientovaných grafů
+  \item nejkratší cesty v ohodnocených grafech (Dijkstrův a Bellmanův-Fordův algoritmus)
+  \item minimální kostra grafu (Jarníkův a Borůvkův algoritmus)
+  \item toky v sítích (Ford-Fulkerson algoritmus)
+\end{itemize}
+\end{tema}
+
+\ucivo
+\begin{intuice}
+U algoritmů se zkouší hlavně rozpoznat správnou techniku, říct invariant nebo datovou
+strukturu a umět odhadnout složitost. U společné části stačí mít mapu pojmů a typické
+časy v ruce.
+\end{intuice}
+
+\begin{center}
+\begin{tikzpicture}[level distance=9mm,every node/.style={circle,draw,minimum size=6mm,font=\scriptsize,inner sep=0pt},
+  level 1/.style={sibling distance=24mm},level 2/.style={sibling distance=12mm}]
+\node {8}
+  child {node {4}
+    child {node {2}}
+    child {node {6}}}
+  child {node {12}
+    child {node {10}}
+    child {node {14}}};
+\node[draw=none,anchor=west,font=\scriptsize,align=left] at (3.1,-0.8)
+  {BST: vlevo menší, vpravo větší\\AVL: výšky podstromů se liší nejvýše o 1};
+\end{tikzpicture}
+\end{center}
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} Složitost měř vzhledem k velikosti vstupu a rozliš čas,
+prostor, nejlepší, průměrný a nejhorší případ. Značení $O$, $\Omega$, $\Theta$ popisuje
+asymptotický růst. P je řešitelné v polynomiálním čase, NP má polynomiálně ověřitelné
+certifikáty.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} NP-těžkost se ukazuje polynomiálním převodem ze známého
+NP-těžkého problému, NP-úplný problém je v NP a je NP-těžký. Rozděl a panuj: rozděl,
+vyřeš podproblémy, slož výsledek, například mergesort $T(n)=2T(n/2)+O(n)=O(n\log n)$.
+BST hledá podle pořadí klíčů, AVL drží vyvážení rotacemi. Porovnávací třídění má dolní
+odhad $\Omega(n\log n)$.\par
+\noindent\bod{3}\ \textbf{Bonus:} Quicksort má průměrně $O(n\log n)$ a nejhůře $O(n^2)$.
+BFS je fronta a vzdálenosti v neohodnoceném grafu, DFS je zásobník a časy průchodu.
+Topologické třídění funguje pro DAG. Dijkstra vyžaduje nezáporné hrany, Bellman-Ford
+zvládá záporné hrany, Jarník a Borůvka řeší MST, Ford-Fulkerson zlepšuje tok po
+reziduálních cestách.
+\end{odpoved}
+
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Co musí platit, aby byl problém NP-úplný?
+  \item Jak spočítáš mergesort přes rekurentní rovnici?
+  \item Jaký je rozdíl mezi BST a AVL stromem?
+  \item Kdy použiješ Dijkstru a kdy Bellman-Forda?
+\end{itemize}
+\end{recall}
+\past{NP-těžký problém nemusí být v NP. NP-úplnost vyžaduje obojí: patří do NP a každý problém z NP se na něj polynomiálně převede.}
+
+% ============================================================
+\subsection{Programovací jazyky}
+\priorita{střední}{zelená (2 body)}
+
+\begin{tema}
+\textbf{Programovací jazyky}
+
+Některé následující body definují varianty požadavků pro různé individuální volby povinně volitelných předmětů.
+Vyžaduje se zvládnutí všech bodů bez označení \textcircled{V} a zvládnutí všech bodů s označením \textcircled{V} pro jeden z jazyků C\#, C++ nebo Java.
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Koncepty pro abstrakci, zapouzdření a polymorfismus.
+  \item související konstrukty programovacích jazyků
+  \item třídy, rozhraní, metody, datové položky, dědičnost, viditelnost
+  \item (dynamický) polymorfismus, statické a dynamické typování
+  \item jednoduchá dědičnost
+  \item \textcircled{V} virtuální a nevirtuální metody v C++ a C\#
+  \item vícenásobná dědičnost a její problémy
+  \item \textcircled{V} interfaces v C\#
+  \item implementace rozhraní (interface)
+  \item vhodné použití uvedených konceptů
+  \item Primitivní a objektové typy a jejich reprezentace.
+  \item číselné a výčtové typy
+  \item \textcircled{V} hodnotové a referenční typy v C\#
+  \item \textcircled{V} reference, imutabilní typy a boxing v C\# a Javě
+  \item Generické typy a funkcionální prvky (procedurálních programovacích jazyků).
+  \item \textcircled{V} generické typy v Javě a C\# (bez omezení typových parametrů)
+  \item \textcircled{V} typy reprezentující funkce v C++, C\#, nebo Javě
+  \item lambda funkce a funkcionální rozhraní
+  \item Manipulace se zdroji a mechanizmy pro ošetření chyb.
+  \item správa životního cyklu zdrojů v případě výskytu chyb
+  \item \textcircled{V} using v C\#
+  \item konstrukce pro obsluhu a propagaci výjimek
+  \item Životní cyklus objektů a správa paměti.
+  \item alokace (alokace statická, na zásobníku, na haldě)
+  \item inicializace (konstruktory, volání zděděných konstruktorů)
+  \item destrukce (destruktory, finalizátory)
+  \item explicitní uvolňování objektů, reference counting, garbage collector
+  \item Vlákna a podpora synchronizace.
+  \item reprezentace vláken v programovacích jazycích
+  \item specifikace funkce vykonávané vláknem a základní operace na vlákny
+  \item časově závislé chyby a mechanizmy pro synchronizaci vláken
+  \item Implementace základních prvků objektových jazyků.
+  \item základní objektové koncepty v konkrétním jazyce
+  \item implementace a interní reprezentace primitivních typů
+  \item implementace a interní reprezentace složených typů a objektů
+  \item implementace dynamického polymorfismu (tabulka virtuálních metod)
+  \item Nativní a interpretovaný běh, řízení překladu a sestavení programu.
+  \item reprezentace programu, bytecode, interpret jazyka
+  \item just-in-time (JIT) a ahead-of-time (AOT) překlad
+  \item proces sestavení programu, oddělený překlad, linkování
+  \item staticky a dynamicky linkované knihovny
+  \item běhové prostředí procesu a vazba na operační systém
+\end{itemize}
+\end{tema}
+
+\ucivo
+\begin{intuice}
+Drž se C\#. Odpověď stav na třech vrstvách: jazykové konstrukty, běhová reprezentace
+a bezpečné zacházení se zdroji a chybami.
+\end{intuice}
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} Abstrakce skrývá detail, zapouzdření chrání stav
+přes viditelnost, polymorfismus dovolí volat stejnou operaci nad různými typy. V C\#
+jsou třídy, rozhraní, metody, položky, jednoduchá dědičnost tříd a vícenásobná
+implementace rozhraní. Typování je statické, dynamická vazba se používá u virtuálních
+metod.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} Hodnotové typy se typicky ukládají přímo a kopírují
+hodnotu, referenční typy se obsluhují přes referenci na objekt na haldě. Boxing zabalí
+hodnotový typ do objektu. Generika v C\# parametrizují třídy a metody typem, delegáti
+a lambda výrazy reprezentují funkce. Výjimky se propagují zásobníkem, \texttt{using}
+zajistí \texttt{Dispose} i při chybě.\par
+\noindent\bod{3}\ \textbf{Bonus:} Konstruktor inicializuje objekt a volá konstruktor
+předka, správu paměti řeší garbage collector, finalizátor není náhrada za uvolnění
+externího zdroje. Dynamický polymorfismus bývá přes tabulku virtuálních metod. C\#
+běží nad CLR, program se překládá do IL, typicky JIT do strojového kódu, knihovny
+mohou být staticky nebo dynamicky navázané. Vlákna sdílejí paměť, proto hrozí race
+conditions a používají se zámky.
+\end{odpoved}
+
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Jaký je rozdíl mezi hodnotovým a referenčním typem v C\#?
+  \item Co v C\# znamená \texttt{virtual}, \texttt{override} a interface?
+  \item Kdy použiješ \texttt{using} a proč nestačí garbage collector?
+  \item Jak spolu souvisí IL, CLR a JIT?
+\end{itemize}
+\end{recall}
+\past{V C\# není vícenásobná dědičnost tříd. Vícenásobně lze implementovat rozhraní.}
+
+% ============================================================
+\subsection{Architektura počítačů a operačních systémů}
+\priorita{střední}{zelená (2 body)}
+
+\begin{tema}
+\textbf{Architektura počítačů a operačních systémů}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Základní architektura počítače, reprezentace čísel, dat a programů.
+  \item reprezentace a přístup k datům v paměti, adresa, adresový prostor
+  \item ukládání jednoduchých a složených datových typů
+  \item základní aritmetické a logické operace
+  \item Instrukční sada, vazba na prvky vyšších programovacích jazyků.
+  \item Implementovat běžné programové konstrukce vyšších jazyků (přiřazení, podmínka, cyklus, volání funkce) pomocí instrukcí procesoru
+  \item Zapsat běžnou konstrukci vyššího jazyka (přiřazení, podmínka, cyklus, volání funkce), která odpovídá zadané sekvenci (vysvětlených) instrukcí procesoru
+  \item Podpora pro běh operačního systému.
+  \item privilegovaný a neprivilegovaný režim procesoru
+  \item jádro operačního systému
+  \item Rozhraní periferních zařízení a jejich obsluha.
+  \item Popsat roli řadiče zařízení při programem řízené obsluze zařízení (PIO), pro zadané adresy a funkce vstupních a výstupních portů implementovat programem řízenou obsluhu zadaného zařízení (myš, disk)
+  \item Popsat roli přerušení při programem řízené obsluze zařízení (PIO), na úrovni vykonávání instrukcí popsat reakci procesoru (hardware) a operačního systému (software) na žádost o přerušení
+  \item Základní abstrakce, rozhraní a mechanizmy OS pro běh programů, sdílení prostředků a vstup/výstup.
+  \item neprivilegované (uživatelské) procesy
+  \item sdílení procesoru
+  \item procesy, vlákna, kontext procesu a vlákna
+  \item přepínání kontextu, kooperativní a preemptivní multitasking
+  \item plánování běhu procesů a vláken, stavy vlákna
+  \item sdílení paměti
+  \item Vysvětlit rozdíl mezi virtuální a fyzickou adresou a identifikovat, zda se v zadaném kontextu či fragmentu kódu používá virtuální nebo fyzická adresa
+  \item Na zadaném příkladu identifikovat a vysvětlit význam komponent virtuální a fyzické adresy (číslo stránky, číslo rámce, offset)
+  \item Pro konkrétní adresy a obsah jednoúrovňové stránkovací tabulky řešit úlohy překladu adres
+  \item Vysvětlit roli virtuálních adresových prostorů v ochraně paměti procesů a vláken
+  \item sdílení úložného prostoru
+  \item soubory, analogie s adresovým prostorem
+  \item abstrakce a rozhraní pro práci se soubory
+  \item Paralelismus, vlákna a rozhraní pro jejich správu, synchronizace vláken.
+  \item časově závislé chyby (race conditions)
+  \item kritická sekce, vzájemné vyloučení
+  \item základní sychronizační primitiva, jejich rozhraní a použití
+  \item zámky
+  \item aktivní a pasivní čekání
+\end{itemize}
+\end{tema}
+
+\ucivo
+\begin{intuice}
+Procesor vykonává instrukce nad registry a pamětí, OS odděluje uživatelský kód od jádra
+a dává procesům iluze: vlastní CPU, vlastní adresový prostor a soubory jako pojmenované
+úložiště.
+\end{intuice}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, font=\scriptsize]
+  \node[draw,minimum width=18mm,minimum height=7mm] (va) at (0,0) {virtuální adresa};
+  \node[draw,minimum width=12mm,minimum height=7mm,right=5mm of va] (pn) {stránka};
+  \node[draw,minimum width=12mm,minimum height=7mm,right=0mm of pn] (off) {offset};
+  \node[draw,minimum width=18mm,minimum height=7mm,right=9mm of off] (pt) {tabulka};
+  \node[draw,minimum width=12mm,minimum height=7mm,right=9mm of pt] (fr) {rámec};
+  \node[draw,minimum width=12mm,minimum height=7mm,right=0mm of fr] (off2) {offset};
+  \node[draw,minimum width=18mm,minimum height=7mm,right=5mm of off2] (pa) {fyzická adresa};
+  \draw[->] (va) -- (pn);
+  \draw[->] (off) -- (pt);
+  \draw[->] (pn) -- (pt);
+  \draw[->] (pt) -- node[above,draw=none] {rámec} (fr);
+  \draw[->] (off2) -- (pa);
+  \draw[->] (fr) -- (pa);
+  \draw[->] (off.south) to[out=-70,in=-110] node[below,draw=none] {beze změny} (off2.south);
+\end{tikzpicture}
+\end{center}
+
+\begin{odpoved}
+\setlength{\parskip}{2pt}
+\noindent\bod{1}\ \textbf{Minimum:} Počítač má CPU, registry, paměť a zařízení. Data i program
+jsou v paměti jako bity, adresa určuje místo v adresovém prostoru. Instrukce realizují
+přiřazení, větvení, cyklus a volání funkce přes čtení, zápis, skoky a práci se zásobníkem.
+OS běží v privilegovaném režimu, procesy běží uživatelsky.\par
+\noindent\bod{2}\ \textbf{+ k tomu:} Řadič zařízení vystavuje porty nebo registry. PIO znamená,
+že procesor programově čte a zapisuje stav a data zařízení. Přerušení dovolí zařízení
+vyžádat obsluhu: hardware uloží kontext, skočí na obsluhu v jádře a po obsluze pokračuje.
+Proces má vlastní adresový prostor a zdroje, vlákno je běžící tok s vlastním kontextem.
+Preemptivní multitasking přepíná OS, kooperativní čeká na dobrovolné předání.\par
+\noindent\bod{3}\ \textbf{Bonus:} Virtuální adresa se dělí na číslo stránky a offset,
+tabulka stránek mapuje stránku na rámec, offset se přenese. Virtuální adresové prostory
+chrání procesy mezi sebou. Soubory jsou pojmenované úložiště s rozhraním open, read,
+write, close. Race condition vzniká při závislosti na proložení vláken, kritickou sekci
+chrání vzájemné vyloučení, typicky zámek. Aktivní čekání točí CPU, pasivní čekání vlákno
+uspí.
+\end{odpoved}
+
+\begin{recall}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]
+  \item Jak instrukcemi vyjádříš podmínku, cyklus a volání funkce?
+  \item Co se stane při přerušení z pohledu procesoru a OS?
+  \item Jak přeložíš virtuální adresu přes jednoúrovňovou stránkovací tabulku?
+  \item Jaký je rozdíl mezi procesem, vláknem a jejich kontextem?
+  \item Čím se liší aktivní a pasivní čekání?
+\end{itemize}
+\end{recall}
+\past{Virtuální adresa není fyzické místo v RAM. Je to adresa v prostoru procesu, kterou MMU a tabulka stránek překládají na fyzický rámec.}
