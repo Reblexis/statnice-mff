@@ -10,7 +10,9 @@ požadované okruhy a je postavený na poznámkách *notes-ipp* (Vít Kološ).
 ## Co je uvnitř
 
 ```
-pozadavky/      oficiální přípravné dokumenty (zdroj požadavků SZZ)
+pozadavky/
+  detailni-pozadavky.pdf   ZÁVAZNÝ oficiální zdroj požadavků SZZ (anchor)
+  SZZ_strojove_uceni.pdf, mff_statnice_...pdf   odvozené přehledy (z téhož zdroje)
 notes-ipp/      submodul s poznámkami (github.com/vitkolos/notes-ipp)
 src/
   build.py      převod poznámek (Markdown) -> LaTeX fragmenty
@@ -21,16 +23,20 @@ src/
 statnice-priprava.pdf   finální studijní text
 ```
 
-## Pokrytí požadavků
+## Pokrytí a rozsah
 
-Dokument prošel auditem proti dvěma oficiálním přípravným dokumentům
-(`pozadavky/`, verze požadavků SZZ 28. 7. 2025). **Každé požadované téma je
-v poznámkách obsažené.** Detaily a výjimky viz sekce *Audit pokrytí* přímo
-v PDF:
+Závazným zdrojem pravdy je `pozadavky/detailni-pozadavky.pdf` (oficiální
+požadavky SZZ, verze 28. 7. 2025). Dokument je proti němu auditovaný:
+**každé požadované téma je v poznámkách obsažené** a zároveň **nic mimo
+požadavky se neučí**.
 
-* Označená místa, kde poznámky odkazují na vlastní procvičení (žluté rámečky).
-* Jediná formální výjimka: Hilbertovský kalkul (v požadavcích uveden jen jako
-  alternativa k tablu/rezoluci, které pokryté jsou).
+Rozsah = přesně zaměření **Strojové učení**: společná matematika, společná
+informatika, Základy UI (téma 1) a Strojové učení (téma 3). **Záměrně
+vynecháno** (nezkouší se pro toto zaměření): Robotika a NLP, neuronové
+sítě / hluboké učení, počítačové sítě, databáze, grafika a další
+specializace. Detaily, výjimky a místa k procvičení viz sekce *Audit
+pokrytí* přímo v PDF (Hilbertovský kalkul je jediná formální výjimka,
+uvedená v požadavcích jen jako alternativa k tablu/rezoluci).
 
 ## Sestavení PDF
 

@@ -146,6 +146,9 @@ def process_inline(text):
         # odkaz obalující jen blokový obrázek -> jen obrázek (href nesmí mít blok)
         if mm and int(mm.group(1)) in block_tokens:
             return label
+        # mrtvé odkazy na jiné soubory poznámek (mimo tento dokument) -> jen text
+        if not url.startswith("http"):
+            return label if "\x00" in label else escape_text(label)
         lab = label if "\x00" in label else escape_text(label)
         return stash(r"\href{" + url + r"}{" + lab + "}")
     text = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", link_sub, text)
