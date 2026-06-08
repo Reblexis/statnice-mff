@@ -265,10 +265,10 @@ běží nad CLR, program se překládá do IL, typicky JIT do strojového kódu,
 mohou být staticky nebo dynamicky navázané. Vlákna sdílejí paměť, proto hrozí race
 conditions a používají se zámky. Diamantový problém řeší C\# vícenásobnou implementací
 rozhraní místo vícenásobné dědičnosti tříd. \texttt{ref}, \texttt{out} a \texttt{in}
-jsou tracking reference pro hodnotové typy; \texttt{readonly} a schovaný setter dávají
-imutabilitu. RAII v C++ váže zdroj na život objektu; \texttt{using} je \texttt{try/finally}
-s \texttt{Dispose}. Návrhové vzory: adapter převádí rozhraní, decorator obaluje objekt,
-factory vyrábí instance, visitor přesouvá operaci mimo hierarchii tříd.
+předávají argument odkazem (u \texttt{in} jen pro čtení); fungují pro hodnotové i
+referenční typy. \texttt{readonly} a schovaný setter pomáhají s imutabilitou.
+RAII v C++ váže zdroj na život objektu; \texttt{using} je \texttt{try/finally}
+s \texttt{Dispose}.
 \end{odpoved}
 
 \begin{recall}

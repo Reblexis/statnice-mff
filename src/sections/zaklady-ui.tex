@@ -46,7 +46,7 @@ Prohledávání je vhodné, když stav umíme brát jako uzel grafu a akci jako 
 \begin{itemize}[leftmargin=1.2em,itemsep=1pt,topsep=1pt]
   \item \textbf{BFS}: fronta, bere nejmělčí uzel. Je úplné pro konečné větvení a optimální při stejných cenách kroků.
   \item \textbf{DFS}: zásobník nebo rekurze, jde do hloubky. Má malou paměť, ale není obecně optimální a ve stromové verzi se může zacyklit.
-  \item \textbf{Uniform-cost search}: prioritní fronta podle dosavadní ceny $g(n)$. Je Dijkstra nad stavovým prostorem, optimální pro nezáporné ceny.
+  \item \textbf{Uniform-cost search}: prioritní fronta podle dosavadní ceny $g(n)$. Je Dijkstra nad stavovým prostorem, optimální pro nezáporné ceny (v nekonečném prostoru typicky pro kladnou dolní mez ceny kroku).
   \item \textbf{A$^*$}: vybírá minimum $f(n)=g(n)+h(n)$. Přípustná heuristika nikdy nepřeceňuje cenu do cíle. Konzistentní heuristika splňuje $h(n)\le c(n,a,n')+h(n')$ a dává optimalitu i v grafovém prohledávání bez znovuotevírání uzlů.
 \end{itemize}
 \klic{BFS = hloubka, DFS = paměť, UCS = skutečná cena, A$^*$ = skutečná cena plus odhad.}
@@ -218,8 +218,9 @@ Pravděpodobnost je způsob, jak uvažovat při nejistotě. Úplná sdružená d
 \begin{defbox}{Bayesovská síť}
 Bayesovská síť je orientovaný acyklický graf náhodných proměnných a tabulky $P(X_i\mid Parents(X_i))$. Společná distribuce se faktorizuje jako
 \[
-P(x_1,\dots,x_n)=\prod_i P(x_i\mid parents(x_i)).
+P(x_1,\dots,x_n)=\prod_i P(x_i\mid pa_i),
 \]
+kde $pa_i$ jsou hodnoty rodičů proměnné $X_i$.
 \end{defbox}
 
 \textbf{Základní počty}: z úplné sdružené distribuce získáš marginál vysčítáním skrytých proměnných, například $P(X)=\sum_y P(X,y)$. Podmíněnou pravděpodobnost získáš normalizací: $P(X\mid e)=\alpha P(X,e)$. Bayesovo pravidlo je $P(H\mid e)=\alpha P(e\mid H)P(H)$.
@@ -347,7 +348,7 @@ Mini příklad: operátor \emph{Přesuň(x,A,B)} má předpoklady $Na(x,A)$ a $V
 \noindent\bod{3}\ \textbf{Bonus:} uveď rozdíl proti obyčejnému prohledávání: stav není atomický, akce mají logickou strukturu a plánovač může využívat předpoklady a efekty místo slepé expanze.
 Plánování používá předpoklad uzavřeného světa; fluenty se akcemi mění, rigidní atomy ne.
 Akce je plně instanciovaný operátor a zpětné plánování používá jen akce relevantní pro cíl.
-Situační kalkulus řeší změny přes possibility a successor-state axiomy.
+Situační kalkulus řeší změny přes predikát proveditelnosti $Poss(a,s)$ a successor-state axiomy.
 \end{odpoved}
 
 \begin{recall}

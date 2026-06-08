@@ -145,7 +145,8 @@ odchylek byl co nejmenší.
 $\sum_i (y_i - w^\top x_i)^2$ (metoda nejmenších čtverců).\par
 \noindent\bod{2}\ \textbf{+ k tomu:} \emph{Analytické řešení} (normální rovnice):
 $\hat w = (X^\top X)^{-1} X^\top y$, kde sloupec jedniček v $X$ pokryje intercept $b$.
-Funguje, dokud $X^\top X$ není moc velká / singulární.\par
+Funguje přímo jen při regulární $X^\top X$; při singularitě se používá pseudoinverze
+nebo regularizace a u velkých dat je vzorec drahý.\par
 \noindent\bod{3}\ \textbf{Bonus:} \emph{SGD} - místo přesného vzorce iterativně:
 $w \leftarrow w - \eta\,\nabla_w \text{loss}$ počítané po malých dávkách dat; nutné u velkých dat.
 $\eta$ = rychlost učení (moc velká diverguje, moc malá je pomalá). Batch GD používá
@@ -360,13 +361,14 @@ a porovnáme s tím, co by dělala náhoda za platnosti \emph{nulové hypotézy}
 \emph{p-hodnotu}; když $p < \alpha$ (typicky 0,05), $H_0$ zamítáme.\par
 \noindent\bod{2}\ \textbf{+ k tomu:} \emph{t-test} porovnává \emph{střední hodnoty}:
 jednovýběrový (průměr vs.\ daná konstanta), dvouvýběrový (dva průměry proti sobě); předpokládá
-zhruba normální data. \emph{Chí-kvadrát test dobré shody} porovnává \emph{pozorované vs.\ očekávané
+nezávislá pozorování a zhruba normální data (Welchova varianta nepotřebuje stejné rozptyly).
+\emph{Chí-kvadrát test dobré shody} porovnává \emph{pozorované vs.\ očekávané
 četnosti} kategorií: $\chi^2 = \sum \frac{(O-E)^2}{E}$.\par
 \noindent\bod{3}\ \textbf{Bonus:} chyba I.\ druhu = zamítnu platné $H_0$ (= $\alpha$);
 chyba II.\ druhu = nezamítnu neplatné $H_0$. Jednovýběrový t-test používá $n-1$ stupňů
 volnosti, dvouvýběrový porovnává průměry dvou populací přes směrodatnou chybu; párový
-t-test testuje rozdíly dvojic jako jednovýběrový. Chí-kvadrát dobré shody má obvykle
-počet kategorií minus jedna stupňů volnosti.
+t-test testuje rozdíly dvojic jako jednovýběrový. Chí-kvadrát dobré shody má
+počet kategorií minus jedna, případně minus počet odhadnutých parametrů, stupňů volnosti.
 \end{odpoved}
 \begin{recall}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=1pt]

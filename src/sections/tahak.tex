@@ -30,7 +30,7 @@ Nauč se nejdřív tohle celé, pak teprve prohlubuj (zejména specializaci).}
 \columnbreak
 \textbf{\color{mffblue}Část III: Základy UI}
 \begin{itemize}[leftmargin=1em,itemsep=1.5pt,topsep=2pt]
-  \item \textbf{Prohledávání:} stavový prostor; BFS/DFS/uniform-cost; A* s přípustnou heuristikou je optimální.
+  \item \textbf{Prohledávání:} stavový prostor; BFS/DFS/uniform-cost; A* je optimální s přípustnou heuristikou ve stromu a konzistentní v grafu.
   \item \textbf{CSP:} proměnné + domény + podmínky; AC-3 = hranová konzistence; řešení backtrackingem (MAC).
   \item \textbf{Logické uvažování:} CNF; DPLL; rezoluce; dopředné/zpětné řetězení (Hornovy klauzule).
   \item \textbf{Pravděp.\ uvažování:} úplná sdružená distribuce; Bayes; Bayesovská síť = DAG + $P(X\mid \text{rodiče})$.
@@ -45,10 +45,10 @@ Nauč se nejdřív tohle celé, pak teprve prohlubuj (zejména specializaci).}
 \begin{itemize}[leftmargin=1em,itemsep=1.5pt,topsep=2pt]
   \item \textbf{Učení s učitelem:} klasifikace (třída) vs regrese (číslo); trénink vs test; přeučení; regularizace L1/L2.
   \item \textbf{kNN:} třída podle většiny $k$ nejbližších bodů; líné učení; nutno škálovat příznaky.
-  \item \textbf{Lineární regrese:} $y=w^\top x+b$, minimalizuj MSE; normální rovnice $w=(X^\top X)^{-1}X^\top y$.
-  \item \textbf{Logistická regrese:} $\sigma(w^\top x)$ = pravděpodobnost třídy, práh 0,5; softmax pro více tříd.
+  \item \textbf{Lineární regrese:} $y=w^\top x+b$, minimalizuj MSE; normální rovnice $w=(X^\top X)^{-1}X^\top y$ při regulární $X^\top X$.
+  \item \textbf{Logistická regrese:} $\sigma(w^\top x+b)$ = pravděpodobnost třídy, práh 0,5; softmax pro více tříd.
   \item \textbf{Rozhodovací stromy:} dělení podle čistoty (entropie/Gini); prořezávání proti přeučení.
-  \item \textbf{SVM:} nadrovina s největším marginem; podpůrné vektory; jádro pro neseparabilní data.
+  \item \textbf{SVM:} nadrovina s největším marginem; podpůrné vektory; měkký margin pro chyby, jádro pro nelineární hranice.
   \item \textbf{Ensembly:} bagging (paralelně, $\downarrow$rozptyl) vs boosting (sekvenčně, $\downarrow$bias); náhodný les.
   \item \textbf{Statistické testy:} $H_0$; $p<\alpha \Rightarrow$ zamítni; t-test (průměry), chí-kvadrát (četnosti).
   \item \textbf{Učení bez učitele:} k-means (přiřaď body + přepočítej centra); hierarchické; PCA = směr max.\ rozptylu.
