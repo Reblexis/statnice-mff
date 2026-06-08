@@ -1,0 +1,56 @@
+\section{Tahák: kostry odpovědí na 1 bod (síť proti nulám)}
+
+{\small Tohle je tvoje pojistka: u \emph{každého} z 28 témat aspoň jedna správná věta, aby
+z žádné přidělené otázky nebyla nula. Pro průchod pak stačí pár otázek dotáhnout na 2 body.
+Nauč se nejdřív tohle celé, pak teprve prohlubuj (zejména specializaci).}
+
+\vspace{4pt}
+\footnotesize
+\setlength{\parskip}{1pt}
+
+\begin{multicols}{2}
+\textbf{\color{mffblue}Část I: Společná matematika}
+\begin{itemize}[leftmargin=1em,itemsep=1.5pt,topsep=2pt]
+  \item \textbf{Dif./int. počet:} limita = kam se blíží; derivace = sklon tečny; integrál = plocha pod grafem; Newton-Leibniz $\int_a^b f=F(b)-F(a)$.
+  \item \textbf{Lin. algebra:} báze = lin.\ nezávislá generující množina, dimenze = její velikost; hodnost = počet pivotů; regulární $\iff \det\neq0 \iff$ existuje inverze.
+  \item \textbf{Diskrétní mat.:} ekvivalence = reflexivní + symetrická + tranzitivní (rozklad na třídy); bijekce = prostá i na; funkcí $A\to B$ je $|B|^{|A|}$.
+  \item \textbf{Teorie grafů:} strom = souvislý bez kružnic ($n-1$ hran); bipartitní $\iff$ bez liché kružnice; Eulerova formule $v-e+f=2$.
+  \item \textbf{Pravděpodobnost:} $P(A|B)=\frac{P(A\cap B)}{P(B)}$; Bayes; $E[X]=\sum x_i p_i$, linearita $E$ platí vždy.
+  \item \textbf{Logika:} tautologie = pravdivá vždy, splnitelná = aspoň v jednom modelu; CNF = konjunkce klauzulí; rezoluce do prázdné klauzule = spor.
+\end{itemize}
+
+\textbf{\color{mffblue}Část II: Společná informatika}
+\begin{itemize}[leftmargin=1em,itemsep=1.5pt,topsep=2pt]
+  \item \textbf{Automaty:} regulární = DFA/NFA/regex; bezkontextové = zásobníkový automat; Turingův stroj = rekurzivně spočetné; Chomského hierarchie.
+  \item \textbf{Algoritmy:} asymptotika $O/\Theta$; P vs NP, NP-úplnost přes převoditelnost; BFS/DFS, Dijkstra (nezáporné hrany), min.\ kostra.
+  \item \textbf{Prog.\ jazyky (C\#):} třída/rozhraní/dědičnost/polymorfismus; hodnotové vs referenční typy; garbage collector; výjimky; tabulka virtuálních metod.
+  \item \textbf{Architektura/OS:} čísla ve dvojkovém doplňku; privilegovaný režim + jádro; proces/vlákno a přepínání kontextu; virtuální paměť (stránka + offset $\to$ rámec).
+\end{itemize}
+
+\columnbreak
+\textbf{\color{mffblue}Část III: Základy UI}
+\begin{itemize}[leftmargin=1em,itemsep=1.5pt,topsep=2pt]
+  \item \textbf{Prohledávání:} stavový prostor; BFS/DFS/uniform-cost; A* s přípustnou heuristikou je optimální.
+  \item \textbf{CSP:} proměnné + domény + podmínky; AC-3 = hranová konzistence; řešení backtrackingem (MAC).
+  \item \textbf{Logické uvažování:} CNF; DPLL; rezoluce; dopředné/zpětné řetězení (Hornovy klauzule).
+  \item \textbf{Pravděp.\ uvažování:} úplná sdružená distribuce; Bayes; Bayesovská síť = DAG + $P(X\mid \text{rodiče})$.
+  \item \textbf{Reprezentace znalostí:} HMM = skryté stavy + pozorování; filtrace/predikce/vyhlazování; Viterbi = nejpravděpodobnější cesta.
+  \item \textbf{Plánování:} stav + operátory (precond/efekty); dopředné a zpětné hledání plánu.
+  \item \textbf{MDP:} stavy/akce/přechody/odměny; Bellmanova rovnice; iterace hodnot a strategií.
+  \item \textbf{Hry:} minimax + alfa-beta prořezávání; Nashovo ekvilibrium; vězňovo dilema.
+  \item \textbf{ML přehledově:} s učitelem / bez učitele / zpětnovazební; stromy, regrese, SVM; Q-učení.
+\end{itemize}
+
+\textbf{\color{mffblue}Část IV: Strojové učení}
+\begin{itemize}[leftmargin=1em,itemsep=1.5pt,topsep=2pt]
+  \item \textbf{Učení s učitelem:} klasifikace (třída) vs regrese (číslo); trénink vs test; přeučení; regularizace L1/L2.
+  \item \textbf{kNN:} třída podle většiny $k$ nejbližších bodů; líné učení; nutno škálovat příznaky.
+  \item \textbf{Lineární regrese:} $y=w^\top x+b$, minimalizuj MSE; normální rovnice $w=(X^\top X)^{-1}X^\top y$.
+  \item \textbf{Logistická regrese:} $\sigma(w^\top x)$ = pravděpodobnost třídy, práh 0,5; softmax pro více tříd.
+  \item \textbf{Rozhodovací stromy:} dělení podle čistoty (entropie/Gini); prořezávání proti přeučení.
+  \item \textbf{SVM:} nadrovina s největším marginem; podpůrné vektory; jádro pro neseparabilní data.
+  \item \textbf{Ensembly:} bagging (paralelně, $\downarrow$rozptyl) vs boosting (sekvenčně, $\downarrow$bias); náhodný les.
+  \item \textbf{Statistické testy:} $H_0$; $p<\alpha \Rightarrow$ zamítni; t-test (průměry), chí-kvadrát (četnosti).
+  \item \textbf{Učení bez učitele:} k-means (přiřaď body + přepočítej centra); hierarchické; PCA = směr max.\ rozptylu.
+\end{itemize}
+\end{multicols}
