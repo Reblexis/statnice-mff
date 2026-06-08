@@ -371,8 +371,6 @@ MDP je plánování, kde akce nejsou jisté. Agent volí akci podle stavu, dosta
   \draw[->] (s0) to[loop above] node[above,draw=none,font=\scriptsize]{$0.2$} (s0);
   \draw[->] (s1) -- node[above,draw=none,font=\scriptsize]{$a:1, r=5$} (g);
   \draw[->] (s1) to[loop below] node[below,draw=none,font=\scriptsize]{$b:1, r=0$} (s1);
-  \node[draw=none,align=left,anchor=west,font=\scriptsize] at (-0.7,-1.4)
-    {$U(S_0)\leftarrow \max_a \sum_{s'}P(s'\mid S_0,a)[R+\gamma U(s')]$};
 \end{tikzpicture}
 \end{center}
 
