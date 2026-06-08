@@ -13,3 +13,5 @@ src/main.pdf
 # Python
 __pycache__/
 *.pyc
+
+src/pilot.pdf
