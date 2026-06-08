@@ -156,3 +156,11 @@
 
 % štítek priority/cíle pod nadpisem tématu
 \newcommand{\priorita}[2]{\noindent{\footnotesize\colorbox{intugreen!18}{\textbf{priorita: #1}}\ \colorbox{defblue!12}{\textbf{cíl: #2}}}\par\smallskip}
+
+% "Ve zkratce" rychlý přehled tématu (učebnost): definice / spouštěcí slova / šablona / past
+\newtcolorbox{vezkratce}{enhanced, breakable, colback=mffblue!4, colframe=mffblue!45,
+  boxrule=0.5pt, arc=1.5pt, left=5pt, right=5pt, top=2pt, bottom=2pt,
+  before skip=4pt, after skip=4pt, fontupper=\footnotesize,
+  fonttitle=\bfseries\scriptsize, coltitle=mffblue, title={Ve zkratce}}
+% použití: \begin{vezkratce}\zk{Definice}{...}\zk{Spouštěč}{...}\zk{Šablona}{...}\zk{Past}{...}\end{vezkratce}
+\newcommand{\zk}[2]{\noindent\textbf{#1:}~#2\par}

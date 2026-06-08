@@ -12,6 +12,12 @@
   \item informované prohledávání (algoritmus A*, přípustné a konzistentní heuristiky)
 \end{itemize}
 \end{tema}
+\begin{vezkratce}
+\zk{Definice}{Prohledávání řeší cestu ve stavovém prostoru pomocí fronty kandidátů a testu cíle.}
+\zk{Spouštěč}{stav, akce, BFS, DFS, UCS, A*, heuristika, přípustná, konzistentní}
+\zk{Šablona}{Formuluj problém - vyber frontier pravidlo - řekni úplnost a optimalitu.}
+\zk{Past}{A$^*$ v grafu potřebuje konzistentní heuristiku, jinak může uzavřít špatnou cenu.}
+\end{vezkratce}
 
 \ucivo
 \begin{intuice}
@@ -79,6 +85,12 @@ Prohledávání je vhodné, když stav umíme brát jako uzel grafu a akci jako 
   \item algoritmus hledání řešení (MAC)
 \end{itemize}
 \end{tema}
+\begin{vezkratce}
+\zk{Definice}{CSP hledá hodnoty proměnných z domén tak, aby splnily všechny relační podmínky.}
+\zk{Spouštěč}{proměnná, doména, omezení, hranová konzistence, AC-3, backtracking, MAC}
+\zk{Šablona}{Zapiš proměnné a domény - proškrtni podporu AC-3 - dohledej MACem.}
+\zk{Past}{Hranová konzistence může zachovat nesplnitelný problém, není to důkaz řešení.}
+\end{vezkratce}
 
 \ucivo
 \begin{intuice}
@@ -137,6 +149,12 @@ CSP má proměnné $X_i$, domény $D_i$ a podmínky jako relace na proměnných.
   \item rezoluce
 \end{itemize}
 \end{tema}
+\begin{vezkratce}
+\zk{Definice}{Logické uvažování odvozuje důsledky z formulí pomocí modelů nebo pravidel.}
+\zk{Spouštěč}{výrok, predikát, KB, entailment, SAT, CNF, rezoluce, unifikace}
+\zk{Šablona}{Formalizuj znalosti - převeď tvar - použij splnitelnost, rezoluci nebo model.}
+\zk{Past}{Důsledek $KB\models\alpha$ není totéž jako jen nalezení jednoho modelu s $\alpha$.}
+\end{vezkratce}
 
 \ucivo
 \begin{intuice}
@@ -184,6 +202,12 @@ CNF je konjunkce klauzulí, kde klauzule je disjunkce literálů. DNF je disjunk
   \item aproximační odvozování (Monte Carlo, zamítání, vážení věrohodností)
 \end{itemize}
 \end{tema}
+\begin{vezkratce}
+\zk{Definice}{Pravděpodobnostní uvažování počítá nejisté závěry přes rozdělení a podmíněnosti.}
+\zk{Spouštěč}{Bayes, nezávislost, síť, inference, skrytá proměnná, Markov, HMM, filtr}
+\zk{Šablona}{Urči proměnné - rozlož společné rozdělení - marginalizuj a normalizuj.}
+\zk{Past}{Podmíněná nezávislost závisí na daných proměnných, neplatí automaticky globálně.}
+\end{vezkratce}
 
 \ucivo
 \begin{intuice}
@@ -263,6 +287,12 @@ kde $N(X,e)$ je počet vzorků splňujících $X$ i $e$ a $N(e)$ počet vzorků 
   \item skryté Markovské modely (HMM) vs. dynamické Bayesovské sítě
 \end{itemize}
 \end{tema}
+\begin{vezkratce}
+\zk{Definice}{Reprezentace znalostí zapisuje svět tak, aby šlo odvozovat změny, stav a nejistotu.}
+\zk{Spouštěč}{situační kalkulus, rámec, Markov, filtrace, predikce, vyhlazování, HMM, DBN}
+\zk{Šablona}{Zvol reprezentaci - zapiš stav a přechod - proveď odvození v čase.}
+\zk{Past}{Markovský předpoklad omezuje závislost na aktuální stav, ne na celou historii.}
+\end{vezkratce}
 
 \ucivo
 \begin{intuice}
@@ -336,6 +366,12 @@ kde první člen je dopředná filtrace a druhý zpětný vliv budoucích pozoro
   \item dopředné a zpětné plánování
 \end{itemize}
 \end{tema}
+\begin{vezkratce}
+\zk{Definice}{Plánování hledá posloupnost akcí, která z počátečního faktického stavu splní cíl.}
+\zk{Spouštěč}{akce, operátor, precondition, effect, dopředné, zpětné, plán}
+\zk{Šablona}{Popiš stavy a akce - ověř předpoklady - skládej plán a kontroluj cíle.}
+\zk{Past}{Akci lze použít až po splnění předpodmínek, efekty samy nestačí.}
+\end{vezkratce}
 
 \ucivo
 \begin{intuice}
@@ -383,6 +419,12 @@ Mini příklad: operátor \emph{Přesuň(x,A,B)} má předpoklady $Na(x,A)$ a $V
   \item POMDP (základní definice)
 \end{itemize}
 \end{tema}
+\begin{vezkratce}
+\zk{Definice}{MDP modeluje rozhodování se stochastickými přechody, odměnami a optimalizací hodnoty.}
+\zk{Spouštěč}{stav, akce, odměna, politika, Bellman, hodnota, value iteration, policy iteration}
+\zk{Šablona}{Zapiš $S,A,T,R,\gamma$ - napiš Bellmana - iteruj hodnoty nebo politiku.}
+\zk{Past}{Optimální akce maximalizuje očekávaný návrat, ne okamžitou odměnu.}
+\end{vezkratce}
 
 \ucivo
 \begin{intuice}
@@ -448,6 +490,12 @@ Pokud je odměna vázaná na přechod, používá se ekvivalentní tvar se člen
   \item mechanism design (typy aukcí)
 \end{itemize}
 \end{tema}
+\begin{vezkratce}
+\zk{Definice}{Teorie her řeší interakci více agentů s užitky, strategiemi a rovnováhami.}
+\zk{Spouštěč}{hra, strategie, minimax, alfa-beta, Nash, užitek, nula-součtová, aukce}
+\zk{Šablona}{Urči hráče a užitky - vyber model hry - spočti strategii nebo rovnováhu.}
+\zk{Past}{Minimax platí pro nula-součtové střídavé hry, ne pro každou strategickou hru.}
+\end{vezkratce}
 
 \ucivo
 \begin{intuice}
@@ -516,6 +564,12 @@ Minimax počítá hodnotu hry s nulovým součtem: v uzlu MAX bere maximum z pot
   \item aktivní učení (definice, explorace vs. exploitace, Q-učení, SARSA)
 \end{itemize}
 \end{tema}
+\begin{vezkratce}
+\zk{Definice}{Strojové učení odhaduje model z dat a hodnotí generalizaci na neviděných příkladech.}
+\zk{Spouštěč}{supervised, unsupervised, reinforcement, strom, regrese, SVM, Bayes, EM, Q-učení}
+\zk{Šablona}{Urči typ úlohy - řekni, co se učí - popiš data, trénink a evaluaci.}
+\zk{Past}{Vysoká přesnost na tréninku neznamená dobrý model, může jít o přeučení.}
+\end{vezkratce}
 
 \ucivo
 \begin{intuice}
