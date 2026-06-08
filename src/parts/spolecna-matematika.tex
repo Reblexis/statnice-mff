@@ -1,0 +1,2316 @@
+%% (H1) Společná matematika
+\subsection{1. Základy diferenciálního a integrálního počtu}
+\begin{itemize}
+\item Posloupnosti reálných čísel a jejich limity (definice)
+\begin{itemize}
+\item posloupnost s hodnotami v množině $M$ je zobrazení z $\mathbb N$ do $M$
+\item nechť $(a_n)$ je reálná posloupnost a $L \in \mathbb R^*$
+\item pokud $(\forall\varepsilon\gt 0)(\exists n_0\in\mathbb N):(n\geq n_0\implies |a_n-L|\lt\varepsilon)$, píšeme, že $\lim a_n=L$ nebo $\lim_{n\to\infty}a_n=L$ nebo $a_n\to L$, a řekneme, že posloupnost $(a_n)$ má limitu $L$
+\item pro $L\in \mathbb R$ mluvíme o vlastní limitě a pro $L=\pm\infty$ o limitě nevlastní
+\item posloupnost, která má vlastní limitu, konverguje (pokud ji nemá, tak diverguje)
+\item každá posloupnost reálných čísel má nejvýše jednu limitu
+\end{itemize}
+\item Aritmetika limit
+\begin{itemize}
+\item nechť $(a_n),(b_n)$ jsou posloupnosti reálných čísel takové, že $\lim a_n=a$ a $\lim b_n=b$
+\item pak\dots{}
+\begin{itemize}
+\item $\lim\,(a_n+b_n)=a+b$
+\item $\lim\,(a_nb_n)=ab$
+\item pokud $b_n\neq 0$ pro každé $n\gt 0$, pak $\lim\,(a_n/b_n)=a/b$
+\end{itemize}
+\item to vše platí za předpokladu, že je výraz na pravé straně definován
+\begin{itemize}
+\item neurčité výrazy (nejsou definované): součet nekonečen s různými znaménky, součin nekonečna s nulou, podíl nekonečen, dělení reálného čísla nulou
+\end{itemize}
+\item pokud je $(a_n)$ omezená a $(b_n)$ konverguje k nule, pak $\lim\,(a_nb_n)=0$
+\begin{itemize}
+\item tzn. limita $(a_n)$ nemusí existovat
+\end{itemize}
+\end{itemize}
+\item Limity a uspořádání
+\begin{itemize}
+\item nechť $(a_n),(b_n)$ jsou posloupnosti reálných čísel takové, že mají limity $\lim a_n=a$ a $\lim b_n=b$
+\item když $a\lt b$, tak existuje $n_0$, že $n\gt n_0\implies a_n\lt b_n$
+\item a naopak, když $a_n\leq b_n$ pro každé $n\gt n_0$, pak $a\leq b$
+\item poznámka: může se stát, že $\forall n:a_n\lt b_n$, ale $\lim a_n=\lim b_n$
+\begin{itemize}
+\item např. uvažujme $a_n=1-\frac1n\lt b_n=1$, přičemž $\lim a_n=\lim b_n=1$
+\end{itemize}
+\end{itemize}
+\item Věta o dvou policajtech
+\begin{itemize}
+\item nechť posloupnosti $(a_n),(b_n),(c_n)\subseteq\mathbb R$ splňují
+\begin{itemize}
+\item $\lim a_n=\lim b_n=a\in\mathbb R$
+\item $\forall n\gt n_0:a_n\leq c_n\leq b_n$
+\end{itemize}
+\item pak $(c_n)$ konverguje a $\lim c_n=a$
+\item platí to i pro nevlastní limity - tam nám stačí jeden policajt
+\end{itemize}
+\item Součet řady a částečný součet řady
+\begin{itemize}
+\item nekonečná řada (reálných čísel) je výraz \[\sum_{n=1}^\infty a_n=a_1+a_2+a_3+\dots\]
+\begin{itemize}
+\item kde $(a_n)_{n\geq 1}$ je posloupnost reálných čísel
+\end{itemize}
+\item ($n$-tý) částečný součet řady se značí $s_n$ a je to součet jejích prvních $n$ členů ($s_n=a_1+a_2+\dots+a_n$)
+\item pokud existuje vlastní limita posloupnosti $(s_n)$ částečných součtů dané řady, mluvíme o \textit{konvergentní} řadě a limita $\lim s_n$ je jejím \textit{součtem}
+\item pokud $\lim s_n$ neexistuje nebo je nevlastní, je daná řada \textit{divergentní}
+\end{itemize}
+\item Geometrická řada, harmonická řada
+\begin{itemize}
+\item geometrická řada
+\begin{itemize}
+\item $\sum_{n=0}^\infty q^n=1+q+q^2+q^3+\dots$
+\item $q\in\mathbb R$ je parametr zvaný \textit{kvocient}
+\item pro součet geometrické řady platí \[\sum_{n=0}^\infty q^n=\begin{cases}\frac1{1-q} &-1\lt q\lt1\\ +\infty &q\geq 1\\\text{neexistuje}&q\leq -1\end{cases}\]
+\item vyplývá to ze vzorce pro částečný součet $s_n=\frac{q^n-1}{q-1}$
+\end{itemize}
+\item harmonická řada
+\begin{itemize}
+\item $\sum_{n=1}^\infty\frac 1n=1+\frac12+\frac13+\dots$
+\item diverguje, přestože její prvky konvergují k nule
+\end{itemize}
+\item pro řady tvaru $\sum_{n=1}^\infty\frac1{n^s}$ obecně platí, že konvergují pro $s\gt 1$ a divergují pro $s\leq 1$
+\end{itemize}
+\item Limita funkce v bodě: definice, aritmetika limit
+\begin{itemize}
+\item okolí bodu je interval $U(a,\delta)=(a-\delta,a+\delta)$
+\begin{itemize}
+\item okolí nekonečen definujeme jako $U(+\infty,\delta)=(1/\delta,+\infty)$, podobně pro $-\infty$
+\item definujeme také pravé okolí bodu $U^+(a,\delta)=[a,a+\delta)$, podobně levé okolí $U^-$
+\item prstencová okolí bodu $a\in\mathbb R$ definujeme jako obyčejná okolí s vyjmutým bodem $a$, značí se jako $P(a,\delta)$ apod.
+\end{itemize}
+\item řekneme, že funkce $f$ má v bodě $a\in\mathbb R^*$ limitu $A\in\mathbb R$, když $(\forall\varepsilon\gt 0)(\exists\delta\gt 0):x\in P(a,\delta)\implies f(x)\in U(A,\varepsilon)$
+\begin{itemize}
+\item zapisujeme $\lim_{x\to a}f(x)=A$
+\item poznámka: limita funkce $f$ v bodě $a$ nezávisí na její hodnota v $a$, funkce $f$ dokonce ani nemusí být v $a$ definovaná
+\item pokud místo prstencového okolí $P$ použijeme pravé prstencové okolí $P^+$, dostaneme definici limity zprava, značí se $\lim_{x\to a^+}f(x)$
+\begin{itemize}
+\item obdobně lze definovat limitu zleva
+\item pokud $\lim_{x\to a^+}f(x)=\lim_{x\to a^-}f(x)=A$, pak $\lim_{x\to a}f(x)=A$
+\item naopak pokud jsou limity zprava a zleva různé, limita neexistuje
+\end{itemize}
+\item podobně jako u posloupnosti - pokud limita funkce existuje, je jednoznačně určena
+\item limitu funkce lze rovněž definovat pomocí posloupnosti
+\end{itemize}
+\item aritmetika limit
+\begin{itemize}
+\item nechť $a,A,B\in\mathbb R^*$, nechť $f,g$ jsou funkce definované na nějakém prstencovém okolí $P(a,\delta)$ bodu $a$, nechť platí $\lim_{x\to a}f(x)=A$ a $\lim_{x\to a}g(x)=B$
+\item pak platí $\lim_{x\to a}f(x)+g(x)=A+B$, je-li tento součet definován
+\item $\lim_{x\to a}f(x)g(x)=AB$, je-li tento součin definován
+\item pokud je $g(x)$ nenulová na nějakém prstencovém okolí bodu $a$, pak $\lim_{x\to a}f(x)/g(x)=A/B$, je-li tento podíl definován
+\end{itemize}
+\end{itemize}
+\item Limita funkce v bodě: vztah s uspořádáním
+\begin{itemize}
+\item nechť $c\in\mathbb R^*$ a funkce $f,g,h$ jsou definované na prstencovém okolí bodu $c$
+\item mají-li $f,g$ v bodě $c$ limitu a $\lim_{x\to c}f(x)\gt\lim_{x\to c}g(x)$, pak existuje $\delta\gt 0$ takové, že $f(x)\gt g(x)$ pro každé $x\in P(c,\delta)$
+\item existuje-li $\delta\gt 0$ takové, že $f(x)\geq g(x)$ pro každé $x\in P(c,\delta)$, a mají-li funkce $f,g$ limitu v bodě $c$, potom $\lim_{x\to c}f(x)\geq \lim_{x\to c}g(x)$
+\item existuje-li $\delta\gt 0$ takové, že $f(x)\leq h(x)\leq g(x)$ pro každé $x\in P(c,\delta)$ a $\lim_{x\to c}f(x)=\lim_{x\to c}g(x)=A\in\mathbb R^*$ potom i $\lim_{x\to c}h(x)=A$
+\begin{itemize}
+\item v podstatě dva policajti
+\end{itemize}
+\end{itemize}
+\item Limita funkce v bodě: limita složené funkce
+\begin{itemize}
+\item nechť $A,B,C\in\mathbb R^*$, nechť $g(x)$ je funkce splňující $\lim_{x\to A}g(x)=B$ a nechť $f(x)$ je funkce splňující $\lim_{x\to B}f(x)=C$
+\item navíc nechť je splněna aspoň jedna z následujících podmínek
+\begin{itemize}
+\item $f(x)$ je spojitá v $B$
+\item na nějakém prstencovém okolí bodu $A$ funkce $g(x)$ nikde nenabývá hodnotu $B$
+\end{itemize}
+\item potom $\lim_{x\to A}f(g(x))=C$
+\end{itemize}
+\item Spojitost a spojitost na intervalu
+\begin{itemize}
+\item řekneme, že funkce $f$ je v bodě $a\in\mathbb R$ spojitá, pokud $\lim_{x\to a}f(x)=f(a)$
+\begin{itemize}
+\item spojitost zprava/zleva definujeme pomocí jednostranných limit
+\end{itemize}
+\item funkce je spojitá na intervalu, pokud je spojitá v každém vnitřním bodu a pokud je (odpovídajícím způsobem) jednostranně spojitá v každém krajním bodu
+\item funkce může být v daném bodě buď spojitá, nebo nespojitá, nebo nedefinovaná
+\end{itemize}
+\item Funkce spojité na intervalu: nabývání mezihodnot
+\begin{itemize}
+\item nechť $a\lt b$ jsou reálná čísla
+\item nechť $f:[a,b]\to\mathbb R$ je na intervalu $[a,b]$ spojitá
+\item označme $m=\min\set{f(a),f(b)}$ a $M=\max\set{f(a),f(b)}$
+\item pak každé reálné číslo z intervalu $[m,M]$ je hodnotou funkce $f$ (pro každé $y\in[m,M]$ existuje $x\in[a,b]$ takové, že $f(x)=y$)
+\end{itemize}
+\item Funkce spojité na intervalu: nabývání maxima
+\begin{itemize}
+\item nechť $a\leq b$ jsou reálná čísla
+\item nechť $f:[a,b]\to\mathbb R$ je spojitá funkce
+\item potom $f$ nabývá na intervalu $[a,b]$ svého maxima (i minima)
+\end{itemize}
+\item Derivace - definice a základní pravidla pro výpočet
+\begin{itemize}
+\item nechť $f:M\to\mathbb R$, $b\in M$ a $U(b,\delta)\subseteq M$ pro nějaké $\delta\gt 0$
+\item derivace funkce $f$ v bodě $b$ je limita \[f'(b):=\lim_{h\to 0}\frac{f(b+h)-f(b)}{h}=\lim_{x\to b}\frac{f(x)-f(b)}{x-b}\]
+\item také můžeme mít derivaci zprava/zleva, pak je limita jednostranná
+\item derivace buď existuje vlastní, nebo existuje nevlastní, nebo neexistuje
+\item pokud má $f$ v $b$ vlastní derivaci, říkáme, že $f$ je v $b$ diferencovatelná
+\item pro pravidla derivací viz libovolnou vhodnou tabulku, některá složitější jsou \href{../semestr2/matematicka-analyza1/zapoctovy-test.md}{v přípravě na zápočtový test}
+\begin{practicebox}
+Poznámky zde derivační pravidla nerozepisují. Natrénuj derivace součinu, podílu a složené funkce na konkrétních příkladech (viz tabulka derivací).
+\end{practicebox}
+\end{itemize}
+\item L'Hospitalovo pravidlo
+\begin{itemize}
+\item nechť $a\in\mathbb R^*$, nechť funkce $f,g:P(a,\delta)\to\mathbb R$ mají na $P(a,\delta)$ vlastní derivaci a nechť $g'(x)\neq 0$ na $P(a,\delta)$
+\item pokud $\lim_{x\to a}f(x)=\lim_{x\to a}g(x)=0$ a $\lim_{x\to a}\frac{f'(x)}{g'(x)}=A\in\mathbb R^*$, pak i $\lim_{x\to a}\frac{f(x)}{g(x)}=A$
+\item pokud $\lim_{x\to a} |g(x)|=+\infty$ a $\lim_{x\to a}\frac{f'(x)}{g'(x)}=A\in\mathbb R^*$, pak i $\lim_{x\to a}\frac{f(x)}{g(x)}=A$
+\end{itemize}
+\item Vyšetření průběhu funkcí: extrémy, monotonie a konvexita/konkavita
+\begin{itemize}
+\item extrémy
+\begin{itemize}
+\item pokud má funkce $f$ v bodě $a$ nenulovou derivaci $f'(a)\neq 0$, pak $f$ v $a$ nenabývá lokální extrém
+\item tedy pokud má $f$ lokální extrém bodě $a$, tak buď $f'(a)=0$, nebo $f'(a)$ neexistuje
+\item pozor, funkce může mít globální extrém v krajním bodě uzavřeného intervalu
+\end{itemize}
+\item monotonie
+\begin{itemize}
+\item uvažujeme interval s kladnou délkou a spojitou funkci $f$ s derivací v každém vnitřním bodě intervalu
+\item pokud na vnitřku intervalu platí $f'\gt 0$, je $f$ na daném intervalu rostoucí
+\item pokud $f'\geq 0$, pak je neklesající
+\item pokud $f'\lt 0$, pak je klesající
+\item pokud $f'\leq 0$, pak je nerostoucí
+\item pokud $f'=0$, pak je konstantní
+\end{itemize}
+\item konvexita/konkavita
+\begin{itemize}
+\item zjednodušená definice: funkce $f$ je na intervalu $(a,b)$ konvexní, pokud graf funkce na intervalu $(a,b)$ leží pod úsečkou spojující body $(a,f(a))$ a $(b,f(b))$
+\begin{itemize}
+\item respektive pokud leží pod nebo na úsečce, tak je konvexní, pokud leží ostře pod úsečkou, tak je ryze konvexní
+\item podobně konkávnost
+\end{itemize}
+\item pokud je druhá derivace funkce kladná, je ryze konvexní (pokud je nezáporná, je konvexní)
+\item pokud je druhá derivace funkce záporná, je ryze konkávní (pokud je nekladná, je konkávní)
+\end{itemize}
+\end{itemize}
+\item Taylorův polynom (limitní forma)
+\begin{itemize}
+\item Taylorův polynom řádu $n$ funkce $f$ v bodě $a$: \[T_n^{f,a}(x)=\sum_{i=0}^n\frac{f^{(i)}(a)}{i!}(x-a)^i\]
+\begin{itemize}
+\item poznámka: nultý člen součtu bude vždy $f(a)$
+\end{itemize}
+\item má-li funkce $f$ v bodě $a\in\mathbb R$ derivace všech řádů, rozumíme pro $x\in\mathbb R$ její taylorovou řadou se středem v $a$ řadu \[T^{f,a}(x)=\sum_{n=0}^\infty \frac{f^{(n)}(a)}{n!}(x-a)^n\]
+\begin{itemize}
+\item součet Taylorovy řady je $f(x)$
+\end{itemize}
+\end{itemize}
+\item Primitivní funkce: definice a metody výpočtu (substituce, per-partes)
+\begin{itemize}
+\item nechť $-\infty\leq a\lt b\leq +\infty$ a $f:(a,b)\to\mathbb R$ je daná funkce
+\item pokud má funkce $F:(a,b)\to\mathbb R$ na $(a,b)$ derivaci a ta se rovná $f(x)$, řekneme, že $F$ je na intervalu $(a,b)$ primitivní funkcí k funkci $f$
+\item primitivní funkce je jednoznačná až na konstantu
+\item Newtonův integrál funkce $f$ na intervalu $(a,b)$ definujeme jako \[(N)\int_a^bf(x)\,dx:=[F]_a^b=F(b^-)-F(a^+)=\lim_{x\to b^-}F(x)-\lim_{x\to a^+}F(x)\]
+\begin{itemize}
+\item poznámka: konstanta $c$ se odečte
+\end{itemize}
+\item substituci a per-partes je nutné nastudovat (i pro určitý integrál)
+\begin{practicebox}
+Výpočetní techniky (substituce, per partes) si projdi na příkladech - v poznámkách je jen vzorec, ne postup.
+\end{practicebox}
+\item vzorec pro per-partes: $\int u'v=uv-\int uv'$
+\end{itemize}
+\item Riemannův integrál: definice, souvislost s primitivní funkcí (Newtonovým integrálem)
+\begin{itemize}
+\item uvažujeme dělení $D=(a_0,a_1,\dots,a_k)$ intervalu $[a,b]$
+\begin{itemize}
+\item tzn. $a=a_0\lt a_1\lt a_2\lt \dots\lt a_k=b$
+\end{itemize}
+\item definujeme dolní Riemannovu sumu $s(f,D)=\sum_{i=0}^{k-1} |I_i|m_i$
+\begin{itemize}
+\item $I_i=[a_i,a_{i+1}]$
+\item $m_i$ je infimum funkce $f$ v intervalu $I_i$
+\end{itemize}
+\item také definujeme horní Riemannovu sumu $S(f,D)=\sum_{i=0}^{k-1}|I_i|M_i$
+\begin{itemize}
+\item $M_i$ \dots{} supremum
+\end{itemize}
+\item dolní Riemannův integrál na intervalu $[a,b]$ definujeme jako supremum z $s(f,D)$ pro všechna dělení $D$ intervalu $[a,b]$
+\begin{itemize}
+\item značí se $\underline{\int_a^b f}$
+\end{itemize}
+\item horní Riemannův integrál je infimum z $S(f,D)$
+\begin{itemize}
+\item $\overline{\int_a^bf}$
+\end{itemize}
+\item funkce má Riemannův integrál, pokud se horní a dolní R. integrály rovnají (pak tuhle společnou hodnotu nazveme Riemannovým integrálem)
+\begin{itemize}
+\item $\int_a^b f$
+\end{itemize}
+\item 2\textbackslash{}. základní věta analýzy: pokud Riemannův a Newtonův integrál existují, pak jsou si rovny
+\end{itemize}
+\item Aplikace integrálů: odhady součtu řad (konečných i nekonečných)
+\begin{itemize}
+\item pro přirozené $n$ a neklesající funkci $f$ na intervalu $[1,n]$ platí \[\sum_{k=1}^{n-1}f(k)\leq\int_1^n f\leq\sum_{k=2}^n f(k)\]
+\item integrální kritérium konvergence
+\begin{itemize}
+\item uvažujme nerostoucí nezápornou funkci $f$
+\item řada $\sum_{k=1}^\infty f(k)$ konverguje $\iff\lim_{b\to+\infty}\int_1^b f\lt +\infty$
+\end{itemize}
+\item přesný postup pro odhad součtu řady je potřeba nacvičit
+\begin{practicebox}
+Odhad součtu řady přes integrál je výpočetní dovednost - vyřeš pár konkrétních příkladů.
+\end{practicebox}
+\end{itemize}
+\item Aplikace integrálů: obsahy rovinných útvarů
+\begin{itemize}
+\item plocha rovinného útvaru $U(a,b,f)$ pod grafem funkce $f$ \dots{} $\int_a^b f$
+\end{itemize}
+\item Aplikace integrálů: objemy a povrchy rotačních útvarů v prostoru
+\begin{itemize}
+\item $V$ \dots{} rotační těleso vzniklé rotací rovinného útvaru $U(a,b,f)$ pod grafem funkce $f$ kolem osy $x$
+\item $\mathrm{objem}(V)=\pi\int_a^b f(t)^2\,dt$
+\item $\mathrm{povrch}(V)=2\pi\int_a^b f(t)\sqrt{1+(f'(t))^2}\,dt$
+\end{itemize}
+\item Aplikace integrálů: délka křivky
+\begin{itemize}
+\item uvažujeme křivku z bodu $a$ do bodu $b$ popsanou funkcí $f$
+\item $\int_a^b\sqrt{1+(f'(t))^2}\,dt$
+\end{itemize}
+\end{itemize}
+\subsection{2. Algebra a lineární algebra}
+\begin{itemize}
+\item Grupy a podgrupy, permutace
+\begin{itemize}
+\item binární operace na množině $X$ je zobrazení $X \times X \to X$
+\item neutrální prvek: $(\exists e \in G)(\forall a \in G): a\circ e = e\circ a = a$
+\item inverzní prvek: $(\forall a \in G)(\exists b \in G): a\circ b = b\circ a = e$
+\item grupa $(G,\circ)$ je množina $G$ spolu s binární operací $\circ$ na $G$ splňující asociativitu operace $\circ$, existenci neutrálního prvku a existenci inverzních prvků
+\item pokud je navíc operace $\circ$ komutativní, pak se jedná o abelovskou grupu
+\item grupa $(H,\bullet)$ je podgrupou grupy $(G,\circ)$, pokud $H\subseteq G$ a $\forall a,b\in H:a\bullet b=a\circ b$
+\begin{itemize}
+\item píšeme $(H,\bullet)\leq (G,\circ)$
+\end{itemize}
+\item permutace na množině $\lbrace1,2,\dots,n\rbrace$ je bijektivní zobrazení $p:\lbrace1,2,\dots,n\rbrace\rightarrow \lbrace1,2,\dots,n\rbrace$
+\begin{itemize}
+\item skládání permutací \dots{} $(q\circ p)(i)=q(p(i))$
+\item permutační matice
+\begin{itemize}
+\item $(P)_{i,j} = \begin{cases} 1 &\text{pokud } p(i)=j \\ 0 &\text{jinak}\end{cases}$
+\end{itemize}
+\item cyklus \dots{} např. $(1,2,3,4)$
+\begin{itemize}
+\item odpovídá zobrazení, které mapuje 1$\to$2, 2$\to$3, 3$\to$4, 4$\to$1
+\end{itemize}
+\item transpozice \dots{} permutace, která má pouze jeden netriviální cyklus o délce 2, tedy např. $(1,3)$
+\item jakoukoliv permutaci lze rozložit na transpozice
+\begin{itemize}
+\item cyklus $(1,2,3,4)$ lze rozložit na $(1,4)\circ(1,3)\circ(1,2)$ nebo na $(1,2)\circ(2,3)\circ(3,4)$
+\end{itemize}
+\item znaménko permutace $p$ je $\text{sgn}(p)=(-1)^{\text{po\text{č}et inverz\text{í} v}\ p}$
+\begin{itemize}
+\item inverze v $p$ je dvojice prvků $(i,j):i \lt j \land p(i) \gt p(j)$
+\item nebo také $\text{sgn}(p)=(-1)^{\text{po\text{č}et transpozic v}\ p}$
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\item Tělesa a speciálně konečná tělesa
+\begin{itemize}
+\item těleso je množina $\mathbb K$ spolu se dvěma komutativními binárními operacemi $+$ a $\cdot$, kde $(\mathbb K, +)$ a $(\mathbb K \setminus \lbrace0\rbrace, \cdot)$ jsou abelovské grupy a navíc platí distributivita $\forall a,b,c \in \mathbb K : a\cdot (b+c)=(a\cdot b)+(a\cdot c)$
+\item charakteristika tělesa
+\begin{itemize}
+\item v tělese $\mathbb K$, pokud $\exists n \in \mathbb N: \underbrace{1+1+\dots+1}_{n}=0$, pak nejmenší takové $n$ je charakteristika tělesa $\mathbb K$
+\item jinak má těleso $\mathbb K$ charakteristiku 0
+\item značí se $\text{char}(\mathbb K)$
+\item lze dokázat, že u konečných těles musí být prvočíselná
+\end{itemize}
+\item $\mathbb Z_p$ je těleso, právě když je $p$ prvočíslo
+\item ale existují i konečná tělesa s neprvočíselným řádem (počtem prvků) - např. Galois field $GF(4)$
+\begin{itemize}
+\item řád musí být kladná celá mocnina prvočísla
+\end{itemize}
+\end{itemize}
+\item Soustavy lineárních rovnic - maticový zápis, elementární řádkové úpravy, odstupňovaný tvar matice
+\begin{itemize}
+\item maticový zápis soustavy rovnic
+\begin{itemize}
+\item soustava $m$ lineárních rovnic o $n$ neznámých \dots{} $Ax = b$
+\item rozšířená matice soustavy \dots{} $(A|b) \in \mathbb{R}^{m\times (n+1)}$
+\item matice soustavy \dots{} $A \in \mathbb{R}^{m\times n}$
+\item vektor pravých stran \dots{} $b \in \mathbb{R}^m$
+\item vektor neznámých \dots{} $x = (x_1,\dots,x_n)^T$
+\item vektor $x \in \mathbb{R}^n$ je řešení soustavy $Ax = b$, pokud splňuje všechny její rovnice
+\item soustavy $Ax = 0$ se nazývají homogenní a vždy umožňují $x = 0$
+\end{itemize}
+\item elementární řádkové operace
+\begin{itemize}
+\item definujeme základní dvě elementární řádkové úpravy
+\begin{itemize}
+\item vynásobení $i$-tého řádku nenulovým $t \in \mathbb R \setminus \lbrace0\rbrace$
+\item přičtení $j$-tého řádku k $i$-tému řádku
+\end{itemize}
+\item z těch lze odvodit další dvě úpravy
+\begin{itemize}
+\item přičtení $t$-násobku $j$-tého řádku k $i$-tému řádku ($t$ může být i nulové)
+\item záměna dvou řádků
+\end{itemize}
+\item provedení jedné elementární úpravy značíme $A\sim A'$
+\item provedení posloupnosti úprav značíme $A\sim\sim A'$
+\item elementárními úpravami soustavy $(A|b)$ se nemění množina řešení
+\end{itemize}
+\item odstupňovaný tvar matice
+\begin{itemize}
+\item matice je v řádkově odstupňovaném tvaru (REF = row echelon form), pokud jsou nenulové řádky (ostře) seřazeny podle počtu počátečních nul a nulové řádky jsou pod nenulovými
+\begin{itemize}
+\item k formální definici bychom zavedli notaci $j(i)$ pro pozici prvního nenulového prvku v $i$-tém řádku
+\end{itemize}
+\item první nenulový prvek nenulového řádku se nazývá pivot, pod pivotem jsou v REF všechny prvky nulové
+\item pro soustavu $A'x = b'$ s $A'$ v REF jsou proměnné odpovídající sloupcům s pivoty bázické, ostatní jsou volné
+\end{itemize}
+\item redukovaný odstupňovaný tvar (RREF)
+\begin{itemize}
+\item pivoty jsou jednotkové
+\item nad i pod pivoty jsou nuly
+\end{itemize}
+\end{itemize}
+\item Gaussova a Gaussova-Jordanova eliminace, popis množiny řešení
+\begin{itemize}
+\item Gaussova eliminace = převod do odstupňovaného tvaru pomocí elementárních úprav, to se dá popsat algoritmicky:
+\begin{itemize}
+\item seřadíme řádky podle počtu počátečních nul
+\item najdeme první dva řádky, co mají stejně počátečních nul
+\item od toho druhého (a všech dalších, co mají stejně nul) odečteme vhodný násobek toho prvního, abychom mu první nenulu vynulovali
+\item tohle opakujeme, dokud se nedostaneme do REF
+\end{itemize}
+\item Gaussova-Jordanova eliminace = převod do RREF
+\begin{itemize}
+\item z pivotů se jedničky dělají snadno - stačí řádek vydělit pivotem
+\item nad pivoty se jedničky také dostávají snadno - stačí od řádku odečíst vhodný násobek řádku s pivotem v daném sloupci (dává smysl postupovat odspodu)
+\end{itemize}
+\item množina řešení
+\begin{itemize}
+\item pokud je pivot v posledním sloupci rozšířené matice soustavy, soustava rovnic nemá řešení
+\item existuje bijekce $\bar x \mapsto \bar x + x^0$ mezi množinami $\lbrace \bar x: A\bar x=0\rbrace$ a $\lbrace x: Ax=b\rbrace$
+\begin{itemize}
+\item pokud $x^0$ splňuje $Ax^0=b$
+\end{itemize}
+\item množinu řešení soustavy $Ax=b$ popíšeme jako $x=y+p_1\overline x_1+p_2\overline x_2+\dots+p_{n-r}\overline x_{n-r}$
+\item $y$ \dots{} libovolné řešení soustavy $Ax=b$
+\begin{itemize}
+\item u homogenní soustavy to typicky bude nulový vektor
+\item je to člen, který odpovídá tomu $x^0$ výše
+\end{itemize}
+\item $p_i\overline x_i$
+\begin{itemize}
+\item takový člen tam bude za každou volnou proměnnou (bude jich $n-r$, tedy počet řádků - hodnost matice)
+\item $p_i$ je libovolný reálný parametr
+\item tyhle členy můžeme získat tak, že řešíme soustavu $A\overline x=0$ a řešení vyjádříme pomocí parametrů (a pak je vytkneme)
+\item nebo je lze vyčíst z RREF matice
+\item ve vektoru $\overline x_i$ bude typicky jednička na místě odpovídající volné proměnné a nuly u všech ostatních volných proměnných (protože je to vlastně složka, která se stará o konkrétní volnou proměnnou)
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\item Operace s maticemi a základní typy matic, hodnost matice
+\begin{itemize}
+\item hodnost matice
+\begin{itemize}
+\item hodnost matice $A$, značená jako $\mathrm{rank}(A)$, je počet pivotů v libovolné $A'$ v REF takové, že $A\sim\sim A'$
+\end{itemize}
+\item jednotková matice
+\begin{itemize}
+\item pro $n \in \mathbb{N}$ je jednotková matice $I_n \in \mathbb{R}^{n\times n}$ definovaná tak, že $(I_n)_{i,j} = 1 \iff i=j$, ostatní prvky jsou nulové 
+\end{itemize}
+\item transponovaná matice
+\begin{itemize}
+\item transponovaná matice k matici $A \in \mathbb{R}^{m\times n}$ je matice $A^T \in \mathbb R^{n\times m}$ splňující $(A^T)_{i,j}=a_{j,i}$
+\end{itemize}
+\item symetrická matice
+\begin{itemize}
+\item čtvercová matice A je symetrická, pokud $A^T =A$, tedy $a_{i,j}=a_{j,i}$
+\end{itemize}
+\item maticový součin
+\begin{itemize}
+\item pro $A \in \mathbb R^{m\times n},B\in \mathbb R^{n\times p}$ je součin $(AB) \in \mathbb R^{m\times p}$ definován $(AB)_{i,j}=\sum^{n}_{k=1}a_{i,k}b_{k,j}$
+\end{itemize}
+\end{itemize}
+\item Regulární a inverzní matice
+\begin{itemize}
+\item inverzní matice
+\begin{itemize}
+\item pokud pro čtvercovou matici $A \in \mathbb R^{n\times n}$ existuje $B \in \mathbb R^{n\times n}$ taková, že $AB=I_n$, pak se $B$ nazývá inverzní matice a značí se $A^{-1}$
+\item výpočet: $(A|I_n)\sim\sim (I_n|A^{-1})$
+\end{itemize}
+\item regulární/singulární matice
+\begin{itemize}
+\item pokud má matice $A$ inverzi, pak se nazývá regulární, jinak je singulární
+\end{itemize}
+\item věta: pro čtvercovou matici $A \in \mathbb R^{n\times n}$ jsou následující podmínky ekvivalentní
+\begin{enumerate}
+\item matice A je regulární, tedy k ní existuje inverzní matice \dots{} $\exists B: AB=I_n$
+\item $\text{rank}(A) = n$
+\item $A\sim\sim I_n$
+\item systém $Ax = 0$ má pouze triviální řešení $x = 0$
+\end{enumerate}
+\item inverzní matici k matici $A$ lze najít pomocí Gaussovy-Jordanovy eliminace $(A|I_n)\sim\sim(I_n|A^{-1})$
+\begin{itemize}
+\item pokud tento proces selže, tak je $A$ singulární
+\end{itemize}
+\end{itemize}
+\item Vektorový prostor, lineární kombinace, lineární závislost a nezávislost, lineární obal, systém generátorů
+\begin{itemize}
+\item vektorový prostor
+\begin{itemize}
+\item vektorový prostor $(V,+,\cdot)$ nad tělesem $(\mathbb K, +,\cdot)$ je množina spolu s binární operací $+$ na $V$ a binární operací skalárního násobku $\cdot: \mathbb K \times V \rightarrow V$
+\item $(V,+)$ je abelovská grupa
+\item $\forall \alpha,\beta \in \mathbb K, \forall u,v \in V$
+\begin{itemize}
+\item asociativita \dots{} $(\alpha \cdot \beta) \cdot u = \alpha \cdot (\beta \cdot u)$
+\item neutrální prvek (skalár) vůči násobení skalárem \dots{} $1 \cdot u = u$
+\item distributivita \dots{} $(\alpha + \beta) \cdot u = (\alpha \cdot u) + (\beta \cdot u)$
+\item distributivita \dots{} $\alpha \cdot (u+v)=(\alpha \cdot u)+(\alpha \cdot v)$
+\end{itemize}
+\item prvky $\mathbb K$ se nazývají skaláry, prvky $V$ vektory
+\item rozlišujeme nulový skalár $0$ a nulový vektor $o$
+\end{itemize}
+\item podprostor vektorového prostoru
+\begin{itemize}
+\item nechť $V$ je vektorový prostor na $\mathbb K$, potom podprostor $U$ je neprázdná podmnožina $V$ splňující uzavřenost na součet vektorů a uzavřenost na násobení skalárem (z $\mathbb K$) - z toho nutně vyplývá $o \in U$
+\end{itemize}
+\item lineární kombinace
+\begin{itemize}
+\item lineární kombinace vektorů $v_1,\dots,v_k \in V$ nad $\mathbb K$ je libovolný vektor $u = \alpha_1v_1+\dots+\alpha_kv_k$, kde $\alpha_1,\dots,\alpha_k \in \mathbb K$
+\end{itemize}
+\item lineárně nezávislé vektory
+\begin{itemize}
+\item množina vektorů $X$ je lineárně nezávislá, pokud nulový vektor nelze získat netriviální lineární kombinací vektorů z $X$; v ostatních případech je množina $X$ lineárně závislá
+\item vektory $v_1,\dots,v_n$ jsou lineárně nezávislé $\equiv$ $\sum_{i=1}^n \alpha_iv_i=o \iff \alpha_1=\dots=\alpha_n=0$
+\end{itemize}
+\item lineární obal (podprostor generovaný množinou)
+\begin{itemize}
+\item lineární obal $\mathcal L(X)$ podmnožiny $X$ vektorového prostoru $V$ je průnik všech podprostorů $U$ z $V$, které obsahují $X$
+\item alternativní značení: $\mathrm{span}(X)$
+\item pro $X \subseteq V$ platí $\text{span}(X)=\bigcap U:U\Subset V, X\subseteq U$
+\item jde o podprostor generovaný $X$, vektory v množině $X$ se označují jako generátory podprostoru
+\end{itemize}
+\item věta: průnik podprostorů je taky podprostor
+\item věta: $\mathcal L(X)$ je množina všech lineárních kombinací vektorů z $X$
+\end{itemize}
+\item Steinitzova věta o výměně, báze, dimenze, souřadnice
+\begin{itemize}
+\item lemma o výměně
+\begin{itemize}
+\item buď $y_1,\dots,y_n$ systém generátorů vektorového prostoru $V$
+\item nechť vektor $x \in V$ má vyjádření $x = \sum_{i=1}^n\alpha_iy_i$
+\item pak pro libovolné $k$ takové, že $\alpha_k \neq 0$, je $y_1,\dots,y_{k-1},x,y_{k+1},\dots,y_n$ systém generátorů prostoru $V$
+\end{itemize}
+\item Steinitzova věta o výměně
+\begin{itemize}
+\item buď $V$ vektorový prostor
+\item buď $x_1,\dots,x_m$ lineárně nezávislý systém ve $V$
+\item nechť $y_1,\dots,y_n$ je systém generátorů $V$
+\item pak platí $m\leq n$ a existují navzájem různé indexy $k_1,\dots,k_{n-m}$ takové, že $x_1,\dots,x_m,y_{k_1},\dots,y_{k_{n-m}}$ tvoří systém generátorů $V$
+\end{itemize}
+\item báze vektorového prostoru
+\begin{itemize}
+\item báze vektorového prostoru $V$ je lineárně nezávislá množina $X$, která generuje $V$ (tedy $\text{span}(X)=V$)
+\end{itemize}
+\item dimenze vektorového prostoru
+\begin{itemize}
+\item dimenze konečně generovaného vektorového prostoru $V$ je mohutnost (kardinalita / počet prvků) kterékoli z jeho bází; značí se $\mathrm{dim}(V)$
+\end{itemize}
+\item vektor souřadnic
+\begin{itemize}
+\item nechť $X=(v_1,\dots,v_n)$ je uspořádaná báze vektorového prostoru $V$ nad $\mathbb K$, potom vektor souřadnic $u \in V$ vzhledem k bázi $X$ je $[u]_x=(\alpha_1,\dots,\alpha_n)^T \in \mathbb K^n$, kde $u=\sum_{i=1}^n\alpha_iv_i$
+\end{itemize}
+\end{itemize}
+\item Vektorové podprostory, zejména maticové (řádkový, sloupcový, jádro) a jejich dimenze
+\begin{itemize}
+\item řádkový a sloupcový prostor matice $A \in \mathbb K^{m\times n}$
+\begin{itemize}
+\item sloupcový prostor $\mathcal S(A) \subseteq \mathbb K^m$ je lineární obal sloupců $A$
+\item řádkový prostor $\mathcal R(A) \subseteq \mathbb K^n$ je lineární obal řádků $A$
+\item $\mathcal S(A)=\lbrace u \in \mathbb K^m:u=Ax,\,x\in \mathbb K^n \rbrace$
+\item $\mathcal R(A)=\lbrace v \in \mathbb K^n:v=A^Ty,\,y\in \mathbb K^m \rbrace$
+\end{itemize}
+\item jádro matice $A \in \mathbb K^{m\times n}$
+\begin{itemize}
+\item $\text{ker}(A) = \lbrace x \in \mathbb K^n: Ax=0\rbrace$
+\end{itemize}
+\item věta: $\forall A \in \mathbb K^{m\times n}:\text{dim}(\text{ker}(A))+\text{rank}(A)=n$
+\item pozorování: dimenze řádkového a sloupcového prostoru se shodují (a rovnají se hodnosti)
+\end{itemize}
+\item Lineární zobrazení - definice, maticová reprezentace lineárního zobrazení, matice složeného zobrazení
+\begin{itemize}
+\item lineární zobrazení
+\begin{itemize}
+\item nechť $U$ a $V$ jsou vektorové prostory nad stejným tělesem $\mathbb K$
+\item zobrazení $f:U\rightarrow V$ nazveme lineární, pokud splňuje $\forall u,v \in U, \forall \alpha \in \mathbb K:$
+\begin{itemize}
+\item $f(u+v)=f(u)+f(v)$
+\item $f(\alpha\cdot u)=\alpha \cdot f(u)$
+\begin{itemize}
+\item z toho vyplývá, že pro lineární zobrazení obecně platí $f(o) = o$
+\end{itemize}
+\end{itemize}
+\item věta: lineární zobrazení je jednoznačně definováno tím, kam zobrazí vektory báze (proto můžeme definovat matici lineárního zobrazení)
+\end{itemize}
+\item matice lineárního zobrazení
+\begin{itemize}
+\item nechť $U$ a $V$ jsou vektorové prostory nad stejným tělesem $\mathbb K$ s bázemi $X=(u_1,\dots,u_n)$ a $Y=(v_1,\dots,v_m)$
+\item matice lineárního zobrazení $f:U\rightarrow V$ vzhledem k bázím $X$ a $Y$ je $[f]_{X,Y} \in \mathbb K^{m\times n}$, jejíž sloupce jsou vektory souřadnic obrazů vektorů báze $X$ vzhledem k bázi $Y$, tedy $[f(u_1)]_Y,\dots,[f(u_n)]_Y$
+\item pro $w \in U$ tedy platí, že $[f(w)]_Y=[f]_{X,Y}[w]_X$
+\end{itemize}
+\item matice složeného zobrazení
+\begin{itemize}
+\item mějme vektorové prostory $U,V,W$ s konečnými uspořádanými bázemi $B,C,D$
+\item pro matice lineárních zobrazení $f:U\to V$ a $g:V\to W$ platí vztah $[g\circ f]_{B,D}=[g]_{C,D}[f]_{B,C}$
+\item je to hezčí, když použijeme Hladíkovo značení: ${}_D[g\circ f]_B={}_D[g]_C\cdot{}_C[f]_B$
+\end{itemize}
+\item matice přechodu
+\begin{itemize}
+\item nechť $X$ a $Y$ jsou dvě konečné báze vektorového prostoru $U$
+\item matice přechodu od $X$ k $Y$ je $[id]_{X,Y}$
+\item pro $u \in U$ tedy platí, že $[u]_Y=[id(u)]_Y=[id]_{X,Y}[u]_X$
+\item matice přechodu je regulární, platí $[id]_{Y,X}=([id]_{X,Y})^{-1}$
+\item výpočet: $[id]_{X,Y}=Y^{-1}X$ nebo také $(Y|X)\sim\sim(I_n|[id]_{X,Y})$
+\end{itemize}
+\end{itemize}
+\item Obraz a jádro lineárních zobrazení
+\begin{itemize}
+\item nechť $U$ a $V$ jsou vektorové prostory nad stejným tělesem $\mathbb K$
+\item jádro lineárního zobrazení
+\begin{itemize}
+\item $\text{ker}(f)=\lbrace w \in U:f(w)=o\rbrace$
+\item vektory v prostoru $U$, které se zobrazí na nulový vektor v prostoru $V$
+\end{itemize}
+\item obraz $f(U)$ podprostoru $U$ je podprostorem $V$
+\begin{itemize}
+\item pokud máme matici zobrazení, tak obraz získáme jako lineární obal těch sloupců, které odpovídají bázickým proměnným (při Gaussovce nám tam vyjdou pivoty)
+\end{itemize}
+\end{itemize}
+\item Isomorfismus prostorů
+\begin{itemize}
+\item vektorové prostory jsou isomorfní, pokud mezi nimi existuje isomorfismus, tedy bijektivní (vzájemně jednoznačné) lineární zobrazení
+\item pro isomorfismus $f$ platí, že existuje $f^{-1}$ a je také isomorfismem
+\item isomorfní prostory mají shodné dimenze
+\item věta: $f$ je isomorfismus, právě když $[f]_{X,Y}$ je regulární
+\end{itemize}
+\item Skalární součin, norma indukovaná skalárním součinem
+\begin{itemize}
+\item skalární součin pro vektorové prostory nad komplexními čísly
+\begin{itemize}
+\item skalární součin na vektorovém prostoru $V$ nad $\mathbb C$ je zobrazení, které přiřadí každé dvojici vektorů $u,v\in V$ skalár $\langle u|v\rangle\in\mathbb C$ tak, že jsou splněny následující axiomy:
+\begin{itemize}
+\item $\forall u\in V:\langle u|u\rangle\in\mathbb R^+_0$ (reálné číslo $\geq 0$)
+\item $\forall u\in V:\langle u|u\rangle=0\iff u=0$
+\item $\forall u,v\in V: \langle v|u\rangle=\overline{\langle u|v\rangle}$ (komplexně sdružené)
+\item $\forall u,v,w \in V: \langle u+v|w\rangle=\langle u|w\rangle+\langle v|w\rangle$
+\item $\forall u,v\in V,\,\forall \alpha\in\mathbb C: \langle \alpha u|v\rangle=\alpha\langle u|v\rangle$
+\end{itemize}
+\item formálně je každý skalární součin zobrazení $V\times V\to\mathbb C$
+\item skalární součin na $V$ nad $\mathbb R$ je zobrazení $V\times V\to\mathbb R$, přičemž $\langle v|u\rangle = \langle u|v\rangle$ (ve třetím axiomu), $\alpha\in\mathbb R$ (v posledním axiomu)
+\item standardní skalární součin na $\mathbb R^n$: $\langle u|v\rangle=v^Tu$
+\item standardní skalární součin na $\mathbb C^n$: $\langle u|v\rangle=v^Hu$
+\end{itemize}
+\item norma spojená se skalárním součinem
+\begin{itemize}
+\item je-li $V$ prostor se skalárním součinem, pak norma odvozená ze skalárního součinu je zobrazení $V\to R^+_0$ přiřazující vektoru $u$ jeho normu $\|u\|=\sqrt{\langle u|u\rangle}$
+\item geometrická interpretace v euklidovském prostoru $\mathbb R^n$
+\begin{itemize}
+\item $\|u\|$ \dots{} délka (velikost) $u$
+\item $\|u-v\|$ \dots{} vzdálenost bodů $u,v$
+\item $\langle u|v\rangle$ souvisí s \quotedblbase{}úhlem\textquotedblleft{} $\varphi$ mezi $u,v$ a délkami $u,v$
+\begin{itemize}
+\item $\langle u|v\rangle=\|u\|\cdot\|v\|\cos\varphi$
+\item to vyplývá z kosinové věty, kde $a=\|u\|,\,b=\|v\|,\,c=\|u-v\|$
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\item kolmé vektory
+\begin{itemize}
+\item vektory $u,v$ z prostoru se skalárním součinem jsou kolmé (ortogonální), pokud $\langle u|v\rangle=0$
+\item kolmé vektory značíme $u\perp v$
+\end{itemize}
+\end{itemize}
+\item Pythagorova věta, Cauchyho-Schwarzova nerovnost, trojúhelníková nerovnost
+\begin{itemize}
+\item Pythagoras: $\|a\|^2+\|b\|^2=\|c\|^2$
+\begin{itemize}
+\item pokud $a,b$ jsou na sebe kolmé a $c=b-a$
+\item ovšem taky platí $\|a+b\|^2=\|a\|^2+\|b\|^2$, rovněž pro kolmé $a,b$
+\end{itemize}
+\item Cauchy-Schwarz: $|\langle u|v\rangle|\leq\sqrt{\langle u|u\rangle\langle v|v\rangle}$
+\item trojúhelníková nerovnost: $\|u+v\|\leq\|u\|+\|v\|$
+\end{itemize}
+\item Ortonormální systémy vektorů, Fourierovy koeficienty, Gramova-Schmidtova ortogonalizace
+\begin{itemize}
+\item ortonormální báze
+\begin{itemize}
+\item bázi $Z=\lbrace v_1,\dots,v_n \rbrace$ prostoru $V$ se skalárním součinem nazveme ortonormální, pokud platí $v_i\perp v_j$ pro každé $i\neq j$ a také $\|v_i\|=1$ pro každé $v_i\in Z$
+\item pozorování: matice, jejichž sloupce tvoří vektory ortonormální báze $\mathbb C^n$ vzhledem ke std. skal. součinu, splňují $A^HA=I_n\implies$ jsou unitární
+\end{itemize}
+\item Fourierovy koeficienty
+\begin{itemize}
+\item nechť $Z=\lbrace v_1,\dots,v_n\rbrace$ je ortonormální báze prostoru $V$
+\item tvrzení: pro každé $u\in V$ platí $u=\langle u|v_1\rangle v_1+\dots+\langle u|v_n\rangle v_n$
+\item $\langle u|v_i\rangle$ \dots{} Fourierovy koeficienty
+\end{itemize}
+\item algoritmus GS ortogonalizace
+\begin{itemize}
+\item převede libovolnou bázi $(u_1,\dots,u_n)$ prostoru $V$ se skalárním součinem na ortonormální bázi $(v_1,\dots,v_n)$
+\item for $i=1,\dots,n$ do
+\begin{itemize}
+\item $w_i\leftarrow u_i-\sum^{i-1}_{j=1}\langle u_i|v_j\rangle v_j$
+\item $v_i\leftarrow \frac1{\|w_i\|}w_i$
+\end{itemize}
+\item end
+\end{itemize}
+\end{itemize}
+\item Ortogonální doplněk, ortogonální projekce, projekce jako lineární zobrazení
+\begin{itemize}
+\item ortogonální doplněk
+\begin{itemize}
+\item ortogonální doplněk podmnožiny $V$ prostoru se skalárním součinem $W$ je $V^\perp=\lbrace u\in W:(\forall v\in V)(u\perp v)\rbrace$
+\end{itemize}
+\item ortogonální projekce
+\begin{itemize}
+\item nechť $W$ je prostor se skalárním součinem a $V$ je jeho podprostor s ortonormální bází $Z=(v_1,\dots,v_n)$
+\item zobrazení $p_Z:W\to V$ definované $p_Z(u)=\sum^n_{i=1}\langle u|v_i \rangle v_i$ je ortogonální (kolmá) projekce $W$ na $V$
+\end{itemize}
+\item pozorování: ortogonální projekce je lineární zobrazení
+\end{itemize}
+\item Ortogonální matice a jejich vlastnosti
+\begin{itemize}
+\item matice $Q\in\mathbb R^{n\times n}$ je ortogonální, pokud $Q^TQ=I_n$
+\begin{itemize}
+\item pro ortogonální matici $Q$ platí $Q^T=Q^{-1}$
+\end{itemize}
+\item věta: $Q$ je ortogonální, právě když sloupce tvoří ortonormální bázi $\mathbb R^n$
+\item zjevně: je-li $Q$ ortogonální, pak\dots{}
+\begin{itemize}
+\item $Q^T$ je rovněž ortogonální
+\item $Q^{-1}$ existuje a je ortogonální
+\end{itemize}
+\item součin ortogonálních matic je ortogonální matice
+\item další vlastnosti
+\begin{itemize}
+\item $\braket{Qx|Qy}=\braket{x|y}$
+\item $\|Qx\|=\|x\|$
+\item zobrazení $x\mapsto Qx$ zachovává úhly a délky
+\item platí to i naopak - matice zobrazení zachovávajícího skalární součin je ortogonální
+\item $\forall i,j:|Q_{ij}|\leq 1$
+\item $\begin{pmatrix}1 & o^T \\ o & Q\end{pmatrix}$ je ortogonální matice
+\end{itemize}
+\end{itemize}
+\item Definice a základní vlastnosti determinantu (multiplikativnost, determinant transponované matice, vztah s regularitou a vlastními čísly)
+\begin{itemize}
+\item determinant matice $A\in\mathbb K^{n\times n}$ je dán výrazem \[\text{det }A=\sum_{p\in S_n}\text{sgn}(p)\prod_{i=1}^na_{i,p(i)}\]
+\item věta: $\forall A,B\in\mathbb K^{n\times n}:\text{det}(AB)=\text{det }A\cdot\text{det }B$
+\item transpozice nemění determinant, $\mathrm{det}\,A=\mathrm{det}\,A^T$
+\item matice je regulární, právě když má nenulový determinant
+\item pro regulární matici $A$ platí $\mathrm{det}(A^{-1})=\mathrm{det}(A)^{-1}$
+\item výpočet determinantu je nutné nastudovat
+\begin{practicebox}
+Vlastní výpočet determinantu (rozvoj, úprava na trojúhelníkový tvar) si natrénuj na příkladech.
+\end{practicebox}
+\item $\mathrm{det}(A)=\lambda_1\cdot\lambda_2\cdot\ldots\cdot\lambda_n$
+\item $\lambda$ je vlastním číslem $A$, právě když $\mathrm{det}(A-\lambda I_n)=0$
+\begin{itemize}
+\item tedy právě když je kořenem charakteristického polynomu $p_A(t)=\mathrm{det}(A-tI_n)$
+\end{itemize}
+\end{itemize}
+\item Laplaceův rozvoj determinantu
+\begin{itemize}
+\item notace: $A^{ij}$ je podmatice získaná z $A$ odstraněním $i$-tého řádku a $j$-tého sloupce
+\item věta: pro libovolné $A\in\mathbb K^{n\times n}$ a jakékoli $i\in \lbrace 1,\dots,n\rbrace$ platí \[\text{det }A=\sum^n_{j=1}a_{ij}(-1)^{i+j}\text{ det }A^{ij}\]
+\end{itemize}
+\item Geometrická interpretace determinantu
+\begin{itemize}
+\item objem rovnoběžnostěnu určeného $k$ vektory je roven absolutní hodnotě determinantu matice, jejíž sloupce tyto vektory tvoří
+\item po provedení lineárního zobrazení se objemy těles změní úměrně absolutní hodnotě determinantu matice zobrazení
+\end{itemize}
+\item Definice, geometrický význam a základní vlastnosti vlastních čísel, charakteristický polynom, násobnost vlastních čísel
+\begin{itemize}
+\item definice
+\begin{itemize}
+\item mějme matici $A\in\mathbb C^{n\times n}$
+\item vlastní číslo matice $A$ je jakékoliv $\lambda\in\mathbb C$, pro které existuje vektor $x\in\mathbb C^n\setminus \lbrace o\rbrace$ takový, že $Ax=\lambda x$
+\item $x$ je pak vlastní vektor příslušný vlastnímu číslu $\lambda$
+\end{itemize}
+\item geometrie
+\begin{itemize}
+\item vlastní vektor reprezentuje invariantní směr při zobrazení $x\mapsto Ax$, tedy směr, který se zobrazí opět na ten samý směr
+\item vlastní číslo odpovídá škálování v tomto invariantním směru
+\end{itemize}
+\item základní vlastnosti
+\begin{itemize}
+\item determinant matice je roven součinu vlastních čísel
+\item stopa matice (součet diagonály) je rovna součtu vlastních čísel
+\item matice je regulární, právě když nula není její vlastní číslo
+\item $A^T$ má stejná vlastní čísla jako $A$, ale vlastní vektory obecně jiné
+\item uvažujeme matici $A\in\mathbb C^{n\times n}$ s vlastními čísly $\lambda_1,\dots,\lambda_n$ a jim odpovídajícími vlastními vektory $x_1,\dots,x_n$
+\begin{itemize}
+\item je-li $A$ regulární, pak $A^{-1}$ má vlastní čísla $\lambda_1^{-1},\dots,\lambda_n^{-1}$ a vlastní vektory $x_1,\dots,x_n$
+\item $A^2$ má vlastní čísla $\lambda_1^{2},\dots,\lambda_n^{2}$ a vlastní vektory $x_1,\dots,x_n$
+\item podobně pro $\alpha A$ a taky pro $A+\alpha I_n$
+\end{itemize}
+\end{itemize}
+\item charakteristický polynom \dots{} $p_A(t)=\mathrm{det}(A-tI_n)$
+\begin{itemize}
+\item vlastní čísla matice $A$ jsou právě kořeny jejího charakteristického polynomu a je jich $n$ včetně násobností
+\end{itemize}
+\item algebraická násobnost $\lambda$ je rovna násobnosti $\lambda$ jakožto kořene $p_A$
+\item geometrická násobnost $\lambda$ je rovna $n-\mathrm{rank}(A-\lambda I_n)$, tj. počtu lineárně nezávislých vlastních vektorů, které odpovídají $\lambda$
+\item algebraická násobnost $\geq$ geometrická násobnost
+\begin{itemize}
+\item obvykle se násobností myslí ta algebraická
+\end{itemize}
+\end{itemize}
+\item Podobnost a diagonalizovatelnost matic, spektrální rozklad
+\begin{itemize}
+\item matice $A,B\in\mathbb C^{n\times n}$ jsou podobné, pokud existuje regulární $S\in\mathbb C^{n\times n}$ tak, že $A=SBS^{-1}$
+\item věta: podobné matice mají stejná vlastní čísla
+\begin{itemize}
+\item počet vlastních vektorů pro konkrétní vlastní číslo je stejný u obou matic
+\end{itemize}
+\item matice $A\in\mathbb C^{n\times n}$ je diagonalizovatelná, je-li podobná nějaké diagonální matici
+\item diagonalizovatelná matice $A$ jde tedy vyjádřit ve tvaru $A=S\Lambda S^{-1}$, kde $S$ je regulární a $\Lambda$ diagonální
+\begin{itemize}
+\item tomuto se říká spektrální rozklad
+\item sloupce matice $S$ odpovídají vlastním vektorům (v~pořadí, v němž jsou vlastní čísla na diagonále $\Lambda$)
+\end{itemize}
+\item věta: matice $A\in\mathbb C^{n\times n}$ je diagonalizovatelná, právě když má $n$ lineárně nezávislých vlastních vektorů
+\item věta: pokud má matice $n$ navzájem různých vlastních čísel, pak je diagonalizovatelná
+\item $A^2=S\Lambda^2 S^{-1}$
+\end{itemize}
+\item Symetrické matice, jejich vlastní čísla a spektrální rozklad
+\begin{itemize}
+\item matice je symetrická, pokud $A=A^T$
+\item vlastní čísla reálných symetrických matic jsou reálná
+\item věta: pro každou symetrickou matici $A\in\mathbb R^{n\times n}$ existuje ortogonální $Q\in\mathbb R^{n\times n}$ a diagonální $\Lambda\in\mathbb R^{n\times n}$ takové, že $A=Q\Lambda Q^T$
+\end{itemize}
+\item Positivně semidefinitní a positivně definitní matice - charakterizace a vlastnosti, vztah se skalárním součinem, vlastními čísly
+\begin{itemize}
+\item definice
+\begin{itemize}
+\item buď $A\in\mathbb R^{n\times n}$ symetrická
+\item pak $A$ je positivně semidefinitní, pokud $x^TAx\geq 0$ pro všechna $x\in\mathbb R^n$
+\item $A$ je positivně definitní, pokud $x^TAx\gt 0$ pro všechna $x\neq o$
+\end{itemize}
+\item poznámka: nesymetrické matice můžeme symetrizovat úpravou $\frac12(A+A^T)$
+\item následující tří vlastnosti jsou ekvivalentní
+\begin{itemize}
+\item $A$ je positivně semidefinitní (nebo definitní)
+\item vlastní čísla $A$ jsou nezáporná
+\begin{itemize}
+\item pro definitní musí být kladná
+\end{itemize}
+\item existuje matice $U\in\mathbb R^{m\times n}$ taková, že $A=U^TU$
+\begin{itemize}
+\item pro definitní musí mít matice $U$ hodnost $n$
+\end{itemize}
+\end{itemize}
+\item vlastnosti
+\begin{itemize}
+\item jsou-li $A,B$ positivně definitní, pak i $A+B$ je p. d.
+\item je-li $A$ positivně definitní a $\alpha\gt 0$, pak i $\alpha A$ je p. d.
+\item je-li $A$ positivně definitní, pak je regulární a $A^{-1}$ je p. d.
+\end{itemize}
+\item operace $\braket{x|y}$ je skalárním součinem v $\mathbb R^n$, právě když má tvar $\braket{x|y}=x^TAy$ pro nějakou positivně definitní matici $A\in\mathbb R^{n\times n}$
+\item testování p. d. pomocí Gaussovy eliminace
+\begin{itemize}
+\item používáme pouze úpravu přičtení násobku řádku s pivotem k jinému řádku pod ním
+\item pokud nám vyjde odstupňovaný tvar s kladnou diagonálou, byla původní matice positivně definitní
+\end{itemize}
+\end{itemize}
+\item Choleského rozklad (znění věty a praktické použití)
+\begin{itemize}
+\item pro každou positivně definitní matici $A\in\mathbb R^{n\times n}$ existuje jediná dolní trojúhelníková matice $L\in\mathbb R^{n\times n}$ s kladnou diagonálou taková, že $A=LL^T$
+\item algoritmus vypadá složitě, ale dá se to vymyslet intuitivně (je vhodné začít tím, že první prvek matice $A$ je druhou mocninou čísla, které je v obou trojúhelníkových maticích vlevo nahoře)
+\item praktické použití
+\begin{itemize}
+\item řešíme soustavu $Ax=b$
+\item máme Choleského rozklad $A=LL^T$
+\item snadno najdeme řešení soustavy $Ly=b$ (díky nulám v trojúhelníkové matici stačí substituovat)
+\item pak najdeme řešení soustavy $L^Tx=y$
+\item proč to funguje?
+\begin{itemize}
+\item $L(\underbrace{L^Tx}_{=y})=b$
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\subsection{3. Diskrétní matematika}
+\begin{itemize}
+\item Relace, vlastnosti binárních relací (reflexivita, symetrie, antisymetrie, tranzitivita)
+\begin{itemize}
+\item (binární) relace mezi množinami $X,Y$ je podmnožina $X\times Y$
+\item relace na množině $X$ je podmnožina $X^2$
+\item značení - pro relaci $R$ mezi $X,Y:xRy \equiv (x,y)\in R$
+\item příklady relací
+\begin{itemize}
+\item prázdná $\emptyset$
+\item univerzální $X\times Y$
+\item diagonální $\Delta_X := \lbrace (x,x)\mid x\in X\rbrace$, např. rovnost $x=y$
+\end{itemize}
+\item operace s relacemi
+\begin{itemize}
+\item inverze
+\begin{itemize}
+\item k relaci $R$ mezi $X,Y$ lze definovat inverzní relaci $R^{-1}$ mezi $Y,X$, přičemž $R^{-1} := \lbrace(y,x)\mid (x,y)\in R\rbrace$
+\end{itemize}
+\item skládání
+\begin{itemize}
+\item pro relaci $R$ mezi $X,Y$ a relaci $S$ mezi $Y,Z$ lze definovat složenou relaci $T=R\circ S$ mezi $X,Z$
+\item $xTz \equiv \exists y \in Y: xRy \land ySz$
+\item $R\circ \Delta_Y =R,\quad \Delta_X\circ R = R$
+\item značení skládání funkcí: $(f\circ g)(x)=g(f(x))$
+\end{itemize}
+\end{itemize}
+\item relace $R$ na $X$ je\dots{}
+\begin{itemize}
+\item reflexivní $\equiv \forall x \in X: xRx$
+\begin{itemize}
+\item $\Delta_X \subseteq R$
+\end{itemize}
+\item symetrická $\equiv \forall x,y \in X: xRy \implies yRx$
+\begin{itemize}
+\item $R=R^{-1}$
+\end{itemize}
+\item antisymetrická $\equiv \forall x,y \in X: xRy \land yRx \implies x=y$
+\begin{itemize}
+\item $R\cap R^{-1}\subseteq \Delta_X$
+\end{itemize}
+\item tranzitivní $\equiv \forall x,y,z \in X: xRy \land yRz \implies xRz$
+\begin{itemize}
+\item $R\circ R \subseteq R$
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\item Ekvivalence a rozkladové třídy
+\begin{itemize}
+\item relace $R$ na $X$ je ekvivalence $\equiv R$ je reflexivní \& symetrická \& tranzitivní
+\begin{itemize}
+\item např. rovnost čísel, rovnost mod $K$, geometrická podobnost
+\end{itemize}
+\item ekvivalenční třída prvku $x \in X:R[x]=\lbrace y \in X : xRy\rbrace$
+\item množinový systém $\mathcal S\subseteq 2^X$ je rozklad množiny $X \equiv$
+\begin{itemize}
+\item $\forall A \in \mathcal S: A \neq \emptyset$
+\item $\forall A,B\in \mathcal S: A\neq B \implies A \cap B = \emptyset$
+\item $\bigcup_{A\in \mathcal S}A=X$
+\end{itemize}
+\item věta (vztah mezi ekvivalencemi a rozklady)
+\begin{enumerate}
+\item $\forall x \in X: R[x]\neq \emptyset$
+\item $\forall x,y \in X:$ buď $R[x]=R[y]$, nebo $R[x] \cap R[y]=\emptyset$
+\item $\lbrace R[x] \mid x \in X\rbrace$ (množina všech ekvivalenčních tříd) určuje ekvivalenci $R$ jednoznačně
+\end{enumerate}
+\end{itemize}
+\item Částečná uspořádání - základní pojmy (minimální a maximální prvky, nejmenší a největší prvky, řetězec, antiřetězec)
+\begin{itemize}
+\item relace $R$ na množině $X$ je (částečné) uspořádání $\equiv R$ je reflexivní \& antisymetrická \& tranzitivní
+\item (částečně) uspořádaná množina $(X,R)$
+\begin{itemize}
+\item zkráceně ČUM
+\item $R$ je (částečné) uspořádání na $X$
+\end{itemize}
+\item prvky $x,y \in X$ jsou porovnatelné $\equiv xRy \lor yRx$
+\item uspořádání je lineární $\equiv \forall x,y\in X$ porovnatelné
+\begin{itemize}
+\item (všechny prvky množiny jsou navzájem porovnatelné)
+\end{itemize}
+\item částečné uspořádání (nebo pouze uspořádání) je obecný pojem, některá taková uspořádání jsou navíc lineární
+\item ostré uspořádání - každému uspořádání $\leq$ na X přiřadíme relaci $<$ na X: $a < b \equiv a \leq b \land a \neq b$ 
+\begin{itemize}
+\item pozor - ostré uspořádání není speciálním případem uspořádání (protože není reflexivní)
+\item vlastnosti ostrého uspořádání - ireflexivní, antisymetrické, tranzitivní
+\end{itemize}
+\item Hasseův diagram graficky zachycuje vztahy mezi prvky ČUM (porovnatelné prvky jsou spojeny, větší prvky jsou výše)
+\item prvek $x\in X$ je nejmenší $\equiv \forall y \in X: x\leq y$
+\item prvek $x\in X$ je minimální $\equiv \nexists y \in X: y\lt x$
+\item $x$ je nejmenší $\implies$ $x$ je minimální
+\item v Hassově diagramu
+\begin{itemize}
+\item z minimálního prvku dolů nevede žádná spojnice
+\item nejmenší prvek je nejníž v diagramu, existuje do něj cesta z libovolného jiného prvku
+\end{itemize}
+\item věta: konečná neprázdná uspořádaná množina má minimální a maximální prvek
+\item pro $(X,\leq)$ ČUM:
+\begin{itemize}
+\item $A\subseteq X$ je řetězec $\equiv \forall a,b \in A: a,b$ jsou porovnatelné
+\item $A \subseteq X$ je antiřetězec (nezávislá množina) $\equiv \nexists a,b$ různé \& porovnatelné
+\end{itemize}
+\end{itemize}
+\item Výška a šířka částečně uspořádané množiny a věta o jejich vztahu (o dlouhém a širokém)
+\begin{itemize}
+\item $\omega(X,\leq)$ je délka nejdelšího řetězce = maximum z délek řetězců (výška uspořádání)
+\item $\alpha(X,\leq)$ je délka nejdelšího antiřetězce (šířka uspořádání)
+\item věta: pro každou konečnou ČUM $(X,\leq)$ platí $\alpha(X,\leq)\cdot \omega(X,\leq)\geq |X|$
+\item důsledek: $\text{max}(\alpha,\omega)\geq\sqrt{|X|}$
+\end{itemize}
+\item Funkce, typy funkcí (prostá, na, bijekce)
+\begin{itemize}
+\item funkce z množiny $X$ do množiny $Y$ je relace $A$ mezi $X$ a $Y$ t. ž. $(\forall x\in X)(\exists! y\in Y):xAy$
+\item funkce $f:X\to Y$ je\dots{}
+\begin{itemize}
+\item prostá (injektivní) $\equiv \nexists x,x' \in X: x \neq x' \land f(x)=f(x')$
+\item na $Y$ (surjektivní) $\equiv (\forall y \in Y)(\exists x \in X): f(x)=y$
+\item vzájemně jednoznačná (bijektivní) $\equiv (\forall y \in Y)(\exists! x \in X):f(x)=y$
+\begin{itemize}
+\item taková funkce je tedy prostá i \quotedblbase{}na\textquotedblleft{}
+\item k takové funkci existuje inverzní funkce $f^{-1}$ z $Y$ do $X$
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\item Počty různých typů funkcí mezi dvěma konečnými množinami
+\begin{itemize}
+\item věta: počet $f:N\to M=m^n$
+\begin{itemize}
+\item pro $|N|=n, |M|=m;\quad m,n\gt 0$
+\end{itemize}
+\item definice: klesající mocnina
+\begin{itemize}
+\item $m^{\underline n}=\underbrace{m\cdot (m-1)\cdot (m-2)\cdot\ldots\cdot(m-n+1)}_n$
+\item tedy $m^{\underline n}=\frac{m!}{(m-n)!}$
+\end{itemize}
+\item věta: počet prostých $f:N\to M=m^{\underline{n}}$
+\item počet surjektivních zobrazení lze určit pomocí principu inkluze a exkluze
+\item bijekcí je $n!$
+\item počet uspořádaných $k$-tic $|X^k|=|X|^k$, lze jej totiž vyjádřit jako počet funkcí $f:[k]\to X$
+\end{itemize}
+\item Permutace a jejich základní vlastnosti (počet a pevný bod)
+\begin{itemize}
+\item definice: $[n]=\lbrace1,2,\dots,n\rbrace$
+\item věta: na množině $[n]$ existuje $n!$ permutací (podobně na každé n-prvkové množině)
+\item pevný bod permutace je prvek, který se zobrazí sám na sebe
+\end{itemize}
+\item Kombinační čísla a vztahy mezi nimi, binomická věta a její aplikace
+\begin{itemize}
+\item kombinační číslo (binomický koeficient) ${n\choose k}:={n^{\underline k} \over k!}={n!\over k!(n-k)!}$
+\item Pascalův trojúhelník - n roste shora dolů, k zleva doprava
+\item $X\choose k$ \dots{} množina všech k-prvkových podmnožin množiny $X$
+\item ${n\choose k} = {n\choose n-k}$ \dots{} každé k-prvkové podmnožině přiřadíme její doplněk
+\begin{itemize}
+\item Pascalův trojúhelník je symetrický
+\end{itemize}
+\item ${n-1\choose k-1}+{n-1\choose k}={n\choose k}$
+\begin{itemize}
+\item zvolíme jeden prvek $a$ a rozdělíme všechny k-prvkové podmnožiny podle toho, zda obsahují $a$, nebo ne
+\item buňka v Pascalově trojúhelníku je součtem dvou buněk nad ní (pokud není na kraji)
+\end{itemize}
+\item Binomická věta: $(x+y)^n=\sum_{i=0}^n{n\choose i}x^{n-i}y^i$
+\item aplikace
+\begin{itemize}
+\item řádek Pascalova trojúhelníku se sečte na $2^n=(1+1)^n=\sum_{k=0}^n\binom{n}{k}$
+\item důkaz $(x^n)'=nx^{n-1}$
+\begin{itemize}
+\item použijeme $f(x+h)=(x+h)^n=x^n+nx^{n-1}h+\binom n2 x^{n-2}h^2+\dots+h^n$
+\item dosadíme do $\lim_{h\to 0}\frac{f(x+h)-f(x)}{h}$
+\end{itemize}
+\item $e=\lim\,(1+\frac1n)^n$
+\end{itemize}
+\end{itemize}
+\item Princip inkluze a exkluze: obecná formulace (a důkaz)
+\begin{itemize}
+\item konkrétní ukázky principu inkluze a exkluze (PIE)
+\begin{itemize}
+\item $|A\cup B|=|A|+|B|-|A\cap B|$
+\item $|A\cup B\cup C|=|A|+|B|+|C|-|A\cap B|-|A\cap C|-|B\cap C|+|A\cap B\cap C|$
+\end{itemize}
+\item věta: pro konečné množiny $A_1,\dots,A_n$ platí \[|\bigcup_{i=1}^nA_i|=\sum_{k=1}^n(-1)^{k+1}\sum_{I\in{[n]\choose k}}|\bigcap_{i\in I}A_i|\]
+\item důkaz
+\begin{itemize}
+\item pro prvek $x$ ve sjednocení spočítáme příspěvky k levé (vždy 1) a pravé straně
+\item nechť $x$ patří do právě $t$ množin
+\item průniky $k$-tic
+\begin{itemize}
+\item $k \gt t$ \dots{} přispěje $0$
+\item $k\leq t$ \dots{} přispěje $(-1)^{k+1}{t\choose k}$
+\begin{itemize}
+\item vybíráme $k$-tice množin z $t$-množin, do kterých prvek patří
+\item minus jednička vychází ze vzorce
+\end{itemize}
+\item chceme $\sum_{k=1}^t(-1)^{k+1}{t\choose k}=1$
+\item lze upravit na $\sum_{k=1}^t(-1)^{k}{t\choose k}=-1$
+\item z binomické věty $0=(1-1)^t=\sum_{k=0}^t{t\choose k}(-1)^{k}$
+\item tedy bez prvního členu se součet rovná $-1\quad \square$
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\item Princip inkluze a exkluze: použití (problém šatnářky, Eulerova funkce pro počet dělitelů, počet surjekcí)
+\begin{itemize}
+\item problém šatnářky
+\begin{itemize}
+\item Šatnářka $n$ pánům vydá náhodně $n$ klobouků (které si předtím odložili v~šatně). Jaká je pravděpodobnost, že žádný pán nedostane od šatnářky zpět svůj klobouk?
+\item jaká je pravděpodobnost, že náhodně zvolená permutace nebude mít žádný pevný bod
+\begin{itemize}
+\item každá z $n!$ permutací je stejně pravděpodobná
+\item $\text{š}(n)$ \dots{} počet permutací bez pevného bodu
+\item pravděpodobnost je rovna $\text{š}(n)/n!$
+\end{itemize}
+\item $S_n$ \dots{} množina všech permutací
+\item $A_i=\lbrace \pi \in S_n : \pi(i)=i\rbrace$
+\begin{itemize}
+\item množina permutací s pevným bodem v $i$-tém prvku (jedna permutace může patřit do více takových množin)
+\end{itemize}
+\item $A=\bigcup_{i=1}^n A_i$ \dots{} (množina všech \quotedblbase{}špatných\textquotedblleft{} permutací)
+\item musíme vyjádřit velikosti průniků
+\begin{itemize}
+\item permutací s (konkrétními) $k$ pevnými body je $(n-k)!$, protože permutuji všechny prvky kromě těch pevných
+\end{itemize}
+\item dosazením do principu inkluze a exkluze vyjde $|A|=\sum_{k=1}^n(-1)^{k+1}{n\choose k}(n-k)!$
+\begin{itemize}
+\item $n\choose k$ vyplývá z počtu prvků druhé sumy
+\item ${n\choose k}(n-k)!={n!\over k!}$
+\end{itemize}
+\item $|A|=\sum_{k=1}^n(-1)^{k+1}\frac{n!}{k!}=n!\cdot\sum_{k=1}^n{(-1)^{k+1}\over k!}$
+\item $|A|=n!({1\over 1!}-{1\over 2!}+{1\over 3!}-\dots+{(-1)^{n+1}\over n!})$
+\item $\text{š}(n)=n!-|A|=n!\cdot(1-{1\over 1!}+{1\over 2!}-{1\over 3!}+\dots+{(-1)^n\over n!})$
+\begin{itemize}
+\item závorka konverguje k $e^{-1}$
+\item závorka odpovídá pravděpodobnosti v problému šatnářky
+\end{itemize}
+\item $\text{š}(n)=n!\cdot\sum_{k=0}^n\frac{(-1)^k}{k!}$
+\item pravděpodobnost \dots{} $\sum_{k=0}^n\frac{(-1)^k}{k!}\approx e^{-1}$
+\end{itemize}
+\item Eulerova funkce $\varphi(n)$
+\begin{itemize}
+\item je to počet čísel z $[n]$ nesoudělných s $n$
+\begin{itemize}
+\item pro prvočíslo $p$ platí $\varphi(n)=p-1$, protože je soudělné samo se sebou a protože podle definice nesoudělnosti (NSD = 1) není soudělné s~jedničkou
+\end{itemize}
+\item tvrzení: nechť $n=p_1^{e_1}\cdot p_2^{e_2}\cdot\ldots\cdot p_k^{e_k}$ je prvočíselný rozklad, pak $\varphi(n)=n(1-\frac{1}{p_1})(1-\frac1{p_2})\dots(1-\frac1{p_k})$
+\item důkaz
+\begin{itemize}
+\item jako $A_i$ označím množinu čísel z $[n]$ soudělných $i$-tým prvočíslem $p_i$
+\item zjevně $\varphi(n)=n-|\bigcup_{i=1}^k A_i|$
+\item $|A_i|=\frac n{p_i}$
+\item pro různé $i,j\in[k]$ platí $|A_i\cap A_j|=\frac n{p_ip_j}$
+\item to se dá zobecnit na průnik více množin
+\item dle PIE $|\bigcup_{i=1}^kA_i|=\sum_{I\in 2^{[n]}\setminus\set\emptyset}(-1)^{|I|+1}\frac{n}{\prod_{i\in I} p_i}$
+\item $=n(\frac1{p_1}+\dots+\frac1{p_k}-\frac1{p_1p_2}-\dots+\frac1{p_1p_2p_3}+\dots+(-1)^{k+1}\frac1{p_1\dots p_k})$
+\item proto $\varphi(n)=n(1-\frac1{p_1}-\dots-\frac1{p_k}+\frac{1}{p_1p_2}+\dots+(-1)^k\frac1{p_1\dots p_k})$
+\item tedy $\varphi(n)=n(1-\frac{1}{p_1})(1-\frac1{p_2})\dots(1-\frac1{p_k})\quad\square$
+\begin{itemize}
+\item z každé závorky vždy vybíráme levý nebo pravý člen
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\item počet surjekcí
+\begin{itemize}
+\item věta
+\begin{itemize}
+\item nechť $X,Y$ jsou konečné množiny, $|X|=n$, $|Y|=m$, $n\geq m\gt 0$
+\item potom počet zobrazení $f$ množiny $X$ na množinu $Y$ je $\sum_{k=0}^m(-1)^k\binom mk(m-k)^n$
+\end{itemize}
+\item důkaz
+\begin{itemize}
+\item počet všech funkcí z $X$ do $Y$ je $m^n$
+\item definujeme $F_i$ jako množinu zobrazení, že $i$-tý prvek z množiny $Y$ není pokrytý (neexistuje $x\in X$, aby $f(x)=y_i$, kde $y_i$ je $i$-tý prvek z $Y$)
+\item takže počet surjekcí bude $m^n-|\bigcup_{i=1}^m F_i|$
+\item použijeme PIE: $|\bigcup_{i=1}^mF_i|=\sum_{k=1}^m(-1)^{k+1}\sum_{I\in{[m]\choose k}}|\bigcap_{i\in I}F_i|$
+\item $=\sum_{k=1}^m(-1)^{k+1}\binom mk(m-k)^n$
+\begin{itemize}
+\item $(m-k)^n$ dostaneme tak, že uvažujeme funkce z $n$-prvkové množiny do množiny s $m-k$ prvky (na vybraných $k$ bodů naše funkce nesmí směřovat)
+\end{itemize}
+\item počet surjekcí $m^n-|\bigcup_{i=1}^m F_i|=m^n-\sum_{k=1}^m(-1)^{k+1}\binom mk(m-k)^n$ pak ještě upravíme do finálního tvaru $\quad\square$
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\item Hallova věta o systému různých reprezentantů a její vztah k párování v bipartitním grafu, princip důkazu a algoritmické aspekty (polynomiální algoritmus pro nalezení SRR)
+\begin{itemize}
+\item párování je taková množina hran, kde žádné dvě hrany nemají společný vrchol
+\begin{itemize}
+\item maximální párování je takové párování, které má nejvíce hran
+\item perfektní párování je takové párování, které pokrývá všechny vrcholy grafu
+\end{itemize}
+\item systém různých reprezentantů v hypergrafu
+\begin{itemize}
+\item systém různých reprezentantů (SRR) v hypergrafu $H=(V,E)$ je funkce $r:E\to V$ taková, že
+\begin{itemize}
+\item $\forall e\in E: r(e)\in e$
+\item $\forall e,f\in E:e\neq f\implies r(e)\neq r(f)$ \dots{} tj. $r$ je prostá
+\end{itemize}
+\item $r(e)$ \dots{} \quotedblbase{}reprezentant hyperhrany $e$\textquotedblleft{}
+\item analogie s předsedy spolků
+\end{itemize}
+\item pozorování: v bipartitním grafu s partitami $A,B$ má každé párování velikost nejvýše $|A|$ (i nejvýše $|B|$)
+\item definice: pro graf $G=(V,E)$ a množinu $X\subseteq V$ označím $N(X):=\set{y\in V\setminus X: (\exists x\in X)\set{x,y}\in E}$
+\item Hallova věta, bipartitní grafová verze
+\begin{itemize}
+\item nechť $G$ je bipartitní graf s partitami $A,B$, potom $G$ má párování velikosti $|A|$ $\iff\underbrace{\forall X\subseteq A:|N(X)|\geq |X|}_{\text{\quotedblbase{}Hallova podm\text{í}nka\textquotedblleft{}}}$
+\end{itemize}
+\item důkaz
+\begin{itemize}
+\item $\implies$
+\begin{itemize}
+\item pokud existuje párování velikosti $|A|$, tak pro každou $X\subseteq A$ existuje $|X|$ vrcholů spárovaných s $X$, ty patří do $N(X)$, tedy $|N(X)|\geq |X|$
+\end{itemize}
+\item $\impliedby$
+\begin{itemize}
+\item nechť $M$ je největší párování v $G$
+\item pro spor nechť $|M|\lt|A|$
+\item dle K\H{o}nigovy-Egerváryho věty existuje pokrytí $C$, kde $|C|=|M|\lt |A|$
+\item $C_A:= C\cap A$
+\item $C_B:=C\cap B$
+\item $X:=A\setminus C_A$
+\item zjistím, že $N(X)\subseteq C_B$
+\begin{itemize}
+\item protože nepokryté hrany musí pokrývat vrcholy v $N(X)$
+\end{itemize}
+\item navíc $|X|=|A|-|C_A|\gt |C_B|\geq |N(X)|$
+\begin{itemize}
+\item jelikož $|C|\lt|A|\implies |A|\gt|C_A|+|C_B|$
+\end{itemize}
+\item to je spor s Hallovou podmínkou
+\end{itemize}
+\item idea $\impliedby$
+\begin{itemize}
+\item uvažujeme ostře menší párování, tedy podle K\H{o}nigovy-Egerváryho věty musí existovat i menší pokrytí
+\begin{itemize}
+\item věta říká, že velikost maximální párování se rovná velikosti minimálního pokrytí (jako u toku a řezu)
+\end{itemize}
+\item prohlásíme, že vrcholy v $X$ nejsou v pokrytí, tak ty hrany mezi nimi a $N(X)$ musí pokrývat vrcholy v $N(X)$, ale těch by pak bylo málo (méně než požaduje Hallova podmínka)
+\item takže jsme dokázali obměnu implikace
+\end{itemize}
+\end{itemize}
+\item pozorování: jakmile uvnitř hypergrafu je množina čtyř hyperhran, které ve svém sjednocení mají tři vrcholy, tak nemůžu najít systém různých reprezentantů
+\begin{itemize}
+\item platí to obecně pro množinu $k$ hyperhran - když budou mít ve sjednocení méně než $k$ vrcholů, tak nenajdu SRR
+\item implikace platí i obráceně, lze vyslovit jako větu
+\end{itemize}
+\item Hallova věta, hypergrafová verze
+\begin{itemize}
+\item hypergraf $H=(V,E)$ má SRR, právě když $\forall F\subseteq E:\left|\bigcup_{e\in F} e\right|\geq |F|$
+\end{itemize}
+\item důkaz
+\begin{itemize}
+\item nechť $H=(V,E)$ je hypergraf, nechť $I_H$ je jeho graf incidence
+\item $H$ má SRR $\iff$ $I_H$ má párování velikosti $|E|$
+\item Hallova podmínka pro $H$: $\forall F\subseteq E: \left|\bigcup_{e\in F}e\right|\geq |F|\iff$ bipartitní Hallova podmínka pro $I_H$ a partitu $E$
+\end{itemize}
+\item algoritmické aspekty
+\begin{itemize}
+\item maximální párování lze najít v polynomiálním čase
+\item proto i SRR lze najít v polynomiálním čase
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\subsection{4. Teorie grafů}
+\begin{itemize}
+\item Základní pojmy teorie grafů - graf, vrcholy a hrany, izomorfismus grafů, podgraf, okolí vrcholu a stupeň vrcholu, doplněk grafu, bipartitní graf
+\begin{itemize}
+\item graf je $(V, E)$, kde $V$ je konečná neprázdná množina vrcholů a $E \subseteq {V \choose 2}$ je množina hran
+\begin{itemize}
+\item lze značit jako $G=(V,E)$, potom $V(G)$ je množina vrcholů a $E(G)$ je množina hran
+\end{itemize}
+\item izomorfismus
+\begin{itemize}
+\item grafy jsou izomorfní $\equiv$ existuje bijekce, která zachovává vlastnost být spojen hranou
+\item v podstatě stačí přejmenovat vrcholy a dostaneme dva stejné grafy
+\item značení $\cong$
+\item $\cong$ je ekvivalence na libovolné množině grafů
+\begin{itemize}
+\item neexistuje množina všech grafů (protože neexistuje množina všech množin)
+\end{itemize}
+\end{itemize}
+\item podgraf
+\begin{itemize}
+\item graf $G'=(V',E')$ je podgrafem grafu $G=(V,E)$ (značíme $G'\subseteq G$), když $V'\subseteq V \land E'\subseteq E$
+\item graf $G'=(V',E')$ je indukovaným podgrafem grafu $G=(V,E)$, když $V'\subseteq V \land E'= E\cap {V'\choose 2}$
+\begin{itemize}
+\item \quotedblbase{}podgraf indukovaný množinou vrcholů\textquotedblleft{}
+\item $G[A] := (A, E(G) \cap {A \choose 2})$, kde $A\subseteq V(G)$
+\end{itemize}
+\end{itemize}
+\item okolí vrcholu
+\begin{itemize}
+\item okolí vrcholu $v$ jsou ty vrcholy, které s vrcholem $v$ sousedí (sdílejí hranu)
+\item $N_G(v)=\set{u\in V(G):\exists uv\in E(G)}$
+\end{itemize}
+\item stupeň vrcholu
+\begin{itemize}
+\item stupeň vrcholu - počet hran, kterých se účastní daný vrchol
+\item graf je k-regulární, pokud je stupeň všech vrcholů grafu roven k
+\item skóre grafu = posloupnost stupňů vrcholů (až na pořadí) $\to$ jakmile dvěma grafům vyjde jiné skóre, nemohou být izomorfní
+\end{itemize}
+\item doplněk grafu
+\begin{itemize}
+\item doplněk/komplement grafu $G$ je graf $G_0$, který má stejné vrcholy jako $G$, ale má právě ty hrany, které v grafu $G$ chybí
+\end{itemize}
+\item bipartitní graf
+\begin{itemize}
+\item graf (V, E) je bipartitní $\equiv \exists L,P\subseteq V$ t. ž.:
+\begin{itemize}
+\item $L \cup P = V$
+\item $L \cap P = \emptyset$
+\item $\forall e \in E: |e \cap L| = 1\quad (\land\ |e \cap P| = 1)$
+\begin{itemize}
+\item nebo $E(G)\subseteq\lbrace\lbrace x,y\rbrace\mid x\in L,y\in P\rbrace$
+\end{itemize}
+\end{itemize}
+\item partity grafu - jednotlivé \quotedblbase{}strany\textquotedblleft{}
+\end{itemize}
+\end{itemize}
+\item Základní příklady grafů - úplný graf a úplný bipartitní graf, cesty a kružnice
+\begin{itemize}
+\item úplný graf $K_n$
+\begin{itemize}
+\item $V(K_n):=[n]$
+\item $E(K_n):={V(K_n)\choose 2}$
+\end{itemize}
+\item úplný bipartitní $K_{m,n}$
+\begin{itemize}
+\item každý prvek nalevo je spojený s každým napravo
+\item prvky na jedné straně mezi sebou nejsou spojeny
+\end{itemize}
+\item prázdný graf $E_n$
+\begin{itemize}
+\item $V(E_n):=[n]$
+\item $E(E_n) =\emptyset$
+\end{itemize}
+\item cesta $P_n$
+\begin{itemize}
+\item $V(P_n):=\{0,\dots, n\}$
+\item $E(P_n):=\{\{i,i+1\}\mid 0\leq i \lt n\}$
+\item délka cesty se měří v počtu hran
+\end{itemize}
+\item kružnice/cyklus $C_n$
+\begin{itemize}
+\item $n\geq 3$
+\item $V(C_n):=\{0,\dots, n-1\}$
+\item $E(C_n):=\{\{i,(i+1)\bmod n\}\mid 0\leq i \lt n\}$
+\end{itemize}
+\end{itemize}
+\item Souvislost grafů, komponenty souvislosti, vzdálenost v grafu
+\begin{itemize}
+\item graf $G$ je souvislý $\equiv\forall u,v\in V(G):$ existuje cesta v $G$ s krajními vrcholy $u,v$
+\item dosažitelnost v $G$ je relace $\sim$ na $V(G)$ t. ž. $u\sim v\equiv$ existuje cesta v $G$ s krajními vrcholy $u,v$
+\begin{itemize}
+\item relace $\sim$ je ekvivalence
+\item tranzitivita se dokazuje pomocí dvou posloupností vrcholů $x \sim y$ a $y\sim z$ a následně zvolení nejzazšího vrcholu z posloupnosti $y\sim z$, který je obsažen v posloupnosti $x\sim y$ a v tomto vrcholu se posloupnosti slepí (přičemž části za ním v první posloupnosti a před ním v druhé posloupnosti se ustřihnou)
+\end{itemize}
+\item komponenty souvislosti jsou podgrafy indukované třídami ekvivalence $\sim$
+\begin{itemize}
+\item komponenty jsou souvislé
+\item graf je souvislý $\iff$ má 1 komponentu
+\end{itemize}
+\item vzdálenost (grafová metrika) v souvislém grafu $G$
+\begin{itemize}
+\item $d_G:V^2\to\mathbb R$
+\item $d_G(u,v):=$ min. z délek (počtu hran) všech cest mezi $u,v$
+\end{itemize}
+\item vlastnosti metriky (funkce je metrika = chová se jako vzdálenost)
+\begin{itemize}
+\item $d_G(u,v)\geq 0$
+\item $d_G(u,v) = 0 \iff u=v$
+\item platí trojúhelníková nerovnost $d_G(u,w) \leq d_G(u,w) + d_G(w,v)$
+\item $d_G(v,u)=d_G(u,v)$
+\end{itemize}
+\item grafové operace: přidání/odebrání vrcholu/hrany, dělení hrany, kontrakce hrany
+\item sled v grafu (walk) - můžou se opakovat vrcholy i hrany
+\begin{itemize}
+\item $(v_0,e_1,v_1,e_2,\dots,e_n,v_n)$
+\item $\forall i: e_i=\lbrace v_{i-1},v_i\rbrace$
+\end{itemize}
+\item tah v grafu - můžou se opakovat vrcholy, hrany ne
+\begin{itemize}
+\item tah může být uzavřený (končí, kde začal), nebo otevřený
+\end{itemize}
+\item eulerovský tah
+\begin{itemize}
+\item eulerovský tah obsahuje všechny hrany a vrcholy grafu
+\begin{itemize}
+\item někdy se eulerovský tah definuje bez nutnosti obsahovat všechny vrcholy
+\end{itemize}
+\item graf je eulerovský $\equiv$ existuje v něm uzavřený eulerovský tah
+\end{itemize}
+\item věta: graf $G$ je eulerovský $\iff G$ je souvislý a každý jeho vrchol má sudý stupeň
+\end{itemize}
+\item Stromy - definice a základní vlastnosti (existence listů, počet hran stromu)
+\begin{itemize}
+\item strom je souvislý graf bez kružnic (= acyklický)
+\item les je acyklický graf
+\item list je vrchol stupně 1
+\begin{itemize}
+\item strom o jednom vrcholu (\quotedblbase{}pařez\textquotedblleft{}) nemá žádný list
+\end{itemize}
+\item lemma: každý strom s aspoň 2 vrcholy má aspoň 1 list (respektive aspoň dva listy)
+\item lemma: je-li $v$ list grafu $G$, pak $G$ je strom, právě když $G-v$ je strom
+\item strom $G$ má $|V(G)|-1$ hran (Eulerova formule)
+\end{itemize}
+\item Ekvivalentní charakteristiky stromů
+\begin{enumerate}
+\item G je souvislý a acyklický (strom)
+\item mezi vrcholy $u, v$ existuje právě jedna cesta (jednoznačně souvislý)
+\item G je souvislý a po smazání libovolné jedné hrany už nebude souvislý (minimální souvislý)
+\item G je acyklický a po přidání libovolné jedné hrany vznikne cyklus (maximální acyklický)
+\item G je souvislý a platí pro něj Eulerova formule $|E(G)|=|V(G)|-1$
+\end{enumerate}
+\item Rovinné grafy - definice a základní pojmy (rovinný graf a rovinné nakreslení grafu, stěny)
+\begin{itemize}
+\item rovinné nakreslení grafu = nakreslení grafu, aby se hrany nekřížily
+\begin{itemize}
+\item vrcholy = body v rovině (navzájem různé)
+\item hrany = křivky, které se neprotínají a jejich společnými body jsou jejich společné vrcholy
+\end{itemize}
+\item stěny nakreslení
+\begin{itemize}
+\item části, na které nakreslení grafu rozděluje rovinu
+\item stěnou je i vnější stěna (zbytek roviny)
+\item hranice stěny - skládá se z hran
+\item hranice stěny je nakreslení uzavřeného sledu
+\end{itemize}
+\item graf je rovinný, pokud má alespoň jedno rovinné nakreslení
+\item topologický graf je uspořádaná dvojice (graf, nakreslení)
+\item $K_5$ a $K_{3,3}$ nejsou rovinné
+\begin{itemize}
+\item graf je rovinný, právě když žádný jeho podgraf není izomorfní s nějakým dělením grafu $K_5$ nebo $K_{3,3}$ (tzn. podgraf může mít podrozdělené hrany - \quotedblbase{}$K_5$\textquotedblleft{} s libovolně podrozdělenými hranami pořád nebude rovinná)
+\end{itemize}
+\end{itemize}
+\item Eulerova formule a maximální počet hran rovinného grafu (důkaz a použití)
+\begin{itemize}
+\item věta
+\begin{itemize}
+\item nechť $G$ je souvislý graf nakreslený do roviny, $v:=|V(G)|, e:=|E(G)|, f:=$ počet stěn nakreslení
+\item potom $v+f=e+2$ (Eulerova formule)
+\end{itemize}
+\item důkaz: indukcí podle $e$
+\begin{itemize}
+\item $e=v-1$ (G je strom)
+\begin{itemize}
+\item $f=1$
+\item $v+1=v-1+2\quad\checkmark$
+\end{itemize}
+\item $e-1\to e$
+\begin{itemize}
+\item mějme graf $G$ s $e$ hranami
+\item zvolím si libovolnou hranu $x$ na kružnici
+\item $G':=G-x$
+\item $v'=v,\quad e'=e-1,\quad f'=f-1$
+\item z IP: $v'+f'=e'+2$
+\item po dosazení: $v+f-1=e-1+2$
+\item k oběma stranám přičteme jedničku
+\item $v+f=e+2\quad\square$
+\end{itemize}
+\end{itemize}
+\item věta: maximální rovinný graf je triangulace
+\begin{itemize}
+\item dokud hranice stěny není trojúhelník, je tam nějaká dvojice nespojených vrcholů
+\end{itemize}
+\item počet hran maximálního rovinného grafu
+\begin{itemize}
+\item každá stěna přispěje třemi hranami
+\item každá hrana patří ke dvěma stěnám
+\item počítáme \quotedblbase{}strany hran\textquotedblleft{}: $3f=2e$
+\item $f={2\over 3}e$
+\item $v+{2\over 3}e=e+2$
+\item $e=3v-6$
+\end{itemize}
+\item věta: v každém rovinném grafu s aspoň 3 vrcholy je $|E|\leq 3|V|-6$
+\item důkaz
+\begin{itemize}
+\item doplníme do $G$ hrany, až získáme maximální rovinný $G'$
+\item $e'=3v-6$ (vrcholy nepřidáváme)
+\item $e\leq e'=3v-6$
+\end{itemize}
+\item důsledek
+\begin{itemize}
+\item průměrný stupeň vrcholu v rovinném grafu je menší než 6
+\begin{itemize}
+\item $\sum \text{deg}(\xi)=2e\leq 6v-12$
+\item průměrný stupeň $\leq {6v-12\over v}\lt 6$
+\end{itemize}
+\end{itemize}
+\item počet hran a vrchol nízkého stupně v rovinných grafech bez trojúhelníků
+\begin{itemize}
+\item maximální rovinné grafy bez trojúhelníků mají stěny čtvercové, pětiúhelníkové, nebo to může být strom ve tvaru hvězdy
+\item pro čtvercově stěny platí $4f=2e$, pro pětiúhelníkové $5f=2e$
+\item obecně $4f\leq 2e\to f\leq \frac 12 e$
+\item $v+\frac 12e\geq e+2$
+\item $e\leq 2v-4$
+\item průměrný stupeň $\leq {4v-8\over v} \lt$ 4
+\item existuje vrchol stupně max. 3
+\end{itemize}
+\end{itemize}
+\item Barevnost grafů - definice dobrého obarvení, vztah barevnosti a klikovosti grafu
+\begin{itemize}
+\item obarvení grafu $G$ $k$ barvami ($k$-obarvení) je $c:V(G)\to[k]$ t. ž. kdykoli $\lbrace x,y\rbrace\in E(G)$, pak $c(x)\neq c(y)$
+\item barevnost $\chi(G)$ grafu $G:=\text{min }k:\exists$ k-obarvení grafu $G$
+\item pozorování: kdykoli $H\subseteq G$, pak $\chi(H)\leq \chi(G)$
+\item barevnost některých grafů
+\begin{itemize}
+\item úplné grafy \dots{} $\chi(K_n)=n$
+\item cesty \dots{} $\chi(P_n)=2$ pro $n\geq 1$
+\item sudé kružnice \dots{} $\chi(C_{2k})=2$
+\item liché kružnice \dots{} $\chi(C_{2k+1})=3$
+\item stromy jsou 2-obarvitelné
+\item pro rovinné grafy existuje věta o čtyřech barvách (je to těsný horní odhad - existují rovinné grafy, které nelze obarvit třemi barvami, např. $K_4$)
+\end{itemize}
+\item věta: $\chi(G)\leq 2\iff G$ je bipartitní $\iff G$ neobsahuje lichou kružnici
+\item definice: klikovost grafu $\kappa(G)$ je maximální $k$ takové, že v grafu jako podgraf existuje úplný graf $K_k$
+\begin{itemize}
+\item $\chi(G)\geq\kappa(G)$
+\end{itemize}
+\item klika v grafu je množina vrcholů taková, že každé dva jsou spojené hranou
+\item nezávislá množina v grafu je množina vrcholů taková, že žádné dva vrcholy nejsou spojené hranou
+\end{itemize}
+\item Hranová a vrcholová souvislost grafů
+\begin{itemize}
+\item $F\subseteq E$ je hranový řez v $G$, pokud $G-F$ je nesouvislý
+\begin{itemize}
+\item kde $G-F\coloneqq(V,E\setminus F)$
+\end{itemize}
+\item graf je hranově $k$-souvislý, pokud neobsahuje žádný hranový řez velikosti menší než $k$
+\item stupeň hranové souvislosti (nebo jen hranová souvislost) grafu $G$, značený $k_e(G)$, je největší $k$ takové, že $G$ je hranově $k$-souvislý
+\begin{itemize}
+\item pozorování: $k_e(G)=$ velikost nejmenšího hranového řezu v $G$
+\end{itemize}
+\item $A\subseteq V$ je vrcholový řez, pokud $G-A$ je nesouvislý
+\begin{itemize}
+\item kde $G-A=(V\setminus A,E\cap {V\setminus A\choose 2})$
+\end{itemize}
+\item graf je vrcholově $k$-souvislý, pokud má aspoň $k+1$ vrcholů a neobsahuje žádný vrcholový řez velikosti menší než $k$
+\item vrcholová souvislost grafu $G$, značená $k_v(G)$, je největší $k$ takové, že $G$ je vrcholově $k$-souvislý
+\begin{itemize}
+\item pozorování: $k_v(K_n)=n-1$
+\item pozorování: $G$ není úplný \dots{} $k_v(G)=$ velikost nejmenšího vrcholového řezu
+\end{itemize}
+\end{itemize}
+\item Hranová a vrcholová verze Mengerovy věty
+\begin{itemize}
+\item Mengerova věta, hranová $xy$-verze
+\begin{itemize}
+\item pro dva různé vrcholy $x,y$ grafu $G$ platí, že $G$ obsahuje $k$ hranově disjunktních cest z $x$ do $y$ $\iff G$ neobsahuje hranový $xy$-řez velikosti menší než $k$ 
+\end{itemize}
+\item Mengerova věta, globální hranová verze
+\begin{itemize}
+\item graf $G$ je hranově $k$-souvislý $\iff$ mezi každými dvěma různými vrcholy existuje $k$ hranově disjunktních cest
+\end{itemize}
+\item definice: dvě cesty v $G$ z $x$ do $y$ jsou navzájem vnitřně vrcholově disjunktní (VVD), pokud nemají žádný společný vrchol kromě $x,y$
+\item Mengerova věta, vrcholová $xy$-verze
+\begin{itemize}
+\item nechť $G=(V,E)$ je graf
+\item nechť $x,y$ jsou různé \textbf{nesousední} vrcholy
+\item nechť $k\in\mathbb N$
+\item potom $G$ obsahuje $k$ navzájem VVD cest z $x$ do $y\iff G$ neobsahuje vrcholový $xy$-řez velikosti $\lt k$
+\end{itemize}
+\item Mengerova věta, globální vrcholová verze
+\begin{itemize}
+\item $G$ je vrcholově $k$-souvislý $\iff$ mezi každými dvěma různými vrcholy $x,y$ existuje $k$ navzájem VVD cest
+\end{itemize}
+\end{itemize}
+\item Orientované grafy, silná a slabá souvislost
+\begin{itemize}
+\item orientovaný graf \dots{} $(V,E): E \subseteq V^2 \setminus \{(x,x)\mid x\in V\}$
+\begin{itemize}
+\item nepovolíme smyčky (v podstatě zakážeme diagonálu na relaci)
+\end{itemize}
+\item podkladový graf je neorientovaný graf založený na tom původním orientovaném
+\begin{itemize}
+\item pro orientovaný $G=(V,E)$ existuje podkladový $G^0=(V,E^0)$, kde $\lbrace u,v\rbrace \in E^0\equiv (u,v)\in E\lor (v,u)\in E$
+\end{itemize}
+\item vstupní a výstupní stupeň $\text{deg}^\text{in},\text{deg}^\text{out}$ (hrany vedoucí do vrcholu / z vrcholu)
+\item vrchol je vyvážený $\equiv \text{deg}^\text{in}(v)=\text{deg}^\text{out}(v)$
+\item graf je vyvážený $\equiv$ všechny vrcholy jsou vyvážené
+\item součet vstupních stupňů = součet výstupních stupňů = počet hran
+\item orientovaný graf je slabě souvislý $\equiv$ jeho podkladový graf je souvislý
+\item o. graf je silně souvislý $\equiv$ existuje orientovaná cesta mezi každými dvěma vrcholy
+\item silná souvislost $\implies$ slabá souvislost
+\item věta: pro orientovaný graf $G$ platí: $G$ je vyvážený a slabě souvislý $\iff$ $G$ je eulerovský $\iff$ $G$ je vyvážený a silně souvislý
+\end{itemize}
+\item Toky v sítích: definice sítě a toku v ní
+\begin{itemize}
+\item tokovou síť tvoří
+\begin{itemize}
+\item $V$ \dots{} množina vrcholů
+\item $E$ \dots{} množina orientovaných hran, $E\subseteq V\times V$
+\item $z\in V$ \dots{} zdroj
+\item $s\in V\setminus\set{z}$ \dots{} spotřebič / stok
+\item $c:E\to [0,+\infty)$ \dots{} $c(e)$ je kapacita hrany $e$
+\end{itemize}
+\item definice umožňuje mít hrany oběma směry, připouští také smyčky, ty však z hlediska toků v sítích nejsou nijak užitečné
+\item poznámka: ze stoku může vycházet orientovaná hrana, podobně do zdroje může vést hrana
+\item tok v síti $(V,E,z,s,c)$ je funkce $f:E\to[0,+\infty)$ splňující
+\begin{itemize}
+\item $\forall e\in E:0\leq f(e)\leq c(e)$
+\item $\forall x\in V\setminus \set{z,s}:$ součet toků do vrcholu $x$ se rovná součtu toků z vrcholu (formálně pomocí sum) \dots{} Kirchhoffův zákon
+\end{itemize}
+\end{itemize}
+\item Existence maximálního toku (bez důkazu)
+\begin{itemize}
+\item velikost toku $f$ v síti $(V,E,z,s,c)$ je $w(f)\coloneqq f[\text{Out}(z)]-f[\text{In}(z)]$
+\item kde $\mathrm{Out}(z)$ a $\mathrm{In}(z)$ jsou množiny hran do, respektive ze zdroje a $f[A]\coloneqq\sum_{e\in A}f(e)$ pro $A\subseteq E$
+\item maximální tok je tok, který má největší velikost
+\item fakt: v každé tokové síti existuje maximální tok
+\item poznámka: obecně na přednášce uvažujeme konečné tokové sítě, grafy apod.
+\item idea důkazu
+\begin{itemize}
+\item mějme síť, očíslujme hrany (od $1$ do $m$)
+\item tok $f$ reprezentujme jako uspořádanou $m$-tici hodnot
+\item množina všech toků je uzavřená a omezená podmnožina $\mathbb R^m$, je tedy kompaktní
+\item funkce, která toku $f$ přiřadí $w(f)$, je spojitá
+\item víme z analýzy, že spojitá funkce na kompaktní množině nabývá maxima
+\end{itemize}
+\item řez v síti $(V,E,z,s,c)$ je množina hran $R\subseteq E$ taková, že každá orientovaná cesta ze $z$ do $s$ obsahuje aspoň jednu hranu $R$
+\item Minimaxová věta o toku a řezu: nechť $f_\text{max}$ je maximální tok a $R_\text{min}$ je minimální řez v $(V,E,z,s,c)$, potom $w(f_\text{max})=c(R_\text{min})$
+\end{itemize}
+\item Princip hledání maximálního toku v síti s~celočíselnými kapacitami (například pomocí Ford-Fulkersonova algoritmu)
+\begin{itemize}
+\item rezerva hrany $uv$
+\begin{itemize}
+\item $r(uv)\coloneqq c(uv)-f(uv)+f(vu)$
+\end{itemize}
+\item hrana je nasycená $\equiv$ má nulovou rezervu
+\item hrana je nenasycená $\equiv$ má kladnou rezervu
+\item cesta je nenasycená $\equiv$ žádná její hrana není nasycená / všechny mají kladné rezervy
+\item algoritmus
+\begin{itemize}
+\item iterujeme, dokud existuje nenasycená cesta ze zdroje do stoku
+\item spočítáme rezervu celé cesty (minimum přes rezervy hran cesty)
+\item pro každou hranu upravíme tok - v~protisměru odečteme co nejvíc, zbytek přičteme po směru
+\end{itemize}
+\item pro celočíselné kapacity vrátí celočíselný tok
+\item racionální kapacity převedeme na celočíselné
+\item pro iracionální kapacity se může rozbít
+\end{itemize}
+\end{itemize}
+\subsection{5. Pravděpodobnost a statistika}
+\begin{itemize}
+\item Pravděpodobnostní prostor, náhodné jevy, pravděpodobnost (definice, příklady)
+\begin{itemize}
+\item $\Omega$ \dots{} množina elementárních jevů
+\item $\mathcal F\subseteq\mathcal P(\Omega)$ je prostor jevů, pokud\dots{}
+\begin{itemize}
+\item $\emptyset,\Omega\in\mathcal F$
+\item $A\in\mathcal F\implies A^c=\Omega\setminus A\in\mathcal F$
+\item $A_1,A_2,\ldots\in\mathcal F\implies\bigcup A_i\in \mathcal F$
+\end{itemize}
+\item $P:\mathcal F\to[0,1]$ je pravděpodobnost, pokud\dots{}
+\begin{itemize}
+\item $P(\Omega)=1$
+\item $P(\bigcup A_i)=\sum P(A_i)$ pro $A_1,A_2,\ldots\in \mathcal F$ po dvou disjunktní
+\end{itemize}
+\item příklady pravděpodobnostních prostorů
+\begin{itemize}
+\item klasický - tedy konečný s uniformní pravděpodobností, např. $\Omega=[6]$ (hod kostkou)
+\begin{itemize}
+\item příklad elementárního jevu \dots{} padla šestka
+\item příklad jevu \dots{} padlo sudé číslo
+\end{itemize}
+\item diskrétní - dovolíme cinknutou kostku (nevyžadujeme uniformní pravděpodobnost)
+\item geometrický - např. \quotedblbase{}náhodně\textquotedblleft{} střílíme na terč, takže šance, že zasáhneme konkrétní oblast, je úměrná obsahu oblasti (ale může být i ve více než dvou dimenzích)
+\item spojitý - schopný střelec se trefuje spíše do středu terče (opět dovolíme i jiné než uniformní rozdělení)
+\end{itemize}
+\end{itemize}
+\item Základní pravidla pro počítání s pravděpodobností
+\begin{itemize}
+\item $P(A)+P(A^c)=1$
+\item $A\subseteq B\implies P(B\setminus A)=P(B)-P(A)\implies P(A)\leq P(B)$
+\item $P(A\cup B)=P(A)+P(B)-P(A\cap B)$
+\item $P(A_1\cup A_2\cup\dots)\leq\sum_i P(A_i)$ \dots{} subaditivita, Booleova nerovnost
+\end{itemize}
+\item Nezávislost náhodných jevů, podmíněná pravděpodobnost
+\begin{itemize}
+\item jevy $A,B\in\mathcal F$ jsou nezávislé, pokud $P(A\cap B)=P(A)\cdot P(B)$
+\item můžeme uvažovat i větší množiny jevů
+\begin{itemize}
+\item jevy v množině jsou (vzájemně) nezávislé, pokud pro každou konečnou podmnožinu platí, že $P(\bigcap)=\prod P$
+\item pokud podmínka platí jen pro dvouprvkové podmnožiny, jsou jevy \textit{po dvou nezávislé}
+\end{itemize}
+\item pokud $A,B\in\mathcal F$ a $P(B)\gt 0$, definujeme podmíněnou pravděpodobnost $A$ při $B$ jako $P(A\mid B)=\frac{P(A\cap B)}{P(B)}$
+\item zjevně $P(A\cap B)=P(A)\cdot P(B\mid A)$
+\item $P(A_1\cap A_2\cap \dots\cap A_n)=P(A_1)P(A_2\mid A_1)P(A_3\mid A_1\cap A_2)\dots P(A_n\mid A_1\cap\dots\cap A_{n-1})$
+\begin{itemize}
+\item lze ukázat indukcí (nebo neformálně rozepsáním členů vpravo a vykrácením)
+\end{itemize}
+\item věta o úplné pravděpodobnosti
+\begin{itemize}
+\item mějme $B_1,B_2,\dots$ rozklad $\Omega$
+\item $P(A)=\sum_iP(B_i)\cdot P(A\mid B_i)$
+\begin{itemize}
+\item sčítance s $P(B_i)=0$ považujeme za nulové
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\item Bayesův vzorec
+\begin{itemize}
+\item mějme $B_1,B_2,\dots$ rozklad $\Omega$
+\item $P(B_j\mid A)=\frac{P(B_j)\cdot P(A\mid B_j)}{\sum_i P(B_i)\cdot P(A\mid B_i)}$
+\end{itemize}
+\item Náhodné veličiny a jejich rozdělení
+\begin{itemize}
+\item náhodná veličina je funkce, která přiřazuje každému elementárnímu náhodnému jevu nějakou (obvykle číselnou) hodnotu
+\item pro diskrétní náhodnou veličinu $X$ definujeme pravděpodobnostní funkci $p_X(x)=P(\set{X=x})$
+\item spojité náhodné veličiny obvykle popisujeme pomocí distribuční funkce a hustoty
+\begin{itemize}
+\item distribuční funkce náhodné veličiny $X$ je funkce $F_X:\mathbb R\to [0,1]$ definovaná předpisem $F_X(x):=P(X\leq x)$
+\item zjevně $P(a\lt X\leq b)=F_X(b)-F_X(a)$
+\item vlastnosti
+\begin{itemize}
+\item $F_X$ je neklesající
+\item $\lim_{x\to+\infty} F_X(x)=1$
+\item $\lim_{x\to-\infty} F_X(x)=0$
+\item $F_X$ je zprava spojitá
+\end{itemize}
+\item náhodná veličina $X$ se nazývá spojitá, pokud existuje nezáporná reálná funkce $f_X$ tak, že $F_X(x)=P(X\leq x)=\int_{-\infty}^x f_X(t)\text dt$
+\item hustota $f_X$ \dots{} \quotedblbase{}limita histogramů\textquotedblleft{}
+\item zjevně $\int_{-\infty}^\infty f_X=1$
+\end{itemize}
+\end{itemize}
+\item Střední hodnota - linearita střední hodnoty, střední hodnota součinu nezávislých veličin, Markovova nerovnost
+\begin{itemize}
+\item $\mathbb E(X)=\sum_{x\in\text{Im}(X)}x\cdot P(X=x)$
+\begin{itemize}
+\item nebo $\mathbb E(X)=\int_{-\infty}^{\infty} x f_X(x)\text dx$
+\end{itemize}
+\item pozorování: $\mathbb E(X)=\sum_{\omega\in\Omega}X(\omega)\cdot P(\set{\omega})$
+\item pravidlo naivního statistika
+\begin{itemize}
+\item $\mathbb E(g(X))=\sum_{x\in\text{Im}(X)}g(x)P(X=x)$
+\item nebo $\mathbb E(g(X))=\int_{-\infty}^\infty g(x)f_X(x)\text dx$
+\end{itemize}
+\item linearita $\mathbb E(aX+b)=a\mathbb E(X)+b$ plyne z PNS pro funkci $ax+b$
+\item podmíněná střední hodnota $\mathbb E(X\mid B)=\sum_{x\in\text{Im}(X)}x\cdot P(X=x\mid B)$
+\item věta o celkové střední hodnotě: $\mathbb E(X)=\sum_i P(B_i)\cdot \mathbb E(X\mid B_i)$
+\item $\mathbb E(g(X,Y))=\sum_x\sum_y g(x,y) P(X=x\land Y=y)$
+\item $\mathbb E(aX+bY)=a\mathbb E(X)+b\mathbb E(Y)$
+\item pro nezávislé $X,Y$ platí $\mathbb E(XY)=\mathbb E(X)\mathbb E(Y)$
+\item Markovova nerovnost
+\begin{itemize}
+\item pro $X\geq 0$ a $a\gt0$ platí $P(X\geq a)\leq\frac{\mathbb E(X)}a$
+\end{itemize}
+\end{itemize}
+\item Rozptyl - definice, vzorec pro rozptyl součtu (závislých či nezávislých veličin)
+\begin{itemize}
+\item rozptyl \dots{} $\text{var}(X)=\mathbb E((X-\mathbb EX)^2)$
+\item směrodatná odchylka \dots{} $\sigma_X=\sqrt{\text{var}(X)}$
+\item věta: $\text{var}(X)=\mathbb E(X^2)-\mathbb E(X)^2$
+\item počítání s rozptylem
+\begin{itemize}
+\item $\mathrm{var}(aX+b)=a^2\mathrm{var}(X)$
+\end{itemize}
+\item rozptyl součtu nezávislých veličin je součet rozptylů
+\begin{itemize}
+\item $\mathrm{var}(X+Y)=\mathrm{var}(X)+\mathrm{var}(Y)$
+\end{itemize}
+\item kovariance a její vlastnosti
+\begin{itemize}
+\item definice: $\text{cov}(X,Y)=\mathbb E((X-\mathbb EX)(Y-\mathbb EY))$
+\item věta: $\text{cov}(X,Y)=\mathbb E(XY)-\mathbb E(X)\mathbb E(Y)$
+\item pro nezávislé $X,Y$ platí $\text{cov}(X,Y)=0$
+\item zjevně $\text{cov}(X,X)=\text{var}(X)$
+\item $\text{cov}(aX+bY,Z)=a\text{cov}(X,Z)+b\text{cov}(Y,Z)$
+\item korelace
+\begin{itemize}
+\item $\rho(X,Y)=\frac{\text{cov}(X,Y)}{\sigma_X\cdot\sigma_Y}$
+\end{itemize}
+\end{itemize}
+\item rozptyl součtu náhodných veličin (závislých i nezávislých)
+\begin{itemize}
+\item nechť $X=\sum_{i=1}^n X_i$
+\item pak $\text{var}(X)=\sum_{i=1}^n\sum_{j=1}^n\text{cov}(X_i,X_j)$
+\end{itemize}
+\end{itemize}
+\item Práce s konkrétními rozděleními: geometrické, binomické, Poissonovo, normální, exponenciální
+\begin{itemize}
+\item Bernoulliho/alternativní rozdělení $\text{Ber}(p)$
+\begin{itemize}
+\item počet úspěchů při jednom pokusu (kde $p$ je pravděpodobnost úspěchu)
+\item $p_X(1)=p$
+\item $p_X(0)=1-p$
+\item jinak $p_X(x)=0$
+\item $\mathbb E(X)=p$
+\item $\text{var}(X)=p(1-p)$
+\end{itemize}
+\item geometrické rozdělení $\text{Geom}(p)$
+\begin{itemize}
+\item při kolikátém pokusu poprvé uspějeme
+\item $p_X(k)=(1-p)^{k-1}\cdot p$
+\item $\mathbb E(X)=1/p$
+\item $\text{var}(X)=\frac{1-p}{p^2}$
+\end{itemize}
+\item binomické rozdělení $\text{Bin}(n,p)$
+\begin{itemize}
+\item počet úspěchů při $n$ nezávislých pokusech
+\item $p_X(k)={n\choose k}p^k(1-p)^{n-k}$
+\item $\mathbb E(X)=np$
+\item $\text{var}(X)=np(1-p)$
+\end{itemize}
+\item Poissonovo rozdělení $\text{Pois}(\lambda)$
+\begin{itemize}
+\item počet doručených zpráv za časový úsek, $\lambda$ je průměrná hodnota
+\item $p_X(k)=\frac{\lambda^k}{k!}e^{-\lambda}$
+\item $\text{Pois}(\lambda)$ je limitou $\text{Bin}(n,\lambda/n)$ pro $n\to\infty$
+\item $\mathbb E(X)=\lambda$
+\item $\text{var}(X)=\lambda$
+\end{itemize}
+\item uniformní $U(a,b)$
+\begin{itemize}
+\item $f_X(x)=\frac 1{b-a}$
+\item $F_X(x)=\frac{x-a}{b-a}$
+\item $\mathbb E(X)=\frac{a+b}2$
+\item $\text{var}(X)=\frac{(b-a)^2}{12}$
+\end{itemize}
+\item exponenciální $\text{Exp}(\lambda)$
+\begin{itemize}
+\item $f_X(x)=\lambda e^{-\lambda x}$ pro $x\geq 0$
+\item $F_X(x)=1-e^{-\lambda x}$ pro $x\geq 0$
+\item $\mathbb E(X)=1/\lambda$
+\item $\text{var}(X)=1/\lambda^2$
+\end{itemize}
+\item standardní normální rozdělení
+\begin{itemize}
+\item $N(0,1)$
+\item $f_X(x)=\varphi(x)=\frac1{\sqrt{2\pi}} e^{-x^2/2}$
+\end{itemize}
+\item obecné normální rozdělení
+\begin{itemize}
+\item $N(\mu,\sigma^2)$
+\item $f_X(x)=\frac 1{\sigma\sqrt{2\pi}}e^{-\frac12(\frac{x-\mu}{\sigma})^2}$
+\item máme-li $X\sim N(\mu,\sigma^2)$, pak pro $Z=\frac{X-\mu}\sigma$ platí $Z\sim N(0,1)$
+\item pro normální nezávislé náhodné veličiny $X_i\sim N(\mu_i,\sigma_i^2)$ (nechť je jich konečně) je i součet normální náhodná veličina $\sum X_i\sim N(\sum\mu_i,\sum\sigma_i^2)$
+\item pravidlo $3\sigma$
+\begin{itemize}
+\item $P(\mu-\sigma\lt X\lt\mu+\sigma)\doteq 0.68$
+\item $P(\mu-2\sigma\lt X\lt\mu+2\sigma)\doteq 0.95$
+\item $P(\mu-3\sigma\lt X\lt\mu+3\sigma)\doteq 0.997$
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\item Limitní věty: zákon velkých čísel
+\begin{itemize}
+\item mějme $X_1,X_2,\dots$ stejně rozdělené nezávislé náhodné veličiny
+\item $\bar X_n=(X_1+\dots+X_n)/n$ \dots{} výběrový průměr
+\item silný zákon velkých čísel
+\begin{itemize}
+\item $\lim_{n\to\infty}\bar X_n=\mu$ skoro jistě (s pravděpodobností 1)
+\item použití: Monte Carlo integrování kruhu
+\end{itemize}
+\item slabý zákon velkých čísel (zlepšení přesnosti opakovaným měřením)
+\begin{itemize}
+\item $\forall\varepsilon\gt 0:\lim_{n\to\infty} P(|\bar X_n-\mu|\gt\varepsilon)=0$
+\item říkáme, že $\bar X_n$ konverguje k $\mu$ v pravděpodobnosti, píšeme $\bar X_n\xrightarrow P\mu$
+\end{itemize}
+\end{itemize}
+\item Limitní věty: centrální limitní věta
+\begin{itemize}
+\item nechť $X_1,X_2,\dots$ jsou stejně rozdělené se střední hodnotou $\mu$ a rozptylem $\sigma^2$
+\item označme $Y_n=\frac{(X_1+\dots+X_n)-n\mu}{\sigma\sqrt{n}}$
+\item pak $Y_n\xrightarrow d N(0,1)$
+\begin{itemize}
+\item $Y_n$ konverguje v distribuci k $N(0,1)$
+\item tzn. $\lim_{n\to\infty} F_{Y_n}(x)=\Phi(x)$
+\end{itemize}
+\item CLV se hodí k aproximaci distribuce součtu nebo průměru velkého počtu náhodných veličin normálním rozdělením
+\begin{itemize}
+\item takže můžeme provádět bodové a intervalové odhady i tam, kde data nejsou normálně rozdělená, ale známe rozptyl
+\end{itemize}
+\end{itemize}
+\item Bodové odhady - alespoň jedna metoda pro jejich tvorbu, vlastnosti
+\begin{itemize}
+\item poznámka: neodhadujeme přímo $\theta$, nýbrž $g(\theta)$, aby to bylo obecnější
+\item pro náhodný výběr $X_1,\dots,X_n\sim F_\theta$ a libovolnou funkci $g$ nazveme bodový odhad $\hat\theta_n$\dots{}
+\begin{itemize}
+\item nevychýlený/nestranný, pokud $\mathbb E(\hat\theta_n)=g(\theta)$
+\item asymptoticky nevychýlený, pokud $\lim_{n\to\infty}\mathbb E(\hat\theta_n)=g(\theta)$
+\item konzistentní, pokud $\hat\theta_n\xrightarrow P g(\theta)$
+\end{itemize}
+\item dále definujeme
+\begin{itemize}
+\item vychýlení \dots{} $\text{bias}(\hat\theta_n)=\mathbb E(\hat\theta_n)-\theta$
+\item střední kvadratickou chybu \dots{} $\text{MSE}(\hat\theta_n)=\mathbb E((\hat\theta_n-\theta)^2)$
+\end{itemize}
+\item věta: $\text{MSE}(\hat\theta_n)=\text{bias}(\hat\theta_n)^2+\text{var}(\hat\theta_n)$
+\item metoda momentů
+\begin{itemize}
+\item $r$-tý moment $X$ \dots{} $\mathbb E(X^r)=m_r(\theta)$
+\item $r$-tý výběrový moment \dots{} $\frac1n\sum_{i=1}^n X_i^r=\widehat{m_r}$
+\begin{itemize}
+\item konzistentní nevychýlený odhad pro $r$-tý moment
+\end{itemize}
+\item nalezneme $\theta$ takové, že $m_r(\theta)=\widehat{m_r}$
+\item typicky stačí použít první moment, dostaneme nějakou rovnici
+\item $m_1=\mu$
+\item $m_2=\mathbb E(X^2)=\text{var}(X)+(\mathbb EX)^2=\sigma^2+\mu^2$
+\end{itemize}
+\item metoda maximální věrohodnosti
+\begin{itemize}
+\item $\hat\theta_{ML}=\text{argmax}_\theta\;p(x;\theta)$
+\begin{itemize}
+\item $\text{argmax}_\theta\;f(x;\theta)$
+\item abych se nemusel rozhodovat mezi $p$ a $f$, budu používat $L$
+\end{itemize}
+\item výpočetně jednodušší bude používat logaritmus $L$, který označíme $\ell$
+\item příklad
+\begin{itemize}
+\item ve vzorku $k$ leváků z $n$ lidí, hledáme pravděpodobnost $\theta$, že je někdo levák
+\item $L(x;\theta)=\theta^k(1-\theta)^{n-k}$
+\item $\ell(x;\theta)=k\log\theta+(n-k)\log(1-\theta)$
+\item $\ell'(x;\theta)=\frac k\theta-\frac{n-k}{1-\theta}$
+\begin{itemize}
+\item hledáme maximum, položíme derivaci rovnou nule (a zkontrolujeme krajní hodnoty)
+\end{itemize}
+\end{itemize}
+\item podobně pro spojitý případ - \quotedblbase{}maximalizujeme\textquotedblleft{} rovnici pro pravděpodobnost konkrétního výběru
+\end{itemize}
+\end{itemize}
+\item Intervalové odhady: metoda založená na aproximaci normálním rozdělením
+\begin{itemize}
+\item statistiky $D\leq H$ určují konfidenční interval o spolehlivosti $1-\alpha$, pokud $P(D\leq\theta\leq H)=1-\alpha$
+\begin{itemize}
+\item zkráceně $(1-\alpha)$-CI
+\end{itemize}
+\item interval budeme uvažovat ve tvaru $[x-\delta,x+\delta]$
+\item postup
+\begin{itemize}
+\item máme nestranný bodový odhad $\hat\theta$ pro parametr $\theta$
+\item $\hat\theta$ má normální rozdělení
+\item $\hat\theta\pm z_{\alpha/2}\cdot\text{se}$ je $(1-\alpha)$-CI
+\begin{itemize}
+\item $z_{\alpha/2}:=\Phi^{-1}(1-\alpha/2)$
+\item $\text{se}:=\sigma(\hat\theta)$
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\item Testování hypotéz - základní přístup, chyby 1. a 2. druhu, hladina významnosti
+\begin{itemize}
+\item zvolíme testovou statistiku $T$
+\item nulová hypotéza \dots{} defaultní, konzervativní model
+\item alternativní hypotéza \dots{} alternativní model, \quotedblbase{}zajímavost\textquotedblleft{}
+\item nulovou hypotézu buď zamítneme, nebo nezamítneme
+\item chyba 1. druhu - chybné zamítnutí, \quotedblbase{}trapas\textquotedblleft{}
+\item chyba 2. druhu - chybné přijetí, \quotedblbase{}promarněná příležitost\textquotedblleft{}
+\item hladina významnosti $\alpha$ \dots{} pravděpodobnost chyby 1. druhu
+\begin{itemize}
+\item typicky se volí $\alpha=0.05$
+\end{itemize}
+\item $\beta$ \dots{} pravděpodobnost chyby 2. druhu
+\item kritický obor \dots{} je to množina, kterou určíme před provedením testu; pokud se výsledek našeho testu bude nacházet v~kritickém oboru, zamítneme nulovou hypotézu
+\begin{itemize}
+\item tedy $\alpha=P(h(X)\in W; H_0)$
+\end{itemize}
+\item síla testu \dots{} $1-\beta$
+\begin{itemize}
+\item chceme co největší
+\end{itemize}
+\item $p$-hodnota \dots{} nejmenší $\alpha$ taková, že na hladině $\alpha$ zamítáme $H_0$
+\begin{itemize}
+\item takže zamítáme, pokud $p$-hodnota vyjde menší rovna naší zvolené $\alpha$
+\item $p$-hodnota je vlastně pravděpodobnost, že při platnosti $H_0$ nabývá zvolená testová statistika $T$ naměřené hodnoty nebo hodnot ještě extrémnějších
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\subsection{6. Logika}
+\begin{itemize}
+\item Znalost a práce se základními pojmy syntaxe výrokové a predikátové logiky (jazyk, otevřená a uzavřená formule, instance formule, apod.)
+\begin{itemize}
+\item výroková logika
+\begin{itemize}
+\item jazyk je určený neprázdnou množinou výrokových proměnných $\mathbb P$ (také jim říkáme prvovýroky nebo atomické výroky)
+\item množina $\mathbb P$ může být konečná nebo i nekonečná (ale obvykle bude spočetná) a bude mít dané uspořádání
+\end{itemize}
+\item predikátová logika
+\begin{itemize}
+\item signatura je dvojice $\braket{\mathcal {R,F}}$, kde $\mathcal{R,F}$ jsou disjunktní množiny symbolů (relační a funkční, ty zahrnují konstantní) spolu s danými aritami a neobsahují symbol $=$
+\begin{itemize}
+\item signaturu ale často uvádíme jako prostý výčet symbolů
+\end{itemize}
+\item do jazyka patří\dots{}
+\begin{itemize}
+\item spočetně mnoho proměnných
+\item relační, funkční a konstantní symboly ze signatury a symbol $=$, jde-li o jazyk s rovností
+\item univerzální a existenční kvantifikátory pro každou proměnnou
+\item symboly pro logické spojky a závorky
+\end{itemize}
+\item např. jazyk uspořádání zapíšeme jako \quotedblbase{}$L=\braket{\leq}$ s rovností\textquotedblleft{}
+\begin{itemize}
+\item tzn. napíšeme signaturu a také uvedeme, zda jde o jazyk s rovností
+\end{itemize}
+\item struktura v signatuře $\braket{\mathcal{R,F}}$ je trojice $\mathcal A=\braket{A,\mathcal{R^A,F^A}}$, kde\dots{}
+\begin{itemize}
+\item $A$ je neprázdná množina, říkáme jí doména (také universum)
+\item $\mathcal {R^A}$ je množina interpretací jednotlivých relačních symbolů (kde interpretace $n$-árního relačního symbolu je množina uspořádaných $n$-tic prvků z $A$)
+\item $\mathcal {F^A}$ je množina interpretací jednotlivých funkčních symbolů (kde intepretace $n$-árního funkčního symbolu odpovídá funkci přiřazující $n$-tici prvků z $A$ jeden prvek z $A$)
+\begin{itemize}
+\item speciálně pro konstantní symbol $c\in\mathcal F$ je $c^\mathcal A\in A$
+\end{itemize}
+\end{itemize}
+\item termy jazyka $L$ jsou konečné nápisy definované induktivně
+\begin{itemize}
+\item proměnná je term
+\item konstantní symbol je term
+\item pro $n$-ární funkční symbol $f$ a termy $t_1,\dots,t_n$ je nápis $f(t_1,\dots,t_n)$ také term
+\end{itemize}
+\item atomická formule jazyka $L$ je nápis $R(t_1,\dots,t_n)$, kde $R$ je $n$-ární relační symbol z $L$ (v jazyce s rovností to může být i rovnost) a $t_i$ je $L$-term
+\item formule jazyka $L$ jsou konečné nápisy definované induktivně
+\begin{itemize}
+\item atomická formule je formule
+\item negace formule je formule
+\item spojením dvou formulí binární logickou spojkou dostaneme formuli
+\item přidáním kvantifikátoru před formuli dostaneme formuli
+\end{itemize}
+\item výskyt proměnné je vázaný, pokud jí odpovídá nějaký kvantifikátor, jinak je výskyt volný
+\item proměnná je volná, pokud má volný výskyt, je vázaná, pokud má vázaný výskyt
+\item formule je otevřená, neobsahuje-li žádný kvantifikátor
+\item formule je uzavřená (= sentence), pokud nemá žádnou volnou proměnnou
+\item term $t$ je substituovatelný za proměnnou $x$ ve formuli $\varphi$, pokud po simultánním nahrazení všech volných výskytů $x$ ve $\varphi$ za $t$ nevznikne ve $\varphi$ žádný vázaný výskyt proměnné z $t$
+\begin{itemize}
+\item v tom případě říkáme vzniklé formuli instance $\varphi$ vzniklá substitucí $t$ za $x$ a označujeme ji $\varphi(x/t)$
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\item Prenexní tvary formulí predikátové logiky
+\begin{itemize}
+\item PNF = kvantifikátory jsou před formulí, formule se dělí na kvantifikátorový prefix a otevřené jádro
+\item převod na PNF - postupně kvantifikátory vytahuju (podle pravidel), v případě potřeby přejmenuju proměnnou, tím vznikne varianta (pokud je v druhé části formule volná proměnná se stejným názvem)
+\item pravidlo převodu: pokud vytahujeme kvantifikátor z negace, musíme ho \quotedblbase{}přepnout\textquotedblleft{} (pozor: u implikace je levá strana jakoby negovaná)
+\end{itemize}
+\item Znalost základních normálních tvarů (CNF, DNF, PNF)
+\begin{itemize}
+\item PNF = kvantifikátory jsou před formulí, formule se dělí na kvantifikátorový prefix a otevřené jádro
+\item tvary výroků
+\begin{itemize}
+\item literál je prvovýrok nebo negace prvovýroku
+\begin{itemize}
+\item pro literál $\ell$ označuje $\overline\ell$ literál k němu opačný (tedy jeho negaci)
+\end{itemize}
+\item klauzule je disjunkce literálů
+\begin{itemize}
+\item jednotková klauzule je samotný literál
+\item prázdná klauzule je $\bot$
+\end{itemize}
+\item výrok je v konjunktivní normální formě (CNF), pokud je konjunkcí klauzulí
+\begin{itemize}
+\item prázdný výrok v CNF je $\top$
+\end{itemize}
+\item elementární konjunkce je konjunkce literálů
+\begin{itemize}
+\item jednotková elementární konjunkce je samotný literál
+\item prázdná elementární konjunkce je $\top$
+\end{itemize}
+\item výrok je v disjunktivní normální formě (DNF), pokud je disjunkcí elementárních konjunkcí
+\begin{itemize}
+\item prázdný výrok v DNF je $\bot$
+\end{itemize}
+\item výrok je hornovský (v Hornově tvaru), pokud je konjunkcí hornovských klauzulí, tj. klauzulí obsahujících nejvýše jeden pozitivní literál
+\end{itemize}
+\item množinová reprezentace
+\begin{itemize}
+\item klauzule je konečná množina literálů
+\begin{itemize}
+\item prázdnou klauzuli označíme $\square$, není nikdy splněna
+\end{itemize}
+\item CNF formule je (konečná nebo nekonečná) množina klauzulí
+\begin{itemize}
+\item prázdná formule $\emptyset$ je vždy splněna
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\item Převody na normální tvary
+\begin{itemize}
+\item sémantický převod
+\begin{itemize}
+\item najdeme modely výroku
+\item pro DNF budeme uvažovat disjunkci elementárních konjunkcí, přičemž každá elementární konjunkce popíše jeden model
+\item pro CNF musíme najít nemodely formule, každá klauzule zakáže jeden nemodel
+\begin{itemize}
+\item pokud je první nemodel $(0,0,0)$, pak první klauzule bude $(p\lor q\lor r)$
+\end{itemize}
+\end{itemize}
+\item syntaktický převod
+\begin{itemize}
+\item přepíšeme implikaci a ekvivalenci pomocí konjunkce, disjunkce a negace
+\item přesuneme negace dovnitř (k literálům)
+\item použijeme distributivitu konjunkce a disjunkce, abychom jednu přesunuli dovnitř (podle toho, jestli chceme CNF nebo DNF)
+\end{itemize}
+\end{itemize}
+\item Použití normálních tvarů pro algoritmy (SAT, rezoluce)
+\begin{itemize}
+\item problém Horn-SAT
+\begin{itemize}
+\item výrok je hornovský, pokud je konjunkcí hornovských klauzulí, tj. klauzulí obsahujících nejvýše jeden pozitivní literál
+\item algoritmus
+\begin{itemize}
+\item pokud $\varphi$ obsahuje dvojici opačných jednotkových klauzulí, není splnitelný
+\item pokud $\varphi$ neobsahuje žádnou jednotkovou klauzuli, je splnitelný, ohodnotíme všechny zbývající proměnné nulou
+\item pokud $\varphi$ obsahuje jednotkovou klauzuli $\ell$, ohodnotíme literál $\ell$ hodnotou 1, provedeme jednotkovou propagaci a postup opakujeme
+\end{itemize}
+\item jednotková propagace pro $\ell=1$
+\begin{itemize}
+\item každou klauzuli obsahující $\ell$ odstraníme (protože je takto splněna)
+\item $\overline\ell$ odstraníme ze všech klauzulí, které ho obsahují (protože $\overline\ell$ nemůže zajistit splnění dané klauzule)
+\end{itemize}
+\item Horn-SAT lze řešit v lineárním čase
+\end{itemize}
+\item algoritmus DPLL pro řešení SAT
+\begin{itemize}
+\item literál $\ell$ má čistý výskyt ve $\varphi$, pokud se $\ell$ vyskytuje ve $\varphi$ a opačný literál $\overline\ell$ se ve $\varphi$ nevyskytuje
+\begin{itemize}
+\item takový literál můžu nastavit na 1
+\item to neovlivní splnitelnost výroku, ale zmenší to množinu modelů, které jsem schopen nalézt
+\end{itemize}
+\item algoritmus
+\begin{itemize}
+\item dokud $\varphi$ obsahuje jednotkovou klauzuli $\ell$, ohodnoť $\ell=1$ a proveď jednotkovou propagaci
+\item dokud existuje literál $\ell$, který má ve $\varphi$ čistý výskyt, ohodnoť $\ell=1$ a odstraň klauzule obsahující $\ell$
+\item pokud $\varphi$ neobsahuje žádnou klauzuli, je splnitelný
+\item pokud $\varphi$ obsahuje prázdnou klauzuli, není splnitelný
+\item jinak zvol dosud neohodnocenou výrokovou proměnnou $p$ a zavolej algoritmus rekurzivně na $\varphi\land p$ a na $\varphi\land\neg p$
+\end{itemize}
+\item algoritmus běží v exponenciálním čase
+\end{itemize}
+\item rezoluce
+\begin{itemize}
+\item použitím rezolučního pravidla z klauzulí $\varphi\lor p$ a $\psi\lor\neg p$ dostaneme $\varphi\lor\psi$
+\item takhle spolu můžeme postupně rezolvovat různé klauzule z teorie
+\item pokud nám vyjde prázdná klauzule, je teorie sporná
+\item k dokázání výroku $\varphi$ v teorii $T$ hledáme rezoluční zamítnutí $T\cup\neg\varphi$
+\begin{itemize}
+\item nebo přímo rezoluční důkaz výroku $\varphi$ (tzn. na konci rezoluce nám vyjde $\varphi$)
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\item Pojem modelu teorie
+\begin{itemize}
+\item model (jazyka) ve výrokové logice je pravdivostní ohodnocení proměnných
+\begin{itemize}
+\item model $v$ je modelem teorie $T$, pokud každý axiom z $T$ v modelu $v$ platí, píšeme $v\models T$
+\end{itemize}
+\item v predikátové logice: model jazyka $L$ nebo také $L$-struktura je libovolná struktura v signatuře jazyka $L$
+\begin{itemize}
+\item model teorie $T$ je $L$-struktura, ve které platí všechny axiomy teorie $T$
+\end{itemize}
+\end{itemize}
+\item Pravdivost, lživost, nezávislost formule vzhledem k teorii, splnitelnost, tautologie, důsledek
+\begin{itemize}
+\item pravdivý výrok platí v každém modelu (jazyka/teorie)
+\begin{itemize}
+\item je pravdivý v logice = platí v logice = je tautologie
+\item je pravdivý v $T$ = platí v $T$ = je důsledek $T$
+\end{itemize}
+\item lživý (sporný) výrok neplatí v žádném modelu
+\item nezávislý výrok platí v nějakém modelu a neplatí v~jiném modelu
+\item splnitelný výrok platí v nějakém modelu (tedy není lživý, je pravdivý nebo nezávislý)
+\end{itemize}
+\item Analýza výrokových teorií nad konečně mnoha prvovýroky
+\begin{itemize}
+\item nechť $T$ je bezesporná teorie nad $\mathbb P$
+\begin{itemize}
+\item $|\mathbb P|=n\in\mathbb N^+$ \dots{} počet proměnných v jazyce
+\item $m=|M_{\mathbb P}(T)|$ \dots{} velikost množiny modelů teorie $T$
+\end{itemize}
+\item neekvivalentních výroků nad $\mathbb P$ je $2^{2^n}$
+\begin{itemize}
+\item každý výrok odpovídá jedné podmnožině množiny modelů (všech modelů je $2^n$)
+\end{itemize}
+\item neekvivalentních výroků nad $\mathbb P$ pravdivých/lživých v $T$ je $2^{2^n-m}$
+\begin{itemize}
+\item u pravdivých musí množina modelů obsahovat všech $m$ modelů, takže je zafixujeme (u lživých naopak nesmí obsahovat žádný z nich)
+\end{itemize}
+\item neekv. výroků nad $\mathbb P$ nezávislých v $T$ je $2^{2^n}-2\cdot 2^{2^n-m}$
+\begin{itemize}
+\item vezmeme všechny a odečteme pravdivé a lživé
+\end{itemize}
+\item neekv. jednoduchých extenzí teorie $T$ je $2^m$, z toho sporná je jedna
+\begin{itemize}
+\item podle toho, které modely ubereme
+\end{itemize}
+\item neekv. kompletních jednoduchých extenzí teorie $T$ je $m$
+\begin{itemize}
+\item každá odpovídá jednomu modelu
+\end{itemize}
+\item $T$-neekvivalentních výroků nad $\mathbb P$ je $2^m$
+\item $T$-neekv. výroků nad $\mathbb P$ pravdivých/lživých (v $T$) je $1$
+\item $T$-neekv. výroků nad $\mathbb P$ nezávislých (v $T$) je $2^m-2$
+\end{itemize}
+\item Extenze teorií - schopnost porovnat sílu teorií, konzervativnost, skolemizace
+\begin{itemize}
+\item extenze teorie $T$ je libovolná teorie $T'$ v jazyce $\mathbb P'\supseteq\mathbb P$ splňující $\text{Csq}_{\mathbb P}(T)\subseteq\text{Csq}_{\mathbb P'}(T')$
+\begin{itemize}
+\item kde $\text{Csq}_\mathbb P(T)$ je množina všech důsledků teorie (výroků/sentencí pravdivých v teorii $T$ v jazyce $\mathbb P$)
+\end{itemize}
+\item extenze je jednoduchá, pokud $\mathbb P'=\mathbb P$
+\item extenze je konzervativní, pokud $\text{Csq}_{\mathbb P}(T)=\text{Csq}_{\mathbb P}(T')=\text{Csq}_{\mathbb P'}(T')\cap\text{VF}_\mathbb P$
+\item sémantický význam (v řeči modelů)
+\begin{itemize}
+\item mějme teorii $T$ v jazyce $\mathbb P$ a teorii $T'$ v jazyce $\mathbb P'$, kde $\mathbb P\subseteq\mathbb P'$
+\item $T'$ je jednoduchou extenzí $T$, právě když $\mathbb P'=\mathbb P$ a $M_\mathbb P(T')\subseteq M_\mathbb P(T)$
+\item $T'$ je extenzí $T$, právě když $M_{\mathbb P'}(T')\subseteq M_{\mathbb P'}(T)$
+\item $T'$ je konzervativní extenzí $T$, pokud je extenzí a navíc platí, že každý model $T$ lze nějak expandovat na model $T'$
+\item $T'$ je extenzí $T$ a zároveň $T$ je extenzí $T'$, právě když $T'\sim T$ (jazyky a množiny modelů se rovnají)
+\item kompletní jednoduché extenze $T$ jednoznačně až na ekvivalenci odpovídají modelům $T$
+\end{itemize}
+\item $T'$ je extenzí $T$ o definice, pokud vznikla z $T$ postupnou extenzí o definice relačních a funkčních (případně konstantních) symbolů
+\item je-li $T'$ extenze teorie $T$ o definice, potom platí:
+\begin{itemize}
+\item každý model teorie $T$ lze jednoznačně expandovat na model $T'$
+\item $T'$ je konzervativní extenze $T$
+\item pro každou $L'$-formuli $\varphi'$ existuje $L$-formule $\varphi$ taková, že $T'\models\varphi'\leftrightarrow\varphi$
+\end{itemize}
+\item Skolemova varianta sentence vzniká z původní PNF sentence skolemizací
+\begin{itemize}
+\item skolemizace spočívá v tom, že tyto kroky iterujeme přes všechny existenční kvantifikátory $(\exists y_i)$
+\begin{itemize}
+\item odstraníme z prefixu existenční kvantifikátor $(\exists y_i$)
+\item za proměnnou $y_i$ substituujeme term $f_i(x_1,\dots,x_{n_i})$, kde $x_1,\dots,x_{n_i}$ jsou proměnné, jejichž univerzální kvantifikátory předcházejí $(\exists y_i)$
+\end{itemize}
+\item začínáme s $L$-sentencí v PNF, jejíž všechny vázané proměnné jsou různé
+\item dostaneme $L'$-sentenci v PNF, kde $L'$ je rozšíření $L$ o nové $n_i$-ární funkční symboly
+\end{itemize}
+\end{itemize}
+\item Dokazatelnost - pojem formálního důkazu, zamítnutí; schopnost práce v některém z formálních dokazovacích systémů (např. tablo)
+\begin{itemize}
+\item důkaz, zamítnutí
+\begin{itemize}
+\item důkaz faktu, že v teorii $T$ platí výrok $\varphi$ je konečný syntaktický objekt vycházející z axiomů $T$ a výroku $\varphi$
+\item důkaz konstruujeme syntakticky, aniž bychom se museli zabývat modely
+\item po dokazovacím systému požadujeme dvě vlastnosti: korektnost (je-li výrok dokazatelný z $T$, je pravdivý v $T$) a úplnost (je-li výrok pravdivý v $T$, je dokazatelný z $T$)
+\item důkaz říká, že $\varphi$ platí, zamítnutí říká, že $\varphi$ neplatí
+\begin{itemize}
+\item rezoluční důkaz $\varphi$ v teorii $S$ má v kořeni $\varphi$, rezoluční zamítnutí teorie $S$ má v kořeni $\square$
+\end{itemize}
+\end{itemize}
+\item tablo důkaz
+\begin{itemize}
+\item konečné tablo z teorie $T$ je uspořádaný, položkami označkovaný strom zkonstruovaný aplikací konečně mnoha následujících pravidel:
+\begin{itemize}
+\item jednoprvkový strom označkovaný libovolnou položkou je tablo z teorie $T$
+\item pro libovolnou položku $P$ na libovolné větvi $V$ můžeme na konec větve $V$ připojit atomické tablo pro položku $P$
+\item na konec libovolné větve můžeme připojit položku $\text T\alpha$ pro libovolný axiom teorie $\alpha\in T$
+\end{itemize}
+\item tablo je konečné nebo nekonečné, každopádně vzniklo ve spočetně mnoha krocích
+\item tablo pro položku $P$ je tablo s položkou $P$ v kořeni
+\item tablo důkaz výroku $\varphi$ z teorie $T$ je sporné tablo z teorie $T$ s  položkou $\text F\varphi$ v~kořeni
+\begin{itemize}
+\item pokud existuje, je $\varphi$ tablo dokazatelný z $T$, píšeme $T\vdash\varphi$
+\item podobně definujeme tablo zamítnutí s $\text T\varphi$ v kořeni, tablo zamítnutelnost se značí $T\vdash \neg\varphi$
+\end{itemize}
+\item tablo je sporné, pokud je každá jeho větev sporná
+\item větev je sporná, pokud obsahuje položky $\text T\psi$ a $\text F\psi$ pro nějaký výrok $\psi$, jinak je bezesporná
+\item tablo je dokončené, pokud je každá jeho větev dokončená
+\item větev je dokončená\dots{}
+\begin{itemize}
+\item pokud je sporná
+\item nebo pokud je každá její položka na této větvi redukovaná a pokud větev zároveň obsahuje položku s T pro každý axiom teorie
+\end{itemize}
+\item položka je redukovaná na dané větvi, pokud obsahuje pouze výrokovou proměnnou nebo se na dané větvi vyskytuje jako kořen atomického tabla (tedy došlo k jejímu rozvoji na dané větvi)
+\item v predikátové logice navíc řešíme kvantifikátory - položky typu \textit{svědek} a \textit{všichni}
+\end{itemize}
+\end{itemize}
+\item Věty o kompaktnosti a úplnosti výrokové a predikátové logiky - znění a porozumění významu; použití na příkladech, důsledky
+\begin{itemize}
+\item věta o kompaktnosti: teorie má model, právě když každá její konečná část má model
+\item aplikace
+\begin{itemize}
+\item popíšeme požadovanou vlastnost nekonečného objektu pomocí (nekonečné) výrokové teorie
+\item z konečné části teorie sestrojíme konečný podobjekt mající danou vlastnost
+\end{itemize}
+\item příklady
+\begin{itemize}
+\item spočetně nekonečný graf je bipartitní $\iff$ každý jeho konečný podgraf je bipartitní
+\begin{itemize}
+\item $T=\set{p_u\to\neg p_v\mid\set{u,v}\in E(G)}$
+\end{itemize}
+\item nestandardní model přirozených čísel
+\begin{itemize}
+\item vezmeme standardní model přirozených čísel (jeho teorii)
+\item přidáme nový konstantní symbol
+\item přidáme k teorii výrok, že je ta konstanta ostře větší než každý $n$-tý numerál
+\item každá konečná část této nové teorie má model, takže i celá ta nová teorie má model
+\end{itemize}
+\end{itemize}
+\item První věta o neúplnosti: Pro každou bezespornou rekurzivně axiomatizovanou extenzi $T$ Robinsonovy aritmetiky existuje sentence, která je pravdivá v $\underline{\mathbb N}$, ale není dokazatelná v $T$.
+\begin{itemize}
+\item Robinsonova aritmetika je teorie jazyka aritmetiky $L=\braket{S,+,\cdot,0,\leq}$ s rovností
+\begin{itemize}
+\item má osm (tradičně spíše sedm) axiomů, některé z nich:
+\begin{itemize}
+\item $S(x)\neq 0$
+\item $S(x)=S(y)\to x=y$
+\item $x+0=x$
+\item $x+S(y)=S(x+y)$
+\end{itemize}
+\end{itemize}
+\item $\underline{\mathbb N}=\braket{\mathbb N,S,+,\cdot,0,\leq}$ \dots{} standardní model přirozených čísel
+\end{itemize}
+\item důsledek 1.1: je-li $T$ rekurzivně axiomatizovaná extenze Robinsonovy aritmetiky a je-li navíc $\underline{\mathbb N}$ modelem teorie $T$, potom $T$ není kompletní
+\begin{itemize}
+\item pro sentenci, která není dokazatelná v $T$, nemůže být dokazatelná ani její negace (byl by to spor s její pravdivostí v $\underline{\mathbb N}$)
+\end{itemize}
+\item důsledek 1.2: teorie $\text{Th}(\underline{\mathbb N})$ není rekurzivně axiomatizovatelná
+\begin{itemize}
+\item kdyby byla, nemohla by být kompletní - ale ona kompletní je
+\item značení: $\text{Th}(\underline{\mathbb N})$ \dots{} množina všech sentencí pravdivých v $\underline{\mathbb N}$ (tzv. teorie struktury $\underline{\mathbb N}$)
+\end{itemize}
+\item věta (Rosserův trik): v každé bezesporné rekurzivně axiomatizované extenzi Robinsonovy aritmetiky existuje nezávislá sentence - tedy taková není kompletní
+\begin{itemize}
+\item v podstatě plyne z důsledku 1.1, jen se zbavuje $\underline{\mathbb N}$ 
+\end{itemize}
+\item Druhá věta o neúplnosti: Pro každou bezespornou rekurzivně axiomatizovanou extenzi $T$ Peanovy aritmetiky platí, že $\mathit{Con_T}$ není dokazatelná v $T$.
+\item $\mathit{Con_T}$ \dots{} sentence vyjadřující bezespornost (konzistence) teorie $T$
+\begin{itemize}
+\item $\mathit{Con_T}=\neg(\exists y)\mathit{Prf_{T}}(\underline{0=S(0)},y)$
+\item $\mathit{Prf_{T}}(x,y)$ \dots{} $y$ je důkaz $x$ v $T$
+\end{itemize}
+\item důsledek 2.1: existuje model Peanovy aritmetiky (PA), ve kterém platí sentence $(\exists y)\mathit{Prf_{PA}}(\underline{0=S(0)},y)$
+\item důsledek 2.2: existuje bezesporná rekurzivně axiomatizovaná extenze $T$ Peanovy aritmetiky, která dokazuje svou spornost, tj. taková, že $T\vdash\neg \mathit{Con_T}$
+\item důsledek 2.3: je-li teorie množin ZFC bezesporná, nemůže být sentence $\mathit{Con_{ZFC}}$ v teorii ZFC dokazatelná
+\end{itemize}
+\item Rozhodnutelnost - pojem kompletnosti a její kritéria, význam pro rozhodnutelnost; příklady rozhodnutelných a nerozhodnutelných teorií
+\begin{itemize}
+\item teorie je sporná, jestliže\dots{} (ekvivalentně)
+\begin{itemize}
+\item v ní platí spor
+\item nemá žádný model
+\item v ní platí všechny výroky
+\end{itemize}
+\item teorie je bezesporná (splnitelná), pokud není sporná, tj. má nějaký model
+\item teorie je kompletní jestliže není sporná a každý výrok (respektive sentence) je v ní pravdivý nebo lživý (tj. nemá žádné nezávislé výroky), ekvivalentně, pokud má právě jeden model (až na elementární ekvivalenci v predikátové logice)
+\begin{itemize}
+\item struktury $\mathcal{A,B}$ (v témž jazyce) jsou elementárně ekvivalentní, pokud v nich platí tytéž sentence (značíme $\mathcal A\equiv \mathcal B$)
+\item zjevně $\mathcal A\equiv \mathcal B\iff\text{Th}(\mathcal A)=\text{Th}(\mathcal B)$
+\end{itemize}
+\item o teorii $T$ říkáme, že je\dots{}
+\begin{itemize}
+\item rozhodnutelná, pokud existuje algoritmus, který pro každou vstupní formuli $\varphi$ doběhne a odpoví, zda $T\models\varphi$
+\item částečně rozhodnutelná, pokud existuje algoritmus, který pro každou vstupní formuli $\varphi$\dots{}
+\begin{itemize}
+\item pokud $T\vDash\varphi$, doběhne a odpoví \quotedblbase{}ano\textquotedblleft{}
+\item pokud $T\nvDash\varphi$, buď nedoběhne, nebo doběhne a odpoví \quotedblbase{}ne\textquotedblleft{}
+\end{itemize}
+\end{itemize}
+\item \quotedblbase{}rekurzivní\textquotedblleft{} pojmy
+\begin{itemize}
+\item teorie $T$ je rekurzivně axiomatizovaná, pokud existuje algoritmus, který pro každou vstupní formuli $\varphi$ doběhne a odpoví, zda $\varphi\in T$
+\item třída $L$-struktur $K\subseteq M_L$ je rekurzivně axiomatizovatelná, pokud existuje rekurzivně axiomatizovaná $L$-teorie $T$ taková, že $K=M_L(T)$
+\item teorie $T'$ je rekurzivně axiomatizovatelná, pokud je rekurzivně axiomatizovatelná třída jejích modelů, neboli pokud je $T'$ ekvivalentní nějaké rekurzivně axiomatizované teorii
+\item řekneme, že teorie $T$ má rekurzivně spočetnou kompletaci, pokud (nějaká) množina (až na ekvivalenci) všech jednoduchých kompletních extenzí teorie $T$ je rekurzivně spočetná, tj. existuje algoritmus, který pro danou vstupní dvojici přirozených čísel $(i,j)$ vypíše na výstup $i$-tý axiom $j$-té extenze (v nějakém pevně daném uspořádání), nebo odpoví, že takový axiom už neexistuje
+\end{itemize}
+\item tvrzení: je-li $T$ rekurzivně axiomatizovaná, potom je částečně rozhodnutelná, je-li navíc kompletní, je rozhodnutelná
+\item tvrzení: je-li $\mathcal A$ konečná struktura v konečném jazyce s rovností, potom je teorie $\text{Th}(\mathcal A)$ rekurzivně axiomatizovatelná
+\item tvrzení: pokud je teorie $T$ rekurzivně axiomatizovaná a má rekurzivně spočetnou kompletaci, potom je $T$ rozhodnutelná
+\item nerozhodnutelnost
+\begin{itemize}
+\item mějme formuli $\varphi$ ve tvaru $(\exists x_1)\dots(\exists x_n) \;p(x_1,\dots,x_n)=q(x_1,\dots,x_n)$
+\begin{itemize}
+\item kde $p$ a $q$ jsou polynomy s přirozenými koeficienty
+\item věta: neexistuje algoritmus, který by pro danou dvojici polynomů s přirozenými koeficienty rozhodl, zda mají přirozené řešení, tj. zda platí $\underline{\mathbb N}\vDash\varphi$
+\end{itemize}
+\item věta: neexistuje algoritmus, který by pro danou vstupní formuli $\varphi$ rozhodl, zda je logicky platná (tedy zda je tautologie)
+\end{itemize}
+\item příklady rozhodnutelných teorií
+\begin{itemize}
+\item teorie čisté rovnosti (bez axiomů, v jazyce $L=\braket{}$ s rovností)
+\item teorie unárního predikátu (bez axiomů, v jazyce $L=\braket{U}$ s rovností, kde $U$ je unární relační symbol)
+\item teorie hustých lineárních uspořádání DeLO*
+\item teorie komutativních grup
+\item teorie Booleových algeber
+\item teorie následníka s nulou
+\item Presburgerova aritmetika
+\end{itemize}
+\item příklady nerozhodnutelných teorií
+\begin{itemize}
+\item Robinsonova aritmetika (a také Peanova aritmetika a ZFC, což jsou její extenze)
+\item teorie (obecných) grup
+\end{itemize}
+\end{itemize}
+\end{itemize}

@@ -1,0 +1,107 @@
+% ---------------------------------------------------------------------------
+% Preambule pro přípravu na bakalářské státnice (MFF UK, Informatika / UI / SU)
+% Sazba: pdflatex (UTF-8, čeština). Build: latexmk -pdf src/main.tex
+% ---------------------------------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[czech]{babel}
+\usepackage[a4paper,margin=2.3cm]{geometry}
+
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{textcomp}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[export]{adjustbox}   % klíče max width / max height u \includegraphics
+\usepackage{graphicx}
+\graphicspath{{../}}             % obrázky z poznámek (relativně ke kořeni repa)
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[most]{tcolorbox}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{parskip}
+\usepackage{hyperref}
+
+% --- chybějící / nestandardní makra z poznámek (psány pro webový renderer) ---
+\newcommand{\gt}{>}
+\newcommand{\lt}{<}
+\providecommand{\set}[1]{\{\,#1\,\}}
+\renewcommand{\set}[1]{\{\,#1\,\}}
+\providecommand{\braket}[1]{\left\langle #1 \right\rangle}
+\renewcommand{\braket}[1]{\left\langle #1 \right\rangle}
+\providecommand{\quotedblbase}{\glqq}
+\providecommand{\quotesinglbase}{\glq}
+
+% --- hlubší zanoření seznamů (poznámky jdou až do ~7 úrovní) ---
+\setlistdepth{9}
+\setlist{leftmargin=1.25em, itemsep=1.2pt, topsep=2.5pt, parsep=0pt}
+\setlist[itemize,1]{label=\textbullet}
+\setlist[itemize,2]{label=\normalfont\bfseries\textendash}
+\setlist[itemize,3]{label=\textperiodcentered}
+\setlist[itemize,4]{label=$\ast$}
+\setlist[itemize,5]{label=$\cdot$}
+\setlist[itemize,6]{label=$\circ$}
+\setlist[itemize,7]{label=$\diamond$}
+\renewlist{itemize}{itemize}{9}
+\setlist[itemize,1]{label=\textbullet}
+\setlist[itemize,2]{label=\normalfont\bfseries\textendash}
+\setlist[itemize,3]{label=\textperiodcentered}
+\setlist[itemize,4]{label=$\ast$}
+\setlist[itemize,5]{label=$\cdot$}
+\setlist[itemize,6]{label=$\circ$}
+\setlist[itemize,7]{label=$\diamond$}
+\setlist[itemize,8]{label=$\triangleright$}
+\setlist[itemize,9]{label=$-$}
+
+% --- barvy a styl nadpisů ---
+\definecolor{mffblue}{RGB}{27,54,93}
+\definecolor{mffaccent}{RGB}{0,90,156}
+\definecolor{practiceyellow}{RGB}{180,120,0}
+\definecolor{gapred}{RGB}{150,30,30}
+
+\titleformat{\section}{\Large\bfseries\color{mffblue}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{mffaccent}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.6em}
+
+\hypersetup{
+  colorlinks=true, linkcolor=mffaccent, urlcolor=mffaccent, citecolor=mffaccent,
+  pdftitle={Příprava na bakalářské státnice -- Informatika / UI / Strojové učení},
+  pdfauthor={Viktor Číhal}, bookmarksnumbered=true,
+}
+
+% --- callout boxy ---
+% Procvičit: místo, kde poznámky odkazují na vlastní procvičení (není to mezera).
+\newtcolorbox{practicebox}{
+  enhanced, breakable, colback=practiceyellow!7, colframe=practiceyellow,
+  boxrule=0.7pt, left=6pt, right=6pt, top=4pt, bottom=4pt, arc=2pt,
+  before skip=5pt, after skip=5pt,
+  overlay first={\node[anchor=north west,font=\bfseries\footnotesize\color{practiceyellow}]
+    at ([xshift=6pt,yshift=-2pt]frame.north west){};},
+  fonttitle=\bfseries\footnotesize, title={\textsc{Procvičit (poznámky odkazují na vlastní trénink)}}
+}
+% Mezera / doplněno: téma není v poznámkách (nebo jen jako alternativa).
+\newtcolorbox{gapbox}{
+  enhanced, breakable, colback=gapred!6, colframe=gapred,
+  boxrule=0.8pt, left=6pt, right=6pt, top=4pt, bottom=4pt, arc=2pt,
+  before skip=6pt, after skip=6pt,
+  fonttitle=\bfseries\footnotesize, title={\textsc{Mezera v poznámkách -- ověř / doplň}}
+}
+% Info / shrnutí
+\newtcolorbox{infobox}[1][]{
+  enhanced, breakable, colback=mffaccent!5, colframe=mffaccent,
+  boxrule=0.7pt, left=6pt, right=6pt, top=4pt, bottom=4pt, arc=2pt,
+  before skip=6pt, after skip=6pt, fonttitle=\bfseries, #1
+}
+
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{3}
+\renewcommand{\arraystretch}{1.25}
+
+% --- méně přetékajících řádků u dlouhých kódových úseků ---
+\emergencystretch=3em
+\makeatletter
+\g@addto@macro\ttfamily{\hyphenchar\font=`\-}  % dovol dělení i ve strojopisu
+\makeatother
+\hbadness=10000  % netiskni varování o podtečení

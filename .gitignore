@@ -1,0 +1,15 @@
+# LaTeX pomocné soubory
+src/*.aux
+src/*.log
+src/*.out
+src/*.toc
+src/*.fls
+src/*.fdb_latexmk
+src/*.synctex.gz
+src/*.bbl
+src/*.blg
+src/main.pdf
+
+# Python
+__pycache__/
+*.pyc

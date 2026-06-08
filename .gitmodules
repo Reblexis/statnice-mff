@@ -1,0 +1,3 @@
+[submodule "notes-ipp"]
+	path = notes-ipp
+	url = git@github.com:vitkolos/notes-ipp.git

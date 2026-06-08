@@ -1,0 +1,190 @@
+% ===================== AUDIT POKRYTÍ =====================
+\section{Audit pokrytí požadavků}
+\label{sec:audit}
+
+\begin{infobox}[title={Závěr auditu}]
+Prošel jsem \textbf{všechny} body obou přípravných dokumentů (oficiální požadavky SZZ, verze 28.\,7.\,2025) a porovnal je s obsahem poznámek notes-ipp. \textbf{Každé požadované téma je v poznámkách obsažené.} Jediné formálně chybějící je \emph{Hilbertovský kalkul}, který je ovšem v požadavcích uvedený jen jako \emph{alternativa} k tablu/rezoluci (a ty obě pokryté jsou) - viz \ref{sec:vyjimka}. Šest míst poznámky vědomě nechávají na vlastní procvičení (výpočetní dovednosti) - viz \ref{sec:procvic}.
+\end{infobox}
+
+\subsection{Metodika}
+Pro každý okruh jsem vzal seznam podtémat z oficiálních požadavků a ověřil, že odpovídající látka v poznámkách existuje (strukturálně i obsahově - členění poznámek kopíruje oficiální osnovu). U níže uvedených seznamů znamená \checkmark{}, že téma je v textu zpracované.
+
+\subsection{Souhrn}
+\begin{center}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Okruh} & \textbf{Témat v požadavcích} & \textbf{Pokryto} \\
+\midrule
+I/1 Diferenciální a integrální počet & 8 & \checkmark{} vše \\
+I/2 Algebra a lineární algebra & 9 & \checkmark{} vše \\
+I/3 Diskrétní matematika & 7 & \checkmark{} vše \\
+I/4 Teorie grafů & 9 & \checkmark{} vše \\
+I/5 Pravděpodobnost a statistika & 8 & \checkmark{} vše \\
+I/6 Logika & 6 & \checkmark{} vše* \\
+II/1 Automaty a jazyky & 4 & \checkmark{} vše \\
+II/2 Algoritmy a datové struktury & 6 & \checkmark{} vše \\
+II/3 Programovací jazyky & 8 & \checkmark{} vše \\
+II/4 Architektura počítačů a OS & 7 & \checkmark{} vše \\
+III\phantom{/0} Základy umělé inteligence & 9 & \checkmark{} vše \\
+IV\phantom{/0} Strojové učení & 9 & \checkmark{} vše \\
+\bottomrule
+\end{tabular}
+\end{center}
+{\small *U logiky chybí jen Hilbertovský kalkul, uvedený v požadavcích jako alternativa (tablo a rezoluce pokryté jsou).}
+
+\subsection{Detailní kontrola po tématech}
+
+\textbf{Část I - Společná matematika}
+\begin{multicols}{2}\small
+\textit{1. Diferenciální a integrální počet}
+\begin{itemize}[label=\checkmark,leftmargin=1.3em,itemsep=0pt]
+  \item posloupnosti a limity, aritmetika limit
+  \item věta o dvou policajtech
+  \item řady; geometrická a harmonická řada
+  \item limita funkce, spojitost (mezihodnoty, maximum)
+  \item derivace, l'Hospital, průběh funkce
+  \item Taylorův polynom (limitní forma)
+  \item primitivní funkce, Riemann/Newton
+  \item aplikace integrálu (obsah, objem, povrch, délka)
+\end{itemize}
+\textit{2. Algebra a lineární algebra}
+\begin{itemize}[label=\checkmark,leftmargin=1.3em,itemsep=0pt]
+  \item grupy, permutace, tělesa (konečná)
+  \item soustavy rovnic, Gauss(-Jordan)
+  \item matice, hodnost, inverze
+  \item vektorové prostory, Steinitz, báze, dimenze
+  \item lineární zobrazení, obraz/jádro, isomorfismus
+  \item skalární součin, Gram-Schmidt, projekce
+  \item determinanty (Laplace, geometrie)
+  \item vlastní čísla, diagonalizace, spektrální rozklad
+  \item pozitivně (semi)definitní, Cholesky
+\end{itemize}
+\textit{3. Diskrétní matematika}
+\begin{itemize}[label=\checkmark,leftmargin=1.3em,itemsep=0pt]
+  \item vlastnosti relací
+  \item ekvivalence a rozklady
+  \item částečná uspořádání, výška/šířka
+  \item funkce a jejich počty
+  \item kombinační čísla, binomická věta
+  \item inkluze a exkluze (i aplikace)
+  \item Hallova věta a SRR
+\end{itemize}
+\textit{4. Teorie grafů}
+\begin{itemize}[label=\checkmark,leftmargin=1.3em,itemsep=0pt]
+  \item základní pojmy a příklady grafů
+  \item souvislost, komponenty, vzdálenost
+  \item stromy a charakteristiky
+  \item rovinné grafy, Eulerova formule
+  \item barevnost a klikovost
+  \item Mengerova věta (obě verze)
+  \item orientované grafy, silná/slabá souvislost
+  \item toky, Ford-Fulkerson
+\end{itemize}
+\textit{5. Pravděpodobnost a statistika}
+\begin{itemize}[label=\checkmark,leftmargin=1.3em,itemsep=0pt]
+  \item prostor, podmíněná pst, Bayes
+  \item náhodné veličiny, distribuce, hustota
+  \item střední hodnota, Markovova nerovnost
+  \item rozptyl (i pro součet)
+  \item konkrétní rozdělení
+  \item LLN a centrální limitní věta
+  \item bodové a intervalové odhady
+  \item testování hypotéz, chyby I/II, hladina
+\end{itemize}
+\textit{6. Logika}
+\begin{itemize}[label=\checkmark,leftmargin=1.3em,itemsep=0pt]
+  \item syntaxe, CNF/DNF/PNF, SAT/rezoluce
+  \item sémantika, splnitelnost, důsledek
+  \item extenze, konzervativnost, skolemizace
+  \item dokazatelnost: tablo, rezoluce
+  \item kompaktnost a úplnost
+  \item rozhodnutelnost
+\end{itemize}
+\end{multicols}
+
+\textbf{Část II - Společná informatika}
+\begin{multicols}{2}\small
+\textit{1. Automaty a jazyky}
+\begin{itemize}[label=\checkmark,leftmargin=1.3em,itemsep=0pt]
+  \item regulární jazyky (gramatiky, DFA/NFA, regexy)
+  \item bezkontextové (gramatiky, zásobníkový automat)
+  \item rekurzivně spočetné (typ 0, Turing, nerozhodnutelnost)
+  \item Chomského hierarchie
+\end{itemize}
+\textit{2. Algoritmy a datové struktury}
+\begin{itemize}[label=\checkmark,leftmargin=1.3em,itemsep=0pt]
+  \item složitost, asymptotická notace
+  \item P, NP, převoditelnost, NP-úplnost
+  \item rozděl a panuj, Master theorem
+  \item vyhledávací stromy, AVL
+  \item třídění a dolní odhad
+  \item grafové algoritmy (BFS/DFS, Dijkstra, MST, toky)
+\end{itemize}
+\textit{3. Programovací jazyky}
+\begin{itemize}[label=\checkmark,leftmargin=1.3em,itemsep=0pt]
+  \item abstrakce, dědičnost, polymorfismus
+  \item typy, reference, boxing
+  \item generika a funkcionální prvky
+  \item zdroje a výjimky
+  \item životní cyklus, GC, reference counting
+  \item vlákna a synchronizace
+  \item vtable a implementace OO
+  \item bytecode, JIT/AOT, linkování, knihovny
+\end{itemize}
+\textit{4. Architektura počítačů a OS}
+\begin{itemize}[label=\checkmark,leftmargin=1.3em,itemsep=0pt]
+  \item architektura, reprezentace čísel, adresování
+  \item instrukční sada a vazba na vyšší jazyk
+  \item privilegovaný režim, jádro
+  \item periferie: PIO, přerušení
+  \item procesy/vlákna, kontext, plánování
+  \item virtuální paměť, stránkování, ochrana
+  \item soubory, race conditions, zámky
+\end{itemize}
+\end{multicols}
+
+\textbf{Část III - Základy UI \quad / \quad Část IV - Strojové učení}
+\begin{multicols}{2}\small
+\textit{III. Základy umělé inteligence}
+\begin{itemize}[label=\checkmark,leftmargin=1.3em,itemsep=0pt]
+  \item prohledávání (DFS/BFS/UCS, A*, heuristiky)
+  \item CSP, AC-3, MAC
+  \item logické uvažování (DPLL, řetězení, rezoluce)
+  \item pravděpodobnostní uvažování, Bayesovy sítě
+  \item reprezentace znalostí, HMM vs.\ DBN
+  \item automatické plánování
+  \item MDP, Bellman, value/policy iteration, POMDP
+  \item hry (minimax, alfa-beta), Nash, mechanism design
+  \item ML přehledově (učení, stromy, SVM, EM, RL)
+\end{itemize}
+\textit{IV. Strojové učení}
+\begin{itemize}[label=\checkmark,leftmargin=1.3em,itemsep=0pt]
+  \item učení s učitelem, metriky, regularizace
+  \item k-nejbližších sousedů
+  \item lineární regrese (LSQ, SGD)
+  \item logistická regrese (sigmoid, softmax)
+  \item rozhodovací stromy, prořezávání
+  \item SVM (separabilní/neseparabilní, jádra, multiclass)
+  \item kombinace modelů (bagging, boosting, random forest)
+  \item statistické testy (t-test, chí-kvadrát)
+  \item učení bez učitele (k-means, hierarchické, PCA)
+\end{itemize}
+\end{multicols}
+
+\subsection{Místa, která poznámky nechávají na vlastní procvičení}
+\label{sec:procvic}
+Nejde o chybějící definice, ale o \textbf{výpočetní dovednosti}, které text vědomě nerozepisuje. V příslušných okruzích jsou navíc označené žlutým rámečkem přímo u tématu.
+\begin{enumerate}[leftmargin=1.5em]
+  \item Derivační pravidla (součin, podíl, složená funkce) - I/1.
+  \item Integrační techniky: substituce a per partes - I/1.
+  \item Odhad součtu řady přes integrál (konkrétní postup) - I/1.
+  \item Vlastní výpočet determinantu - I/2.
+  \item Překlad konstrukcí vyššího jazyka do instrukcí procesoru - II/4.
+  \item Opačný směr: poznat konstrukci z dané sekvence instrukcí - II/4.
+\end{enumerate}
+
+\subsection{Jediná formální výjimka: Hilbertovský kalkul}
+\label{sec:vyjimka}
+\begin{gapbox}
+Požadavky u okruhu \emph{Logika} zmiňují dokazovací systémy „tablo, rezoluce \textbf{nebo} Hilbertovský kalkul“. Poznámky podrobně rozebírají \textbf{tablo metodu i rezoluci}, čímž je požadavek splněn. \textbf{Hilbertovský (axiomatický) kalkul} v poznámkách \textbf{není}. Protože je uvedený jen jako alternativa, na zkoušku to nevadí; pokud bys ho přesto chtěl umět, doplň si: jazyk s několika \emph{axiomovými schématy} (implikační fragment) a jediným odvozovacím pravidlem \emph{modus ponens}; důkaz je posloupnost formulí, kde každá je buď axiom, předpoklad, nebo plyne z předchozích pravidlem; věta o dedukci. Toto si \textbf{ověř} v oficiálních materiálech NAIL062, pokud bys na něj chtěl spoléhat.
+\end{gapbox}

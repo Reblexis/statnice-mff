@@ -1,0 +1,91 @@
+\documentclass[11pt,a4paper]{article}
+\input{preamble}
+
+\begin{document}
+
+% ===================== TITULNÍ STRANA =====================
+\begin{titlepage}
+\centering
+\vspace*{2.2cm}
+{\color{mffblue}\rule{\linewidth}{1.2pt}}\\[0.5cm]
+{\Huge\bfseries\color{mffblue} Příprava na bakalářské státnice\par}
+\vspace{0.5cm}
+{\LARGE Informatika - Umělá inteligence\par}
+\vspace{0.2cm}
+{\Large zaměření \textbf{Strojové učení}\par}
+\vspace{0.3cm}
+{\color{mffblue}\rule{\linewidth}{1.2pt}}\\[1.2cm]
+
+{\large MFF UK \textbullet{} studijní plán 2025/2026\par}
+\vspace{0.3cm}
+{\normalsize Kompletní studijní text postavený na poznámkách \emph{notes-ipp} (Vít Kološ),\\
+strukturovaný a auditovaný proti oficiálním požadavkům SZZ (verze 28.\,7.\,2025).\par}
+
+\vfill
+\begin{infobox}[title={Jak tento dokument číst}]
+\begin{itemize}[leftmargin=1.2em]
+  \item Obsah jednotlivých okruhů je \textbf{věrně převzatý z poznámek notes-ipp} (submodul repozitáře) a odborně nezměněný.
+  \item Pořadí a členění kopíruje \textbf{oficiální seznam požadavků} ze dvou přípravných dokumentů ve složce \texttt{pozadavky/}.
+  \item Sekce \ref{sec:audit} (\nameref{sec:audit}) ověřuje bod po bodu, že je pokryté \emph{každé} požadované téma, a vypisuje místa, která poznámky jen naznačují.
+  \item \colorbox{practiceyellow!18}{\textbf{Žluté rámečky}} = poznámky odkazují na vlastní procvičení (výpočetní dovednost, ne definiční mezera).
+  \item \colorbox{gapred!12}{\textbf{Červené rámečky}} = téma v poznámkách chybí nebo je jen alternativou; ověř/doplň.
+\end{itemize}
+\end{infobox}
+
+\vspace{0.6cm}
+{\small Viktor Číhal \textbullet{} sestaveno 8.\,6.\,2026\par}
+\end{titlepage}
+
+\tableofcontents
+\clearpage
+
+% ===================== STRUKTURA ZKOUŠKY =====================
+\section{Struktura a hodnocení zkoušky}
+\label{sec:struktura}
+
+\begin{infobox}[title={Formát odborné části SZZ (písemná forma)}]
+\begin{itemize}[leftmargin=1.2em]
+  \item Zadáno je typicky \textbf{8 otázek}: 2 ze společné matematiky, 2 ze společné informatiky, 4 z okruhů specializace (Základy UI + Strojové učení).
+  \item Za každou odpověď \textbf{0-3 body}.
+  \item K úspěchu je nutné získat \textbf{min.\ 5 bodů ze společných okruhů} a \textbf{min.\ 7 bodů ze specializace}.
+  \item Známka podle součtu (max 24): od \textbf{12\,b} dobře, od \textbf{16\,b} velmi dobře, od \textbf{20\,b} výborně.
+  \item Zkouška má \textbf{přehledový charakter}: důraz na pochopení principů, přesné definice a terminologii, \emph{ne} na složité důkazy.
+\end{itemize}
+\end{infobox}
+
+\noindent\textbf{Co to znamená pro přípravu na známku „výborně“ (A):} potřebuješ stabilně dávat blízko plný počet bodů, tj.\ u každé otázky umět \emph{přesnou definici}, \emph{klíčové tvrzení/větu} a \emph{hlavní myšlenku} (proč to platí, k čemu to je). Tomu odpovídá i forma tohoto textu - hutné definice a tvrzení, ne dlouhé důkazy.
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Okruh} & \textbf{Počet témat} & \textbf{Část zkoušky} \\
+\midrule
+Společná matematika & 6 & společný okruh - 2 otázky \\
+Společná informatika & 4 & společný okruh - 2 otázky \\
+Základy umělé inteligence & 1 (rozsáhlé) & specializace - povinné \\
+Strojové učení & 1 (rozsáhlé) & specializace - vlastní zaměření \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% ===================== AUDIT POKRYTÍ =====================
+\input{audit}
+
+% ===================== ČÁSTI =====================
+\clearpage
+\section{Část I: Společná matematika}
+\input{parts/spolecna-matematika}
+
+\clearpage
+\section{Část II: Společná informatika}
+\input{parts/spolecna-informatika}
+
+\clearpage
+\section{Část III: Specializace - Základy umělé inteligence}
+\input{parts/zaklady-umele-inteligence}
+
+\clearpage
+\section{Část IV: Specializace - Strojové učení}
+\input{parts/strojove-uceni}
+
+\end{document}
