@@ -47,7 +47,7 @@ splňuje $F'=f$ a je určena až na konstantu.\par
 \noindent\bod{2}\ \textbf{Věty, pravidla a algoritmy:} Aritmetika limit posloupností i funkcí:
 z limit $a,b$ plynou limity součtu, součinu a podílu, pokud je pravá strana definována
 a jmenovatel je od jistého místa nenulový. Neurčité výrazy jsou zejména součet nekonečen
-různých znamének, $0\cdot\infty$, podíl nekonečen a dělení reálného čísla nulou.
+různých znamének, $0\cdot\infty$, podíl nekonečen a podíl $0/0$.
 Je-li $(a_n)$ omezená a $b_n\to0$, pak $a_nb_n\to0$ i bez existence $\lim a_n$.
 Uspořádání: z $\lim a_n=a< b=\lim b_n$ plyne od jistého indexu $a_n<b_n$; naopak
 $a_n\le b_n$ od jistého indexu dává $\lim a_n\le\lim b_n$. Stejně pro funkce v
@@ -216,7 +216,7 @@ a existuje $U$ s $A=U^TU$; v definitním případě má $U$ hodnost $n$. Nesymet
 lze pro kvadratickou formu symetrizovat na $(A+A^T)/2$. Součet pozitivně definitních
 matic je pozitivně definitní, kladný násobek také, pozitivně definitní matice je regulární
 a její inverze je pozitivně definitní. Skalární součin na $\mathbb R^n$ má tvar
-$\langle x|y\rangle=x^TAy$ právě pro pozitivně definitní $A$. Pozitivní definitnost lze
+$\langle x|y\rangle=x^TAy$ právě pro symetrickou pozitivně definitní $A$. Pozitivní definitnost lze
 testovat Gaussovou eliminací bez výměn řádků a se sledováním kladných pivotů. Choleského
 věta: pro každou pozitivně definitní $A\in\mathbb R^{n\times n}$ existuje jediná dolní
 trojúhelníková $L$ s kladnou diagonálou tak, že $A=LL^T$; soustavu $Ax=b$ pak řešíme
@@ -261,7 +261,7 @@ reflexivní, symetrická a tranzitivní; třída prvku je $R[x]=\{y:xRy\}$. Rozk
 $X$ je systém neprázdných po dvou disjunktních podmnožin se sjednocením $X$. Částečné
 uspořádání je reflexivní, antisymetrická a tranzitivní relace; lineární uspořádání má
 každé dva prvky porovnatelné. Ostré uspořádání $a<b$ znamená $a\le b$ a $a\ne b$,
-je ireflexivní, antisymetrické a tranzitivní. Nejmenší prvek splňuje $x\le y$ pro
+je ireflexivní, asymetrické a tranzitivní. Nejmenší prvek splňuje $x\le y$ pro
 všechna $y$, minimální prvek nemá žádné $y<x$; duálně pro největší a maximální.
 Řetězec je podmnožina po dvou porovnatelných prvků, antiřetězec po dvou neporovnatelných.
 Funkce $X\to Y$ je relace s právě jedním obrazem pro každé $x$; je prostá, když různé
@@ -600,7 +600,7 @@ elementárních konjunkcí literálů a prázdná DNF je $\bot$. Hornova formule
 klauzulí s nejvýše jedním pozitivním literálem. PNF má všechny kvantifikátory v prefixu
 a otevřené jádro. Model výrokové logiky je ohodnocení proměnných; model predikátové
 teorie je struktura, ve které platí všechny axiomy. Tautologie je formule pravdivá ve
-všech modelech, splnitelná v aspoň jednom, lživá v žádném a nezávislá vzhledem k teorii,
+všech modelech, splnitelná v aspoň jednom, lživá ve všech modelech a nezávislá vzhledem k teorii,
 když v některém modelu teorie platí a v jiném ne. Důsledek $T\models\varphi$ znamená,
 že $\varphi$ platí v každém modelu $T$.\par
 \noindent\bod{2}\ \textbf{Věty, pravidla a algoritmy:} PNF se získá vytahováním
@@ -626,7 +626,7 @@ sporné všechny větve. Věta o kompaktnosti: teorie má model právě tehdy, k
 konečná část má model. Věta o úplnosti: sémantický důsledek a dokazatelnost se shodují,
 tedy $T\models\varphi$ právě tehdy, když $T\vdash\varphi$. Extenze $T'$ teorie $T$ v
 větším jazyce splňuje zahrnutí důsledků staré teorie; jednoduchá extenze nemění jazyk.
-Konzervativní extenze nepřidá nové důsledky ve starém jazyce, sémanticky lze každý model
+Konzervativní extenze nepřidá nové důsledky ve starém jazyce; modelově konzervativní extenze navíc dovolí každý model
 $T$ expandovat na model $T'$. Extenze o definice je konzervativní, každý model staré
 teorie má jednoznačnou expanzi a každá nová formule je v $T'$ ekvivalentní starojazykové.
 Skolemizace PNF sentence s různými vázanými proměnnými odstraňuje existenční kvantifikátor
@@ -654,8 +654,7 @@ stejnou teorii. Teorie je rozhodnutelná, pokud algoritmus vždy rozhodne $T\mod
 a částečně rozhodnutelná, pokud pro platné důsledky doběhne s odpovědí ano. Rekurzivně
 axiomatizovaná teorie má algoritmus pro členství mezi axiomy; taková teorie je částečně
 rozhodnutelná a je-li kompletní, je rozhodnutelná. Konečná struktura v konečném jazyce
-s rovností má rekurzivně axiomatizovatelnou teorii. Pokud je $T$ rekurzivně axiomatizovaná
-a má rekurzivně spočetnou kompletaci, je rozhodnutelná. Nerozhodnutelnost: neexistuje
+s rovností má rozhodnutelnou, tedy i rekurzivně axiomatizovatelnou teorii. Nerozhodnutelnost: neexistuje
 algoritmus pro rozhodnutí, zda diofantická rovnice $p(\bar x)=q(\bar x)$ s přirozenými
 koeficienty má přirozené řešení, a neexistuje algoritmus rozhodující logickou platnost
 libovolné predikátové formule. Rozhodnutelné jsou například teorie čisté rovnosti,

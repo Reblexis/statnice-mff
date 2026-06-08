@@ -19,3 +19,12 @@ High-confidence factual and consistency fixes were applied directly. Remaining d
 - The text intentionally keeps several theorem statements compressed for grade-3 exam prep. Examples: Menger's theorem omits the full set-version statement; A* and UCS conditions are stated only at the level needed to avoid the usual exam traps.
 - The normal-equation formula in the cheat sheet assumes the intercept has been folded into `X` by a column of ones, as stated in the body.
 - The t-test paragraph now mentions independence, rough normality, and Welch's unequal-variance variant, but does not list all small-sample diagnostics or nonparametric alternatives because that would add depth outside the pass-oriented scope.
+
+## Correctness-only kontrola - 2026-06-08
+
+Přímo opravené byly jen vysokojistotní faktické chyby. Položky níže ponechávám jako záměrně zhuštěné nebo závislé na konvenci:
+
+- `src/sections/spolecna-matematika.tex`: V diskrétní matematice zůstává několik doplňkových vět mimo hlavní téma kombinatoriky, například poznámka k derivaci a limitě pro `e`. Nejde o faktickou chybu, spíš o zkratkový kontext z poznámek.
+- `src/sections/spolecna-informatika.tex`: Detaily syncblocku v C# jsou zjednodušený model pro zkouškovou odpověď. Přesná implementace CLR je runtime-dependent.
+- `src/sections/zaklady-ui.tex`: V aukcích jsou desiderata dobrého mechanismu uvedená pohromadě. V obecném mechanism designu nejdou všechna garantovat bez dalších předpokladů, ale pro přehledovou odpověď je formulace použitelná jako motivace.
+- `src/sections/strojove-uceni.tex`: EM příklad s výškami ponechává fixní zjednodušený počet komponent a neřeší plný odhad směsí včetně variancí a priorů, protože by to přidalo nové téma.

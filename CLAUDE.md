@@ -106,4 +106,6 @@ UTF-8 + babel czech. After cloning, run `git submodule update --init --recursive
   goes there; common areas only need breadth (5/12 floor).
 - After any change, run `make`, confirm zero LaTeX errors AND zero dash chars in
   the PDF before committing.
-- C# is the strongest language in the notes; if answering in Java, supplement Java.
+- LANGUAGE CHOICE: the owner studies **C# (NOT Java)** for the programming-languages
+  topic (the exam lets you pick one of C#/C++/Java). Use C# throughout that section; do
+  NOT add Java-specific material, and Java/C++-only variant bullets can be dropped.
