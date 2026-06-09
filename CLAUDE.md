@@ -21,9 +21,16 @@ consequences for how to shape the material:
   Prioritize broad, shallow coverage that secures these minimums over deep mastery
   of any single topic.
 - Favor crisp definitions, key statements, and the one-line "why" over long
-  derivations and proofs (the exam has přehledový charakter anyway).
+  derivations. The exam is přehledový, BUT per the official term instructions a question
+  CAN cover "definic, aplikací i důkazů" - so know the main idea/sketch of key proofs;
+  just don't reproduce long formal proofs. (Do not claim "no proofs" in the doc.)
 - Keep it lean: do not add depth or topics beyond the requirements. Anything that
   does not move the needle on passing is bloat and should be cut.
+- Term logistics: see LOGISTIKA.md (and the "Logistika zkoušky" box in the PDF).
+  Key: 7-hour window 9:00-16:00 for ~2-3h of work => almost no in-exam time pressure
+  (attempt all 8, get at least the definition each); anonymous grading by student number;
+  NO aids at all (not even on you); results ~2 working days; English option within 1
+  working day (binding).
 - When trimming or expanding, ask "does this raise the probability of passing per
   minute of study?" If not, leave it out.
 
@@ -57,7 +64,8 @@ src/
   sections/
     zaklady-ui.tex       Část III (authored; co-authored with Codex)
     strojove-uceni.tex   Část IV (authored)
-    (spolecna-matematika.tex, spolecna-informatika.tex  = TODO, common areas)
+    spolecna-matematika.tex, spolecna-informatika.tex   Část I, II (all 4 parts done)
+    priklady.tex (vzorové výpočty+kód), vzorova-reseni.tex (model answers), plan.tex, tahak.tex
   build.py, parts/, audit.tex   LEGACY notes->LaTeX pipeline (superseded by
                  sections/; kept only in git history if removed). Not used by main.
 STRATEGY.md          agreed pass strategy (synthesis of Claude + Codex)
@@ -67,9 +75,10 @@ statnice-priprava.pdf  the deliverable (committed at repo root)
 Makefile, README.md, .gitignore
 ```
 
-## Build order / status
-Specialization first (it carries the 7/12 floor): Část III + IV are done. Common
-math + informatika (Část I + II) are TODO in the same template, lighter depth.
+## Status
+All 4 parts DONE (~80 pages) + appendices (vzorové výpočty/kód, 11 model answers,
+plán učení+drily, tahák) + time-budget table + logistics box. Audio podcast in
+`podcast/`. Past exams + audits in `zkousky/`, COMPLETENESS-EXAMS.md, NOTES-ONLY-SCORING.md.
 
 ## Exam scope (what to include / exclude)
 
@@ -91,7 +100,7 @@ summarizes this for the learner; keep it in sync if findings change.
   these to vague intuition.
 - **Question anatomy** (from solved "Nástin řešení"): (1) precise definition/statement,
   (2) construction/pseudocode/small computation, (3) edge case/complexity/application.
-  Depth needed = definition + main procedure/algorithm + one example; NOT long proofs.
+  Depth needed = definition + main procedure/algorithm + one example. Long formal proofs are not required, but a question CAN ask for a proof - include the main idea/sketch of key theorems.
 - **Specialization (UI-SU) is conceptual** ("popište/vysvětlete/nemusíte počítat/zakreslete").
   Favor principles + ability to explain/sketch; include the few computational patterns that
   appear (one EM update, metrics from a confusion matrix). The 7/12 floor lives here -> most depth.
