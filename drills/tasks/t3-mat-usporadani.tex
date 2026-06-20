@@ -1,0 +1,23 @@
+\ulohahead{společná matematika \textnormal{\footnotesize[úroveň 3]}}{Částečná uspořádání: výška, šířka a věta o dlouhém a širokém}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte částečné uspořádání, řetězec a antiřetězec a minimální/maximální prvek.
+  \item \bod{2} Definujte výšku a šířku částečně uspořádané množiny.
+  \item \bod{3} Zformulujte větu o dlouhém a širokém (Dilworth/Mirsky) a ilustrujte na příkladu (dělitelnost na $\{1,2,3,4,6,12\}$).
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Částečné uspořádání} $\le$ je reflexivní, antisymetrická a tranzitivní relace. \emph{Řetězec} = podmnožina po dvou \emph{porovnatelných} prvku; \emph{antiřetězec} = podmnožina po dvou \emph{neporovnatelných} prvku. \emph{Minimální} prvek nemá nic ostře pod sebou (\emph{nejmenší} je pod vším); \emph{maximální} nemá nic nad sebou.
+
+\textbf{(b)} \emph{Výška} = velikost nejdelšího řetězce. \emph{Šířka} = velikost největšího antiřetězce.
+
+\textbf{(c)} \emph{Dilworthova věta}: minimální počet řetězcu, na něž lze rozložit uspořádanou množinu, se rovná \emph{šířce} (velikosti největšího antiřetězce). \emph{Duálně (Mirsky)}: minimální počet antiřetězcu pokrývajících množinu se rovná \emph{výšce}. Příklad (dělitelnost na $\{1,2,3,4,6,12\}$): nejdelší řetězec $1\mid2\mid4\mid12$ (resp.\ $1\mid2\mid6\mid12$) má 4 prvky, takže \emph{výška} $=4$. Největší antiřetězec je $\{4,6\}$ (vzájemně nedělitelné), případně $\{2,3\}$ - \emph{šířka} $=2$, takže množinu lze pokrýt 2 řetězci. Z Mirskyho plyne \emph{věta o dlouhém a širokém}: pro každou konečnou uspořádanou množinu je výška$\,\cdot\,$šířka $\ge|X|$ (pokrytí výškou antiřetězcu, každý nejvýše šířka); zde $4\cdot2=8\ge6$.
+\end{reseni}
+
+\begin{jadro}
+Řetězec = porovnatelné prvky, antiřetězec = neporovnatelné. Výška = nejdelší řetězec, šířka = největší antiřetězec. Dilworth: min.\ počet řetězcu na pokrytí $=$ šířka; Mirsky: min.\ počet antiřetězcu $=$ výška.
+\end{jadro}
+
+\kalibrace{Výška/šířka a věta o dlouhém a širokém jsou explicitně v požadavku diskrétní matematiky, ale vzácné; úroveň 3 je pokrývá pro úplnost.}
+\past{Dilworth páruje \emph{řetězce} se \emph{šířkou} (antiřetězcem), Mirsky \emph{antiřetězce} s \emph{výškou} - nezaměň směr. Minimální prvek nemusí být nejmenší.}

@@ -1,0 +1,23 @@
+\ulohahead{společná matematika \textnormal{\footnotesize[úroveň 3]}}{Vektorové prostory a lineární zobrazení}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte vektorový prostor, lineární nezávislost, bázi, dimenzi a souřadnice vektoru.
+  \item \bod{2} Zformulujte Steinitzovu větu o výměně. Definujte lineární zobrazení, jeho obraz a jádro.
+  \item \bod{3} Zformulujte větu o dimenzi (rank-nullity) a vysvětlete izomorfismus vektorových prostoru.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Vektorový prostor} nad tělesem $T$ je množina $V$ se sčítáním (abelovská grupa) a násobením skalárem $T\times V\to V$ splňujícím distributivitu, asociativitu a $1\cdot v=v$. Vektory $v_1,\dots,v_k$ jsou \emph{lineárně nezávislé}, pokud $\sum c_iv_i=0$ implikuje všechna $c_i=0$. \emph{Báze} = lineárně nezávislý systém generátoru (každý vektor je jejich jednoznačnou lineární kombinací); \emph{dimenze} = počet prvku báze. \emph{Souřadnice} vektoru v bázi jsou koeficienty této kombinace.
+
+\textbf{(b)} \emph{Steinitzova věta o výměně}: je-li $\{v_1,\dots,v_k\}$ lineárně nezávislá a $\{w_1,\dots,w_m\}$ systém generátoru, pak $k\le m$ a lze $k$ generátoru vyměnit za $v_i$ tak, že vznikne opět systém generátoru (důsledek: všechny báze mají stejnou velikost). \emph{Lineární zobrazení} $f:V\to W$ splňuje $f(au+bv)=af(u)+bf(v)$. \emph{Obraz} $\operatorname{Im}f=\{f(v):v\in V\}$ (podprostor $W$), \emph{jádro} $\operatorname{Ker}f=\{v:f(v)=0\}$ (podprostor $V$).
+
+\textbf{(c)} \emph{Věta o dimenzi (rank-nullity)}: pro lineární $f:V\to W$ s konečnou dimenzí $V$ platí $\dim\operatorname{Im}f+\dim\operatorname{Ker}f=\dim V$ (hodnost + defekt). \emph{Izomorfismus} je bijektivní lineární zobrazení; dva prostory nad týmž tělesem jsou izomorfní právě tehdy, mají-li stejnou (konečnou) dimenzi - každý $n$-rozměrný prostor je izomorfní $T^n$ (přes souřadnice v bázi).
+\end{reseni}
+
+\begin{jadro}
+Báze = nezávislý systém generátoru; dimenze = její velikost (všechny báze stejně velké, Steinitz). $f$ lineární: $\operatorname{Im}f\le W$, $\operatorname{Ker}f\le V$, $\dim\operatorname{Im}f+\dim\operatorname{Ker}f=\dim V$. Izomorfní $\iff$ stejná dimenze.
+\end{jadro}
+
+\kalibrace{Vektorové prostory a lineární zobrazení (báze, dimenze, jádro/obraz, rank-nullity) jsou jádro lineární algebry; úroveň 3 doplňuje abstraktní část vedle výpočetních úloh z úrovní 1-2.}
+\past{Báze není ,,libovolná generující množina'' - musí být i nezávislá. Rank-nullity sčítá dimenze obrazu a jádra do dimenze \emph{definičního oboru}, ne cíle.}

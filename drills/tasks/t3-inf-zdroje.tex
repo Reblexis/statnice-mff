@@ -1,0 +1,29 @@
+\ulohahead{společná informatika \textnormal{\footnotesize[úroveň 3]}}{Správa zdrojů a ošetření chyb (C\#)}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Co je správa životního cyklu zdroje (soubor, zámek, spojení) a jak souvisí s výjimkami?
+  \item \bod{2} Vysvětlete \texttt{IDisposable} a \texttt{using} v C\# (a obdobu RAII / try-with-resources). Co je deterministické uvolnění?
+  \item \bod{3} Vysvětlete reference counting a finalizéry: kdy se volají a jaká jsou jejich úskalí.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} Zdroj (soubor, síťové spojení, zámek) je nutné po použití \emph{uvolnit}, i když nastane chyba. Výjimka může běžný tok přerušit, takže uvolnění nesmí být jen za ,,šťastnou'' cestou - musí proběhnout i při propagaci výjimky (jinak hrozí únik zdroje / zaseknutý zámek).
+
+\textbf{(b)} V C\# typ vlastnící zdroj implementuje \texttt{IDisposable} s metodou \texttt{Dispose()}. Konstrukce \texttt{using} zaručí volání \texttt{Dispose()} při opuštění bloku (i přes výjimku), což je \emph{deterministické} uvolnění (přesně v daném bodě), na rozdíl od nedeterministického garbage collectoru.
+\begin{lstlisting}
+using (var f = File.OpenRead(path)) {
+    // prace se souborem
+}   // zde se vola f.Dispose() i kdyz vyletela vyjimka
+\end{lstlisting}
+Obdoby: \emph{RAII} v C++ (destruktor uvolní zdroj při opuštění rozsahu), \emph{try-with-resources} v Javě; bez nich slouží \texttt{try/finally}.
+
+\textbf{(c)} \emph{Reference counting} drží u objektu počet odkazu; při poklesu na 0 se objekt uvolní (deterministicky), ale neumí uvolnit \emph{cykly}. \emph{Finalizér} (\texttt{\textasciitilde Trida} / \texttt{Finalize}) volá GC \emph{nedeterministicky} před uvolněním objektu jako záchrana pro nespravované zdroje - není zaručeno kdy (ani zda) se zavolá, proto se na něj nespoléhá; správně je \texttt{Dispose()} (vzor dispose + finalizér jako pojistka).
+\end{reseni}
+
+\begin{jadro}
+Zdroj uvolni i při výjimce: C\# \texttt{using}+\texttt{IDisposable} (deterministicky), C++ RAII (destruktor), jinak \texttt{try/finally}. Reference counting neuvolní cykly; finalizér běží nedeterministicky přes GC - nespoléhat, použít \texttt{Dispose}.
+\end{jadro}
+
+\kalibrace{Správa zdroju a výjimky jsou v požadavku programovacích jazyku; jazyk je C\# (volba majitele). Úroveň 3 doplňuje tuto tail oblast.}
+\past{Finalizér $\neq$ destruktor v C++ - běží nedeterministicky a není zaručen. Deterministické uvolnění zajistí \texttt{using}/\texttt{Dispose}, ne GC.}

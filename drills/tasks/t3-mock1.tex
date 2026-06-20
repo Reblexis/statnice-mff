@@ -1,0 +1,41 @@
+\subsection*{Zkouška nanečisto 1}
+\addcontentsline{toc}{subsection}{Zkouška nanečisto 1}
+\begin{infobox}[title={Pokyny}]
+\footnotesize 8 otázek (2 matematika, 2 informatika, 4 specializace), každá 0-3 body. Cíl: společné $\ge5/12$ \textbf{a} specializace $\ge7/12$. Zakryj řešení, vyřeš na papír, pak porovnej.
+\end{infobox}
+
+\mockq{Otázka 1}{matematika}{Průběh funkce}
+\begin{zadani}Najděte lokální extrémy funkce $f(x)=x^3-3x$ a spočtěte $\lim_{x\to0}\frac{1-\cos x}{x^2}$.\end{zadani}
+\begin{reseni}$f'(x)=3x^2-3=0\Rightarrow x=\pm1$; $f''=6x$, takže $x{=}{-}1$ je maximum ($f={2}$), $x{=}1$ minimum ($f={-}2$). Limita: $1-\cos x=\frac{x^2}{2}+o(x^2)$, tedy $\lim=\frac12$.\end{reseni}
+
+\mockq{Otázka 2}{matematika}{Vlastní čísla a diagonalizace}
+\begin{zadani}Pro $A=\begin{psmallmatrix}1&2\\2&1\end{psmallmatrix}$ najděte vlastní čísla, vlastní vektory a rozhodněte o diagonalizovatelnosti.\end{zadani}
+\begin{reseni}$\det(A-\lambda I)=(1-\lambda)^2-4=\lambda^2-2\lambda-3=(\lambda-3)(\lambda+1)$, takže $\lambda=3,-1$. Vektory: $\lambda{=}3\to(1,1)$, $\lambda{=}{-}1\to(1,-1)$. Dvě různá vlastní čísla $\Rightarrow$ diagonalizovatelná, $A=PDP^{-1}$, $P=\begin{psmallmatrix}1&1\\1&-1\end{psmallmatrix}$, $D=\operatorname{diag}(3,-1)$.\end{reseni}
+
+\mockq{Otázka 3}{informatika}{Konečný automat}
+\begin{zadani}Sestrojte DFA pro binární čísla (čtená odshora) dělitelná 3.\end{zadani}
+\begin{reseni}Stavy = zbytek po dělení 3: $\{0,1,2\}$, počátek a jediný přijímající stav $0$. Přechod při bitu $b$: $q\to(2q+b)\bmod 3$. Tedy $0\xrightarrow{0}0,\;0\xrightarrow{1}1,\;1\xrightarrow{0}2,\;1\xrightarrow{1}0,\;2\xrightarrow{0}1,\;2\xrightarrow{1}2$. (Funguje, protože přečtení bitu odpovídá $n\mapsto 2n+b$.)\end{reseni}
+
+\mockq{Otázka 4}{informatika}{Virtuální paměť}
+\begin{zadani}Stránka 4\,KiB. Přeložte virtuální adresu \texttt{0x5678}, je-li stránka 5 namapována na rámec 2. Co je race condition?\end{zadani}
+\begin{reseni}Offset 12 bitu: offset $=$\texttt{0x678}, číslo stránky $=$\texttt{0x5}. Stránka $5\to$ rámec $2$, fyzická adresa $=(2\ll12)\,|\,\texttt{0x678}=\texttt{0x2678}$. \emph{Race condition}: výsledek závisí na prokládání vláken nad sdíleným stavem; řeší se vzájemným vyloučením (zámek/kritická sekce).\end{reseni}
+
+\mockq{Otázka 5}{specializace}{Logistická regrese}
+\begin{zadani}Napište predikci, ztrátu a jeden krok SGD pro $w=(0,0)$, $x=(1,1)$, $y=1$, $\eta=0{,}5$.\end{zadani}
+\begin{reseni}$p=\sigma(0)=0{,}5$; ztráta NLL $=-\ln p$. Gradient $(p-y)x=(-0{,}5,-0{,}5)$, krok $w\leftarrow(0,0)-0{,}5\cdot(-0{,}5,-0{,}5)=(0{,}25,\,0{,}25)$. Nová predikce $\sigma(0{,}5)\approx0{,}62$ (posun k 1).\end{reseni}
+
+\mockq{Otázka 6}{specializace}{Rozhodovací strom}
+\begin{zadani}Uzel se 4 kladnými a 4 zápornými příklady. Spočtěte entropii a informační zisk štěpení na čisté listy $(4,0)$ a $(0,4)$.\end{zadani}
+\begin{reseni}$H=-\tfrac12\log_2\tfrac12-\tfrac12\log_2\tfrac12=1$ bit. Čisté listy mají $H=0$, vážená entropie $0$, takže $\mathrm{IG}=1-0=1$ bit (dokonalé rozdělení).\end{reseni}
+
+\mockq{Otázka 7}{specializace}{Shlukování k-means}
+\begin{zadani}Body $1,2,8,9$ na přímce, $k=2$, počáteční centra $1$ a $9$. Proveďte jednu iteraci.\end{zadani}
+\begin{reseni}Přiřazení: $1,2\to c_1{=}1$ (blíž), $8,9\to c_2{=}9$. Nová centra: $c_1=\tfrac{1+2}{2}=1{,}5$, $c_2=\tfrac{8+9}{2}=8{,}5$. Další iterace už nic nezmění (konvergence), ztráta $J=0{,}25\cdot4=1{,}0$.\end{reseni}
+
+\mockq{Otázka 8}{specializace}{Bayesovská inference}
+\begin{zadani}$P(A)=0{,}3$, $P(B\mid A)=0{,}8$, $P(B\mid\neg A)=0{,}4$. Spočtěte $P(A\mid B)$.\end{zadani}
+\begin{reseni}$P(A,B)=0{,}3\cdot0{,}8=0{,}24$, $P(\neg A,B)=0{,}7\cdot0{,}4=0{,}28$, $P(B)=0{,}52$. $P(A\mid B)=\tfrac{0{,}24}{0{,}52}\approx0{,}46$.\end{reseni}
+
+\begin{infobox}[title={Bodování (orientačně)}]
+\footnotesize Každá úplná odpověď $\approx3$, definice + hlavní postup $\approx2$. Na průchod stačí: u 4 společných (Q1-Q4) nasbírat $\ge5$ (např.\ $2{+}2{+}1{+}1$), u 4 specializačních (Q5-Q8) $\ge7$ (např.\ $2{+}2{+}2{+}1$). Pokud někde vyjde $\le1$, dožeň to jinde - hlídej obě podlahy zvlášť.
+\end{infobox}

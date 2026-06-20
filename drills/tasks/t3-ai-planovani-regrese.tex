@@ -1,0 +1,28 @@
+\ulohahead{specializace UI-SU \textnormal{\footnotesize[úroveň 3]}}{Plánování zpětnou regresí (STRIPS)}
+\begin{zadani}
+Operátor \texttt{Stack(A,B)}: předpoklady $\{Hold(A),\,Clear(B)\}$, přidává $\{On(A,B),\,Clear(A),\,HandEmpty\}$, ruší $\{Hold(A),\,Clear(B)\}$. Cíl je $On(A,B)$.
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Připomeňte princip zpětného (regresního) plánování.
+  \item \bod{2} Proveďte jeden krok regrese cíle $On(A,B)$ přes operátor \texttt{Stack(A,B)}.
+  \item \bod{3} Porovnejte dopředné a zpětné plánování (větvení, relevance operátoru).
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Zpětné (regresní) plánování} jde od cíle: vyber operátor, jehož \emph{přidávací} efekty obsahují nějaký cílový literál, a \emph{regreduj} cíl - nahraď splněné cílové literály předpoklady operátoru. Pracuje jen s \emph{relevantními} operátory (těmi, co k cíli přispívají).
+
+\textbf{(b)} Cíl $G=\{On(A,B)\}$. Operátor \texttt{Stack(A,B)} přidává $On(A,B)$, je tedy relevantní a \emph{konzistentní} (neruší žádný jiný cílový literál). Regrese:
+\[
+G' = \big(G\setminus \text{add}(\texttt{Stack})\big)\,\cup\,\text{pre}(\texttt{Stack}) = \big(\{On(A,B)\}\setminus\{On(A,B),\dots\}\big)\cup\{Hold(A),Clear(B)\}.
+\]
+Nový podcíl $G'=\{Hold(A),\,Clear(B)\}$ - tj.\ abychom dosáhli $On(A,B)$ pomocí \texttt{Stack(A,B)}, musíme nejprve dosáhnout, že držíme $A$ a $B$ je volné.
+
+\textbf{(c)} \emph{Dopředné} plánování jde od počátečního stavu a aplikuje použitelné operátory; má velký větvící faktor (mnoho použitelných akcí), ale konkrétní úplné stavy. \emph{Zpětné} jde od cíle a uvažuje jen \emph{relevantní} operátory (menší větvení k cíli), ale pracuje s \emph{částečnými} stavy (množinami podcílu) a musí hlídat konzistenci (operátor nesmí rušit jiný cílový literál).
+\end{reseni}
+
+\begin{jadro}
+Regrese cíle $G$ přes operátor $o$ (jehož add pokrývá část $G$ a nic z $G$ neruší): $G'=(G\setminus\text{add}(o))\cup\text{pre}(o)$. Zpětné plánování = relevantní operátory od cíle; dopředné = použitelné operátory od počátku.
+\end{jadro}
+
+\kalibrace{Automatické plánování (dopředné/zpětné) je v požadavku Základu UI; úroveň 3 přidává vypracovaný regresní krok ke konceptu z úrovně 1.}
+\past{Regrese odečítá z cíle \emph{add} efekty a přidává \emph{předpoklady}; operátor je použitelný jen, neruší-li jiný cílový literál (konzistence).}

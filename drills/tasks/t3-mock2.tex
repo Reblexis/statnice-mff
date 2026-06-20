@@ -1,0 +1,41 @@
+\subsection*{Zkouška nanečisto 2}
+\addcontentsline{toc}{subsection}{Zkouška nanečisto 2}
+\begin{infobox}[title={Pokyny}]
+\footnotesize 8 otázek (2 matematika, 2 informatika, 4 specializace), 0-3 body. Cíl: společné $\ge5/12$ \textbf{a} specializace $\ge7/12$.
+\end{infobox}
+
+\mockq{Otázka 1}{matematika}{Integrály}
+\begin{zadani}Spočtěte $\int_0^2 (x^2-1)\,dx$ a obsah mezi $y=x$ a $y=x^2$ na $[0,1]$.\end{zadani}
+\begin{reseni}$\int_0^2(x^2-1)\,dx=[\tfrac{x^3}{3}-x]_0^2=\tfrac83-2=\tfrac23$. Obsah $=\int_0^1(x-x^2)\,dx=[\tfrac{x^2}{2}-\tfrac{x^3}{3}]_0^1=\tfrac12-\tfrac13=\tfrac16$.\end{reseni}
+
+\mockq{Otázka 2}{matematika}{Teorie grafu}
+\begin{zadani}Definujte barevnost. Je $K_5$ rovinný? Zdůvodněte přes $E\le 3V-6$.\end{zadani}
+\begin{reseni}Barevnost $\chi(G)$ = nejmenší počet barev pro dobré obarvení (sousedé různě). $K_5$: $V=5$, $E=\binom52=10$; rovinný jednoduchý graf splňuje $E\le3V-6=9$. Protože $10>9$, $K_5$ rovinný \emph{není}. ($\chi(K_5)=5$.)\end{reseni}
+
+\mockq{Otázka 3}{informatika}{Složitost}
+\begin{zadani}Definujte třídy P a NP a NP-úplnost. Jak se dokazuje NP-úplnost?\end{zadani}
+\begin{reseni}P = řešitelné v polynomiálním čase; NP = ano-instance mají polynomiálně ověřitelný certifikát. $B$ je NP-úplný, je-li v NP a NP-těžký ($\forall K\in$NP$:K\le_p B$). Důkaz: (1) ukázat $B\in$NP, (2) polynomiální redukce ze \emph{známého} NP-úplného problému na $B$.\end{reseni}
+
+\mockq{Otázka 4}{informatika}{Reprezentace dat}
+\begin{zadani}Jak je v little-endian uloženo \texttt{int32} \texttt{0x01020304}? Co je zarovnání?\end{zadani}
+\begin{reseni}Bajty od nejnižší adresy: \texttt{04 03 02 01} (nejméně významný první). Zarovnání: hodnota velikosti $s$ začíná na adrese dělitelné $s$ (rychlejší přístup CPU); překladač vkládá výplň mezi položky struktury.\end{reseni}
+
+\mockq{Otázka 5}{specializace}{Lineární regrese a L2}
+\begin{zadani}Napište normální rovnice OLS a ridge. Jaký má L2 efekt na koeficienty?\end{zadani}
+\begin{reseni}OLS: $X^{\!\top}Xw=X^{\!\top}y$, $w=(X^{\!\top}X)^{-1}X^{\!\top}y$ (je-li $X^{\!\top}X$ regulární; jinak pseudoinverze). Ridge: $(X^{\!\top}X+\lambda I)w=X^{\!\top}y$ (bias se obvykle nepenalizuje). L2 koeficienty \emph{smršťuje} k nule (menší rozptyl, řešitelné i při kolinearitě).\end{reseni}
+
+\mockq{Otázka 6}{specializace}{Evaluace klasifikátoru}
+\begin{zadani}Z 1000 vzorku je 5\,\% pozitivních; recall $0{,}8$, precision $0{,}5$. Spočtěte TP, FP, FN, TN a $F_1$.\end{zadani}
+\begin{reseni}$P=50,N=950$. $TP=0{,}8\cdot50=40$, $FN=10$; z precision $TP+FP=80\Rightarrow FP=40$, $TN=910$. $F_1=\tfrac{2\cdot0{,}5\cdot0{,}8}{1{,}3}\approx0{,}615$. (Accuracy $0{,}95$ je zde zavádějící - nevyvážené třídy.)\end{reseni}
+
+\mockq{Otázka 7}{specializace}{SVM a PCA}
+\begin{zadani}Vysvětlete maximální margin a podpůrné vektory. Co PCA optimalizuje a jak souvisí s kovariancí?\end{zadani}
+\begin{reseni}SVM hledá nadrovinu s největším marginem ($\min\tfrac12\|w\|^2$ s $y_i(w^{\!\top}x_i+b)\ge1$); určují ji nejbližší body = podpůrné vektory. PCA hledá směry maximálního rozptylu = vlastní vektory kovarianční matice (top-$k$ podle vlastních čísel); ekvivalentně minimalizuje rekonstrukční chybu.\end{reseni}
+
+\mockq{Otázka 8}{specializace}{MDP a Bellman}
+\begin{zadani}Napište Bellmanovu rovnici pro $V^*$ a popište iteraci hodnot.\end{zadani}
+\begin{reseni}$V^*(s)=\max_a\sum_{s'}P(s'\mid s,a)[R(s,a,s')+\gamma V^*(s')]$. Iterace hodnot: inicializuj $V$, opakovaně aplikuj pravou stranu jako update pro všechny stavy do konvergence; pak $\pi^*(s)=\arg\max_a(\dots)$.\end{reseni}
+
+\begin{infobox}[title={Bodování (orientačně)}]
+\footnotesize Společné Q1-Q4: cíl $\ge5$. Specializace Q5-Q8: cíl $\ge7$ (tři ze čtyř na $\ge2$). Hlídej obě podlahy nezávisle.
+\end{infobox}

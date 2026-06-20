@@ -1,0 +1,23 @@
+\ulohahead{společná informatika \textnormal{\footnotesize[úroveň 3]}}{Garbage collection}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Co je garbage collection a princip dosažitelnosti (kořeny, živé objekty)? Popište mark-and-sweep.
+  \item \bod{2} Co je generační hypotéza a jak ji využívá generační GC?
+  \item \bod{3} Porovnejte GC s reference countingem (problém cyklu) a vysvětlete stop-the-world a kompakci.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Garbage collector} automaticky uvolňuje objekty, které už nejsou potřeba. \emph{Dosažitelnost}: objekt je \emph{živý}, je-li dosažitelný z \emph{kořenu} (lokální proměnné, registry, statická pole) přes řetěz referencí; nedosažitelné objekty jsou odpad. \emph{Mark-and-sweep}: (1) \emph{mark} - projdi z kořenu a označ všechny dosažitelné objekty; (2) \emph{sweep} - uvolni neoznačené.
+
+\textbf{(b)} \emph{Generační hypotéza}: většina objektu umírá mladá (krátká životnost). \emph{Generační GC} proto dělí haldu na generace; \emph{mladou} generaci sbírá často a rychle (málo přeživších se povýší do starší), \emph{starou} jen občas. Tím se zlevní typický průběh (nesbírá se pokaždé celá halda).
+
+\textbf{(c)} \emph{Reference counting} uvolňuje deterministicky při poklesu počtu odkazu na 0, ale \emph{neuvolní cykly} (vzájemně se odkazující objekty mají počet $>0$, ač jsou nedosažitelné) - sledovací GC (mark-sweep) cykly zvládá, protože jde od kořenu. \emph{Stop-the-world}: po dobu (části) sběru se pozastaví běh aplikace, aby se graf objektu neměnil. \emph{Kompakce}: po sweepu se živé objekty posunou k sobě, čímž se odstraní fragmentace haldy a zrychlí alokace.
+\end{reseni}
+
+\begin{jadro}
+GC uvolní nedosažitelné objekty (od kořenu). Mark-and-sweep: označ dosažitelné, ukliď zbytek. Generační GC těží z ,,objekty umírají mladé''. Reference counting neuvolní cykly; GC ano. Stop-the-world pozastaví aplikaci, kompakce odstraní fragmentaci.
+\end{jadro}
+
+\kalibrace{Garbage collection je v požadavku (správa paměti) a objevila se v dřívějších zkouškách; úroveň 3 ji pokrývá do hloubky.}
+\past{Reference counting selhává na cyklech - to je klíčový rozdíl proti sledovacímu GC. Generační GC nesbírá pokaždé celou haldu.}

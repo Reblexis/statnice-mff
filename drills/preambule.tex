@@ -111,3 +111,7 @@
 \newtcolorbox{infobox}[1][]{enhanced, breakable, colback=mffaccent!5, colframe=mffaccent,
   boxrule=0.7pt, left=6pt, right=6pt, top=4pt, bottom=4pt, arc=2pt,
   before skip=6pt, after skip=6pt, fonttitle=\bfseries, #1}
+
+% hlavička otázky v nanečisto-zkoušce (bez čítače úloh)
+\newcommand{\mockq}[3]{\par\smallskip\noindent
+  {\bfseries\color{ulohagray}#1}\quad{\small\colorbox{ulohagray!12}{\textbf{#2}}}\quad{\bfseries #3}\par\vspace{1pt}}

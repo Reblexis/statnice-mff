@@ -1,0 +1,29 @@
+\ulohahead{společná informatika \textnormal{\footnotesize[úroveň 3]}}{Generické typy a funkcionální prvky (C\#)}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Co jsou generické typy a proč se používají (typová bezpečnost, výkon)?
+  \item \bod{2} Co jsou typy reprezentující funkce: delegáti, \texttt{Func}/\texttt{Action}, lambda funkce?
+  \item \bod{3} Napište generickou metodu v C\# a vysvětlete rozdíl mezi generikami (C\#) a šablonami (C++).
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Generické typy} parametrizují třídu/metodu typem (\texttt{List<T>}, \texttt{Dictionary<K,V>}), takže lze psát kód nezávislý na konkrétním typu \emph{bez ztráty typové kontroly} (vše se ověří při překladu) a \emph{bez boxingu} hodnotových typu (na rozdíl od kontejneru \texttt{object}). Výsledek: méně duplicity, bezpečnější a rychlejší kód.
+
+\textbf{(b)} \emph{Delegát} je typ reprezentující odkaz na metodu (typový ukazatel na funkci). \texttt{Func<...,TResult>} a \texttt{Action<...>} jsou předdefinované generické delegáty (s/bez návratové hodnoty). \emph{Lambda} je stručný zápis anonymní funkce, např.\ \texttt{x => x*x}, který lze přiřadit do delegátu a předat jako argument (funkce vyššího řádu).
+
+\textbf{(c)}
+\begin{lstlisting}
+T Max<T>(T a, T b) where T : IComparable<T>
+    => a.CompareTo(b) >= 0 ? a : b;
+// pouziti: Max(3, 7) -> 7;  Max("a","b") -> "b"
+\end{lstlisting}
+\emph{Generika (C\#)} jsou \emph{reifikovaná} (typové parametry existují v metadatech/IL i za běhu, lze je omezit klauzulí \texttt{where}); JIT typicky sdílí kód pro referenční typy a specializuje pro hodnotové. \emph{Šablony (C++)} jsou \emph{instanciovány při překladu} - pro každý použitý typ vznikne samostatný kód (mocnější/statický polymorfismus, ale delší překlad a horší chybové hlášky).
+\end{reseni}
+
+\begin{jadro}
+Generika = parametrizace typem, typová bezpečnost bez boxingu. Delegát = typ funkce; \texttt{Func}/\texttt{Action}; lambda \texttt{x=>...}. C\# generika: jeden typ + běhová podpora + \texttt{where}; C++ šablony: instanciace při překladu.
+\end{jadro}
+
+\kalibrace{Generické typy a funkcionální prvky jsou v požadavku programovacích jazyku; úroveň 3 doplňuje tuto oblast v C\#.}
+\past{Generika C\# nejsou ,,smazání typu'' jako v Javě - typové parametry jsou dostupné i za běhu. Lambda je výraz, delegát je typ, který ji drží.}

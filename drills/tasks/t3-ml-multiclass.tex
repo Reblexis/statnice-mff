@@ -1,0 +1,31 @@
+\ulohahead{specializace UI-SU \textnormal{\footnotesize[úroveň 3]}}{Klasifikace do více tříd (softmax) a křížová validace}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte softmax pro klasifikaci do $K$ tříd a uveďte alternativu one-vs-rest.
+  \item \bod{2} Napište ztrátovou funkci (kategoriální křížová entropie) a gradient pro jeden krok.
+  \item \bod{3} Popište $k$-násobnou křížovou validaci a spočtěte průměrnou přesnost z foldu $\{0{,}80;0{,}85;0{,}75;0{,}90;0{,}80\}$.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Softmax} převede skóre $z_k=w_k^{\!\top}x$ na pravděpodobnosti tříd:
+\[
+p_k=\frac{e^{z_k}}{\sum_{j=1}^K e^{z_j}},\qquad \sum_k p_k=1.
+\]
+Predikuje se třída s nejvyšším $p_k$. \emph{One-vs-rest}: natrénuj $K$ binárních klasifikátoru (každý ,,třída $k$ vs zbytek'') a vyber ten s nejvyšším skóre - jednodušší, ale skóre nejsou kalibrovaná pravděpodobnost.
+
+\textbf{(b)} \emph{Kategoriální křížová entropie} pro správnou třídu $y$: $L=-\ln p_y=-\ln\frac{e^{z_y}}{\sum_j e^{z_j}}$. Gradient vuči skóre má stejně elegantní tvar jako u logistické regrese:
+\[
+\frac{\partial L}{\partial z_k}=p_k-\mathbb{1}[k=y],\qquad \nabla_{w_k}L=(p_k-\mathbb{1}[k=y])\,x.
+\]
+Krok SGD: $w_k\leftarrow w_k-\eta(p_k-\mathbb{1}[k=y])x$.
+
+\textbf{(c)} \emph{$k$-fold CV}: rozděl data na $k$ částí, $k$-krát trénuj na $k-1$ z nich a vyhodnoť na zbylé; výsledky zprůměruj (robustnější odhad než jeden split, využije všechna data). Použije se i k volbě hyperparametru (vyber hodnotu s nejlepší průměrnou CV přesností). Průměr: $\frac{0{,}80+0{,}85+0{,}75+0{,}90+0{,}80}{5}=\frac{4{,}10}{5}=0{,}82$.
+\end{reseni}
+
+\begin{jadro}
+Softmax $p_k=e^{z_k}/\sum_j e^{z_j}$; ztráta $-\ln p_y$; gradient $(p_k-\mathbb{1}[k{=}y])x$. $k$-fold CV: průměr přesností přes foldy; vyber hyperparametr s nejlepším průměrem.
+\end{jadro}
+
+\kalibrace{Klasifikace do více tříd (softmax) je v požadavku logistické regrese; CV je opakované evaluační téma. Úroveň 3 doplňuje multiclass variantu.}
+\past{Softmax normuje přes \emph{všechny} třídy (jmenovatel je suma). CV se průměruje přes foldy; na testu se nevybírá hyperparametr (jen na dev/CV).}

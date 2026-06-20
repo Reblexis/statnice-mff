@@ -1,0 +1,27 @@
+\ulohahead{společná matematika \textnormal{\footnotesize[úroveň 3]}}{Bodové a intervalové odhady}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte bodový odhad, nestrannost a konzistenci odhadu.
+  \item \bod{2} Popište metodu maximální věrohodnosti (MLE) a odvoďte MLE parametru $p$ z $n$ Bernoulliho pokusu s $k$ úspěchy.
+  \item \bod{3} Popište intervalový odhad střední hodnoty založený na normální aproximaci.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Bodový odhad} $\hat\theta=\hat\theta(X_1,\dots,X_n)$ je statistika odhadující neznámý parametr $\theta$. Je \emph{nestranný}, je-li $\mathbb{E}[\hat\theta]=\theta$ (žádné systematické vychýlení). Je \emph{konzistentní}, pokud $\hat\theta\xrightarrow{P}\theta$ s rostoucím $n$ (např.\ prumer $\bar X$ je nestranný a konzistentní odhad $\mathbb{E}X$).
+
+\textbf{(b)} \emph{MLE}: zvol $\theta$ maximalizující věrohodnost $L(\theta)=\prod_i P(x_i\mid\theta)$ (typicky maximalizujeme $\ln L$). Pro $n$ Bernoulliho pokusu s $k$ úspěchy: $L(p)=p^k(1-p)^{n-k}$, $\ln L=k\ln p+(n-k)\ln(1-p)$; derivace $\frac{k}{p}-\frac{n-k}{1-p}=0$ dává $\hat p=\frac{k}{n}$ (relativní četnost); hraničně $k{=}0\Rightarrow\hat p{=}0$ a $k{=}n\Rightarrow\hat p{=}1$.
+
+\textbf{(c)} \emph{Intervalový odhad} střední hodnoty: pro velké $n$ je $\bar X\approx\mathcal{N}(\mu,\sigma^2/n)$ (CLT), takže $100(1-\alpha)\,\%$ konfidenční interval je
+\[
+\bar X\pm z_{1-\alpha/2}\,\frac{\sigma}{\sqrt n}
+\]
+($z_{1-\alpha/2}$ je kvantil normálního rozdělení, např.\ $1{,}96$ pro 95\,\%); neznámé $\sigma$ se nahradí výběrovou směrodatnou odchylkou $s$ (pro malé $n$ se použije $t$-kvantil).
+\end{reseni}
+
+\begin{jadro}
+Nestranný: $\mathbb{E}[\hat\theta]=\theta$. MLE: maximalizuj $\ln L(\theta)=\sum\ln P(x_i\mid\theta)$; pro Bernoulli $\hat p=k/n$. CI střední hodnoty: $\bar X\pm z_{1-\alpha/2}\,\sigma/\sqrt n$.
+\end{jadro}
+
+\kalibrace{Bodové i intervalové odhady jsou explicitně v požadavku statistiky a codex je označil za vysokovýnosové pro úplnost; podporují i ML (maximální věrohodnost).}
+\past{Nestrannost je o $\mathbb{E}[\hat\theta]=\theta$, ne o rozptylu. Šířka konfidenčního intervalu klesá jako $1/\sqrt n$ (čtyřnásobek dat = poloviční interval).}

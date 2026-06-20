@@ -1,0 +1,29 @@
+\ulohahead{specializace UI-SU \textnormal{\footnotesize[úroveň 3]}}{POMDP a aktualizace beliefu}
+\begin{zadani}
+Částečně pozorovatelný MDP se dvěma stavy $s_1,s_2$. Pro akci $a$: $T(s_1\!\to\!s_1)=0{,}8$, $T(s_1\!\to\!s_2)=0{,}2$, $T(s_2\!\to\!s_1)=0{,}3$, $T(s_2\!\to\!s_2)=0{,}7$. Model pozorování: $O(o\mid s_1)=0{,}9$, $O(o\mid s_2)=0{,}2$. Počáteční belief $b=(0{,}5,\,0{,}5)$.
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte POMDP a pojem belief (víra o stavu).
+  \item \bod{2} Napište vzorec aktualizace beliefu po akci $a$ a pozorování $o$.
+  \item \bod{3} Spočtěte nový belief po provedení $a$ a pozorování $o$.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{POMDP} $=(S,A,T,R,\Omega,O,\gamma)$: jako MDP, ale agent stav přímo \emph{nevidí}; po akci dostane jen \emph{pozorování} $o\in\Omega$ s pravděpodobností $O(o\mid s',a)$ (obecně $O:\Omega\times S\times A\to[0,1]$ - pozorování smí záviset i na akci). \emph{Belief} $b$ je rozdělení pravděpodobnosti nad stavy (co agent ví); rozhoduje se podle něj (POMDP lze chápat jako MDP nad spojitým prostorem beliefu).
+
+\textbf{(b)} Aktualizace (předpověď přes přechod + korekce pozorováním, Bayes):
+\[
+b'(s')\ \propto\ O(o\mid s',a)\sum_{s} T(s'\mid s,a)\,b(s),
+\]
+poté normalizace, aby $\sum_{s'}b'(s')=1$.
+
+\textbf{(c)} (V tomto příkladu $O$ na akci nezávisí, tj.\ $O(o\mid s')$.) \emph{Predikce}: $\tilde b(s_1)=0{,}8\cdot0{,}5+0{,}3\cdot0{,}5=0{,}55$, $\tilde b(s_2)=0{,}2\cdot0{,}5+0{,}7\cdot0{,}5=0{,}45$.
+\emph{Korekce} pozorováním $o$: $\propto(0{,}9\cdot0{,}55,\ 0{,}2\cdot0{,}45)=(0{,}495,\ 0{,}09)$. Normalizace ($/0{,}585$): $b'(s_1)\approx0{,}846$, $b'(s_2)\approx0{,}154$.
+\end{reseni}
+
+\begin{jadro}
+POMDP = MDP + skrytý stav + pozorování $O(o\mid s',a)$; agent drží belief $b$ (rozdělení nad stavy). Update: $b'(s')\propto O(o\mid s')\sum_s T(s'\mid s,a)b(s)$, pak normuj. (Stejná logika jako filtrace HMM s akcemi.)
+\end{jadro}
+
+\kalibrace{POMDP (základní definice) je explicitně v požadavku Základu UI. Belief update je stejný mechanismus jako filtrace HMM - úroveň 3 ho doplňuje numericky.}
+\past{Belief update = predikce (přechod) PAK korekce (pozorování) + normalizace, jako u HMM. Belief je rozdělení, ne jeden ,,nejpravděpodobnější'' stav.}

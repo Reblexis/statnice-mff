@@ -1,0 +1,23 @@
+\ulohahead{společná informatika \textnormal{\footnotesize[úroveň 3]}}{Nativní vs interpretovaný běh, JIT/AOT, sestavení programu}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Vysvětlete rozdíl nativní vs interpretovaný běh, co je bytecode a interpret.
+  \item \bod{2} Vysvětlete JIT a AOT překlad a proces sestavení (oddělený překlad, linkování, staticky vs dynamicky linkované knihovny).
+  \item \bod{3} Stručně: běhové prostředí procesu, volací konvence a relokace (position-independent code).
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Nativní} běh: program je přeložen do strojového kódu procesoru a CPU ho vykonává přímo (rychlé, závislé na platformě). \emph{Interpretovaný} běh: \emph{interpret} čte a vykonává program (zdroj nebo \emph{bytecode} = přenositelný mezikód virtuálního stroje, např.\ CIL/JVM) instrukci po instrukci - přenositelné, ale pomalejší.
+
+\textbf{(b)} \emph{JIT} (just-in-time): bytecode se překládá do nativního kódu \emph{za běhu} těsně před prvním spuštěním metody (kombinuje přenositelnost s rychlostí, může optimalizovat dle běhových dat). \emph{AOT} (ahead-of-time): překlad do nativního kódu \emph{před} během (rychlý start, bez JIT režie). \emph{Sestavení}: zdroje se \emph{odděleně} přeloží na objektové soubory a \emph{linker} je spojí (vyřeší odkazy mezi moduly) do spustitelného souboru. \emph{Staticky} linkované knihovny se vkopírují do binárky (větší, soběstačná); \emph{dynamické} (.dll/.so) se zavádějí za běhu (sdílené, menší binárka, závislost na verzi).
+
+\textbf{(c)} \emph{Běhové prostředí procesu}: adresový prostor (kód, data, halda, zásobník), vazba na OS přes systémová volání. \emph{Volací konvence} určuje, jak se předávají argumenty (registry/zásobník), kdo uklízí zásobník a kde je návratová hodnota. \emph{Relokace} upravuje adresy při zavedení modulu na jinou adresu; \emph{position-independent code} (PIC) používá relativní adresování, takže kód lze zavést na různé adresy s žádnými/menšími relokacemi v sekci kódu (dynamické relokace symbolu přes GOT/PLT mohou zustat); typické pro sdílené knihovny.
+\end{reseni}
+
+\begin{jadro}
+Nativní = přímo CPU; interpret = vykonává bytecode. JIT = překlad za běhu, AOT = předem. Sestavení: oddělený překlad $\to$ objektové soubory $\to$ linker. Statické knihovny v binárce, dynamické (.dll/.so) zaváděné za běhu.
+\end{jadro}
+
+\kalibrace{Řízení překladu a sestavení (JIT/AOT, linkování) je v požadavku programovacích jazyku, ale v moderních zkouškách vzácné - úroveň 3 to pokrývá pro úplnost.}
+\past{JIT překládá \emph{za běhu}, ne před ním (to je AOT). Dynamické knihovny šetří paměť sdílením, ale přinášejí závislost na verzi (,,DLL hell'').}

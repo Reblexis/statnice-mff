@@ -1,0 +1,23 @@
+\ulohahead{společná matematika \textnormal{\footnotesize[úroveň 3]}}{Posloupnosti, limity a řady}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte limitu posloupnosti a konvergenci. Uveďte aritmetiku limit a větu o dvou policajtech.
+  \item \bod{2} Spočtěte $\displaystyle\lim_{n\to\infty}\frac{2n^2+1}{n^2+n}$ a $\displaystyle\lim_{n\to\infty}\sqrt[n]{n}$.
+  \item \bod{3} Definujte součet řady a uveďte kritéria konvergence (srovnávací, podílové, odmocninové). Proč harmonická řada diverguje a geometrická (pro $|q|<1$) konverguje?
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} $\lim_{n\to\infty}a_n=L$, pokud $\forall\varepsilon>0\,\exists n_0\,\forall n\ge n_0:|a_n-L|<\varepsilon$ (posloupnost je pak \emph{konvergentní}). \emph{Aritmetika limit}: limita součtu/součinu/podílu je součet/součin/podíl limit (u podílu při nenulové limitě jmenovatele). \emph{Věta o dvou policajtech}: je-li $a_n\le b_n\le c_n$ a $\lim a_n=\lim c_n=L$, pak $\lim b_n=L$.
+
+\textbf{(b)} $\lim\frac{2n^2+1}{n^2+n}=\lim\frac{2+1/n^2}{1+1/n}=\frac{2}{1}=2$ (vydělením $n^2$). $\lim\sqrt[n]{n}=1$ (např.\ $\sqrt[n]{n}=e^{\frac{\ln n}{n}}$ a $\frac{\ln n}{n}\to0$).
+
+\textbf{(c)} \emph{Součet řady} $\sum a_n$ je limita částečných součtu $s_N=\sum_{n=1}^N a_n$ (pokud existuje). \emph{Srovnávací}: $0\le a_n\le b_n$ a $\sum b_n$ konverguje $\Rightarrow$ $\sum a_n$ konverguje. \emph{Podílové (d'Alembert)}: $q=\lim|a_{n+1}/a_n|$; $q<1\Rightarrow$ konverguje (absolutně), $q>1\Rightarrow$ diverguje, $q=1$ nerozhoduje. \emph{Odmocninové (Cauchy)}: stejně podle $q=\lim\sqrt[n]{|a_n|}$ ($<1$ konverguje, $>1$ diverguje, $=1$ nerozhoduje). \emph{Harmonická} $\sum\frac1n$ diverguje (částečné součty rostou jako $\ln N$); \emph{geometrická} $\sum q^n$ pro $|q|<1$ konverguje k $\frac{1}{1-q}$ (částečný součet $\frac{1-q^{N+1}}{1-q}$).
+\end{reseni}
+
+\begin{jadro}
+Limita posloupnosti: $\forall\varepsilon\,\exists n_0:\,|a_n-L|<\varepsilon$. Racionální podíl polynomu: vyděl nejvyšší mocninou. Řada konverguje dle podílového/odmocninového/srovnávacího kritéria; harmonická diverguje, geometrická ($|q|<1$) $\to\frac1{1-q}$.
+\end{jadro}
+
+\kalibrace{Posloupnosti a řady jsou v požadavku analýzy a opakovaně se zkouší (geometrická řada byla samostatná otázka). Definice limity + jeden výpočet = 2 body.}
+\past{Podílové kritérium s $q=1$ nerozhoduje. Harmonická řada diverguje, ač $a_n\to0$ - samotné $a_n\to0$ konvergenci nezaručuje.}

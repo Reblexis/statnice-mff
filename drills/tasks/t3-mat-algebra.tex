@@ -1,0 +1,23 @@
+\ulohahead{společná matematika \textnormal{\footnotesize[úroveň 3]}}{Algebraické struktury: grupy, podgrupy, tělesa, konečná tělesa}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte grupu a podgrupu. Co je permutace a grupa permutací $S_n$?
+  \item \bod{2} Definujte těleso. Uveďte příklady (i konečné) a vysvětlite charakteristiku tělesa.
+  \item \bod{3} Zformulujte Lagrangeovu větu a uveďte, kdy je $\mathbb{Z}_n$ těleso.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Grupa} $(G,\cdot)$ je množina s binární operací, která je asociativní ($a(bc)=(ab)c$), má \emph{neutrální prvek} $e$ ($ae=ea=a$) a ke každému $a$ \emph{inverzní} $a^{-1}$ ($aa^{-1}=e$). Je-li navíc komutativní, je \emph{abelovská}. \emph{Podgrupa} $H\le G$ je podmnožina, která je sama grupou vuči téže operaci (uzavřená na operaci i inverzy, obsahuje $e$). \emph{Permutace} množiny je bijekce na sebe; všechny permutace $\{1,\dots,n\}$ se skládáním tvoří grupu $S_n$ řádu $n!$ (obecně nekomutativní).
+
+\textbf{(b)} \emph{Těleso} $(T,+,\cdot)$ je množina se dvěma operacemi, kde $(T,+)$ je abelovská grupa (s neutrálním $0$), $(T\setminus\{0\},\cdot)$ je abelovská grupa (s neutrálním $1$) a platí distributivita. Příklady: $\mathbb{Q},\mathbb{R},\mathbb{C}$ (nekonečná) a $\mathbb{Z}_p$ pro prvočíslo $p$ (konečné). \emph{Charakteristika} je nejmenší $k>0$ s $\underbrace{1+\dots+1}_{k}=0$ (nebo $0$, pokud takové neexistuje); u konečného tělesa je to vždy prvočíslo $p$ a těleso má $p^m$ prvku.
+
+\textbf{(c)} \emph{Lagrangeova věta}: v konečné grupě řád každé podgrupy dělí řád grupy ($|H|\mid|G|$); důsledek: řád každého prvku dělí $|G|$. $\mathbb{Z}_n$ (zbytky modulo $n$) je \emph{těleso právě tehdy, když je $n$ prvočíslo} - jen tehdy má každý nenulový prvek multiplikativní inverz (jinak existují dělitelé nuly).
+\end{reseni}
+
+\begin{jadro}
+Grupa = asociativní operace + neutrál + inverzy. Těleso = $(T,+)$ a $(T\setminus\{0\},\cdot)$ abelovské grupy + distributivita. $\mathbb{Z}_p$ těleso $\iff p$ prvočíslo. Lagrange: $|H|\mid|G|$.
+\end{jadro}
+
+\kalibrace{Algebraické struktury (grupy, tělesa, konečná tělesa) jsou v požadavku, ale v moderních zkouškách vzácné - úroveň 3 je pokrývá, aby žádný draw společné matematiky nebyl nepokrytý.}
+\past{Těleso vyžaduje inverzy i pro \emph{násobení} (kromě 0) - proto $\mathbb{Z}_4$ není těleso (2 nemá inverz). Charakteristika konečného tělesa je vždy prvočíslo.}

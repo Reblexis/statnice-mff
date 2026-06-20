@@ -1,0 +1,28 @@
+\ulohahead{specializace UI-SU \textnormal{\footnotesize[úroveň 3]}}{Rezoluce v predikátové logice a unifikace}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Co je unifikace a nejobecnější unifikátor (MGU)? Co je skolemizace?
+  \item \bod{2} Z předpokladu ,,$\forall x\,(P(x)\to Q(x))$'' a ,,$P(a)$'' rezolucí odvoďte $Q(a)$.
+  \item \bod{3} Vysvětlete, proč je rezoluce důkaz sporem a jakou roli hraje převod do klauzulární formy.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Unifikace} hledá substituci proměnných, která dva literály (termy) ztotožní; \emph{nejobecnější unifikátor} (MGU) je ta nejméně specializující (každá jiná unifikace je její instancí). \emph{Skolemizace} odstraní existenční kvantifikátory při převodu do klauzulární formy: $\exists y$ se nahradí novou \emph{Skolemovou} konstantou (není-li pod $\forall$) nebo \emph{Skolemovou funkcí} závislých univerzálních proměnných. Skolemizace zachovává \emph{splnitelnost} (equisatisfiabilitu), ne obecně logickou ekvivalenci - rezoluci to stačí, protože dokazuje sporem (jde jí o nesplnitelnost).
+
+\textbf{(b)} Klauzulární forma: $\forall x(P(x)\to Q(x))$ dá klauzuli $\{\neg P(x),\,Q(x)\}$; dále $\{P(a)\}$. Pro důkaz $Q(a)$ přidáme negaci cíle $\{\neg Q(a)\}$.
+\begin{itemize}\setlength\itemsep{1pt}
+  \item Rezolvuj $\{\neg P(x),Q(x)\}$ a $\{P(a)\}$ s MGU $\{x/a\}$: vznikne $\{Q(a)\}$.
+  \item Rezolvuj $\{Q(a)\}$ a $\{\neg Q(a)\}$: vznikne prázdná klauzule $\square$.
+\end{itemize}
+Odvození prázdné klauzule dokazuje $Q(a)$.
+
+\textbf{(c)} Rezoluce dokazuje $T\models\varphi$ \emph{sporem}: k teorii přidá $\neg\varphi$ a snaží se odvodit \emph{prázdnou klauzuli} (= nesplnitelnost $T\cup\{\neg\varphi\}$). Aby to šlo mechanicky, převede se vše do \emph{klauzulární formy} (PNF $\to$ skolemizace $\to$ CNF $\to$ množina klauzulí); rezoluce s unifikací je pak úplná zamítací procedura pro predikátovou logiku.
+\end{reseni}
+
+\begin{jadro}
+Unifikace = substituce ztotožňující literály, MGU = nejobecnější. Skolemizace odstraní $\exists$. Rezoluce: přidej $\neg$cíl, převeď na klauzule, rezolvuj s MGU do prázdné klauzule (důkaz sporem).
+\end{jadro}
+
+\kalibrace{Rezoluce a Hornovy klauzule jsou v požadavku Základu UI i logiky; úroveň 3 doplňuje predikátovou rezoluci s unifikací (těžší než výroková).}
+\past{Skolemizace ruší $\exists$, ne $\forall$. Rezoluce dokazuje sporem - bez přidání negace cíle nic nedokážeš.}
