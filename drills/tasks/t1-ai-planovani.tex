@@ -8,7 +8,7 @@
 \end{zadani}
 
 \begin{reseni}
-\textbf{(a)} \emph{Plánovací problém} (např.\ STRIPS): počáteční stav (množina platných faktu), množina \emph{operátoru} a cílová podmínka. \emph{Operátor} má \emph{předpoklady} (precondition - co musí platit, aby šel provést) a \emph{efekty} (add list = co začne platit, delete list = co přestane platit). Plán = posloupnost operátoru vedoucí z počátečního stavu do stavu splňujícího cíl.
+\textbf{(a)} \emph{Plánovací problém} (STRIPS) je čtveřice $\Pi=(P,O,I,G)$: množina atomu/fluentu $P$, operátory $O$, počáteční stav $I\subseteq P$ a cílová podmínka $G$. \emph{Operátor} je trojice $o=(\mathrm{pre}(o),\mathrm{add}(o),\mathrm{del}(o))$ (předpoklady, přidávané a rušené atomy); je použitelný ve stavu $s$, je-li $\mathrm{pre}(o)\subseteq s$, a dá stav $(s\setminus\mathrm{del}(o))\cup\mathrm{add}(o)$. Plán = posloupnost operátoru vedoucí z $I$ do stavu splňujícího $G$.
 
 \textbf{(b)} \emph{Dopředné plánování}: začni v počátečním stavu a aplikuj použitelné operátory, dokud nedosáhneš cíle (prohledávání stavového prostoru vpřed); velký větvící faktor. \emph{Zpětné plánování}: začni od cíle a hledej operátory, jejichž efekty cíl (částečně) splňují, a nahraď cíl jejich předpoklady (regrese); pracuje jen s relevantními operátory, ale stavy jsou částečné (množiny podcílu).
 

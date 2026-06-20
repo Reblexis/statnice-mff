@@ -8,7 +8,7 @@
 \end{zadani}
 
 \begin{reseni}
-\textbf{(a)} \emph{Markovský řetězec}: posloupnost stavu, kde budoucnost závisí jen na současném stavu (\emph{Markovský předpoklad} $P(X_t\mid X_{1:t-1})=P(X_t\mid X_{t-1})$). \emph{HMM}: skryté stavy $X_t$ s maticí přechodu $P(X_t\mid X_{t-1})$ a pozorování $E_t$ s modelem emisí $P(E_t\mid X_t)$; vidíme jen $E_t$, stavy odhadujeme.
+\textbf{(a)} \emph{Markovský řetězec} je trojice $(S,A,\pi_0)$: stavový prostor $S$, přechodová matice $A_{ij}=P(X_t{=}j\mid X_{t-1}{=}i)$ a počáteční rozdělení $\pi_0$; splňuje \emph{Markovský předpoklad} $P(X_t\mid X_{1:t-1})=P(X_t\mid X_{t-1})$. \emph{HMM} je pětice $\lambda=(S,O,A,B,\pi_0)$: skryté stavy $S$, abeceda pozorování $O$, přechody $A$, emise $B_{ij}=P(E_t{=}o_j\mid X_t{=}i)$ a počáteční rozdělení $\pi_0$; vidíme jen pozorování $E_t$ a stavy odhadujeme.
 
 \textbf{(b)} \emph{Filtrace}: $P(X_t\mid e_{1:t})$ (odhad současného stavu z dosavadních pozorování). \emph{Predikce}: $P(X_{t+k}\mid e_{1:t})$ (budoucí stav). \emph{Vyhlazování}: $P(X_k\mid e_{1:t})$ pro $k<t$ (minulý stav s využitím pozdějších pozorování). Rekurence filtrace (forward):
 \[
