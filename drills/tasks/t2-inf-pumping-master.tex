@@ -1,9 +1,9 @@
-\ulohahead{společná informatika \textnormal{\footnotesize[úroveň 2]}}{Pumping lemma pro bezkontextové jazyky a důkaz Master theoremu}
+\ulohahead{společná informatika \textnormal{\footnotesize[úroveň 2]}}{Pumping lemma pro bezkontextové jazyky a Master theorem}
 \begin{zadani}
 \begin{enumerate}[label=(\alph*)]
   \item \bod{1} Zformulujte pumping lemma pro bezkontextové jazyky (CFL).
   \item \bod{2} Dokažte, že $L=\{a^n b^n c^n\mid n\ge0\}$ není bezkontextový.
-  \item \bod{3} Naznačte důkaz Master theoremu (přes rekurzní strom).
+  \item \bod{3} Vysvětlete hlavní myšlenku Master theoremu (rekurzní strom) a jeho tři případy. \emph{(Požadavek uvádí Master theorem ,,bez důkazu'' - formální důkaz se nevyžaduje, jen pochopení.)}
 \end{enumerate}
 \end{zadani}
 
@@ -19,5 +19,5 @@
 CFL pumping: $w=uvxyz$, $|vxy|\le p$, $|vy|\ge1$, $uv^ixy^iz\in L$. $\{a^nb^nc^n\}$: $vxy$ pokryje max 2 bloky $\Rightarrow$ pumpování rozváží třetí. Master theorem: porovnej $n^{\log_b a}$ (listy) s $f(n)$.
 \end{jadro}
 
-\kalibrace{Důkaz nebezkontextovosti a náčrt Master theoremu jsou legální 3.\ body u automatové/algoritmické otázky. Úroveň 2 cílí na tento ,,těžší'' bod.}
+\kalibrace{Důkaz nebezkontextovosti (přes pumping) podpírá zařazení do Chomského hierarchie - to je v požadavku. Master theorem se dle požadavku umí \emph{použít} (bez důkazu); intuice rekurzního stromu je jen pro pochopení.}
 \past{CFL pumping pumpuje \emph{dva} úseky ($v$ a $y$) zároveň, na rozdíl od regulárního (jeden). Klíč u $a^nb^nc^n$ je $|vxy|\le p$ (nepokryje krajní bloky současně).}

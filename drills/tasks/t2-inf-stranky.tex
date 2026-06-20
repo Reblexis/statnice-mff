@@ -1,24 +1,26 @@
-\ulohahead{společná informatika \textnormal{\footnotesize[úroveň 2]}}{Dvouúrovňové stránkování a překlad adresy}
+\ulohahead{společná informatika \textnormal{\footnotesize[úroveň 2]}}{Stránkování, překlad adresy a ochrana paměti}
 \begin{zadani}
-16bitová virtuální adresa, velikost stránky 256\,B. Číslo stránky je rozděleno na dvě úrovně po 4 bitech. Virtuální adresa je \texttt{0x1234}.
+16bitová virtuální adresa, velikost stránky 256\,B. Virtuální adresa je \texttt{0x1234}.
 \begin{enumerate}[label=(\alph*)]
-  \item \bod{1} Rozdělte adresu na index L1, index L2 a offset.
-  \item \bod{2} L1 tabulka v položce \texttt{0x1} ukazuje na L2 tabulku, jejíž položka \texttt{0x2} udává rámec \texttt{0x7}. Spočtěte fyzickou adresu.
-  \item \bod{3} Proč se používá víceúrovňová tabulka místo jedné ploché? K čemu je TLB?
+  \item \bod{1} Rozdělte adresu na číslo stránky a offset.
+  \item \bod{2} Jednoúrovňová stránkovací tabulka mapuje stránku \texttt{0x12} na rámec \texttt{0x07}. Spočtěte fyzickou adresu.
+  \item \bod{3} Vysvětlete roli virtuálních adresových prostoru v ochraně paměti procesu.
 \end{enumerate}
 \end{zadani}
 
 \begin{reseni}
-\textbf{(a)} Stránka 256\,B $\Rightarrow$ offset má $\log_2 256=8$ bitu. Zbývá 8 bitu čísla stránky, rozdělené na L1 (4 bity) a L2 (4 bity). \texttt{0x1234} $=$ \texttt{0001\,0010\,0011\,0100}$_2$: offset (dolních 8 bitu) $=$ \texttt{0x34}, číslo stránky (horních 8) $=$ \texttt{0x12}, tj.\ L1 $=$ \texttt{0x1}, L2 $=$ \texttt{0x2}.
+\textbf{(a)} Stránka 256\,B $\Rightarrow$ offset má $\log_2 256=8$ bitu. \texttt{0x1234} $=$ \texttt{0001\,0010\,0011\,0100}$_2$: offset (dolních 8 bitu) $=$ \texttt{0x34}, číslo stránky (horních 8 bitu) $=$ \texttt{0x12}.
 
-\textbf{(b)} L1[\texttt{0x1}] $\to$ L2 tabulka; L2[\texttt{0x2}] $=$ rámec \texttt{0x7}. Fyzická adresa $=$ (rámec $\ll 8$) $\,|\,$ offset $=$ \texttt{0x7}\,$\ll8\ |\ $\texttt{0x34} $=$ \texttt{0x0734}.
+\textbf{(b)} Stránka \texttt{0x12} $\to$ rámec \texttt{0x07}. Fyzická adresa $=$ (rámec $\ll 8$) $\,|\,$ offset $=$ \texttt{0x07}\,$\ll8\ |\ $\texttt{0x34} $=$ \texttt{0x0734}.
 
-\textbf{(c)} Jedna plochá tabulka by musela mít položku pro \emph{každou} stránku adresového prostoru (i nepoužité), což je u velkých prostoru obrovské. \emph{Víceúrovňová} tabulka alokuje L2 podtabulky jen pro skutečně použité oblasti (řídký adresový prostor) - šetří paměť. \emph{TLB} (translation lookaside buffer) je malá rychlá cache nedávných překladu stránka$\to$rámec, aby se nemusela při každém přístupu procházet tabulka v paměti.
+\textbf{(c)} Každý proces má vlastní stránkovací tabulku, tedy vlastní mapování virtuálních adres na rámce; nevidí proto fyzickou paměť jiných procesu (\emph{izolace}). Přístup na nenamapovanou stránku vyvolá výpadek (page fault) a OS proces ochrání/ukončí. Tím virtuální adresový prostor zajišťuje ochranu paměti mezi procesy.
+
+\emph{(Nad rámec požadavku - jen pro přehled:) u velkých adresových prostoru se používají \emph{víceúrovňové} tabulky (alokují podtabulky jen pro použité oblasti, šetří paměť) a \emph{TLB} (cache nedávných překladu stránka$\to$rámec).}
 \end{reseni}
 
 \begin{jadro}
-Adresa = (číslo stránky $\Vert$ offset); offset má $\log_2$(velikost stránky) bitu. Číslo stránky se u víceúrovňové tabulky dělí na indexy úrovní. Fyzická $=$ rámec $\ll$ (bity offsetu) $|$ offset. Víceúrovňová = šetří paměť u řídkého prostoru; TLB = cache překladu.
+Adresa = (číslo stránky $\Vert$ offset); offset má $\log_2$(velikost stránky) bitu. Fyzická $=$ rámec $\ll$ (bity offsetu) $|$ offset. Virtuální adresový prostor (vlastní tabulka na proces) zajišťuje izolaci/ochranu paměti.
 \end{jadro}
 
-\kalibrace{Překlad adres je opakovaný výpočet (architektura/OS ~60\,\%); dvouúrovňová varianta je těžší než v úrovni 1. Rozdělení adresy + výpočet rámce = 2-3 body.}
-\past{Offset má tolik bitu, kolik je $\log_2$(velikost stránky). Fyzická adresa skládá \emph{rámec} (ne číslo stránky) s offsetem. Bity čísla stránky se dělí mezi úrovně.}
+\kalibrace{Překlad adres jednoúrovňovou tabulkou + ochrana paměti jsou přesně v požadavku a opakovaně se zkouší (virtuální paměť, architektura/OS ~60\,\%). Rozdělení adresy + výpočet rámce = 2-3 body.}
+\past{Offset má tolik bitu, kolik je $\log_2$(velikost stránky). Fyzická adresa skládá \emph{rámec} (ne číslo stránky) s offsetem.}

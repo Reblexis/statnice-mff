@@ -2,7 +2,7 @@
 \begin{zadani}
 \begin{enumerate}[label=(\alph*)]
   \item \bod{1} Popište algoritmus k-nejbližších sousedu pro klasifikaci i regresi. Proč se mu říká ,,líné'' učení (lazy)?
-  \item \bod{2} Jak se volí $k$ (křížová validace) a jak malé vs velké $k$ ovlivní výsledek (vychýlení vs rozptyl)? Proč je nutné škálovat příznaky?
+  \item \bod{2} Jak se volí $k$ (křížová validace) a jak malé vs velké $k$ ovlivní výsledek (citlivost na šum vs hladkost hranice)? Proč je nutné škálovat příznaky?
   \item \bod{3} Co je prokletí dimenzionality a jak postihuje kNN? Jaká je výpočetní složitost predikce?
 \end{enumerate}
 \end{zadani}
@@ -10,7 +10,7 @@
 \begin{reseni}
 \textbf{(a)} kNN si \emph{pamatuje} trénovací data; pro nový bod najde $k$ nejbližších (dle metriky, typicky euklidovské) a \emph{klasifikace} = většinové hlasování jejich tříd, \emph{regrese} = průměr jejich hodnot. Je \emph{líné}, protože netrénuje žádný model - veškerá práce je až při predikci.
 
-\textbf{(b)} $k$ se volí \emph{křížovou validací}. \emph{Malé} $k$ (např.\ 1) dává nízké vychýlení, ale vysoký rozptyl (citlivé na šum, přeučení); \emph{velké} $k$ hranici vyhladí (vyšší vychýlení, nižší rozptyl). \emph{Škálování} je nutné, protože vzdálenost jinak ovládne příznak s největším rozsahem.
+\textbf{(b)} $k$ se volí \emph{křížovou validací}. \emph{Malé} $k$ (např.\ 1) je citlivé na šum (nestabilní, přeučení); \emph{velké} $k$ rozhodovací hranici vyhladí (může podučit). \emph{Škálování} je nutné, protože vzdálenost jinak ovládne příznak s největším rozsahem.
 
 \textbf{(c)} \emph{Prokletí dimenzionality}: ve vysoké dimenzi se vzdálenosti mezi body vyrovnávají (poměr nejbližší/nejvzdálenější $\to1$), takže pojem ,,soused'' ztrácí smysl a kNN selhává; navíc je třeba exponenciálně víc dat. \emph{Složitost} naivní predikce je $O(nd)$ na jeden dotaz (projít $n$ bodu v dimenzi $d$); urychlení přes k-d stromy či přibližné hledání.
 \end{reseni}

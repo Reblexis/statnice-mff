@@ -2,7 +2,7 @@
 \begin{zadani}
 \begin{enumerate}[label=(\alph*)]
   \item \bod{1} Definujte binomické, geometrické, Poissonovo, normální a exponenciální rozdělení a uveďte jejich střední hodnotu.
-  \item \bod{2} Zformulujte Markovovu a Čebyševovu nerovnost a jednu použijte.
+  \item \bod{2} Zformulujte Markovovu nerovnost a použijte ji. \emph{(Volitelně: Čebyševova nerovnost.)}
   \item \bod{3} Zformulujte zákon velkých čísel a vysvětlete vztah binomické $\to$ Poissonovo/normální.
 \end{enumerate}
 \end{zadani}
@@ -10,13 +10,13 @@
 \begin{reseni}
 \textbf{(a)} \emph{Binomické} $\mathrm{Bi}(n,p)$: počet úspěchu v $n$ nezávislých pokusech, $P(X=k)=\binom{n}{k}p^k(1-p)^{n-k}$, $\mathbb{E}X=np$. \emph{Geometrické}: počet pokusu do prvního úspěchu, $P(X=k)=(1-p)^{k-1}p$, $\mathbb{E}X=1/p$. \emph{Poissonovo} $\mathrm{Po}(\lambda)$: $P(X=k)=e^{-\lambda}\lambda^k/k!$, $\mathbb{E}X=\lambda$. \emph{Normální} $\mathcal{N}(\mu,\sigma^2)$: hustota $\frac{1}{\sigma\sqrt{2\pi}}e^{-(x-\mu)^2/(2\sigma^2)}$, $\mathbb{E}X=\mu$. \emph{Exponenciální} $\mathrm{Exp}(\lambda)$: hustota $\lambda e^{-\lambda x}$ pro $x\ge0$, $\mathbb{E}X=1/\lambda$.
 
-\textbf{(b)} \emph{Markovova}: pro $X\ge0$ a $a>0$ je $P(X\ge a)\le\frac{\mathbb{E}X}{a}$. \emph{Čebyševova}: $P(|X-\mathbb{E}X|\ge k)\le\frac{\operatorname{var}X}{k^2}$. Příklad: má-li $X\ge0$ střední hodnotu $2$, pak $P(X\ge10)\le 2/10=0{,}2$.
+\textbf{(b)} \emph{Markovova}: pro $X\ge0$ a $a>0$ je $P(X\ge a)\le\frac{\mathbb{E}X}{a}$. Příklad: má-li $X\ge0$ střední hodnotu $2$, pak $P(X\ge10)\le 2/10=0{,}2$. \emph{(Nad rámec požadavku, příbuzná Čebyševova:} $P(|X-\mathbb{E}X|\ge k)\le\frac{\operatorname{var}X}{k^2}$.\emph{)}
 
 \textbf{(c)} \emph{Zákon velkých čísel} (slabý): pro nezávislé stejně rozdělené se střední hodnotou $\mu$ platí $\bar X_n\xrightarrow{P}\mu$, tj.\ $\forall\varepsilon>0:P(|\bar X_n-\mu|>\varepsilon)\to0$ (silný: konvergence skoro jistě). Binomické $\to$ \emph{Poissonovo} pro velké $n$ a malé $p$ s $np=\lambda$ (zákon vzácných jevu); binomické $\to$ \emph{normální} pro velké $n$ (de Moivre-Laplace, speciální případ CLT) s $\mu=np$, $\sigma^2=np(1-p)$.
 \end{reseni}
 
 \begin{jadro}
-$\mathrm{Bi}(n,p)$: $\mathbb{E}=np$; geom.: $1/p$; $\mathrm{Po}(\lambda)$: $\lambda$; $\mathcal{N}(\mu,\sigma^2)$: $\mu$; $\mathrm{Exp}(\lambda)$: $1/\lambda$. Markov $P(X\ge a)\le\mathbb{E}X/a$; Čebyšev $P(|X-\mu|\ge k)\le\sigma^2/k^2$. ZVČ: prumer $\to$ střední hodnota.
+$\mathrm{Bi}(n,p)$: $\mathbb{E}=np$; geom.: $1/p$; $\mathrm{Po}(\lambda)$: $\lambda$; $\mathcal{N}(\mu,\sigma^2)$: $\mu$; $\mathrm{Exp}(\lambda)$: $1/\lambda$. Markov $P(X\ge a)\le\mathbb{E}X/a$ (Čebyšev $\sigma^2/k^2$ navíc). ZVČ: prumer $\to$ střední hodnota.
 \end{jadro}
 
 \kalibrace{Práce s konkrétními rozděleními a nerovnostmi je v požadavku pravděpodobnosti; úroveň 3 je shrnuje pro úplnost a podporuje statistické testy ze specializace.}

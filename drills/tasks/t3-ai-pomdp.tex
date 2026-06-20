@@ -2,9 +2,9 @@
 \begin{zadani}
 Částečně pozorovatelný MDP se dvěma stavy $s_1,s_2$. Pro akci $a$: $T(s_1\!\to\!s_1)=0{,}8$, $T(s_1\!\to\!s_2)=0{,}2$, $T(s_2\!\to\!s_1)=0{,}3$, $T(s_2\!\to\!s_2)=0{,}7$. Model pozorování: $O(o\mid s_1)=0{,}9$, $O(o\mid s_2)=0{,}2$. Počáteční belief $b=(0{,}5,\,0{,}5)$.
 \begin{enumerate}[label=(\alph*)]
-  \item \bod{1} Definujte POMDP a pojem belief (víra o stavu).
-  \item \bod{2} Napište vzorec aktualizace beliefu po akci $a$ a pozorování $o$.
-  \item \bod{3} Spočtěte nový belief po provedení $a$ a pozorování $o$.
+  \item \bod{1} Definujte POMDP a pojem belief (víra o stavu). \emph{(Toto je rozsah požadavku: ,,POMDP - základní definice''.)}
+  \item Napište vzorec aktualizace beliefu po akci $a$ a pozorování $o$. \emph{(volitelně, nad rámec požadavku)}
+  \item Spočtěte nový belief po provedení $a$ a pozorování $o$. \emph{(volitelně, nad rámec požadavku)}
 \end{enumerate}
 \end{zadani}
 
@@ -25,5 +25,5 @@ poté normalizace, aby $\sum_{s'}b'(s')=1$.
 POMDP = MDP + skrytý stav + pozorování $O(o\mid s',a)$; agent drží belief $b$ (rozdělení nad stavy). Update: $b'(s')\propto O(o\mid s')\sum_s T(s'\mid s,a)b(s)$, pak normuj. (Stejná logika jako filtrace HMM s akcemi.)
 \end{jadro}
 
-\kalibrace{POMDP (základní definice) je explicitně v požadavku Základu UI. Belief update je stejný mechanismus jako filtrace HMM - úroveň 3 ho doplňuje numericky.}
+\kalibrace{Požadavek chce u POMDP \emph{jen základní definici} (část a) - to je povinné jádro. Belief update (b, c) je nad rámec požadavku; uvádíme ho pro pochopení (je to táž logika jako filtrace HMM), ale na zkoušce se nevyžaduje.}
 \past{Belief update = predikce (přechod) PAK korekce (pozorování) + normalizace, jako u HMM. Belief je rozdělení, ne jeden ,,nejpravděpodobnější'' stav.}

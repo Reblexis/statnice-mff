@@ -3,7 +3,7 @@
 \begin{enumerate}[label=(\alph*)]
   \item \bod{1} Vysvětlete rozdělení dat na train/dev/test a křížovou validaci ($k$-fold). Co je princip maximální věrohodnosti?
   \item \bod{2} Co je přeučení (overfitting) a generalizační chyba? Jak proti přeučení působí regularizace (L1 vs L2) a včasné zastavení trénování?
-  \item \bod{3} Vysvětlete kompromis vychýlení-rozptyl (bias-variance) a prokletí dimenzionality při výběru modelu.
+  \item \bod{3} Vysvětlete vztah podučení vs přeučení (jednoduchý vs složitý model) a prokletí dimenzionality při výběru modelu.
 \end{enumerate}
 \end{zadani}
 
@@ -12,11 +12,11 @@
 
 \textbf{(b)} \emph{Přeučení}: model se naučí šum trénovacích dat, má malou trénovací, ale velkou \emph{generalizační} (testovací) chybu. \emph{Regularizace} přidá penaltu za velikost vah: \emph{L2} ($\lambda\lVert w\rVert_2^2$) hladce smršťuje, \emph{L1} ($\lambda\lVert w\rVert_1$) tlačí váhy přesně na nulu (řídké řešení, výběr příznaku). \emph{Včasné zastavení}: trénink se ukončí, když začne růst validační chyba.
 
-\textbf{(c)} \emph{Bias-variance}: příliš jednoduchý model má velké \emph{vychýlení} (podučení), příliš složitý velký \emph{rozptyl} (přeučení); cílem je minimum jejich součtu. \emph{Prokletí dimenzionality}: s rostoucím počtem příznaku roste potřeba dat exponenciálně a vzdálenosti se vyrovnávají, takže složitější modely snáz přeučí - proto redukce dimenze/regularizace.
+\textbf{(c)} \emph{Podučení vs přeučení}: příliš jednoduchý model špatně zachytí vztah (podučení - velká chyba i na tréninku), příliš složitý se učí šum (přeučení - malá trénovací, velká testovací chyba); cílem je rovnováha mezi nimi. \emph{Prokletí dimenzionality}: s rostoucím počtem příznaku roste potřeba dat exponenciálně a vzdálenosti se vyrovnávají, takže složitější modely snáz přeučí - proto redukce dimenze/regularizace.
 \end{reseni}
 
 \begin{jadro}
-Train (učení) / dev (ladění) / test (jediný závěrečný odhad); $k$-fold CV průměruje. Přeučení = malá train, velká test chyba. L2 hladce smršťuje, L1 dělá řídké váhy (výběr příznaku). Bias-variance: minimalizuj součet.
+Train (učení) / dev (ladění) / test (jediný závěrečný odhad); $k$-fold CV průměruje. Přeučení = malá train, velká test chyba. L2 hladce smršťuje, L1 dělá řídké váhy (výběr příznaku). Hledej rovnováhu podučení/přeučení.
 \end{jadro}
 
 \kalibrace{Toto je ,,zastřešující'' ML téma (evaluace, regularizace) prolínající mnoho otázek; opakovaně se ptá na křížovou validaci a přeučení. Solidní definice = body napříč specializací.}
