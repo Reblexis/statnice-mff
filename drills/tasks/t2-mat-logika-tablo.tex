@@ -1,0 +1,23 @@
+\ulohahead{společná matematika \textnormal{\footnotesize[úroveň 2]}}{Tablo metoda a věty o kompaktnosti a úplnosti}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Popište princip tablo metody (důkaz sporem, rozkladová pravidla, uzavřená větev).
+  \item \bod{2} Tablo metodou ukažte, že $((p\to q)\wedge p)\to q$ je tautologie.
+  \item \bod{3} Zformulujte větu o kompaktnosti a větu o úplnosti a vysvětlete jejich význam.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Tablo} dokazuje tautologii sporem: předpokládá, že formule \emph{neplatí}, a rozkládá ji \emph{rozkladovými pravidly} na složky (konjunktivní pravidla větev prodlouží, disjunktivní ji rozvětví). Větev se \emph{uzavře}, obsahuje-li formuli i její negaci. Uzavřou-li se všechny větve, je výchozí předpoklad sporný, takže formule je tautologie.
+
+\textbf{(b)} Předpokládáme nepravdivost: $\neg\big(((p\to q)\wedge p)\to q\big)$, což znamená $(p\to q)\wedge p$ pravdivé a $q$ nepravdivé. Z konjunkce: $p\to q$ pravdivé, $p$ pravdivé, $\neg q$. Z $p\to q$ (disjunkce $\neg p\vee q$) se větev rozdělí: větev s $\neg p$ se uzavře (máme $p$ i $\neg p$); větev s $q$ se uzavře (máme $q$ i $\neg q$). Všechny větve uzavřené $\Rightarrow$ tautologie.
+
+\textbf{(c)} \emph{Věta o kompaktnosti}: teorie má model právě tehdy, když má model každá její konečná podmnožina. \emph{Věta o úplnosti}: $T\models\varphi$ (sémantický důsledek) právě tehdy, když $T\vdash\varphi$ (existuje formální důkaz). Význam: úplnost spojuje pravdivost ve všech modelech s odvoditelností v kalkulu (dokazatelnost ,,dohoní'' platnost); kompaktnost umožňuje přenášet vlastnosti z konečných částí na celek (časté u nekonečných teorií).
+\end{reseni}
+
+\begin{jadro}
+Tablo = důkaz sporem: rozkládej negaci cíle, uzavři větev při $X$ i $\neg X$; všechny uzavřené $\Rightarrow$ tautologie. Kompaktnost: model existuje $\iff$ pro každou konečnou podmnožinu. Úplnost: $\models\,\iff\,\vdash$.
+\end{jadro}
+
+\kalibrace{Logika (znění vět o kompaktnosti/úplnosti, tablo/rezoluce) je v požadavku a je levná na definice. Úroveň 2 přidává jeden vyřešený tablo důkaz.}
+\past{Tablo dokazuje sporem - začínáš \emph{negací} dokazované formule. Úplnost ($\models\iff\vdash$) nezaměňuj s korektností (jen $\vdash\Rightarrow\models$).}

@@ -1,0 +1,24 @@
+\ulohahead{specializace UI-SU \textnormal{\footnotesize[úroveň 2]}}{PCA: kovariance, vlastní rozklad, projekce}
+\begin{zadani}
+Centrovaná data mají kovarianční matici $C=\begin{psmallmatrix}2&1\\1&2\end{psmallmatrix}$.
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Spočtěte vlastní čísla $C$ a první hlavní komponentu (vlastní vektor).
+  \item \bod{2} Jaký podíl rozptylu vysvětluje první komponenta?
+  \item \bod{3} Na kterou osu data projektujete při redukci na 1 dimenzi a jak projekci spočtete?
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} $\det(C-\lambda I)=(2-\lambda)^2-1=\lambda^2-4\lambda+3=(\lambda-1)(\lambda-3)$, tedy $\lambda_1=3$, $\lambda_2=1$. K $\lambda_1=3$: $(C-3I)=\begin{psmallmatrix}-1&1\\1&-1\end{psmallmatrix}$, vlastní vektor $v_1=(1,1)^{\!\top}$, normovaně $\tfrac{1}{\sqrt2}(1,1)$. To je první hlavní komponenta.
+
+\textbf{(b)} Vysvětlený rozptyl první komponenty $=\dfrac{\lambda_1}{\lambda_1+\lambda_2}=\dfrac{3}{4}=0{,}75$, tedy 75\,\%.
+
+\textbf{(c)} Projektujeme na směr $v_1=\tfrac1{\sqrt2}(1,1)$ (největší vlastní číslo). Nová (1D) souřadnice bodu $x$ je skalární součin $z=v_1^{\!\top}x=\tfrac{1}{\sqrt2}(x_1+x_2)$. Tím zachováme maximum rozptylu (75\,\%) a zahodíme směr $(1,-1)$ s rozptylem 25\,\%.
+\end{reseni}
+
+\begin{jadro}
+Hlavní komponenty = vlastní vektory kovariance, seřazené podle vlastních čísel (= rozptylu podél nich). Vysvětlený rozptyl $=\lambda_i/\sum\lambda_j$. Projekce na PC: $z=v^{\!\top}x$. Před PCA centruj (a obvykle škáluj).
+\end{jadro}
+
+\kalibrace{Numerická PCA na 2D (kovariance -> vlastní čísla -> projekce) je vděčný typ (PCA ~12\,\%, ale opakovaný jako vizuální/výpočetní). Sytí specializační podlahu.}
+\past{Komponenta s \emph{největším} vlastním číslem nese nejvíc rozptylu. Vlastní vektory normuj. PCA hledá rozptyl, ne oddělení tříd.}

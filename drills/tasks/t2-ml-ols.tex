@@ -1,0 +1,28 @@
+\ulohahead{specializace UI-SU \textnormal{\footnotesize[úroveň 2]}}{Lineární regrese ručně a vliv L2 regularizace}
+\begin{zadani}
+Data jednorozměrné regrese: $(x,y)\in\{(1,1),(2,2),(3,2)\}$, model $\hat y=w_0+w_1x$.
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Napište normální rovnice v maticovém tvaru.
+  \item \bod{2} Spočtěte řešení nejmenších čtverců $w_0,w_1$.
+  \item \bod{3} Jak by se řešení změnilo s L2 regularizací (ridge) a proč? Uveďte upravené normální rovnice.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} S maticí $X=\begin{psmallmatrix}1&1\\1&2\\1&3\end{psmallmatrix}$ a $y=(1,2,2)^{\!\top}$ jsou normální rovnice $X^{\!\top}X\,w=X^{\!\top}y$, kde
+$X^{\!\top}X=\begin{psmallmatrix}3&6\\6&14\end{psmallmatrix}$, $X^{\!\top}y=\begin{psmallmatrix}5\\11\end{psmallmatrix}$.
+
+\textbf{(b)} Snazší přes vzorce jednoduché regrese: $\bar x=2$, $\bar y=\tfrac53$.
+$w_1=\dfrac{\sum(x-\bar x)(y-\bar y)}{\sum(x-\bar x)^2}=\dfrac{(-1)(-\tfrac23)+0+(1)(\tfrac13)}{1+0+1}=\dfrac{1}{2}=0{,}5$.
+$w_0=\bar y-w_1\bar x=\tfrac53-0{,}5\cdot2=\tfrac23\approx0{,}667$. Tedy $\hat y=0{,}667+0{,}5\,x$.
+(Kontrola maticově: $\det(X^{\!\top}X)=3\cdot14-36=6$, $w=\tfrac16\begin{psmallmatrix}14&-6\\-6&3\end{psmallmatrix}\begin{psmallmatrix}5\\11\end{psmallmatrix}=\tfrac16\begin{psmallmatrix}4\\3\end{psmallmatrix}=\begin{psmallmatrix}0{,}667\\0{,}5\end{psmallmatrix}$.)
+
+\textbf{(c)} Ridge minimalizuje $\lVert Xw-y\rVert^2+\lambda\lVert w\rVert^2$, normální rovnice $(X^{\!\top}X+\lambda I)\,w=X^{\!\top}y$. S rostoucím $\lambda$ se $w_1$ (a $w_0$, neregularizuje-li se zvlášť) \emph{smršťuje k nule}: matice $X^{\!\top}X+\lambda I$ je vždy regulární a dobře podmíněná, takže řešení existuje i při kolineárních datech a model méně přeučuje (menší rozptyl).
+\end{reseni}
+
+\begin{jadro}
+$w=(X^{\!\top}X)^{-1}X^{\!\top}y$; jednodušeji $w_1=\frac{\sum(x-\bar x)(y-\bar y)}{\sum(x-\bar x)^2}$, $w_0=\bar y-w_1\bar x$. Ridge: $(X^{\!\top}X+\lambda I)w=X^{\!\top}y$, smršťuje koeficienty.
+\end{jadro}
+
+\kalibrace{Ruční OLS / jeden ridge krok je opakovaný (regrese ~67\,\%). Tato úloha sytí kritickou podlahu specializace a snižuje šanci na skóre $\le1$.}
+\past{$X$ musí mít sloupec jedniček pro bias. Vzorec pro $w_1$ má ve jmenovateli rozptyl $x$, ne kovarianci.}

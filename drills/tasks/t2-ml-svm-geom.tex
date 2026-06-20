@@ -1,0 +1,24 @@
+\ulohahead{specializace UI-SU \textnormal{\footnotesize[úroveň 2]}}{SVM: geometrie hranice a vliv bodu}
+\begin{zadani}
+Dvě lineárně separabilní třídy v rovině: kladné body $(3,3),(4,4)$, záporné body $(0,0),(1,1)$.
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Popište, kudy povede rozdělující nadrovina s maximálním marginem a které body jsou podpůrné vektory. Načrtněte (slovně) hranici.
+  \item \bod{2} Co se stane s hranicí, přidáme-li bod $(2,2)$ s kladnou třídou? A co bod $(5,5)$ s kladnou třídou daleko za hranicí?
+  \item \bod{3} Kdy lineární SVM selže a jak pomůže RBF jádro?
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} Body leží na přímce $y=x$; kladné jsou ,,nahoře vpravo'', záporné ,,dole vlevo''. Maximálně marginová nadrovina je kolmá na spojnici nejbližších bodu protilehlých tříd, tedy přímka $x+y=c$ procházející středem mezi $(1,1)$ a $(3,3)$, tj.\ $x+y=4$ (kolmá na směr $(1,1)$). \emph{Podpůrné vektory} jsou nejbližší body $(1,1)$ a $(3,3)$; body $(0,0)$ a $(4,4)$ jsou dál a hranici neurčují.
+
+\textbf{(b)} Bod $(2,2)$ leží přesně na hranici $x+y=4$; jako \emph{kladný} tedy leží uvnitř marginu (porušuje ho), stane se podpůrným vektorem a hranici \emph{posune/zúží} (řešení se změní). Bod $(5,5)$: $x+y=10$, leží daleko v kladné oblasti za marginem, je správně klasifikovaný a není mezi nejbližšími - hranici proto \emph{nezmění}. Obecně: body daleko a správně klasifikované (mimo margin) řešení neovlivní; mění ho jen body v marginu, resp.\ nejbližší body.
+
+\textbf{(c)} Lineární SVM selže, nejsou-li třídy lineárně separabilní (např.\ XOR nebo soustředné kružnice). \emph{RBF jádro} $K(x,z)=e^{-\gamma\lVert x-z\rVert^2}$ implicitně mapuje do vysokorozměrného prostoru, kde hranice může být nelineární (lokální, podle vzdálenosti k podpůrným vektorum); malé $\gamma$ = hladká hranice, velké $\gamma$ = klikatá (přeučení).
+\end{reseni}
+
+\begin{jadro}
+Maximálně marginová hranice je kolmá na spojnici nejbližších protilehlých bodu, vede jejich středem; ty body jsou podpůrné vektory. Body daleko a správně neovlivní řešení. Neseparabilní data -> měkký margin ($C$) nebo nelineární jádro (RBF).
+\end{jadro}
+
+\kalibrace{Geometrická SVM otázka (,,nakreslete hranici, vliv přidaného bodu, kdy RBF'') padla 2024-léto skoro doslova. Konceptuálně-geometrické zvládnutí = 2-3 body.}
+\past{Hranici určují jen podpůrné vektory; přidání bodu daleko za marginem nic nezmění, přidání do marginu ano. Velké $\gamma$/velké $C$ = přeučení.}

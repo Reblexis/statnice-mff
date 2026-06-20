@@ -1,0 +1,35 @@
+\ulohahead{specializace UI-SU \textnormal{\footnotesize[úroveň 2]}}{ROC křivka a AUC z konkrétních skóre}
+\begin{zadani}
+Klasifikátor přiřadil skóre: pozitivní příklady $\{0{,}9,\,0{,}6,\,0{,}4\}$, negativní příklady $\{0{,}7,\,0{,}3,\,0{,}2\}$ (tedy $P=3$, $N=3$).
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Pro klesající práh spočtěte body ROC (TPR, FPR).
+  \item \bod{2} Načrtněte (popište) tvar ROC křivky.
+  \item \bod{3} Spočtěte AUC a interpretujte ji.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} Setříděno sestupně: $0{,}9(+),0{,}7(-),0{,}6(+),0{,}4(+),0{,}3(-),0{,}2(-)$. Predikuj ,,+'' při skóre $\ge$ práh; $\mathrm{TPR}=\mathrm{TP}/3$, $\mathrm{FPR}=\mathrm{FP}/3$:
+\[
+\begin{array}{c|cc|cc}
+\text{práh} & \mathrm{TP} & \mathrm{FP} & \mathrm{TPR} & \mathrm{FPR}\\\hline
+0{,}9 & 1 & 0 & 0{,}33 & 0\\
+0{,}7 & 1 & 1 & 0{,}33 & 0{,}33\\
+0{,}6 & 2 & 1 & 0{,}67 & 0{,}33\\
+0{,}4 & 3 & 1 & 1{,}00 & 0{,}33\\
+0{,}3 & 3 & 2 & 1{,}00 & 0{,}67\\
+0{,}2 & 3 & 3 & 1{,}00 & 1{,}00
+\end{array}
+\]
+
+\textbf{(b)} Křivka jde z $(0,0)$ schody nahoru a doprava do $(1,1)$; nejprve stoupá strmě (zachytí 2 pozitivní při FPR $0{,}33$), pak doroste TPR na 1 a nakonec dobírá falešně pozitivní. Leží nad diagonálou (lepší než náhoda).
+
+\textbf{(c)} AUC $=$ pravděpodobnost, že náhodný pozitivní dostane vyšší skóre než náhodný negativní. Spočítáme přes dvojice: $0{,}9>$ všechny 3 negativní; $0{,}6>\{0{,}3,0{,}2\}$ (2); $0{,}4>\{0{,}3,0{,}2\}$ (2). Celkem $3+2+2=7$ z $9$ dvojic. $\text{AUC}=\tfrac{7}{9}\approx0{,}78$. Tedy klasifikátor řadí pozitivní nad negativní v 78\,\% případu (1 = ideál, 0{,}5 = náhoda).
+\end{reseni}
+
+\begin{jadro}
+ROC = TPR vs FPR při klesajícím prahu; každý pozitivní zvýší TPR, každý negativní FPR. AUC $=$ podíl dvojic (pozitivní, negativní), kde pozitivní má vyšší skóre $=$ P(skóre$^+>$ skóre$^-$).
+\end{jadro}
+
+\kalibrace{ROC/AUC z konkrétních skóre je legální numerický typ evaluační otázky (~44\,\%). Doplňuje rekonstrukci matice záměn a snižuje šanci na skóre $\le1$.}
+\past{ROC vynáší TPR proti \emph{FPR}, ne proti precision (to je PR křivka). AUC přes počítání dvojic je rychlejší než integrace.}

@@ -1,0 +1,44 @@
+\ulohahead{společná informatika \textnormal{\footnotesize[úroveň 2]}}{Jednoduchý správce paměti (alokátor haldy)}
+\begin{zadani}
+Implementujte jednoduchý alokátor nad souvislým polem bajtu (haldou).
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Popište reprezentaci: blok s hlavičkou (velikost + příznak volný/obsazený) a volný seznam.
+  \item \bod{2} Napište \texttt{Alloc} strategií first-fit (včetně rozdělení bloku) a \texttt{Free} (včetně slučování sousedu).
+  \item \bod{3} Vysvětlete vnitřní a vnější fragmentaci a roli zarovnání (alignment).
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} Halda je posloupnost bloku; každý má \emph{hlavičku} s velikostí a příznakem, zda je volný. Volné bloky lze provázat do \emph{volného seznamu}. Z ukazatele na data se k hlavičce dostaneme odečtením její velikosti.
+
+\textbf{(b)}
+\begin{lstlisting}
+// hlavicka: int Size; bool Free; (ulozena pred daty)
+IntPtr Alloc(int n) {
+    n = Align(n, 8);                       // zarovnani pozadavku
+    for (var b = first; b != null; b = b.Next)
+        if (b.Free && b.Size >= n) {
+            if (b.Size >= n + MinBlock)    // rozdel velky blok
+                Split(b, n);
+            b.Free = false;
+            return b.Data;
+        }
+    return IntPtr.Zero;                     // nenalezeno
+}
+
+void Free(Block b) {
+    b.Free = true;
+    if (b.Next != null && b.Next.Free) Coalesce(b, b.Next); // sluc vpravo
+    if (b.Prev != null && b.Prev.Free) Coalesce(b.Prev, b); // sluc vlevo
+}
+\end{lstlisting}
+
+\textbf{(c)} \emph{Vnitřní fragmentace}: blok je větší než požadavek (kvuli zarovnání / minimální velikosti), nevyužitý zbytek leží uvnitř bloku. \emph{Vnější fragmentace}: volná paměť je roztříštěná do malých kousku, takže velký souvislý požadavek selže, ač je celkem dost místa. \emph{Zarovnání}: data daného typu musí začínat na adrese dělitelné jejich velikostí (rychlejší/korektní přístup CPU), proto se velikosti zaokrouhlují nahoru.
+\end{reseni}
+
+\begin{jadro}
+Blok = hlavička (velikost + volný?) + data. First-fit: první dost velký volný blok, případně rozděl. Free: označ volný a slučuj se sousedy. Fragmentace: vnitřní (zbytek v bloku) vs vnější (roztříštěné volno).
+\end{jadro}
+
+\kalibrace{Implementační otázka ze společné informatiky (alokátor) padla 2025-léto; je to typ, na kterém ,,naoko připravený'' propadá. Definice + kostra Alloc/Free = vyhnutí se nule.}
+\past{Po \texttt{Free} nezapomeň slučovat sousední volné bloky (jinak vnější fragmentace roste). Hlavička zabírá místo - počítej s ní u malých alokací.}

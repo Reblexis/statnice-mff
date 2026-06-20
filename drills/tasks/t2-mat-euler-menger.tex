@@ -1,0 +1,23 @@
+\ulohahead{společná matematika \textnormal{\footnotesize[úroveň 2]}}{Eulerova formule (důkaz) a Mengerova věta}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Zformulujte Eulerovu formuli pro souvislý rovinný graf a naznačte její důkaz indukcí.
+  \item \bod{2} Odvoďte $E\le 3V-6$ a pomocí toho ukažte, že $K_5$ není rovinný.
+  \item \bod{3} Zformulujte hranovou a vrcholovou verzi Mengerovy věty.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} Pro souvislý rovinný graf platí $V-E+F=2$. \emph{Důkaz indukcí podle počtu hran}: kostra (strom) má $E=V-1$ a $F=1$, takže $V-(V-1)+1=2$ platí. Přidáním hrany, která uzavře kružnici, vznikne nová stěna: $E$ i $F$ vzrostou o 1, takže $V-E+F$ se nezmění. Indukcí platí pro každý souvislý rovinný graf.
+
+\textbf{(b)} U jednoduchého grafu s $V\ge3$ ohraničuje každou stěnu $\ge3$ hran a každá hrana sousedí se 2 stěnami, tedy $2E\ge3F$. Dosazením $F=2-V+E$: $2E\ge3(2-V+E)=6-3V+3E$, odkud $E\le3V-6$. Pro $K_5$: $V=5$, $E=\binom52=10$, ale $3V-6=9<10$, takže $K_5$ nesplňuje nutnou podmínku rovinnosti $\Rightarrow$ není rovinný.
+
+\textbf{(c)} \emph{Mengerova věta (hranová):} minimální počet hran, jejichž odebrání rozpojí vrcholy $u,v$, se rovná maximálnímu počtu \emph{hranově disjunktních} cest mezi $u,v$. \emph{Vrcholová verze:} minimální počet vrcholu (různých od $u,v$), jejichž odebrání rozpojí $u,v$, se rovná maximálnímu počtu \emph{vnitřně vrcholově disjunktních} cest mezi $u,v$.
+\end{reseni}
+
+\begin{jadro}
+$V-E+F=2$ (souvislý rovinný), důkaz indukcí přes hrany (kružnicová hrana přidá stěnu). Důsledek $E\le3V-6$ vylučuje $K_5$. Menger: min.\ řez $=$ max.\ počet disjunktních cest (hranová/vrcholová verze).
+\end{jadro}
+
+\kalibrace{Eulerova formule, rovinnost a Menger jsou opakovaný grafový okruh (~45\,\%); úroveň 2 přidává \emph{důkaz}, který zkouška může chtít. Náčrt důkazu = 3.\ bod.}
+\past{$E\le3V-6$ platí pro jednoduché grafy $V\ge3$ (bipartitní: $E\le2V-4$). Mengerova věta je grafový protějšek max-flow/min-cut.}

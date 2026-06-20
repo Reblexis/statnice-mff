@@ -1,0 +1,31 @@
+\ulohahead{specializace UI-SU \textnormal{\footnotesize[úroveň 2]}}{AC-3 krok za krokem}
+\begin{zadani}
+Proměnné $X,Y,Z$ s doménami $\{1,2,3,4\}$ a omezeními $X<Y$ a $Y<Z$. Proveďte AC-3 a veďte frontu hran.
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Vypište počáteční frontu hran.
+  \item \bod{2} Zpracujte hrany a u každé revize uveďte zúžení domény a nově přidané hrany.
+  \item \bod{3} Uveďte výsledné domény a vysvětlete, proč musela být znovu zařazena hrana $(X,Y)$.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} Hrany (obě orientace každého omezení): $(X,Y),(Y,X),(Y,Z),(Z,Y)$.
+
+\textbf{(b)}
+\begin{itemize}\setlength\itemsep{1pt}
+  \item $(X,Y)$ [$X<Y$]: $X{=}4$ nemá $Y>4$ $\Rightarrow$ $D_X=\{1,2,3\}$. (přidej hrany do $X$: $(Y,X)$ už ve frontě)
+  \item $(Y,X)$ [pro $Y$ existuje $X<Y$]: $Y{=}1$ nemá $X<1$ $\Rightarrow$ $D_Y=\{2,3,4\}$. (přidej $(X,Y),(Z,Y)$)
+  \item $(Y,Z)$ [$Y<Z$]: $Y{=}4$ nemá $Z>4$ $\Rightarrow$ $D_Y=\{2,3\}$. (přidej $(X,Y),(Z,Y)$)
+  \item $(Z,Y)$ [pro $Z$ existuje $Y<Z$]: $Z{=}1$ (žádné $Y<1$) a $Z{=}2$ (žádné $Y<2$ v $\{2,3\}$) vypadnou $\Rightarrow$ $D_Z=\{3,4\}$.
+  \item $(X,Y)$ (znovu): $X{=}3$ nemá $Y>3$ v $\{2,3\}$ $\Rightarrow$ $D_X=\{1,2\}$.
+\end{itemize}
+
+\textbf{(c)} Výsledek: $D_X=\{1,2\}$, $D_Y=\{2,3\}$, $D_Z=\{3,4\}$. Hrana $(X,Y)$ se musela zařadit znovu, protože při revizi $(Y,Z)$ se zmenšila doména $Y$; tím mohly ztratit podporu hodnoty v $X$, které se na zúžené $Y$ odvolávaly (proto AC-3 vrací do fronty všechny hrany směřující do změněné proměnné).
+\end{reseni}
+
+\begin{jadro}
+AC-3: fronta orientovaných hran; \textsc{Revise}$(X_i,X_j)$ smaže z $D_i$ hodnoty bez podpory v $D_j$. Zmenší-li se $D_i$, vrať do fronty hrany $(X_k,X_i)$. Konec při prázdné frontě (nebo prázdné doméně = bez řešení). Složitost $O(e\,d^3)$.
+\end{jadro}
+
+\kalibrace{Krokování AC-3 padlo 2026-jaro. Vedení fronty a šíření zpaměti = 2-3 body z AI slotu (CSP ~22\,\%).}
+\past{Po zúžení domény se musí znovu prověřit \emph{sousední} hrany - na to se zapomíná. Hranová konzistence ani po doběhnutí nezaručuje řešení.}

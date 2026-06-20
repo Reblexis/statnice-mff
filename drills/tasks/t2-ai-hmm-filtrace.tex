@@ -1,0 +1,26 @@
+\ulohahead{specializace UI-SU \textnormal{\footnotesize[úroveň 2]}}{HMM: dvoukroková filtrace}
+\begin{zadani}
+Skrytý stav ,,prší'' $R\in\{t,f\}$. Přechody: $P(R_t{=}t\mid R_{t-1}{=}t)=0{,}7$, $P(R_t{=}t\mid R_{t-1}{=}f)=0{,}3$. Emise (deštník): $P(U{=}t\mid R{=}t)=0{,}9$, $P(U{=}t\mid R{=}f)=0{,}2$. Prior $P(R_0{=}t)=0{,}5$. Pozorování $U_1{=}t$, $U_2{=}t$.
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Spočtěte filtraci $P(R_1\mid U_1{=}t)$ (krok predikce + korekce).
+  \item \bod{2} Spočtěte $P(R_2\mid U_1{=}t,U_2{=}t)$.
+  \item \bod{3} Napište obecný rekurentní vzorec, který jste použili.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Predikce} z prioru: $P(R_1{=}t)=0{,}7\cdot0{,}5+0{,}3\cdot0{,}5=0{,}5$, $P(R_1{=}f)=0{,}5$.
+\emph{Korekce} emisí $U_1{=}t$: $\propto(0{,}9\cdot0{,}5,\ 0{,}2\cdot0{,}5)=(0{,}45,\ 0{,}10)$. Normalizace ($/0{,}55$): $P(R_1{=}t\mid U_1)=0{,}818$, $P(R_1{=}f\mid U_1)=0{,}182$.
+
+\textbf{(b)} \emph{Predikce}: $P(R_2{=}t)=0{,}7\cdot0{,}818+0{,}3\cdot0{,}182=0{,}573+0{,}055=0{,}627$, $P(R_2{=}f)=0{,}373$.
+\emph{Korekce} $U_2{=}t$: $\propto(0{,}9\cdot0{,}627,\ 0{,}2\cdot0{,}373)=(0{,}564,\ 0{,}075)$. Normalizace ($/0{,}639$): $P(R_2{=}t\mid U_1,U_2)\approx0{,}883$, $P(R_2{=}f\mid\cdot)\approx0{,}117$.
+
+\textbf{(c)} $P(R_t\mid e_{1:t})\propto P(e_t\mid R_t)\sum_{r_{t-1}}P(R_t\mid r_{t-1})\,P(r_{t-1}\mid e_{1:t-1})$ (predikce přes přechod, korekce emisí, normalizace).
+\end{reseni}
+
+\begin{jadro}
+Filtrace = střídej predikci (násob přechodovou maticí) a korekci (násob emisí pozorování) a normuj. Dva deštníky táhnou ,,prší'' nahoru: $0{,}5\to0{,}818\to0{,}883$.
+\end{jadro}
+
+\kalibrace{Numerická filtrace HMM padla 2023-léto. Dvoukrokový výpočet zpaměti = 2-3 body z AI slotu; HMM ~12\,\%.}
+\past{Pořadí: nejdřív predikce (přechod), pak korekce (emise), pak normalizace. Emisi nesmíš použít dřív než přechod.}

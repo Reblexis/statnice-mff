@@ -1,0 +1,23 @@
+\ulohahead{specializace UI-SU \textnormal{\footnotesize[úroveň 2]}}{Minimax, alfa-beta a A* na konkrétním příkladu}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Strom: kořen MAX má dva syny MIN. Levý MIN má listy $3,5$; pravý MIN má listy $2,9$. Spočtěte minimaxovou hodnotu.
+  \item \bod{2} Ukažte, kterou hodnotu alfa-beta ořeže (prochází zleva doprava).
+  \item \bod{3} V grafu s hranami $S{-}A{=}1,\ A{-}B{=}2,\ A{-}G{=}5,\ B{-}G{=}1$ a heuristikou $h(S){=}4,h(A){=}3,h(B){=}1,h(G){=}0$ najděte A* cestu z $S$ do $G$.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} Levý MIN $=\min(3,5)=3$, pravý MIN $=\min(2,9)=2$. Kořen MAX $=\max(3,2)=3$.
+
+\textbf{(b)} Po vyhodnocení levého podstromu je $\alpha=3$. V pravém MIN se přečte první list $2$; protože hodnota MIN uzlu bude $\le2\le\alpha=3$, MAX si ho stejně nevybere - druhý list $9$ se \emph{ořízne} (alfa cutoff). Výsledek $3$ je stejný jako u minimaxu.
+
+\textbf{(c)} $f=g+h$. Start $S$: $g{=}0,f{=}4$. Rozvoj $S$: $A$ $g{=}1,f{=}1{+}3{=}4$; $B$ přes $S$ neexistuje hrana, jen přes $A$. Rozvoj $A$ (nejmenší $f{=}4$): $B$ $g{=}1{+}2{=}3,f{=}3{+}1{=}4$; $G$ $g{=}1{+}5{=}6,f{=}6$. Rozvoj $B$ ($f{=}4$): $G$ $g{=}3{+}1{=}4,f{=}4$. Rozvoj $G$ ($f{=}4$) = cíl. Cesta $S\to A\to B\to G$ s cenou $4$ (lepší než $S\to A\to G$ s cenou $6$; přímá hrana $S{-}B$ v grafu není).
+\end{reseni}
+
+\begin{jadro}
+Minimax: listy nahoru, MAX bere $\max$, MIN $\min$. Alfa-beta ořeže větev, jakmile $\alpha\ge\beta$. A* rozvíjí nejmenší $f{=}g{+}h$; s přípustnou/konzistentní $h$ je optimální.
+\end{jadro}
+
+\kalibrace{Ruční alfa-beta a A* jsou opakované AI typy (hry ~22\,\%, prohledávání ~15\,\%). Jeden vyřešený strom + graf = 2-3 body z AI slotu.}
+\past{Alfa-beta nemění výsledek, jen ořezává. U A* musí být $h$ přípustná, jinak nemusí najít optimum; rozvíjej vždy uzel s nejmenším $f$.}

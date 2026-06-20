@@ -1,0 +1,28 @@
+\ulohahead{specializace UI-SU \textnormal{\footnotesize[úroveň 2]}}{Bayesovské učení: posterior a Bayes-optimal predikce}
+\begin{zadani}
+Pytlík je jedné ze dvou hypotéz: $h_1$ s $P(\text{třešeň})=0{,}8$, nebo $h_2$ s $P(\text{třešeň})=0{,}4$. Prior $P(h_1)=P(h_2)=0{,}5$. Vytáhneme jeden bonbon a je to \emph{třešeň}.
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Určete ML a MAP hypotézu po tomto pozorování.
+  \item \bod{2} Spočtěte posterior $P(h_1\mid \text{třešeň})$ a $P(h_2\mid \text{třešeň})$.
+  \item \bod{3} Spočtěte Bayes-optimal predikci $P(\text{další} = \text{třešeň}\mid \text{data})$.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} Věrohodnost pozorování ,,třešeň'': $P(\text{tř}\mid h_1)=0{,}8 > P(\text{tř}\mid h_2)=0{,}4$, takže \emph{ML} hypotéza je $h_1$. Prior je uniformní, takže \emph{MAP} $=$ ML $=h_1$.
+
+\textbf{(b)} $P(h_1\mid\text{tř})\propto0{,}5\cdot0{,}8=0{,}4$; $P(h_2\mid\text{tř})\propto0{,}5\cdot0{,}4=0{,}2$. Normalizace ($/0{,}6$): $P(h_1\mid\text{tř})=\tfrac{0{,}4}{0{,}6}=0{,}667$, $P(h_2\mid\text{tř})=0{,}333$.
+
+\textbf{(c)} Bayes-optimal váží přes hypotézy:
+\[
+P(\text{další}{=}\text{tř}\mid\text{data})=\sum_h P(\text{tř}\mid h)P(h\mid\text{data})=0{,}8\cdot0{,}667+0{,}4\cdot0{,}333=0{,}533+0{,}133=0{,}667.
+\]
+(Pozn.: predikce přes MAP samotnou by dala $0{,}8$; Bayes-optimal je obezřetnější, protože $h_2$ ještě není vyloučena.)
+\end{reseni}
+
+\begin{jadro}
+Posterior $\propto$ věrohodnost $\times$ prior, pak normuj. ML $=\arg\max$ věrohodnost, MAP $=\arg\max$ posterior. Bayes-optimal predikce $=\sum_h P(\cdot\mid h)P(h\mid\text{data})$ (ne jen přes jednu hypotézu).
+\end{jadro}
+
+\kalibrace{Posterior + Bayes-optimal predikce padly 2025-jaro. Přesný typ; nacvičit = 2-3 body z AI slotu.}
+\past{Bayes-optimal $\neq$ predikce přes MAP hypotézu - váží přes \emph{všechny} hypotézy jejich posteriorem. Nezapomeň normovat posterior.}

@@ -1,0 +1,31 @@
+\ulohahead{specializace UI-SU \textnormal{\footnotesize[úroveň 2]}}{Rekonstrukce matice záměn u nevyvážených tříd}
+\begin{zadani}
+Testovací množina má 1000 vzorku, z toho 5\,\% pozitivních. Klasifikátor má recall $0{,}8$ a precision $0{,}5$.
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Určete počet pozitivních a negativních a spočtěte $\mathrm{TP}$ a $\mathrm{FN}$.
+  \item \bod{2} Z precision dopočítejte $\mathrm{FP}$ a poté $\mathrm{TN}$. Sestavte matici záměn.
+  \item \bod{3} Spočtěte accuracy a $F_1$ a vysvětlete, proč je zde accuracy zavádějící.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} Pozitivních $P=0{,}05\cdot1000=50$, negativních $N=950$. $\mathrm{TP}=\text{recall}\cdot P=0{,}8\cdot50=40$, $\mathrm{FN}=P-\mathrm{TP}=10$.
+
+\textbf{(b)} Z $\text{precision}=\frac{\mathrm{TP}}{\mathrm{TP}+\mathrm{FP}}=0{,}5$ plyne $\mathrm{TP}+\mathrm{FP}=80$, tedy $\mathrm{FP}=40$. $\mathrm{TN}=N-\mathrm{FP}=950-40=910$. Matice záměn:
+\[
+\begin{array}{c|cc}
+ & \hat{+} & \hat{-}\\\hline
++ & 40 & 10\\
+- & 40 & 910
+\end{array}
+\]
+
+\textbf{(c)} $\text{accuracy}=\frac{\mathrm{TP}+\mathrm{TN}}{1000}=\frac{950}{1000}=0{,}95$. $F_1=\frac{2\cdot0{,}5\cdot0{,}8}{0{,}5+0{,}8}=\frac{0{,}8}{1{,}3}\approx0{,}615$. Accuracy $0{,}95$ vypadá skvěle, ale triviální klasifikátor ,,vše negativní'' by měl accuracy $0{,}95$ taky (950/1000) a nenašel by nic - proto se u nevyvážených tříd díváme na precision/recall/$F_1$.
+\end{reseni}
+
+\begin{jadro}
+$\mathrm{TP}=\text{recall}\cdot P$, $\mathrm{FN}=P-\mathrm{TP}$; z precision $\mathrm{TP}+\mathrm{FP}=\mathrm{TP}/\text{precision}$, $\mathrm{TN}=N-\mathrm{FP}$. Accuracy u nevyvážených tříd klame (porovnej s ,,vše majoritní'').
+\end{jadro}
+
+\kalibrace{Tento přesný typ (rekonstrukce počtu z metrik) padl opakovaně (2023-léto, 2025-podzim). Nacvičit = jistá 2-3 z evaluační otázky.}
+\past{Jmenovatel precision jsou \emph{predikované} pozitivní ($\mathrm{TP}+\mathrm{FP}$), recall \emph{skutečné} pozitivní ($\mathrm{TP}+\mathrm{FN}$). Nepleť $P$ (skutečné pozitivní) s predikcemi.}

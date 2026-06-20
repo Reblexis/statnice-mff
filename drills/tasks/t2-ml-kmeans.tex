@@ -1,0 +1,29 @@
+\ulohahead{specializace UI-SU \textnormal{\footnotesize[úroveň 2]}}{k-means ručně: dvě iterace a hodnota ztráty}
+\begin{zadani}
+Body v rovině: $P_1=(1,1)$, $P_2=(2,1)$, $P_3=(4,3)$, $P_4=(5,4)$. Spusť k-means s $k=2$ a počátečními centry $c_1=(1,1)$, $c_2=(5,4)$.
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Proveďte krok přiřazení (euklidovská vzdálenost).
+  \item \bod{2} Přepočítejte centra a proveďte druhou iteraci; rozhodněte, zda algoritmus zkonvergoval.
+  \item \bod{3} Spočtěte hodnotu účelové funkce $J=\sum_i\lVert x_i-\mu_{c(i)}\rVert^2$ ve výsledném rozdělení.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} Vzdálenosti k $c_1=(1,1)$ a $c_2=(5,4)$:
+$P_1$: $0$ vs $5$; $P_2$: $1$ vs $\sqrt{18}\approx4{,}24$; $P_3$: $\sqrt{13}\approx3{,}61$ vs $\sqrt2\approx1{,}41$; $P_4$: $5$ vs $0$.
+Přiřazení: $\{P_1,P_2\}\to c_1$, $\{P_3,P_4\}\to c_2$.
+
+\textbf{(b)} Nová centra: $c_1=\big(\tfrac{1+2}{2},\tfrac{1+1}{2}\big)=(1{,}5,\,1)$, $c_2=\big(\tfrac{4+5}{2},\tfrac{3+4}{2}\big)=(4{,}5,\,3{,}5)$. Druhá iterace: $P_1,P_2$ jsou jasně blíž $c_1$ (vzdálenosti $0{,}5$) než $c_2$; $P_3,P_4$ blíž $c_2$. Přiřazení se nezměnilo $\Rightarrow$ \emph{konvergence}.
+
+\textbf{(c)} Čtverce vzdáleností k přiřazenému centru:
+$c_1$: $\lVert P_1-c_1\rVert^2=0{,}25$, $\lVert P_2-c_1\rVert^2=0{,}25$;
+$c_2$: $\lVert P_3-c_2\rVert^2=0{,}25+0{,}25=0{,}5$, $\lVert P_4-c_2\rVert^2=0{,}25+0{,}25=0{,}5$.
+$J=0{,}25+0{,}25+0{,}5+0{,}5=1{,}5$.
+\end{reseni}
+
+\begin{jadro}
+Iterace = (1) přiřaď ke knejbližšímu centru, (2) přepočti centra na průměr přiřazených bodu. $J=$ součet čtvercu vzdáleností k centrum, po každém kroku neroste. Konec, když se přiřazení nezmění.
+\end{jadro}
+
+\kalibrace{Numerický k-means je opakovaný typ (shlukování ~44\,\%). Umět dvě iterace ručně = spolehlivé 2-3 body; tato úloha snižuje šanci na skóre $\le1$ u shlukovací otázky.}
+\past{Vzdálenosti můžeš porovnávat přes čtverce (není třeba odmocňovat). Centrum je průměr, ne medián; remízy v přiřazení vyřeš pevným pravidlem.}

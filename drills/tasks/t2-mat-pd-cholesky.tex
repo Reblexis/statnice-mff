@@ -1,0 +1,27 @@
+\ulohahead{společná matematika \textnormal{\footnotesize[úroveň 2]}}{Pozitivně definitní matice, Sylvester a Choleského rozklad}
+\begin{zadani}
+Matice $A=\begin{psmallmatrix}4&2\\2&3\end{psmallmatrix}$.
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte pozitivně definitní matici a uveďte Sylvestrovo kritérium a vztah k vlastním číslum.
+  \item \bod{2} Rozhodněte, zda je $A$ pozitivně definitní.
+  \item \bod{3} Spočtěte Choleského rozklad $A=LL^{\!\top}$.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} Symetrická $A$ je \emph{pozitivně definitní}, pokud $x^{\!\top}Ax>0$ pro každé $x\neq0$. Ekvivalentně: všechna vlastní čísla jsou kladná; nebo (\emph{Sylvestrovo kritérium}) všechny hlavní rohové minory jsou kladné. Pak existuje jednoznačný \emph{Choleského rozklad} $A=LL^{\!\top}$ s dolní trojúhelníkovou $L$ s kladnou diagonálou.
+
+\textbf{(b)} Rohové minory: $4>0$ a $\det A=4\cdot3-2\cdot2=8>0$. Obě kladné $\Rightarrow$ $A$ je pozitivně definitní. (Kontrola přes vlastní čísla: stopa $7$, determinant $8$, $\lambda=\tfrac{7\pm\sqrt{17}}{2}\approx5{,}56;\,1{,}44>0$.)
+
+\textbf{(c)} $A=LL^{\!\top}$, $L=\begin{psmallmatrix}l_{11}&0\\l_{21}&l_{22}\end{psmallmatrix}$: $l_{11}=\sqrt{4}=2$; $l_{21}=a_{21}/l_{11}=2/2=1$; $l_{22}=\sqrt{a_{22}-l_{21}^2}=\sqrt{3-1}=\sqrt2$. Tedy
+\[
+L=\begin{psmallmatrix}2&0\\1&\sqrt2\end{psmallmatrix},\qquad LL^{\!\top}=\begin{psmallmatrix}4&2\\2&3\end{psmallmatrix}=A.
+\]
+\end{reseni}
+
+\begin{jadro}
+PD $\iff$ vlastní čísla $>0$ $\iff$ všechny rohové minory $>0$ (Sylvester). Cholesky: $l_{11}=\sqrt{a_{11}}$, $l_{21}=a_{21}/l_{11}$, $l_{22}=\sqrt{a_{22}-l_{21}^2}$.
+\end{jadro}
+
+\kalibrace{Pozitivní definitnost + Cholesky je doslova v požadavku a opakuje se v lineární algebře (skalární součin, pozitivně definitní matice). Sylvester + jeden rozklad = 2-3 body.}
+\past{Sylvester vyžaduje \emph{rohové} (leading) minory, ne libovolné. Pozitivní semidefinitní připouští nulové vlastní číslo (minory $\ge0$).}

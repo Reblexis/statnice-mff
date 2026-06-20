@@ -1,0 +1,26 @@
+\ulohahead{společná matematika \textnormal{\footnotesize[úroveň 2]}}{Pravděpodobnost numericky: Bayes a centrální limitní věta}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Nemoc má prevalenci $P(D)=0{,}01$. Test má $P(+\mid D)=0{,}99$ a $P(+\mid \neg D)=0{,}05$. Spočtěte $P(D\mid +)$.
+  \item \bod{2} Interpretujte výsledek (proč je tak nízký).
+  \item \bod{3} Pomocí CLT odhadněte $P(\text{součet }100\text{ hodu kostkou}>380)$. (Pro jednu kostku $\mathbb{E}X=3{,}5$, $\operatorname{var}X=\tfrac{35}{12}$.)
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} Bayes:
+\[
+P(D\mid+)=\frac{P(+\mid D)P(D)}{P(+\mid D)P(D)+P(+\mid\neg D)P(\neg D)}=\frac{0{,}99\cdot0{,}01}{0{,}99\cdot0{,}01+0{,}05\cdot0{,}99}=\frac{0{,}0099}{0{,}0594}\approx0{,}167.
+\]
+
+\textbf{(b)} I při velmi přesném testu je posterior jen $\approx16{,}7\,\%$, protože nemoc je vzácná: falešně pozitivních ze zdravé většiny ($0{,}05\cdot0{,}99\approx0{,}0495$) je víc než pravdivě pozitivních ($0{,}0099$). Nízká \emph{prevalence} (base rate) sráží posterior.
+
+\textbf{(c)} Součet $S=\sum_{i=1}^{100}X_i$: $\mathbb{E}S=100\cdot3{,}5=350$, $\operatorname{var}S=100\cdot\tfrac{35}{12}\approx291{,}7$, $\sigma_S\approx17{,}08$. Dle CLT je $S$ přibližně normální, takže $z=\frac{380-350}{17{,}08}\approx1{,}76$ a $P(S>380)\approx P(Z>1{,}76)\approx0{,}039$.
+\end{reseni}
+
+\begin{jadro}
+Bayes: posterior $\propto$ věrohodnost $\times$ prior; u vzácných jevu pozor na base rate. CLT: součet/průměr nezávislých je přibližně $\mathcal{N}$; $\mathbb{E}S=n\mu$, $\operatorname{var}S=n\sigma^2$, standardizuj $z=\frac{x-\mathbb{E}S}{\sigma_S}$.
+\end{jadro}
+
+\kalibrace{Bayes numericky a CLT aplikace jsou opakované (pravděpodobnost ~25\,\%, CLT se zkoušela 2025-léto). Dosazení do vzorce = 2 body.}
+\past{Rozptyl součtu je $n\sigma^2$, směrodatná odchylka $\sqrt n\,\sigma$ (ne $n\sigma$). U Bayese nezapomeň na jmenovatel přes úplnou pravděpodobnost.}

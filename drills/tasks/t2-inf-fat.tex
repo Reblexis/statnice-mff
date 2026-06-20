@@ -1,0 +1,24 @@
+\ulohahead{společná informatika \textnormal{\footnotesize[úroveň 2]}}{Souborový systém typu FAT}
+\begin{zadani}
+Souborový systém ukládá soubor jako řetěz bloku spojený tabulkou FAT (každá položka udává číslo \emph{dalšího} bloku, nebo značku konce \texttt{EOF}, nebo \texttt{FREE}).
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Popište, jak FAT reprezentuje soubor a jak se pozná konec a volné bloky.
+  \item \bod{2} Soubor začíná blokem 2 a tabulka je: $\text{FAT}[2]{=}5$, $\text{FAT}[5]{=}7$, $\text{FAT}[7]{=}\texttt{EOF}$. Vypište bloky souboru v pořadí. Jak se přidá blok na konec?
+  \item \bod{3} Jaké jsou nevýhody FAT (fragmentace, náhodný přístup) a jak je řeší inody/extenty?
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} Adresář drží u souboru číslo \emph{prvního} bloku. Položka $\text{FAT}[i]$ udává číslo bloku následujícího po bloku $i$; speciální hodnota \texttt{EOF} značí poslední blok, \texttt{FREE} značí volný blok. Řetězením od prvního bloku se přečte celý soubor.
+
+\textbf{(b)} Od bloku 2: $2\to\text{FAT}[2]{=}5\to\text{FAT}[5]{=}7\to\text{FAT}[7]{=}\texttt{EOF}$. Bloky souboru: \textbf{2, 5, 7}. Přidání bloku: najdi volný blok (např.\ $k$ s $\text{FAT}[k]{=}\texttt{FREE}$), nastav $\text{FAT}[7]{=}k$ a $\text{FAT}[k]{=}\texttt{EOF}$.
+
+\textbf{(c)} \emph{Nevýhody}: soubor bývá rozházený po disku (vnější fragmentace, pomalé čtení), a \emph{náhodný přístup} na $n$-tý blok vyžaduje projít řetěz od začátku ($O(n)$). \emph{Inody} drží pole přímých (a nepřímých) odkazu na bloky, takže přístup k libovolnému bloku je rychlý; \emph{extenty} popisují souvislé úseky (start + délka), což šetří metadata a zrychluje sekvenční čtení.
+\end{reseni}
+
+\begin{jadro}
+FAT[$i$] = další blok řetězu (nebo EOF/FREE). Čtení = řetěz od prvního bloku z adresáře. Slabina: náhodný přístup $O(n)$ a fragmentace; inody/extenty to řeší přímými odkazy/souvislými úseky.
+\end{jadro}
+
+\kalibrace{FAT / interní struktura souborového systému padla 2020-podzim. Sledování řetězu bloku + nevýhody = 2 body z implementační otázky.}
+\past{FAT položka ukazuje na \emph{další} blok, není to bitmapa volných (to je jiná struktura). Náhodný přístup je u FAT lineární, ne konstantní.}

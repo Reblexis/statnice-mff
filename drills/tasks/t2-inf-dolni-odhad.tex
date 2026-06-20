@@ -1,0 +1,23 @@
+\ulohahead{společná informatika \textnormal{\footnotesize[úroveň 2]}}{Dolní odhad porovnávacího třídění}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Popište model rozhodovacího stromu pro porovnávací třídicí algoritmy.
+  \item \bod{2} Dokažte dolní odhad $\Omega(n\log n)$ na počet porovnání.
+  \item \bod{3} Jak tuto mez obcházejí nesrovnávací algoritmy (counting/radix sort)?
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} Porovnávací algoritmus lze popsat \emph{rozhodovacím stromem}: vnitřní uzel je porovnání dvou prvku ($a_i\lessgtr a_j$), větve odpovídají výsledku, list odpovídá jedné konkrétní permutaci (výslednému uspořádání). Běh algoritmu = cesta od kořene k listu; počet porovnání v nejhorším případě $=$ výška stromu.
+
+\textbf{(b)} Pro $n$ prvku existuje $n!$ možných uspořádání, a protože algoritmus musí umět rozlišit každé, má strom aspoň $n!$ listu. Binární strom s $L$ listy má výšku $\ge\log_2 L$, tedy výška $\ge\log_2(n!)$. Stirlingovým vzorcem $\log_2(n!)=\Theta(n\log n)$. Výška = nejhorší počet porovnání, takže každý porovnávací algoritmus potřebuje $\Omega(n\log n)$ porovnání.
+
+\textbf{(c)} \emph{Nesrovnávací} algoritmy nepoužívají porovnání dvojic, ale strukturu klíču: \emph{counting sort} pro celá čísla z malého rozsahu $k$ spočítá četnosti a umístí prvky, $O(n+k)$; \emph{radix sort} třídí po číslicích pomocí stabilního counting sortu, $O(d\,(n+k))$. Tím obcházejí dolní mez $\Omega(n\log n)$, která platí jen pro \emph{porovnávací} model.
+\end{reseni}
+
+\begin{jadro}
+Rozhodovací strom má $\ge n!$ listu $\Rightarrow$ výška $\ge\log_2(n!)=\Theta(n\log n)$ $\Rightarrow$ porovnávací třídění je $\Omega(n\log n)$. Counting/radix sort tuto mez obchází (nepoužívají porovnání), za cenu předpokladu o rozsahu klíču.
+\end{jadro}
+
+\kalibrace{Dolní odhad třídění je opakované téma (třídění) a klasický důkaz na 3.\ bod. Úroveň 2 přidává jeho vypracování.}
+\past{Mez $\Omega(n\log n)$ platí jen pro \emph{porovnávací} model; counting/radix ji nelámou ,,kouzlem'', ale jiným modelem (předpoklad o klíčích). $\log_2(n!)=\Theta(n\log n)$, ne $\Theta(n)$.}

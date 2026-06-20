@@ -1,0 +1,26 @@
+\ulohahead{společná matematika \textnormal{\footnotesize[úroveň 2]}}{Určité integrály: obsah, objem, substituce}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Spočtěte $\displaystyle\int_0^1 (3x^2+2x)\,dx$.
+  \item \bod{2} Spočtěte obsah plochy mezi křivkami $y=x$ a $y=x^2$ na $[0,1]$ a objem tělesa vzniklého rotací $y=x$ kolem osy $x$ na $[0,1]$.
+  \item \bod{3} Spočtěte $\displaystyle\int_0^1 x\,e^{x^2}\,dx$ substitucí.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} $\int_0^1(3x^2+2x)\,dx=\big[x^3+x^2\big]_0^1=1+1=2.$
+
+\textbf{(b)} Na $[0,1]$ je $x\ge x^2$, takže obsah $=\int_0^1 (x-x^2)\,dx=\big[\tfrac{x^2}{2}-\tfrac{x^3}{3}\big]_0^1=\tfrac12-\tfrac13=\tfrac16$. Objem rotace $y=x$ kolem osy $x$: $V=\pi\int_0^1 x^2\,dx=\pi\big[\tfrac{x^3}{3}\big]_0^1=\tfrac{\pi}{3}$.
+
+\textbf{(c)} Substituce $u=x^2$, $du=2x\,dx$, tedy $x\,dx=\tfrac12 du$; meze $x{:}0\to1$ dají $u{:}0\to1$:
+\[
+\int_0^1 x e^{x^2}\,dx=\tfrac12\int_0^1 e^{u}\,du=\tfrac12\big[e^u\big]_0^1=\tfrac{e-1}{2}\approx0{,}859.
+\]
+\end{reseni}
+
+\begin{jadro}
+Obsah $=\int_a^b (\text{horní}-\text{dolní})\,dx$; objem rotace kolem osy $x$ $=\pi\int_a^b f(x)^2 dx$. Substituce: zaveď $u$, přepiš $dx$ i meze. $\int_0^1 x e^{x^2}=\frac{e-1}{2}$.
+\end{jadro}
+
+\kalibrace{Obsah/objem a substituce jsou opakované výpočetní podotázky analýzy (~45\,\%). Jeden bezchybný integrál = 2 body do podlahy společných okruhu.}
+\past{U obsahu mezi křivkami integruj \emph{rozdíl} (horní minus dolní) a hlídej, která je nahoře. U substituce přepiš i meze, jinak musíš vracet zpět do $x$.}

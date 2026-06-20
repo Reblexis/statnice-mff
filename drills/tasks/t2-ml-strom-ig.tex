@@ -1,0 +1,31 @@
+\ulohahead{specializace UI-SU \textnormal{\footnotesize[úroveň 2]}}{Rozhodovací strom: výpočet informačního zisku}
+\begin{zadani}
+Uzel obsahuje 6 příkladu, z toho 3 kladné a 3 záporné. Uvažte dva atributy:
+$A$ rozdělí data na $A{=}0$: (2 kladné, 1 záporný) a $A{=}1$: (1 kladný, 2 záporné);
+$B$ rozdělí data na $B{=}0$: (3 kladné, 0 záporných) a $B{=}1$: (0 kladných, 3 záporné).
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Spočtěte entropii kořene.
+  \item \bod{2} Spočtěte informační zisk atributu $A$ a atributu $B$.
+  \item \bod{3} Který atribut zvolíte a proč? Co by udělalo prořezávání?
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} $H(\text{kořen})=-\tfrac12\log_2\tfrac12-\tfrac12\log_2\tfrac12=1$ bit.
+
+\textbf{(b)} Atribut $A$: obě větve mají rozdělení $(2,1)$, resp.\ $(1,2)$, tedy
+\[
+H=-\tfrac23\log_2\tfrac23-\tfrac13\log_2\tfrac13=\tfrac23\cdot0{,}585+\tfrac13\cdot1{,}585=0{,}918\ \text{bitu}.
+\]
+Vážená entropie $=\tfrac36\cdot0{,}918+\tfrac36\cdot0{,}918=0{,}918$, takže $\mathrm{IG}(A)=1-0{,}918=0{,}082$.
+Atribut $B$: obě větve jsou čisté, $H=0$, vážená entropie $0$, takže $\mathrm{IG}(B)=1-0=1$ bit.
+
+\textbf{(c)} Zvolíme $B$ (maximální informační zisk, dokonalé rozdělení). \emph{Prořezávání}: kdyby další štěpení (např.\ podle $A$ uvnitř větve) zlepšovalo jen trénovací chybu, ne validační, ponecháme list (post-pruning), aby strom negeneralizoval šum.
+\end{reseni}
+
+\begin{jadro}
+$H=-\sum_k p_k\log_2 p_k$; pro $(2,1)$ vyjde $0{,}918$. $\mathrm{IG}=H(\text{rodič})-\sum_j\frac{|S_j|}{|S|}H(S_j)$. Čisté listy $\Rightarrow H=0\Rightarrow$ maximální zisk. Vyber atribut s největším IG.
+\end{jadro}
+
+\kalibrace{Výpočet IG je opakovaný (rozhodovací stromy ~33\,\%). Hodnoty $\log_2\tfrac13=-1{,}585$, $\log_2\tfrac23=-0{,}585$ je vhodné znát; tím se vyhneš skóre $\le1$.}
+\past{Informační zisk je \emph{vážený} velikostmi větví. $\log_2$, ne $\ln$. Záporný argument logaritmu nehrozí (jen podíly v $(0,1]$).}

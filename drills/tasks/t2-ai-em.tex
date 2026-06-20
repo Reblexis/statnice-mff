@@ -1,0 +1,31 @@
+\ulohahead{specializace UI-SU \textnormal{\footnotesize[úroveň 2]}}{EM algoritmus: jedna iterace}
+\begin{zadani}
+Směs dvou shluku $Z\in\{1,2\}$ nad binárním příznakem $x\in\{0,1\}$. Aktuální parametry: $\pi=(0{,}5,\,0{,}5)$, $p(x{=}1\mid Z{=}1)=0{,}8$, $p(x{=}1\mid Z{=}2)=0{,}4$. Data: $x_1=1$, $x_2=0$.
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} E-krok: spočtěte responsibility $r_{i1}=P(Z{=}1\mid x_i)$ pro oba body.
+  \item \bod{2} M-krok: aktualizujte váhy $\pi_1,\pi_2$.
+  \item \bod{3} M-krok: aktualizujte $p(x{=}1\mid Z{=}1)$ a $p(x{=}1\mid Z{=}2)$.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} $r_{i1}=\dfrac{\pi_1 p(x_i\mid 1)}{\pi_1 p(x_i\mid 1)+\pi_2 p(x_i\mid 2)}$.
+Pro $x_1{=}1$: $\dfrac{0{,}5\cdot0{,}8}{0{,}5\cdot0{,}8+0{,}5\cdot0{,}4}=\dfrac{0{,}4}{0{,}6}=0{,}667$, takže $r_{11}=0{,}667$, $r_{12}=0{,}333$.
+Pro $x_2{=}0$ (použij $p(x{=}0\mid1)=0{,}2$, $p(x{=}0\mid2)=0{,}6$): $\dfrac{0{,}5\cdot0{,}2}{0{,}5\cdot0{,}2+0{,}5\cdot0{,}6}=\dfrac{0{,}1}{0{,}4}=0{,}25$, takže $r_{21}=0{,}25$, $r_{22}=0{,}75$.
+
+\textbf{(b)} $\pi_k=\tfrac1n\sum_i r_{ik}$: $\pi_1=\tfrac{0{,}667+0{,}25}{2}=0{,}458$, $\pi_2=0{,}542$.
+
+\textbf{(c)} $p(x{=}1\mid Z{=}k)=\dfrac{\sum_i r_{ik}\,[x_i{=}1]}{\sum_i r_{ik}}$:
+\[
+p(x{=}1\mid1)=\frac{0{,}667\cdot1+0{,}25\cdot0}{0{,}667+0{,}25}=\frac{0{,}667}{0{,}917}\approx0{,}727,\quad
+p(x{=}1\mid2)=\frac{0{,}333}{0{,}333+0{,}75}=\frac{0{,}333}{1{,}083}\approx0{,}308.
+\]
+Shluk 1 se přiostřil k $x{=}1$, shluk 2 k $x{=}0$.
+\end{reseni}
+
+\begin{jadro}
+E-krok: $r_{ik}=\frac{\pi_k p(x_i\mid\theta_k)}{\sum_j\pi_j p(x_i\mid\theta_j)}$. M-krok: $\pi_k=\frac1n\sum_i r_{ik}$, parametry = responsibilitami vážené (relativní) četnosti / průměry.
+\end{jadro}
+
+\kalibrace{Jeden EM update (responsibility + M-krok) padl 2025-léto. Toto je přesný typ; nacvičit = 2-3 body z AI slotu.}
+\past{Responsibility se normuje přes shluky. M-krok je \emph{vážený} responsibilitami, ne prosté četnosti. Pro $x{=}0$ použij $p(x{=}0\mid\cdot)=1-p(x{=}1\mid\cdot)$.}

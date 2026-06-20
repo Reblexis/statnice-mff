@@ -1,0 +1,23 @@
+\ulohahead{společná informatika \textnormal{\footnotesize[úroveň 2]}}{NP-úplnost: redukce 3-SAT na kliku}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Co je potřeba dokázat, aby byl problém NP-úplný? Co je polynomiální redukce?
+  \item \bod{2} Popište redukci 3-SAT $\le_p$ KLIKA (konstrukci grafu).
+  \item \bod{3} Zdůvodněte korektnost (formule splnitelná $\iff$ graf má kliku dané velikosti) a polynomialitu.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} Problém $B$ je NP-úplný, pokud (1) $B\in\mathrm{NP}$ (existuje polynomiálně ověřitelný certifikát) a (2) $B$ je NP-těžký, tj.\ nějaký známý NP-úplný problém se na něj \emph{polynomiálně redukuje}. \emph{Polynomiální redukce} $A\le_p B$ je v polynomiálním čase vyčíslitelná funkce převádějící instance $A$ na instance $B$ se zachováním odpovědi ano/ne.
+
+\textbf{(b)} Dáno 3-CNF s $m$ klauzulemi. Pro každou klauzuli vytvoř \emph{trojici vrcholu} (po jednom za každý literál). Hranou spoj dva vrcholy z \emph{různých} klauzulí, pokud si jejich literály \emph{neodporují} (nejsou to $x$ a $\neg x$). Uvnitř téže klauzule hrany nevedou. Ptáme se na kliku velikosti $m$.
+
+\textbf{(c)} \emph{Korektnost}: klika velikosti $m$ musí obsahovat právě jeden vrchol z každé klauzule (uvnitř klauzule hrany nejsou) a vybrané literály se navzájem neodporují - lze je tedy všechny nastavit na \emph{pravda} konzistentním ohodnocením, které splní každou klauzuli. Naopak ze splňujícího ohodnocení vyber v každé klauzuli jeden pravdivý literál; tyto vrcholy jsou po dvou spojené (neodporují si) a tvoří kliku velikosti $m$. \emph{Polynomialita}: graf má $3m$ vrcholu a $O(m^2)$ hran, konstrukce běží v polynomiálním čase.
+\end{reseni}
+
+\begin{jadro}
+NP-úplný = v NP $+$ NP-těžký (redukce ze známého NP-úplného). 3-SAT$\le_p$KLIKA: vrchol za literál v klauzuli, hrana mezi neodporujícími literály různých klauzulí, hledej kliku velikosti $=$ počet klauzulí.
+\end{jadro}
+
+\kalibrace{Konkrétní redukce (důkaz NP-úplnosti) je legální 3.\ bod u otázky o složitosti. Úroveň 2 přidává jeden vzorový převod.}
+\past{Směr redukce: ze \emph{známého} těžkého (3-SAT) na \emph{nový} (KLIKA). Hrany vedou mezi \emph{neodporujícími} literály \emph{různých} klauzulí; klika má velikost počtu klauzulí.}

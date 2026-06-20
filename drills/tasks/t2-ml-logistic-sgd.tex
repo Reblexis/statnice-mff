@@ -1,0 +1,27 @@
+\ulohahead{specializace UI-SU \textnormal{\footnotesize[úroveň 2]}}{Logistická regrese: jeden krok SGD}
+\begin{zadani}
+Binární logistická regrese s vahami $w=(w_0,w_1)=(0,0)$ (s biasem). Trénovací příklad $x=(1,2)$ (první složka je bias), skutečná třída $y=1$, rychlost učení $\eta=0{,}1$.
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Spočtěte predikci $p=\sigma(w^{\!\top}x)$.
+  \item \bod{2} Spočtěte gradient ztráty na tomto příkladu a proveďte jeden krok SGD.
+  \item \bod{3} Spočtěte novou predikci na stejném bodě a ověřte, že se posunula správným směrem.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} $w^{\!\top}x=0\cdot1+0\cdot2=0$, takže $p=\sigma(0)=\tfrac{1}{1+e^{0}}=0{,}5$.
+
+\textbf{(b)} Gradient NLL na jednom příkladu: $\nabla_w=(p-y)\,x=(0{,}5-1)\,(1,2)=(-0{,}5,\,-1)$. Krok SGD:
+\[
+w\leftarrow w-\eta\,\nabla_w=(0,0)-0{,}1\cdot(-0{,}5,-1)=(0{,}05,\,0{,}1).
+\]
+
+\textbf{(c)} Nová predikce: $w^{\!\top}x=0{,}05\cdot1+0{,}1\cdot2=0{,}25$, $p=\sigma(0{,}25)=\tfrac{1}{1+e^{-0{,}25}}\approx\tfrac{1}{1+0{,}779}\approx0{,}562$. Pravděpodobnost třídy 1 vzrostla z $0{,}5$ na $0{,}562$, tedy směrem ke skutečné třídě $y=1$. Správně.
+\end{reseni}
+
+\begin{jadro}
+$p=\sigma(w^{\!\top}x)=\frac{1}{1+e^{-w^{\!\top}x}}$. Gradient $(p-y)x$. SGD: $w\leftarrow w-\eta(p-y)x$. Při $y=1$ a $p<1$ je $(p-y)<0$, takže váhy ve směru $x$ rostou a $p$ se zvyšuje.
+\end{jadro}
+
+\kalibrace{Jeden SGD krok logistické regrese je opakovaný (logistická regrese se zkoušela 2024-podzim, 2025-jaro). Sigmoid + gradient $(p-y)x$ zpaměti = jistá 2-3.}
+\past{Gradient je $(p-y)x$, ne $(y-p)x$ - pak by byl krok $w\leftarrow w+\eta(y-p)x$ (znaménko musí sedět se směrem minimalizace). $\sigma(0)=0{,}5$.}

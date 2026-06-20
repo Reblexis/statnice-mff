@@ -1,0 +1,23 @@
+\ulohahead{společná informatika \textnormal{\footnotesize[úroveň 2]}}{Pumping lemma pro bezkontextové jazyky a důkaz Master theoremu}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Zformulujte pumping lemma pro bezkontextové jazyky (CFL).
+  \item \bod{2} Dokažte, že $L=\{a^n b^n c^n\mid n\ge0\}$ není bezkontextový.
+  \item \bod{3} Naznačte důkaz Master theoremu (přes rekurzní strom).
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} Pro každý CFL existuje $p$ tak, že každé slovo $w\in L$ s $|w|\ge p$ lze psát $w=uvxyz$, kde $|vxy|\le p$, $|vy|\ge1$ a pro každé $i\ge0$ je $uv^ixy^iz\in L$. (Pumpují se \emph{dva} úseky najednou.)
+
+\textbf{(b)} Sporem: nechť $L$ je CFL s konstantou $p$ a $w=a^pb^pc^p$. Rozklad $w=uvxyz$ s $|vxy|\le p$ znamená, že $vxy$ zasahuje nejvýše \emph{dva} ze tří bloku ($a,b,c$) - nemůže obsahovat $a$ i $c$, neboť mezi nimi je $p$ symbolu $b$. Napumpováním ($i=2$) se zvýší počet symbolu jen v jednom či dvou blocích, takže přestanou být všechny tři stejně početné: $uv^2xy^2z\notin L$. Spor, $L$ není CFL.
+
+\textbf{(c)} \emph{Master theorem} ($T(n)=aT(n/b)+f(n)$) přes \emph{rekurzní strom}: na úrovni $i$ je $a^i$ podproblému velikosti $n/b^i$, práce mimo rekurzi na úrovni $i$ je $a^i f(n/b^i)$; listu je $a^{\log_b n}=n^{\log_b a}$. Sečtením úrovní rozhoduje, zda dominují listy ($n^{\log_b a}$), kořen ($f(n)$), nebo jsou úrovně vyrovnané (pak faktor $\log n$). To dává tři případy věty.
+\end{reseni}
+
+\begin{jadro}
+CFL pumping: $w=uvxyz$, $|vxy|\le p$, $|vy|\ge1$, $uv^ixy^iz\in L$. $\{a^nb^nc^n\}$: $vxy$ pokryje max 2 bloky $\Rightarrow$ pumpování rozváží třetí. Master theorem: porovnej $n^{\log_b a}$ (listy) s $f(n)$.
+\end{jadro}
+
+\kalibrace{Důkaz nebezkontextovosti a náčrt Master theoremu jsou legální 3.\ body u automatové/algoritmické otázky. Úroveň 2 cílí na tento ,,těžší'' bod.}
+\past{CFL pumping pumpuje \emph{dva} úseky ($v$ a $y$) zároveň, na rozdíl od regulárního (jeden). Klíč u $a^nb^nc^n$ je $|vxy|\le p$ (nepokryje krajní bloky současně).}

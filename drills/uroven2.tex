@@ -1,0 +1,102 @@
+\documentclass[11pt]{article}
+\input{preambule}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\bfseries\color{mffblue} Cvičné úlohy ke státnicím \\[2pt]
+  Úroveň 2 \textnormal{(cíl: $>95\,\%$ pravděpodobnost složení)}}\\[4pt]
+  {\small Informatika - Umělá inteligence, zaměření Strojové učení (UI-SU) \quad|\quad MFF UK}\\[2pt]
+  {\footnotesize\itshape Kumulativní: obsahuje celou úroveň 1 plus rozšíření úrovně 2 (označené [úroveň 2]).}
+\end{center}
+
+\begin{infobox}[title={Co přidává úroveň 2 a proč to zvedá pravděpodobnost}]
+\footnotesize
+Úroveň 1 (38 úloh) dává modelově $\approx92\,\%$. Vázající je podlaha specializace ($\ge7/12$, tři ze čtyř otázek na $\ge2$ body), takže hlavní páka není šířka, ale \textbf{snížit pravděpodobnost, že u pokryté otázky dostaneš 0-1 bod}. Úroveň 2 proto přidává:
+\begin{itemize}\setlength{\itemsep}{1pt}
+  \item \textbf{Numerické varianty} vysokovýnosových témat (k-means a entropie ručně, rekonstrukce matice záměn, ROC/AUC, krok SGD, PCA, inference v Bayes síti, filtrace HMM, jeden EM update, alfa-beta a A*, iterace hodnot MDP, AC-3) - aby šel spolehlivě i 2.\ a 3.\ bod, ne jen definice.
+  \item \textbf{Důkazové náčrty} (pumping pro CFL, Master theorem, NP-úplnost redukcí, dolní odhad třídění, Eulerova formule, tablo) - zkouška může chtít ,,nástin důkazu''.
+  \item \textbf{Těžší implementační otázky} společné informatiky (alokátor, FAT, dvouúrovňové stránkování, překlad konstrukcí) - nejčastější příčina nuly na společné části.
+\end{itemize}
+Modelově to posune $P(\text{ML}\le1)$ z $\approx15\,\%$ na $\approx5\,\%$ a $P(\text{složím})$ z $\approx92\,\%$ na $\approx95\,\%$.\\
+\textbf{Poctivá výhrada:} ,,$>95\,\%$'' platí za předpokladu \emph{skutečného} zvládnutí (umět to převést na varianty), ne jen přečtení. Garanci $>99\,\%$ z konečné sady a 9 zkoušek dat dát nelze; reálný strop je $\sim97\text{-}98{,}5\,\%$ (to bude cíl úrovně 3).\\
+\textbf{Jak procvičovat:} zakryj \emph{Řešení}; u numerických úloh spočítej výsledek na papíře a teprve pak odkryj. Zelené \emph{Jádro na 2 body} je minimum k zapamatování.
+\end{infobox}
+
+\tableofcontents
+\bigskip
+
+\section{Společná matematika}
+\input{tasks/t1-mat-linalg}
+\input{tasks/t1-mat-soustavy}
+\input{tasks/t1-mat-analyza1}
+\input{tasks/t1-mat-analyza2}
+\input{tasks/t1-mat-grafy}
+\input{tasks/t1-mat-pravdep}
+\input{tasks/t1-mat-logika}
+\input{tasks/t1-mat-diskretni}
+\input{tasks/t2-mat-pd-cholesky}
+\input{tasks/t2-mat-integral}
+\input{tasks/t2-mat-pravdep-num}
+\input{tasks/t2-mat-euler-menger}
+\input{tasks/t2-mat-logika-tablo}
+
+\section{Společná informatika}
+\input{tasks/t1-inf-automaty1}
+\input{tasks/t1-inf-automaty2}
+\input{tasks/t1-inf-slozitost}
+\input{tasks/t1-inf-rozdel}
+\input{tasks/t1-inf-grafalg}
+\input{tasks/t1-inf-ds}
+\input{tasks/t1-inf-binary}
+\input{tasks/t1-inf-os}
+\input{tasks/t1-inf-sync}
+\input{tasks/t1-inf-oop}
+\input{tasks/t2-inf-alokator}
+\input{tasks/t2-inf-fat}
+\input{tasks/t2-inf-stranky}
+\input{tasks/t2-inf-preklad}
+\input{tasks/t2-inf-pumping-master}
+\input{tasks/t2-inf-npc-redukce}
+\input{tasks/t2-inf-dolni-odhad}
+
+\section{Specializace: Strojové učení (Téma 3)}
+\input{tasks/t1-ml-regrese}
+\input{tasks/t1-ml-shlukovani}
+\input{tasks/t1-ml-metriky}
+\input{tasks/t1-ml-stromy}
+\input{tasks/t1-ml-ensemble}
+\input{tasks/t1-ml-svm}
+\input{tasks/t1-ml-pca}
+\input{tasks/t1-ml-knn}
+\input{tasks/t1-ml-testy}
+\input{tasks/t1-ml-vyhodnoceni}
+\input{tasks/t1-ml-tabular}
+\input{tasks/t2-ml-kmeans}
+\input{tasks/t2-ml-strom-ig}
+\input{tasks/t2-ml-metriky-rekonstrukce}
+\input{tasks/t2-ml-ols}
+\input{tasks/t2-ml-logistic-sgd}
+\input{tasks/t2-ml-pca}
+\input{tasks/t2-ml-svm-geom}
+\input{tasks/t2-ml-roc}
+
+\section{Specializace: Základy umělé inteligence (Téma 1)}
+\input{tasks/t1-ai-csp}
+\input{tasks/t1-ai-prohledavani}
+\input{tasks/t1-ai-hry}
+\input{tasks/t1-ai-bayes-site}
+\input{tasks/t1-ai-bayes-uceni-em}
+\input{tasks/t1-ai-hmm}
+\input{tasks/t1-ai-mdp}
+\input{tasks/t1-ai-logika}
+\input{tasks/t1-ai-planovani}
+\input{tasks/t2-ai-bayes-enum}
+\input{tasks/t2-ai-hmm-filtrace}
+\input{tasks/t2-ai-em}
+\input{tasks/t2-ai-search-games}
+\input{tasks/t2-ai-bayes-uceni-num}
+\input{tasks/t2-ai-ac3}
+\input{tasks/t2-ai-mdp-valueiter}
+
+\end{document}
