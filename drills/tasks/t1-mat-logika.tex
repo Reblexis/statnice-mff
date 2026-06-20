@@ -8,7 +8,7 @@
 \end{zadani}
 
 \begin{reseni}
-\textbf{(a)} \emph{Formule} se tvoří z prvovýroku (resp.\ atomických formulí s predikáty, termy a kvantifikátory) logickými spojkami. Ve výrokové logice není kvantifikace; v predikátové je formule \emph{otevřená}, má-li volnou proměnnou, a \emph{uzavřená} (sentence), nemá-li žádnou. \emph{CNF} = konjunkce disjunkcí literálu (klauzulí); \emph{DNF} = disjunkce konjunkcí literálu; \emph{PNF} (prenexní) = všechny kvantifikátory na začátku, za nimi otevřené jádro.
+\textbf{(a)} \emph{Formule} se tvoří z prvovýroku (resp.\ atomických formulí s predikáty, termy a kvantifikátory) logickými spojkami. Ve výrokové logice není kvantifikace; v predikátové je formule \emph{otevřená}, neobsahuje-li žádný kvantifikátor, a \emph{uzavřená} (sentence), nemá-li žádnou volnou proměnnou (každý výskyt proměnné je vázán kvantifikátorem). \emph{CNF} = konjunkce disjunkcí literálu (klauzulí); \emph{DNF} = disjunkce konjunkcí literálu; \emph{PNF} (prenexní) = všechny kvantifikátory na začátku, za nimi otevřené jádro.
 
 \textbf{(b)} \emph{Model} teorie/formule = ohodnocení (struktura), v němž je pravdivá. Formule je \emph{splnitelná}, má-li model; \emph{tautologie}, je-li pravdivá v každém ohodnocení; $\varphi$ je \emph{důsledek} teorie $T$ ($T\models\varphi$), platí-li ve všech modelech $T$. Převod: $p\to q\equiv\neg p\vee q$ (už je CNF, jediná klauzule). Výraz $((p\to q)\wedge p)\to q$ je \emph{modus ponens}; pravdivostní tabulkou (4 řádky) vyjde vždy $1$, je to tautologie.
 

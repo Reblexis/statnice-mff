@@ -8,9 +8,9 @@
 \end{zadani}
 
 \begin{reseni}
-\textbf{(a)} Relace $R\subseteq X\times X$ je \emph{reflexivní} ($\forall x: xRx$), \emph{symetrická} ($xRy\Rightarrow yRx$), \emph{antisymetrická} ($xRy\wedge yRx\Rightarrow x=y$), \emph{tranzitivní} ($xRy\wedge yRz\Rightarrow xRz$). \emph{Ekvivalence} = reflexivní + symetrická + tranzitivní; její \emph{rozkladové třídy} tvoří rozklad $X$. \emph{Částečné uspořádání} = reflexivní + antisymetrické + tranzitivní; \emph{řetězec} = po dvou porovnatelné prvky, \emph{antiřetězec} = po dvou neporovnatelné.
+\textbf{(a)} Relace $R\subseteq X\times X$ je \emph{reflexivní} ($\forall x: xRx$), \emph{symetrická} ($xRy\Rightarrow yRx$), \emph{antisymetrická} ($xRy\wedge yRx\Rightarrow x=y$), \emph{tranzitivní} ($xRy\wedge yRz\Rightarrow xRz$). \emph{Ekvivalence} = reflexivní + symetrická + tranzitivní; \emph{třída} prvku $x$ je $[x]=\{y\in X\mid xRy\}$. Třídy jsou neprázdné, po dvou disjunktní a pokrývají $X$ (tvoří \emph{rozklad} $X$). \emph{Částečné uspořádání} = reflexivní + antisymetrické + tranzitivní; \emph{řetězec} = po dvou porovnatelné prvky, \emph{antiřetězec} = po dvou neporovnatelné.
 
-\textbf{(b)} Všech funkcí $X\to Y$ je $n^m$; \emph{prostých} (pro $m\le n$) je $n(n-1)\cdots(n-m+1)=\frac{n!}{(n-m)!}$. \emph{Binomická věta:} $(x+y)^n=\sum_{k=0}^n\binom{n}{k}x^k y^{n-k}$. \emph{Inkluze-exkluze:} $\big|\bigcup_{i=1}^n A_i\big|=\sum_i|A_i|-\sum_{i<j}|A_i\cap A_j|+\cdots+(-1)^{n+1}|A_1\cap\cdots\cap A_n|$.
+\textbf{(b)} Všech funkcí $X\to Y$ je $n^m$; \emph{prostých} (injekcí) je pro $m\le n$ právě $n(n-1)\cdots(n-m+1)=\frac{n!}{(n-m)!}$, pro $m>n$ je jich $0$ (Dirichletuv princip). \emph{Binomická věta:} $(x+y)^n=\sum_{k=0}^n\binom{n}{k}x^k y^{n-k}$. \emph{Inkluze-exkluze:} $\big|\bigcup_{i=1}^n A_i\big|=\sum_i|A_i|-\sum_{i<j}|A_i\cap A_j|+\cdots+(-1)^{n+1}|A_1\cap\cdots\cap A_n|$.
 
 \textbf{(c)} \emph{Surjekce} z $m$ na $n$: od všech $n^m$ funkcí odečteme ty, které vynechají aspoň jeden prvek cíle. Označíme-li $A_i$ funkce vynechávající $i$-tý prvek, dostaneme inkluzí-exkluzí
 \[

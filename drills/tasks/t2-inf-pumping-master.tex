@@ -12,7 +12,7 @@
 
 \textbf{(b)} Sporem: nechť $L$ je CFL s konstantou $p$ a $w=a^pb^pc^p$. Rozklad $w=uvxyz$ s $|vxy|\le p$ znamená, že $vxy$ zasahuje nejvýše \emph{dva} ze tří bloku ($a,b,c$) - nemůže obsahovat $a$ i $c$, neboť mezi nimi je $p$ symbolu $b$. Napumpováním ($i=2$) se zvýší počet symbolu jen v jednom či dvou blocích, takže přestanou být všechny tři stejně početné: $uv^2xy^2z\notin L$. Spor, $L$ není CFL.
 
-\textbf{(c)} \emph{Master theorem} ($T(n)=aT(n/b)+f(n)$) přes \emph{rekurzní strom}: na úrovni $i$ je $a^i$ podproblému velikosti $n/b^i$, práce mimo rekurzi na úrovni $i$ je $a^i f(n/b^i)$; listu je $a^{\log_b n}=n^{\log_b a}$. Sečtením úrovní rozhoduje, zda dominují listy ($n^{\log_b a}$), kořen ($f(n)$), nebo jsou úrovně vyrovnané (pak faktor $\log n$). To dává tři případy věty.
+\textbf{(c)} \emph{Master theorem} ($T(n)=aT(n/b)+f(n)$) přes \emph{rekurzní strom}: na úrovni $i$ je $a^i$ podproblému velikosti $n/b^i$, práce mimo rekurzi na úrovni $i$ je $a^i f(n/b^i)$; listu je $a^{\log_b n}=n^{\log_b a}$. Sečtením úrovní rozhoduje, zda dominují listy ($n^{\log_b a}$), kořen ($f(n)$), nebo jsou úrovně vyrovnané (pak faktor $\log n$). Konkrétně pro $f(n)=\Theta(n^c)$ ($a\ge1,b>1$) porovnej $c$ s $\log_b a$: $c<\log_b a\Rightarrow\Theta(n^{\log_b a})$ (listy); $c=\log_b a\Rightarrow\Theta(n^{c}\log n)$; $c>\log_b a\Rightarrow\Theta(n^{c})$ (kořen, za podmínky regularity). To jsou tři případy věty.
 \end{reseni}
 
 \begin{jadro}

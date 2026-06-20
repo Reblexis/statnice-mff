@@ -8,7 +8,7 @@
 \end{zadani}
 
 \begin{reseni}
-\textbf{(a)} \emph{Test} rozhoduje mezi \emph{nulovou hypotézou} $H_0$ a alternativou na základě dat. \emph{Hladina významnosti} $\alpha$ = přípustná pravděpodobnost chyby 1.\ druhu; \emph{p-hodnota} = pravděpodobnost dat aspoň tak extrémních jako pozorovaná, platí-li $H_0$; zamítáme, je-li $p<\alpha$. \emph{Jednovýběrový} t-test: $H_0:\mu=\mu_0$, statistika $t=\frac{\bar x-\mu_0}{s/\sqrt n}$. \emph{Dvouvýběrový}: $H_0:\mu_1=\mu_2$, porovnává průměry dvou skupin (Welch při různých rozptylech).
+\textbf{(a)} \emph{Test} rozhoduje mezi \emph{nulovou hypotézou} $H_0$ a alternativou na základě dat. \emph{Hladina významnosti} $\alpha$ = přípustná pravděpodobnost chyby 1.\ druhu; \emph{p-hodnota} = pravděpodobnost dat aspoň tak extrémních jako pozorovaná, platí-li $H_0$; zamítáme, je-li $p<\alpha$. \emph{Jednovýběrový} t-test: $H_0:\mu=\mu_0$, statistika $t=\frac{\bar x-\mu_0}{s/\sqrt n}$, která má za platnosti $H_0$ Studentovo $t$-rozdělení s $n-1$ stupni volnosti; zamítáme, padne-li $t$ do kritického oboru (resp.\ $p<\alpha$). \emph{Dvouvýběrový}: $H_0:\mu_1=\mu_2$, statistika $t=\frac{\bar x-\bar y}{\sqrt{s_X^2/n+s_Y^2/m}}$ (Welchova varianta při různých rozptylech).
 
 \textbf{(b)} \emph{Chí-kvadrát test dobré shody} porovná pozorované četnosti $O_i$ s očekávanými $E_i$ podle modelu: $\chi^2=\sum_i\frac{(O_i-E_i)^2}{E_i}$. \emph{Stupně volnosti} $=$ (počet kategorií $-1-$ počet odhadovaných parametru). $H_0$ (data odpovídají modelu) zamítneme, je-li $\chi^2$ větší než kritická hodnota $\chi^2_{1-\alpha}$ pro dané df.
 

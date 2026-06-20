@@ -16,7 +16,7 @@
 \]
 takže $B$ je regulární. \emph{Gaussova eliminace}: soustavu $Ax=b$ převedeme řádkovými úpravami na odstupňovaný tvar. Pak: pokud vznikne řádek $0=c$ s $c\neq0$, soustava nemá řešení; jinak je počet volných proměnných $=$ (počet neznámých) $-\operatorname{rank}A$ a řešení je jednoznačné právě tehdy, když $\operatorname{rank}A=$ počtu neznámých.
 
-\textbf{(c)} \emph{Skalární součin} $\langle x,y\rangle=\sum_i x_iy_i$ (standardní), \emph{norma} $\lVert x\rVert=\sqrt{\langle x,x\rangle}$, vektory jsou \emph{kolmé}, je-li $\langle x,y\rangle=0$. Gram-Schmidt:
+\textbf{(c)} \emph{Skalární součin} na reálném vektorovém prostoru $V$ je zobrazení $\langle\cdot,\cdot\rangle:V\times V\to\mathbb{R}$, které je \emph{symetrické} ($\langle x,y\rangle=\langle y,x\rangle$), \emph{bilineární} (lineární v každé složce) a \emph{pozitivně definitní} ($\langle x,x\rangle\ge0$, s rovností jen pro $x=0$). (V komplexním případě se požaduje hermitovskost/sesquilinearita.) Standardní příklad v $\mathbb{R}^n$ je $\langle x,y\rangle=\sum_i x_iy_i$. Indukovaná \emph{norma} $\lVert x\rVert=\sqrt{\langle x,x\rangle}$; vektory jsou \emph{kolmé}, je-li $\langle x,y\rangle=0$. Gram-Schmidt:
 \[
 u_1=v_1=(1,1,0),\quad u_2=v_2-\frac{\langle v_2,u_1\rangle}{\langle u_1,u_1\rangle}u_1=(1,0,1)-\tfrac12(1,1,0)=\big(\tfrac12,-\tfrac12,1\big).
 \]

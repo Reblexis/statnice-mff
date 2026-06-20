@@ -8,7 +8,7 @@
 \end{zadani}
 
 \begin{reseni}
-\textbf{(a)} Problém $B$ je NP-úplný, pokud (1) $B\in\mathrm{NP}$ (existuje polynomiálně ověřitelný certifikát) a (2) $B$ je NP-těžký, tj.\ nějaký známý NP-úplný problém se na něj \emph{polynomiálně redukuje}. \emph{Polynomiální redukce} $A\le_p B$ je v polynomiálním čase vyčíslitelná funkce převádějící instance $A$ na instance $B$ se zachováním odpovědi ano/ne.
+\textbf{(a)} Problém $B$ je NP-úplný, pokud (1) $B\in\mathrm{NP}$ (existuje polynomiálně ověřitelný certifikát) a (2) $B$ je \emph{NP-těžký}: každý problém z NP se na $B$ polynomiálně redukuje ($\forall K\in\mathrm{NP}:K\le_p B$). V praxi (díky tranzitivitě $\le_p$) stačí zredukovat jeden \emph{známý} NP-úplný problém na $B$. \emph{Polynomiální redukce} $A\le_p B$ je v polynomiálním čase vyčíslitelná funkce převádějící instance $A$ na instance $B$ se zachováním odpovědi ano/ne.
 
 \textbf{(b)} Dáno 3-CNF s $m$ klauzulemi. Pro každou klauzuli vytvoř \emph{trojici vrcholu} (po jednom za každý literál). Hranou spoj dva vrcholy z \emph{různých} klauzulí, pokud si jejich literály \emph{neodporují} (nejsou to $x$ a $\neg x$). Uvnitř téže klauzule hrany nevedou. Ptáme se na kliku velikosti $m$.
 
