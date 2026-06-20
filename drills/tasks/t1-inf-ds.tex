@@ -1,0 +1,19 @@
+\ulohahead{společná informatika}{Datové struktury: vyhledávací stromy a haldy}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte binární vyhledávací strom (BVS) a jeho operace (find/insert/delete). Co je AVL strom a jakou má výšku?
+  \item \bod{2} Popište binární (min-)haldu v poli a operace \textsc{Insert} a \textsc{ExtractMin}. Jak funguje Heapsort a jaká je jeho složitost?
+  \item \bod{3} Popište hledání následníka (successor) v BVS. Porovnejte složitost operací u nevyváženého a vyváženého stromu. Proč jde halda postavit v $O(n)$?
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{BVS}: binární strom, kde pro každý uzel platí klíče vlevo $<$ klíč uzlu $<$ klíče vpravo. \textsc{Find}/\textsc{Insert} jdou shora dle porovnání; \textsc{Delete} listu/uzlu s jedním synem je přímé, uzel se dvěma syny se nahradí svým následníkem. Vše $O(h)$ (výška). \emph{AVL} je BVS udržující v každém uzlu rozdíl výšek podstromu $\le1$ (rotacemi), takže $h=O(\log n)$.
+
+\textbf{(b)} \emph{Min-halda} = úplný binární strom v poli (uzel $i$ má syny $2i{+}1,2i{+}2$), kde rodič $\le$ synové. \textsc{Insert}: přidej na konec a ,,probublej nahoru'' ($O(\log n)$). \textsc{ExtractMin}: vrať kořen, dej poslední prvek na vrchol a ,,probublej dolu'' ($O(\log n)$). \emph{Heapsort}: postav haldu a $n$-krát vyber minimum/maximum; $O(n\log n)$, in-place.
+
+\textbf{(c)} \emph{Successor} (nejbližší větší): má-li uzel pravý podstrom, je to jeho nejlevnější uzel; jinak jdi nahoru, dokud nejsi levým synem rodiče (ten je následník). U \emph{nevyváženého} BVS je $h$ až $O(n)$ (degenerace na seznam), takže operace $O(n)$; u \emph{vyváženého} (AVL) $O(\log n)$. Haldu lze postavit \emph{zdola nahoru} (\textsc{Heapify} od posledního vnitřního uzlu): součet prací $\sum_h \tfrac{n}{2^{h+1}}\cdot O(h)=O(n)$.
+\end{reseni}
+
+\kalibrace{Stromy a haldy jsou opakovaný okruh datových struktur (BVS, AVL, Heapsort se objevily v zadáních). Definice + operace s složitostí = 2 body.}
+\past{Mazání uzlu se dvěma syny v BVS jde přes následníka, ne ledabyle. Build-heap je $O(n)$, nikoli $O(n\log n)$ - klasická chytací otázka.}

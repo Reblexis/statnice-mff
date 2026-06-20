@@ -1,0 +1,19 @@
+\ulohahead{specializace UI-SU}{Logické uvažování: DPLL, řetězení, rezoluce}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Zopakujte CNF a popište algoritmus DPLL pro řešení splnitelnosti (SAT): jednotková propagace a čistý literál.
+  \item \bod{2} Co jsou Hornovy klauzule a jak funguje dopředné a zpětné řetězení?
+  \item \bod{3} Popište rezoluci jako rozhodovací/dokazovací metodu (důkaz sporem, prázdná klauzule). K čemu je v predikátové logice unifikace?
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{CNF} = konjunkce klauzulí (disjunkcí literálu). \emph{DPLL} prohledává přiřazení s prořezáváním: (1) \emph{jednotková propagace} - klauzule s jediným literálem vynutí jeho hodnotu (a zjednoduší ostatní); (2) \emph{čistý literál} - proměnná vyskytující se jen v jedné polaritě se nastaví tak, aby tyto klauzule splnila; (3) jinak rozděl podle nějaké proměnné (větev true/false) a rekurzivně. Konec: prázdná množina klauzulí = splnitelné, prázdná klauzule = konflikt (backtrack).
+
+\textbf{(b)} \emph{Hornova klauzule} má nejvýše jeden pozitivní literál (tj.\ tvar $a_1\wedge\dots\wedge a_k\Rightarrow b$). \emph{Dopředné řetězení}: z známých faktu opakovaně odvozuj hlavy pravidel, jejichž těla jsou splněna, dokud nepřibývají nové fakty (data-driven). \emph{Zpětné řetězení}: od dotazovaného cíle rekurzivně dokazuj těla pravidel, která ho mají v hlavě (goal-driven, základ Prologu). Pro Hornovy klauzule je to lineární/efektivní.
+
+\textbf{(c)} \emph{Rezoluce}: dokazuje $T\models\varphi$ sporem - k $T$ přidá $\neg\varphi$, převede na CNF a opakovaně tvoří rezolventy; odvození \emph{prázdné klauzule} znamená nesplnitelnost, tedy platnost $\varphi$. V \emph{predikátové} logice je nutná \emph{unifikace}: najití nejobecnějšího substitučního přiřazení proměnných, které dva literály ztotožní, aby šly rezolvovat.
+\end{reseni}
+
+\kalibrace{Logické uvažování (~10\,\%, DPLL se zkoušelo) je vzácnější ,,Základy UI'' okruh. CNF + DPLL kroky = 2-bodová záloha; navíc se prolíná s matematickou logikou.}
+\past{Jednotková propagace a čistý literál nejsou totéž. Rezoluce dokazuje sporem (přidej negaci cíle); cílem je odvodit prázdnou klauzuli.}

@@ -1,0 +1,23 @@
+\ulohahead{společná matematika}{Logika: normální tvary, sémantika, rezoluce}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Vysvětlete základní pojmy syntaxe výrokové a predikátové logiky (formule, otevřená/uzavřená formule). Definujte CNF, DNF a PNF.
+  \item \bod{2} Definujte model, splnitelnost, tautologii a důsledek. Převeďte $(p\to q)$ na CNF a rozhodněte, zda je $(p\to q)\wedge p\to q$ tautologie.
+  \item \bod{3} Popište rezoluci jako dokazovací metodu. Rezolucí ukažte, že množina klauzulí $\{p\vee q,\ \neg p,\ \neg q\}$ je nesplnitelná.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Formule} se tvoří z prvovýroku (resp.\ atomických formulí s predikáty, termy a kvantifikátory) logickými spojkami. Ve výrokové logice není kvantifikace; v predikátové je formule \emph{otevřená}, má-li volnou proměnnou, a \emph{uzavřená} (sentence), nemá-li žádnou. \emph{CNF} = konjunkce disjunkcí literálu (klauzulí); \emph{DNF} = disjunkce konjunkcí literálu; \emph{PNF} (prenexní) = všechny kvantifikátory na začátku, za nimi otevřené jádro.
+
+\textbf{(b)} \emph{Model} teorie/formule = ohodnocení (struktura), v němž je pravdivá. Formule je \emph{splnitelná}, má-li model; \emph{tautologie}, je-li pravdivá v každém ohodnocení; $\varphi$ je \emph{důsledek} teorie $T$ ($T\models\varphi$), platí-li ve všech modelech $T$. Převod: $p\to q\equiv\neg p\vee q$ (už je CNF, jediná klauzule). Výraz $((p\to q)\wedge p)\to q$ je \emph{modus ponens}; pravdivostní tabulkou (4 řádky) vyjde vždy $1$, je to tautologie.
+
+\textbf{(c)} \emph{Rezoluce}: pracuje s klauzulemi (CNF); rezolventa dvojice klauzulí $C_1\vee\ell$ a $C_2\vee\neg\ell$ je $C_1\vee C_2$. Množina je nesplnitelná, lze-li z ní odvodit prázdnou klauzuli $\square$. Zde:
+\[
+\{p\vee q\},\ \{\neg p\}\ \Rightarrow\ \{q\};\qquad \{q\},\ \{\neg q\}\ \Rightarrow\ \square.
+\]
+Odvodili jsme prázdnou klauzuli, takže $\{p\vee q,\neg p,\neg q\}$ je nesplnitelná. (Doplňkově: věty o kompaktnosti a úplnosti zaručují, že rezoluce je úplná dokazovací metoda - detail je nad rámec úrovně 1.)
+\end{reseni}
+
+\kalibrace{Logika je vzácnější matematický okruh, ale definice (CNF/DNF, model, splnitelnost) jsou levné body a rezoluce/DPLL se prolínají i se specializací ,,Základy UI''. Tady stačí 2-bodová záloha.}
+\past{Důsledek ($\models$) je sémantický pojem (přes modely), dokazatelnost ($\vdash$) syntaktický (přes odvození); věta o úplnosti je spojuje. Nezaměňuj splnitelnost (existuje model) s tautologií (všechny modely).}

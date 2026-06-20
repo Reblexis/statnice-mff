@@ -1,0 +1,27 @@
+\ulohahead{specializace UI-SU}{Markovské rozhodovací procesy (MDP) a zpětnovazební učení}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte MDP (stavy, akce, přechody, odměny, diskont) a pojmy strategie (policy) a užitek (hodnota) stavu.
+  \item \bod{2} Napište Bellmanovu rovnici pro optimální hodnotu a popište iteraci hodnot (value iteration).
+  \item \bod{3} Co je iterace strategií? Popište zpětnovazební učení: Q-učení (update) a kompromis explorace vs exploitace.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{MDP} $=(S,A,P,R,\gamma)$: stavy $S$, akce $A$, přechody $P(s'\mid s,a)$, odměny $R(s,a,s')$, diskont $\gamma\in[0,1)$. \emph{Strategie} $\pi:S\to A$ určuje akci v každém stavu. \emph{Hodnota} (užitek) stavu při $\pi$: očekávaná diskontovaná suma odměn $V^\pi(s)=\mathbb{E}[\sum_{t\ge0}\gamma^t R_t\mid s_0=s,\pi]$.
+
+\textbf{(b)} \emph{Bellmanova rovnice} pro optimální hodnotu:
+\[
+V^*(s)=\max_{a}\sum_{s'}P(s'\mid s,a)\big[R(s,a,s')+\gamma V^*(s')\big].
+\]
+\emph{Iterace hodnot}: inicializuj $V$, opakovaně aplikuj pravou stranu jako přiřazení (Bellmanuv update) pro všechny stavy, dokud se $V$ nestabilizuje; pak optimální strategie $\pi^*(s)=\arg\max_a\sum_{s'}P[\,R+\gamma V^*\,]$.
+
+\textbf{(c)} \emph{Iterace strategií}: střídá \emph{vyhodnocení} dané strategie (vyřeš $V^\pi$) a \emph{zlepšení} (greedy vuči $V^\pi$); konverguje v konečně krocích. \emph{Zpětnovazební učení} (neznámé $P,R$): \emph{Q-učení} aktualizuje akční hodnotu z pozorovaného přechodu
+\[
+Q(s,a)\leftarrow Q(s,a)+\alpha\big[r+\gamma\max_{a'}Q(s',a')-Q(s,a)\big]
+\]
+(off-policy). \emph{Explorace vs exploitace}: je třeba občas zkusit i nepreferované akce (např.\ $\varepsilon$-greedy), jinak agent uvázne v suboptimu; SARSA je on-policy obdoba (místo $\max$ použije skutečně zvolenou $a'$).
+\end{reseni}
+
+\kalibrace{MDP/RL (~15\,\%) je opakovaná ,,Základy UI'' otázka (Bellmanova rovnice se zkoušela). Definice MDP + Bellman + iterace hodnot = 2-bodová záloha.}
+\past{Bellman pro optimum má $\max_a$ (u dané strategie je tam suma přes $\pi$). Q-učení je off-policy ($\max$), SARSA on-policy - nezaměňuj.}

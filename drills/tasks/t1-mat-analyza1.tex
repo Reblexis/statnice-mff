@@ -1,0 +1,23 @@
+\ulohahead{společná matematika}{Limity, spojitost, derivace a Tayloruv polynom}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte limitu funkce v bodě a spojitost funkce. Zformulujte větu o nabývání mezihodnot a větu o nabývání maxima na uzavřeném intervalu.
+  \item \bod{2} Spočtěte $\displaystyle\lim_{x\to0}\frac{\sin x - x}{x^3}$. Pro $f(x)=x^3-3x$ najděte lokální extrémy a intervaly monotonie.
+  \item \bod{3} Napište Tayloruv polynom (limitní formu) a pomocí něj zdůvodněte výsledek limity z (b). Určete konvexitu/konkavitu $f$.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} $\lim_{x\to a}f(x)=L$, pokud $\forall\varepsilon>0\,\exists\delta>0:\,0<|x-a|<\delta\Rightarrow|f(x)-L|<\varepsilon$. Funkce je \emph{spojitá} v $a$, je-li $\lim_{x\to a}f(x)=f(a)$. \emph{Věta o mezihodnotě (Bolzano):} je-li $f$ spojitá na $[a,b]$ a $y$ leží mezi $f(a),f(b)$, existuje $c\in[a,b]$ s $f(c)=y$. \emph{Weierstrass:} spojitá funkce na uzavřeném omezeném intervalu nabývá maxima i minima.
+
+\textbf{(b)} Limita je typu $0/0$. l'Hospital třikrát, nebo lépe Taylor: $\sin x = x-\tfrac{x^3}{6}+o(x^3)$, takže
+\[
+\frac{\sin x-x}{x^3}=\frac{-x^3/6+o(x^3)}{x^3}\to-\tfrac16.
+\]
+Pro $f(x)=x^3-3x$: $f'(x)=3x^2-3=3(x-1)(x+1)$, nulové body $x=\pm1$. $f'>0$ na $(-\infty,-1)\cup(1,\infty)$ (rostoucí), $f'<0$ na $(-1,1)$ (klesající). V $x=-1$ lokální maximum, v $x=1$ lokální minimum.
+
+\textbf{(c)} \emph{Tayloruv polynom} řádu $n$ v bodě $a$: $T_n(x)=\sum_{k=0}^n\frac{f^{(k)}(a)}{k!}(x-a)^k$, přičemž $f(x)=T_n(x)+o((x-a)^n)$ (limitní/Peanova forma). Rozvoj $\sin x$ kolem $0$ dává přímo čitatel $-x^3/6+o(x^3)$, odkud limita $-1/6$. Konvexita: $f''(x)=6x$, takže $f$ je konkávní na $(-\infty,0)$ a konvexní na $(0,\infty)$; v $x=0$ je inflexní bod.
+\end{reseni}
+
+\kalibrace{Analýza je druhý nejčastější okruh matematiky. Definice limity/spojitosti + jeden spočtený limit/extrém spolehlivě dají 2 body do podlahy společných okruhů.}
+\past{l'Hospital lze použít jen na typy $\tfrac00$ nebo $\tfrac{\infty}{\infty}$ a po ověření, že limita podílu derivací existuje. Taylor je často rychlejší a méně chybový.}

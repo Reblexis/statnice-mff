@@ -1,0 +1,23 @@
+\ulohahead{specializace UI-SU}{Bayesovské učení a EM algoritmus}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Popište Bayesovské učení: prior, věrohodnost, posterior. Co je maximálně věrohodná (ML) a maximálně aposteriorní (MAP) hypotéza a co je Bayesovsky optimální predikce?
+  \item \bod{2} Popište EM algoritmus (E-krok a M-krok) pro model se skrytou proměnnou.
+  \item \bod{3} Napište vzorec pro responsibility (odpovědnost) v E-kroku a aktualizaci parametru v M-kroku pro skrytou kategoriální proměnnou (shluk).
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} Bayesovo pravidlo: $P(h\mid D)=\frac{P(D\mid h)P(h)}{P(D)}$, kde $P(h)$ je \emph{prior}, $P(D\mid h)$ \emph{věrohodnost}, $P(h\mid D)$ \emph{posterior}. \emph{ML hypotéza} $h_{ML}=\arg\max_h P(D\mid h)$; \emph{MAP} $h_{MAP}=\arg\max_h P(D\mid h)P(h)$ (= ML při uniformním prioru). \emph{Bayesovsky optimální predikce} nepoužívá jedinou hypotézu, ale váží přes všechny: $P(c\mid D)=\sum_h P(c\mid h)P(h\mid D)$.
+
+\textbf{(b)} \emph{EM} maximalizuje věrohodnost při skrytých proměnných střídáním: \emph{E-krok} spočítá očekávané rozdělení skrytých proměnných (responsibility) za daných aktuálních parametru; \emph{M-krok} přepočítá parametry tak, aby maximalizovaly očekávanou (úplnou) log-věrohodnost. Iteruje do konvergence; věrohodnost monotónně neklesá, konverguje do lokálního maxima.
+
+\textbf{(c)} Pro skrytý shluk $z\in\{1,\dots,K\}$ s vahami (priory) $\pi_k$ a modelem $p(x\mid\theta_k)$ je \emph{responsibility} bodu $x_i$ vuči shluku $k$:
+\[
+r_{ik}=P(z_i=k\mid x_i)=\frac{\pi_k\,p(x_i\mid\theta_k)}{\sum_{j=1}^K \pi_j\,p(x_i\mid\theta_j)}.
+\]
+\emph{M-krok}: $\pi_k=\frac1n\sum_i r_{ik}$ a parametry $\theta_k$ se odhadnou váženě responsibilitami (např.\ vážený průměr $\mu_k=\frac{\sum_i r_{ik}x_i}{\sum_i r_{ik}}$); u kategoriálních dat = vážené relativní četnosti.
+\end{reseni}
+
+\kalibrace{,,Bayesovské učení'' a EM jsou opakovaný ,,Základy UI'' okruh; EM zkouška chtěla \emph{jeden výpočetní update} (responsibility), ne jen pojem. Vzorec responsibility umět zpaměti.}
+\past{MAP $\neq$ ML, liší se priorem. EM najde jen \emph{lokální} maximum (závisí na inicializaci); responsibility se musí normovat přes všechny shluky.}

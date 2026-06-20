@@ -1,0 +1,107 @@
+% -------------
+% Preambule pro DRILY (cvičné úlohy ve stylu statnic) - MFF UK, UI / Strojové učení
+% Sazba: pdflatex (UTF-8, čeština). Samostatné PDF na úroveň (1/2/3).
+% -------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[czech]{babel}
+\usepackage[a4paper,margin=2.3cm]{geometry}
+
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{textcomp}
+\usepackage[nopatch=all]{microtype}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[most]{tcolorbox}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{hyperref}
+
+% - seznamy -
+\setlist{leftmargin=1.4em, itemsep=2pt, topsep=3pt, parsep=0pt}
+
+% - barvy -
+\definecolor{mffblue}{RGB}{27,54,93}
+\definecolor{mffaccent}{RGB}{0,90,156}
+\definecolor{ulohagray}{RGB}{70,70,75}
+\definecolor{resgreen}{RGB}{30,110,60}
+\definecolor{gapred}{RGB}{150,30,30}
+\definecolor{calorange}{RGB}{180,110,0}
+\definecolor{codebg}{RGB}{245,245,245}
+
+\titleformat{\section}{\Large\bfseries\color{mffblue}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{mffaccent}}{\thesubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.6em}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{1}
+
+\hypersetup{colorlinks=true, linkcolor=mffaccent, urlcolor=mffaccent,
+  pdftitle={Cvičné úlohy ke státnicím - Informatika / UI / Strojové učení},
+  pdfauthor={Viktor Číhal}, bookmarksnumbered=true}
+
+\renewcommand{\arraystretch}{1.2}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 2pt minus 1pt}
+\emergencystretch=3em
+\hbadness=10000
+
+% - kód (C#); komentáře držíme bez diakritiky kvuli listings+utf8 -
+\lstdefinestyle{cs}{
+  basicstyle=\ttfamily\footnotesize, backgroundcolor=\color{codebg},
+  keywordstyle=\color{mffaccent}\bfseries, commentstyle=\color{resgreen!70!black}\itshape,
+  stringstyle=\color{gapred}, showstringspaces=false, columns=fullflexible,
+  breaklines=true, frame=single, framerule=0pt, rulecolor=\color{codebg},
+  xleftmargin=6pt, xrightmargin=6pt, aboveskip=4pt, belowskip=4pt,
+  literate={ě}{{\v e}}1 {š}{{\v s}}1 {č}{{\v c}}1 {ř}{{\v r}}1 {ž}{{\v z}}1
+           {á}{{\'a}}1 {í}{{\'\i}}1 {é}{{\'e}}1 {ý}{{\'y}}1 {ů}{{\r u}}1 {ú}{{\'u}}1,
+  language=[Sharp]C}
+\lstset{style=cs}
+
+% =====================================================================
+% Prostředí pro ÚLOHU a ŘEŠENÍ ve stylu statnic.
+% =====================================================================
+
+% čítač úloh
+\newcounter{uloha}
+\renewcommand{\theuloha}{\arabic{uloha}}
+
+% \uloha{okruh}{téma} -> nadpis úlohy ve stylu zadání statnic
+% okruh: "společná matematika" / "společná informatika" / "specializace UI-SU"
+\newcommand{\ulohahead}[2]{%
+  \refstepcounter{uloha}%
+  \par\medskip\noindent
+  {\large\bfseries\color{ulohagray}Úloha \theuloha.}\quad
+  {\small\colorbox{ulohagray!12}{\textbf{#1}}}\quad{\bfseries #2}\par
+  \vspace{2pt}}
+
+% zadání: lehce rámovaný blok jako na zkoušce
+\newtcolorbox{zadani}{enhanced, breakable, sharp corners=south,
+  colback=ulohagray!5, colframe=ulohagray, boxrule=0pt, leftrule=3pt,
+  left=8pt, right=8pt, top=4pt, bottom=5pt, before skip=4pt, after skip=4pt}
+
+% podotázky se značkou bodu (kolik bodu daná část typicky nese)
+\newcommand{\bod}[1]{\tikz[baseline=-0.55ex]\node[circle,fill=mffaccent,text=white,
+  inner sep=1.3pt,font=\bfseries\scriptsize]{#1};}
+% bez tikz (rychlejší): kroužek přes textový symbol
+\renewcommand{\bod}[1]{{\footnotesize\colorbox{mffaccent}{\textcolor{white}{\bfseries #1\,b}}}}
+
+% řešení
+\newtcolorbox{reseni}{enhanced, breakable, colback=resgreen!6, colframe=resgreen,
+  boxrule=0.6pt, arc=1.5pt, left=7pt, right=7pt, top=3pt, bottom=4pt,
+  before skip=4pt, after skip=8pt, fonttitle=\bfseries\small, coltitle=resgreen,
+  title={Řešení}}
+
+% kalibrační poznámka: jak tato úloha sytí podlahu (common>=5 / spec>=7)
+\newcommand{\kalibrace}[1]{\par\smallskip\noindent
+  {\footnotesize\textcolor{calorange}{\textbf{Kalibrace:}}~\textit{#1}}\par\smallskip}
+
+% past / častá chyba
+\newcommand{\past}[1]{\par\smallskip\noindent
+  \textbf{\color{gapred}Pozor (častá chyba):}~#1\par}
+
+% info box
+\newtcolorbox{infobox}[1][]{enhanced, breakable, colback=mffaccent!5, colframe=mffaccent,
+  boxrule=0.7pt, left=6pt, right=6pt, top=4pt, bottom=4pt, arc=2pt,
+  before skip=6pt, after skip=6pt, fonttitle=\bfseries, #1}

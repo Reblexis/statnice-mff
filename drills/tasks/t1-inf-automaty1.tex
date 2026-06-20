@@ -1,0 +1,28 @@
+\ulohahead{společná informatika}{Regulární jazyky: automaty, výrazy, uzávěry, neregularita}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte deterministický (DFA) a nedeterministický (NFA) konečný automat, regulární gramatiku a regulární výraz. Zformulujte Kleeneho větu.
+  \item \bod{2} Sestrojte DFA pro jazyk slov nad $\{a,b\}$ obsahujících podslovo $ab$. Uveďte uzávěrové vlastnosti regulárních jazyku (sjednocení, průnik, doplněk).
+  \item \bod{3} Dokažte, že jazyk $L=\{a^n b^n\mid n\ge0\}$ není regulární.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{DFA} $=(Q,\Sigma,\delta,q_0,F)$ s $\delta:Q\times\Sigma\to Q$; přijímá $w$, skončí-li ve stavu z $F$. \emph{NFA} má $\delta:Q\times\Sigma\to 2^Q$ (a případně $\varepsilon$-přechody); přijímá, existuje-li přijímající běh. \emph{Regulární gramatika} = pravidla typu $A\to aB$ a $A\to a$ (resp.\ $\varepsilon$). \emph{Regulární výraz} se tvoří z $\emptyset,\varepsilon,$ symbolu operacemi $\cup,\cdot,{}^*$. \emph{Kleeneho věta:} třídy jazyku popsatelných DFA, NFA, regulární gramatikou a regulárním výrazem jsou totožné (= regulární jazyky).
+
+\textbf{(b)} DFA se 3 stavy, $F=\{q_2\}$:
+\[
+\begin{array}{c|cc}
+ & a & b\\\hline
+q_0 & q_1 & q_0\\
+q_1 & q_1 & q_2\\
+q_2 & q_2 & q_2
+\end{array}
+\]
+($q_0$ = zatím nic, $q_1$ = naposledy $a$, $q_2$ = už viděno $ab$). \emph{Uzávěry:} regulární jazyky jsou uzavřené na sjednocení a průnik (součinový automat na $Q_1\times Q_2$), na doplněk (u DFA prohodíme $F\leftrightarrow Q\setminus F$), dále na zřetězení a iteraci.
+
+\textbf{(c)} Sporem přes \emph{pumping lemma}: nechť $L$ regulární s konstantou $p$. Vezmi $w=a^p b^p\in L$, $|w|\ge p$. Lemma dá rozklad $w=xyz$, $|xy|\le p$, $|y|\ge1$. Protože $|xy|\le p$, leží $y$ celé v úvodních $a$, tedy $y=a^k$, $k\ge1$. Pak $xy^2z=a^{p+k}b^p\notin L$ (více $a$ než $b$), což je spor. Tedy $L$ není regulární.
+\end{reseni}
+
+\kalibrace{Automaty a jazyky jsou nejčastější okruh společné informatiky (~78\,\% zkoušek, skoro vždy jako Q1). Konstrukce DFA + definice = spolehlivé 2 body; tato úloha je proto v jádru úrovně 1.}
+\past{Pumping lemma dokazuje \emph{ne}regularitu (sporem); neslouží k důkazu regularity. Vždy zdůvodni, proč $y$ padne do bloku $a$ (díky $|xy|\le p$).}

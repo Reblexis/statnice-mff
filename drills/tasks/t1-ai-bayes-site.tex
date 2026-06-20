@@ -1,0 +1,23 @@
+\ulohahead{specializace UI-SU}{Bayesovské sítě a pravděpodobnostní inference}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte Bayesovskou síť a její vztah k úplné sdružené distribuci (faktorizace).
+  \item \bod{2} Jak se síť konstruuje (podmíněná nezávislost) a jak se počítá exaktní inference enumerací?
+  \item \bod{3} Popište eliminaci proměnných a aproximační inferenci (Monte Carlo: zamítání, vážení věrohodností).
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Bayesovská síť} = orientovaný acyklický graf, kde uzly jsou náhodné proměnné a hrany vyjadřují přímou závislost; každý uzel má tabulku podmíněných pravděpodobností $P(X_i\mid \mathrm{rodiče}(X_i))$. Kóduje \emph{úplnou sdruženou distribuci} faktorizací
+\[
+P(X_1,\dots,X_n)=\prod_{i=1}^n P\big(X_i\mid \mathrm{rodiče}(X_i)\big),
+\]
+což šetří parametry oproti plné tabulce (využívá podmíněné nezávislosti).
+
+\textbf{(b)} \emph{Konstrukce}: seřaď proměnné (ideálně příčiny před následky) a každou napoj jen na ty předchozí, na nichž přímo závisí (Markovský rodičovský obal). \emph{Inference enumerací} dotazu $P(Q\mid e)$: $P(Q\mid e)\propto\sum_{\text{skryté } h}P(Q,e,h)$, kde sčítáme součiny faktoru z faktorizace přes všechny hodnoty skrytých proměnných a nakonec normujeme.
+
+\textbf{(c)} \emph{Eliminace proměnných} sčítá zprava efektivněji: postupně ,,vysčítá'' skryté proměnné, mezivýsledky drží jako faktory a opakované součiny nepřepočítává - výrazně rychlejší než holá enumerace. \emph{Aproximace (Monte Carlo)}: \emph{zamítavé vzorkování} (rejection) generuje vzorky z priorů a zahodí ty neslučitelné s $e$ (neefektivní při vzácném $e$); \emph{vážení věrohodností} (likelihood weighting) fixuje pozorované proměnné a každý vzorek váží součinem jejich pravděpodobností - žádný vzorek nezahazuje.
+\end{reseni}
+
+\kalibrace{Bayesovské sítě (~22\,\% s Bayesovským učením) jsou opakovaná ,,Základy UI'' otázka. Faktorizace + enumerace = 2-bodová záloha; tady je AI rodina, kde je vhodné mít i hlubší zvládnutí.}
+\past{Faktorizace je součin $P(X_i\mid\text{rodiče})$ - ne marginálu. Likelihood weighting nezahazuje vzorky (na rozdíl od rejection), proto je efektivnější při vzácné evidenci.}

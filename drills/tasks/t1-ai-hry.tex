@@ -1,0 +1,19 @@
+\ulohahead{specializace UI-SU}{Hry: minimax, alfa-beta a teorie her}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Popište algoritmus Minimax pro hru dvou hráču s nulovým součtem. Co předpokládá o protihráči?
+  \item \bod{2} Popište alfa-beta prořezávání: co a proč prořezává a jak pořadí tahu ovlivní úsporu.
+  \item \bod{3} Vysvětlete základy teorie her: vězňovo dilema, dominantní strategie, Nashovo ekvilibrium a Paretovskou optimalitu.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Minimax}: prohledá herní strom; hráč MAX volí tah maximalizující hodnotu, MIN minimalizující. Hodnota listu = užitek; hodnota vnitřního uzlu = max/min hodnot synu podle toho, kdo je na tahu. Předpokládá \emph{optimálně hrajícího} protihráče (nejhorší případ pro nás). Hloubku lze omezit a listy nahradit \emph{ohodnocovací funkcí}.
+
+\textbf{(b)} \emph{Alfa-beta} udržuje $\alpha$ (nejlepší jistá hodnota pro MAX) a $\beta$ (pro MIN). Větev se \emph{ořízne}, jakmile $\alpha\ge\beta$, protože ji racionální hráč stejně nezvolí, takže nemá smysl ji dál prohledávat. Výsledek je identický s minimaxem. Při \emph{dobrém pořadí} tahu (nejlepší první) klesne počet prohledaných uzlu z $O(b^d)$ až na $O(b^{d/2})$, tj.\ dvojnásobná dosažitelná hloubka.
+
+\textbf{(c)} \emph{Vězňovo dilema}: dva hráči, každý volí spolupráci/zradu; zrada je \emph{dominantní strategie} (lepší bez ohledu na soupeře), takže oba zradí, ač by oboustranná spolupráce byla lepší. \emph{Nashovo ekvilibrium}: profil strategií, kde nikdo nezíská jednostrannou změnou (vzájemně nejlepší odpovědi); ve vězňově dilematu je to (zrada, zrada). \emph{Paretovsky optimální} je výsledek, který nelze zlepšit jednomu bez zhoršení druhému - (spolupráce, spolupráce) je Pareto-lepší, ale není Nashovo ekvilibrium.
+\end{reseni}
+
+\kalibrace{Hry (~22\,\%, minimax + teorie her) jsou opakovaná ,,Základy UI'' otázka. Minimax + alfa-beta + Nash = 2-3 body za vysvětlení.}
+\past{Alfa-beta nemění \emph{výsledek}, jen rychlost. Nashovo ekvilibrium nemusí být Paretovsky optimální (vězňovo dilema je důkaz).}

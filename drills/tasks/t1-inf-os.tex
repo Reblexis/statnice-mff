@@ -1,0 +1,19 @@
+\ulohahead{společná informatika}{Architektura a OS: režimy, procesy, virtuální paměť}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Vysvětlete adresu a adresový prostor, privilegovaný vs neprivilegovaný režim procesoru a roli jádra OS. Co je proces, vlákno, kontext a přepínání kontextu? Uveďte stavy vlákna.
+  \item \bod{2} Vysvětlete rozdíl virtuální vs fyzická adresa a komponenty stránkování (číslo stránky, číslo rámce, offset). Pro stránku 4\,KiB přeložte virtuální adresu \texttt{0x00003ABC}, je-li stránka 3 namapována na rámec 7.
+  \item \bod{3} Jakou roli hrají virtuální adresové prostory v ochraně paměti? Jak procesor realizuje konstrukce vyššího jazyka (přiřazení, podmínka, cyklus) instrukcemi?
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Adresa} identifikuje místo v paměti; \emph{adresový prostor} = množina platných adres (každý proces má vlastní). V \emph{privilegovaném} (jádrovém) režimu smí procesor vše (I/O, správa paměti), v \emph{neprivilegovaném} (uživatelském) jen omezeně; přechod přes přerušení/syscall. \emph{Jádro OS} spravuje prostředky a izolaci. \emph{Proces} = běžící program s vlastním adresovým prostorem; \emph{vlákno} = tok provádění uvnitř procesu (sdílí paměť). \emph{Kontext} = registry + čítač instrukcí + stav; \emph{přepnutí kontextu} je uloží/obnoví. Stavy vlákna: \emph{běží} (running), \emph{připraveno} (ready), \emph{čeká/blokováno} (waiting); plánovač přepíná preemptivně nebo kooperativně.
+
+\textbf{(b)} \emph{Virtuální} adresu používá program; \emph{fyzická} ukazuje do RAM; překlad zajišťuje MMU přes stránkovací tabulku. Adresa $=$ (číslo stránky $\Vert$ offset). Stránka 4\,KiB $\Rightarrow$ offset 12 bitu. \texttt{0x00003ABC}: offset $=$ \texttt{0xABC}, číslo stránky $=$ \texttt{0x00003ABC}$\gg12=$ \texttt{0x3} $=3$. Tabulka: stránka $3\to$ rámec $7$. Fyzická adresa $=(7\ll12)\,\vert\,\texttt{0xABC}=\texttt{0x7ABC}$.
+
+\textbf{(c)} Každý proces má vlastní mapování, takže nevidí cizí paměť (\emph{ochrana/izolace}); přístup mimo mapování vyvolá výpadek (page fault). Konstrukce vyššího jazyka: \emph{přiřazení} = load/store mezi registrem a pamětí; \emph{podmínka} = porovnání (\texttt{cmp}) + podmíněný skok; \emph{cyklus} = podmíněný skok zpět; \emph{volání funkce} = uložení návratové adresy a rámce na zásobník (\texttt{call}/\texttt{ret}).
+\end{reseni}
+
+\kalibrace{Architektura a OS jsou druhý nejčastější informatický okruh (~60\,\%); virtuální paměť a překlad adres se v zadáních opakují jako konkrétní výpočet. Tabulka adres je vděčné 2-3 body.}
+\past{Offset má tolik bitu, kolik je $\log_2$(velikost stránky); nepleť číslo stránky (virtuální) s číslem rámce (fyzické). Stavy vlákna nejsou jen ,,běží/neběží''.}

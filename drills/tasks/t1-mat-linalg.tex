@@ -1,0 +1,35 @@
+\ulohahead{společná matematika}{Vlastní čísla, diagonalizace a symetrické matice}
+\begin{zadani}
+Je dána reálná matice
+\[
+A=\begin{pmatrix} 2 & 1\\ 1 & 2 \end{pmatrix}.
+\]
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte vlastní číslo a vlastní vektor matice a charakteristický polynom. Uveďte vztah mezi vlastními čísly a determinantem (resp. regularitou) matice.
+  \item \bod{2} Spočtěte vlastní čísla matice $A$ a ke každému najděte vlastní vektor.
+  \item \bod{3} Rozhodněte, zda je $A$ diagonalizovatelná. Pokud ano, napište matice $P,D$ tak, že $A=PDP^{-1}$. Vysvětlete, proč je každá reálná symetrická matice (ortogonálně) diagonalizovatelná.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a) Definice.} Číslo $\lambda\in\mathbb{R}$ (obecně $\mathbb{C}$) je \emph{vlastní číslo} matice $A$, pokud existuje nenulový vektor $v$ s $Av=\lambda v$; takový $v$ je \emph{vlastní vektor}. Vlastní čísla jsou kořeny \emph{charakteristického polynomu} $p_A(\lambda)=\det(A-\lambda I)$. Platí $\det A=\prod_i \lambda_i$ (součin vlastních čísel s násobností), takže $A$ je regulární právě tehdy, když $0$ není vlastní číslo.
+
+\textbf{(b) Výpočet.}
+\[
+\det(A-\lambda I)=\det\!\begin{pmatrix}2-\lambda & 1\\ 1 & 2-\lambda\end{pmatrix}=(2-\lambda)^2-1=\lambda^2-4\lambda+3=(\lambda-1)(\lambda-3).
+\]
+Vlastní čísla: $\lambda_1=3$, $\lambda_2=1$.
+\begin{itemize}
+  \item $\lambda_1=3$: $(A-3I)=\begin{pmatrix}-1&1\\1&-1\end{pmatrix}$, řešení $v_1=(1,1)^{\!\top}$.
+  \item $\lambda_2=1$: $(A-I)=\begin{pmatrix}1&1\\1&1\end{pmatrix}$, řešení $v_2=(1,-1)^{\!\top}$.
+\end{itemize}
+
+\textbf{(c) Diagonalizace.} $A$ má dvě různá vlastní čísla, příslušné vlastní vektory jsou nezávislé, takže $A$ je diagonalizovatelná:
+\[
+P=\begin{pmatrix}1&1\\1&-1\end{pmatrix},\qquad D=\begin{pmatrix}3&0\\0&1\end{pmatrix},\qquad A=PDP^{-1}.
+\]
+$A$ je navíc symetrická. \emph{Spektrální věta}: každá reálná symetrická matice má reálná vlastní čísla a vlastní vektory příslušné různým vlastním číslům jsou na sebe kolmé, takže je lze znormovat na ortonormální bázi. Pak $A=QDQ^{\!\top}$ s ortogonální $Q$ ($Q^{-1}=Q^{\!\top}$). Zde $v_1\cdot v_2=1\cdot1+1\cdot(-1)=0$, takže $Q=\tfrac{1}{\sqrt2}\begin{psmallmatrix}1&1\\1&-1\end{psmallmatrix}$.
+\end{reseni}
+
+\kalibrace{Lineární algebra je nejčastější okruh společné matematiky (~65\,\% zkoušek). Část (a)+(b) = 2 body bezpečně sytí podlahu společných okruhů (cíl $\ge 5/12$). Definice z (a) je nejlevnější bod, nikdy ji nevynechej.}
+\past{U diagonalizovatelnosti se neptáme jen ,,jdou spočítat vlastní čísla'', ale zda existuje báze z vlastních vektoru (tj. zda je algebraická = geometrická násobnost). Různá vlastní čísla to zaručí; u násobných je nutno ověřit dimenzi vlastního podprostoru.}

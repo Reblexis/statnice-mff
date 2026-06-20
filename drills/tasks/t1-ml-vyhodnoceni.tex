@@ -1,0 +1,19 @@
+\ulohahead{specializace UI-SU}{Vyhodnocení modelu: validace, přeučení, regularizace}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Vysvětlete rozdělení dat na train/dev/test a křížovou validaci ($k$-fold). Co je princip maximální věrohodnosti?
+  \item \bod{2} Co je přeučení (overfitting) a generalizační chyba? Jak proti přeučení působí regularizace (L1 vs L2) a včasné zastavení trénování?
+  \item \bod{3} Vysvětlete kompromis vychýlení-rozptyl (bias-variance) a prokletí dimenzionality při výběru modelu.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Train} slouží k učení, \emph{dev/validace} k ladění hyperparametru a výběru modelu, \emph{test} k jedinému závěrečnému odhadu výkonu (nesmí se na něm ladit). \emph{$k$-fold křížová validace}: data rozděl na $k$ částí, $k$-krát trénuj na $k{-}1$ a validuj na zbylé, výsledky zprůměruj (lepší využití dat). \emph{Maximální věrohodnost}: zvol parametry maximalizující pravděpodobnost (věrohodnost) pozorovaných dat, $\hat\theta=\arg\max_\theta P(\text{data}\mid\theta)$.
+
+\textbf{(b)} \emph{Přeučení}: model se naučí šum trénovacích dat, má malou trénovací, ale velkou \emph{generalizační} (testovací) chybu. \emph{Regularizace} přidá penaltu za velikost vah: \emph{L2} ($\lambda\lVert w\rVert_2^2$) hladce smršťuje, \emph{L1} ($\lambda\lVert w\rVert_1$) tlačí váhy přesně na nulu (řídké řešení, výběr příznaku). \emph{Včasné zastavení}: trénink se ukončí, když začne růst validační chyba.
+
+\textbf{(c)} \emph{Bias-variance}: příliš jednoduchý model má velké \emph{vychýlení} (podučení), příliš složitý velký \emph{rozptyl} (přeučení); cílem je minimum jejich součtu. \emph{Prokletí dimenzionality}: s rostoucím počtem příznaku roste potřeba dat exponenciálně a vzdálenosti se vyrovnávají, takže složitější modely snáz přeučí - proto redukce dimenze/regularizace.
+\end{reseni}
+
+\kalibrace{Toto je ,,zastřešující'' ML téma (evaluace, regularizace) prolínající mnoho otázek; opakovaně se ptá na křížovou validaci a přeučení. Solidní definice = body napříč specializací.}
+\past{Na testovacích datech se \emph{neladí}. L1 dělá řídké váhy (výběr příznaku), L2 jen smršťuje - nezaměňuj jejich efekt.}

@@ -1,0 +1,27 @@
+\ulohahead{specializace UI-SU}{Evaluační metriky binárního klasifikátoru}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Nakreslete matici záměn a definujte accuracy, precision, recall a F1.
+  \item \bod{2} Proč je accuracy zavádějící u nevyvážených tříd? Kdy upřednostnit precision a kdy recall? Z hodnot $\mathrm{TPR}$, $\mathrm{FPR}$ a počtu pozitivních/negativních rekonstruujte $\mathrm{TP,FP,TN,FN}$.
+  \item \bod{3} Co zobrazuje ROC křivka a co je AUC? Spočtěte precision a recall pro $\mathrm{TP}=20,\ \mathrm{FP}=30,\ \mathrm{FN}=5$.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} Matice záměn (řádky skutečnost, sloupce predikce):
+\[
+\begin{array}{c|cc}
+ & \hat{+} & \hat{-}\\\hline
++ & \mathrm{TP} & \mathrm{FN}\\
+- & \mathrm{FP} & \mathrm{TN}
+\end{array}
+\]
+$\text{accuracy}=\frac{\mathrm{TP+TN}}{\text{vše}}$, $\text{precision}=\frac{\mathrm{TP}}{\mathrm{TP+FP}}$, $\text{recall (TPR)}=\frac{\mathrm{TP}}{\mathrm{TP+FN}}$, $F_1=\frac{2\,PR}{P+R}$ (harmonický průměr).
+
+\textbf{(b)} Při nevyvážených třídách (např.\ 1\,\% pozitivních) dá triviální klasifikátor ,,vše negativní'' accuracy 99\,\%, ač nic nenajde - proto se sleduje precision/recall. \emph{Recall} je důležitý, když je drahé minout pozitivní (nemoc, podvod); \emph{precision}, když je drahý falešný poplach (spam označený jako důležitý). Rekonstrukce z $\mathrm{TPR},\mathrm{FPR}$ a počtu $P$ (pozitivních) a $N$ (negativních): $\mathrm{TP}=\mathrm{TPR}\cdot P$, $\mathrm{FN}=P-\mathrm{TP}$, $\mathrm{FP}=\mathrm{FPR}\cdot N$, $\mathrm{TN}=N-\mathrm{FP}$.
+
+\textbf{(c)} \emph{ROC} vynáší $\mathrm{TPR}$ proti $\mathrm{FPR}$ při měnícím se prahu klasifikace; \emph{AUC} (plocha pod ní) je pravděpodobnost, že náhodný pozitivní dostane vyšší skóre než náhodný negativní (1 = ideál, 0{,}5 = náhoda). Pro zadání: $\text{precision}=\frac{20}{20+30}=0{,}4$, $\text{recall}=\frac{20}{20+5}=0{,}8$.
+\end{reseni}
+
+\kalibrace{Evaluační metriky jsou velmi častý ML okruh (~44\,\%) a opakovaně chtějí rekonstrukci počtu z metrik. Vzorce P/R/F1 a převod TPR/FPR umět zpaměti = spolehlivé body.}
+\past{Precision a recall si nepleť (jmenovatel: u precision predikované pozitivní, u recall skutečně pozitivní). F1 je harmonický, ne aritmetický průměr.}

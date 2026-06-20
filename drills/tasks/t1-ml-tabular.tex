@@ -1,0 +1,19 @@
+\ulohahead{specializace UI-SU}{Predikce z tabulárních dat: předzpracování a metriky}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Popište předzpracování tabulárních dat: kódování kategoriálních příznaku (one-hot), škálování spojitých příznaku a ošetření chybějících hodnot (imputace).
+  \item \bod{2} Definujte regresní metriky MAE, RMSE a $R^2$. Kdy je vhodnější MAE a kdy RMSE?
+  \item \bod{3} Jaký model zvolit pro tabulární regresi (lineární / stromové / náhodný les / boosting) a proč stromové metody nepotřebují škálování?
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Kategoriální} příznaky se převedou na čísla: \emph{one-hot} kódování (každá hodnota = binární sloupec) pro neuspořádané kategorie; ordinální kódování pro uspořádané. \emph{Spojité} příznaky se \emph{škálují} (standardizace na nulový průměr a jednotkový rozptyl, nebo min-max) - nutné pro vzdálenostní a gradientové modely. \emph{Chybějící hodnoty}: imputace (průměr/medián/nejčastější hodnota), případně příznak ,,bylo chybějící''.
+
+\textbf{(b)} Pro predikce $\hat y_i$ a cíle $y_i$: $\mathrm{MAE}=\tfrac1n\sum|y_i-\hat y_i|$; $\mathrm{RMSE}=\sqrt{\tfrac1n\sum(y_i-\hat y_i)^2}$; $R^2=1-\frac{\sum(y_i-\hat y_i)^2}{\sum(y_i-\bar y)^2}$ (podíl vysvětleného rozptylu). \emph{MAE} je odolnější vuči odlehlým hodnotám; \emph{RMSE} velké chyby trestá kvadraticky (preferuj, když jsou velké chyby zvlášť nežádoucí).
+
+\textbf{(c)} \emph{Lineární regrese} pro zhruba lineární vztahy (rychlá, interpretovatelná); \emph{stromové metody} (rozhodovací strom, \emph{náhodný les}, \emph{gradient boosting}) pro nelineární vztahy a smíšené typy příznaku - na tabulárních datech bývají nejlepší a robustní. Stromy dělí podle \emph{prahu} jednoho příznaku, takže jsou \emph{invariantní k monotónní transformaci} (škálování nezmění pořadí hodnot, tedy ani štěpení) - proto nepotřebují normalizaci.
+\end{reseni}
+
+\kalibrace{Tabulární workflow (~10\,\%) se objevil nedávno a chtěl předzpracování + metriky (ne jen definici modelu). MAE/RMSE a one-hot/škálování/imputace = 2-bodová záloha proti ,,end-to-end'' otázce.}
+\past{One-hot pro neuspořádané kategorie (jinak modelu podsouváš falešné pořadí). RMSE je v jednotkách cíle (odmocnina), MSE ne; stromy škálování nepotřebují, lineární/kNN/SVM ano.}

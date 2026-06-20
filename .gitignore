@@ -18,3 +18,12 @@ src/pilot.pdf
 
 # podcast intermediate clips (regenerable)
 podcast/clips/
+
+# drily (cvičné úlohy) - pomocné soubory
+drills/*.aux
+drills/*.log
+drills/*.out
+drills/*.toc
+drills/*.fls
+drills/*.fdb_latexmk
+drills/*.synctex.gz

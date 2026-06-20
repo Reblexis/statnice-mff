@@ -1,0 +1,19 @@
+\ulohahead{společná informatika}{Složitost, třídy P a NP, NP-úplnost}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte časovou složitost a asymptotickou notaci ($O,\Omega,\Theta$). Definujte třídy P a NP.
+  \item \bod{2} Definujte polynomiální převoditelnost, NP-těžkost a NP-úplnost. Uveďte aspoň tři NP-úplné problémy.
+  \item \bod{3} Jak se dokazuje, že je problém NP-úplný? Co tvrdí Cookova-Levinova věta a co znamená otevřená otázka $\mathrm{P}\overset{?}{=}\mathrm{NP}$?
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Časová složitost} = počet elementárních kroku jako funkce velikosti vstupu (nejhorší případ). $f=O(g)$: $\exists c,n_0:\,f(n)\le c\,g(n)$ pro $n\ge n_0$; $\Omega$ je dolní mez, $\Theta=O\cap\Omega$. \emph{P} = problémy řešitelné deterministicky v polynomiálním čase. \emph{NP} = problémy, jejichž ,,ano'' instance mají v polynomiálním čase ověřitelný certifikát (ekvivalentně řešitelné nedeterministicky v polynomiálním čase).
+
+\textbf{(b)} \emph{Polynomiální převod} $A\le_p B$: funkce vyčíslitelná v polynomiálním čase, která instance $A$ převádí na instance $B$ se zachováním odpovědi. $B$ je \emph{NP-těžký}, pokud $A\le_p B$ pro každé $A\in\mathrm{NP}$; \emph{NP-úplný}, je-li navíc $B\in\mathrm{NP}$. Příklady NP-úplných: SAT, 3-SAT, klika, vrcholové pokrytí, barevnost grafu, Hamiltonovská kružnice, batoh (rozhodovací).
+
+\textbf{(c)} NP-úplnost se dokazuje ve dvou krocích: (1) ukázat $B\in\mathrm{NP}$ (certifikát + ověření); (2) zvolit známý NP-úplný problém $A$ a sestrojit polynomiální redukci $A\le_p B$. \emph{Cookova-Levinova věta:} SAT je NP-úplný (první NP-úplný problém), což dává startovní bod pro všechny další redukce. $\mathrm{P}=\mathrm{NP}$? je otevřená otázka, zda lze vše ověřitelné v polynomiálním čase i v polynomiálním čase \emph{vyřešit}; obecně se věří, že $\mathrm{P}\neq\mathrm{NP}$.
+\end{reseni}
+
+\kalibrace{Algoritmy a složitost (P/NP) jsou opakovaný okruh; čistě definiční úloha s vysokou návratností bodu. Redukce z (b)/(c) přidá třetí bod.}
+\past{NP \emph{není} ,,ne-polynomiální''. NP-těžkost nevyžaduje $B\in$ NP; NP-úplnost ano. Směr redukce: ze \emph{známého} těžkého na \emph{nový} problém.}

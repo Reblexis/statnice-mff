@@ -1,0 +1,19 @@
+\ulohahead{společná informatika}{Bezkontextové jazyky, Turinguv stroj a nerozhodnutelnost}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte bezkontextovou gramatiku (CFG), jazyk jí generovaný a zásobníkový automat (PDA). Co je Chomského hierarchie (typy 0-3)?
+  \item \bod{2} Sestrojte CFG pro $\{a^n b^n\mid n\ge0\}$ a popište princip převodu CFG na PDA.
+  \item \bod{3} Definujte Turinguv stroj a rekurzivně spočetné jazyky. Vysvětlete existenci algoritmicky nerozhodnutelného problému (problém zastavení).
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{CFG} $G=(N,\Sigma,P,S)$ s pravidly $A\to\alpha$, $A\in N$, $\alpha\in(N\cup\Sigma)^*$; \emph{generovaný jazyk} = slova nad $\Sigma$ odvoditelná z $S$. \emph{PDA} = konečný automat se zásobníkem; třída jazyku přijímaných PDA = bezkontextové jazyky (CFL). \emph{Chomského hierarchie:} typ 3 regulární $\subset$ typ 2 bezkontextové $\subset$ typ 1 kontextové $\subset$ typ 0 rekurzivně spočetné, s odpovídajícími stroji (KA, PDA, lineárně omezený automat, Turinguv stroj).
+
+\textbf{(b)} CFG: $S\to aSb \mid \varepsilon$. \emph{Převod CFG$\to$PDA} (přijímání prázdným zásobníkem): na zásobník dej $S$; v každém kroku buď nahraď nejvyšší neterminál pravou stranou pravidla ($\varepsilon$-přechod), nebo paruj nejvyšší terminál se vstupním symbolem (a oba odeber). Slovo je přijato, vyprázdní-li se zásobník při dočtení vstupu. PDA tak simuluje levou derivaci.
+
+\textbf{(c)} \emph{Turinguv stroj} = konečný řídicí automat s nekonečnou páskou, hlavou (čte/zapisuje/posouvá), přechodovou funkcí; přijímá vstup, dostane-li se do přijímajícího stavu. Jazyk je \emph{rekurzivně spočetný} (typ 0), přijímá-li ho nějaký TS (může cyklit na slovech mimo jazyk); \emph{rekurzivní} (rozhodnutelný), pokud TS vždy zastaví. \emph{Problém zastavení} (zastaví TS $M$ na vstupu $w$?) je nerozhodnutelný: kdyby existoval rozhodovač $H$, sestrojíme $D(x)$, který se zacyklí, právě když $H$ řekne ,,$x(x)$ zastaví''; pak $D(D)$ vede ke sporu (diagonalizace).
+\end{reseni}
+
+\kalibrace{Bezkontextové jazyky a Chomského hierarchie jsou jádro Q1; Turinguv stroj + nerozhodnutelnost jsou vzácnější, ale legální tah z téhož okruhu - tady je držíme na definiční úrovni jako pojistku proti nule.}
+\past{,,Bezkontextové'' $=$ PDA, ne konečný automat. Nerozhodnutelnost se dokazuje diagonalizací/redukcí, ne ,,je to těžké''.}

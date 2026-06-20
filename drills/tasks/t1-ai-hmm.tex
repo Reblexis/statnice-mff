@@ -1,0 +1,23 @@
+\ulohahead{specializace UI-SU}{Markovské modely a skryté Markovské modely (HMM)}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Co je Markovský řetězec a Markovský předpoklad? Definujte skrytý Markovský model (HMM): skryté stavy, přechody, emise.
+  \item \bod{2} Popište filtraci, predikci a vyhlazování a uveďte rekurentní vzorec pro filtraci (forward).
+  \item \bod{3} Co počítá Viterbiho algoritmus (nejpravděpodobnější průchod)? Jak HMM souvisí s dynamickými Bayesovskými sítěmi?
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Markovský řetězec}: posloupnost stavu, kde budoucnost závisí jen na současném stavu (\emph{Markovský předpoklad} $P(X_t\mid X_{1:t-1})=P(X_t\mid X_{t-1})$). \emph{HMM}: skryté stavy $X_t$ s maticí přechodu $P(X_t\mid X_{t-1})$ a pozorování $E_t$ s modelem emisí $P(E_t\mid X_t)$; vidíme jen $E_t$, stavy odhadujeme.
+
+\textbf{(b)} \emph{Filtrace}: $P(X_t\mid e_{1:t})$ (odhad současného stavu z dosavadních pozorování). \emph{Predikce}: $P(X_{t+k}\mid e_{1:t})$ (budoucí stav). \emph{Vyhlazování}: $P(X_k\mid e_{1:t})$ pro $k<t$ (minulý stav s využitím pozdějších pozorování). Rekurence filtrace (forward):
+\[
+P(X_t\mid e_{1:t})\ \propto\ P(e_t\mid X_t)\sum_{x_{t-1}}P(X_t\mid x_{t-1})\,P(x_{t-1}\mid e_{1:t-1}),
+\]
+tj.\ krok predikce (přes přechod) a poté přenásobení emisí a normalizace.
+
+\textbf{(c)} \emph{Viterbi} dynamickým programováním najde \emph{nejpravděpodobnější posloupnost skrytých stavu} pro dané pozorování (max místo součtu ve forward rekurzi + zpětný chod). HMM je speciální případ \emph{dynamické Bayesovské sítě} (řetězec s jednou skrytou proměnnou na krok); DBN dovolují víc proměnných a strukturovanějších závislostí na časový krok.
+\end{reseni}
+
+\kalibrace{HMM (~12\,\%) je opakované ,,Základy UI'' téma (filtrace se zkoušela numericky). Definice + forward rekurence = 2-bodová záloha; pro 3 body umět jeden krok filtrace dosadit.}
+\past{Filtrace je jen ,,dopředu'', vyhlazování využívá i \emph{budoucí} pozorování. Viterbi hledá nejpravděpodobnější \emph{celou cestu}, ne stav po stavu.}

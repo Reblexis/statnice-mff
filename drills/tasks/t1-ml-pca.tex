@@ -1,0 +1,19 @@
+\ulohahead{specializace UI-SU}{Analýza hlavních komponent (PCA)}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Co je PCA a k čemu slouží? Co jsou hlavní komponenty a jak souvisí s kovarianční maticí?
+  \item \bod{2} Popište postup PCA (centrování, kovariance, vlastní rozklad / SVD, projekce na top-$k$). Co je vysvětlený rozptyl?
+  \item \bod{3} Jaká je souvislost PCA a SVD? Proč je nutné data před PCA škálovat a co PCA optimalizuje (rekonstrukční chyba)?
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{PCA} je lineární redukce dimenze: hledá nové ortogonální osy (\emph{hlavní komponenty}), podél nichž mají data největší rozptyl, a projektuje na prvních $k$ z nich. Hlavní komponenty jsou \emph{vlastní vektory kovarianční matice} dat; příslušná vlastní čísla udávají rozptyl podél nich.
+
+\textbf{(b)} Postup: (1) \emph{centruj} data (odečti průměr), případně standardizuj; (2) spočti \emph{kovarianční matici} $C=\tfrac1n X^{\!\top}X$; (3) najdi její \emph{vlastní čísla a vektory} (nebo SVD matice $X$); (4) seřaď komponenty podle vlastních čísel a \emph{projektuj} na prvních $k$. \emph{Vysvětlený rozptyl} komponenty = $\lambda_i/\sum_j\lambda_j$; volíme $k$ tak, aby pokryl např.\ 95\,\% rozptylu.
+
+\textbf{(c)} Pro centrovaná data $X=U\Sigma V^{\!\top}$ (SVD) jsou hlavní komponenty sloupce $V$ a singulární hodnoty $\sigma_i$ souvisí s vlastními čísly kovariance přes $\lambda_i=\sigma_i^2/n$; SVD je numericky stabilnější cesta. \emph{Škálování} je nutné, protože PCA reaguje na rozptyl: příznak s velkou jednotkou (rozsahem) by jinak uměle dominoval první komponentě. PCA minimalizuje \emph{rekonstrukční chybu} (součet čtvercu kolmých vzdáleností k podprostoru), což je ekvivalentní maximalizaci zachyceného rozptylu.
+\end{reseni}
+
+\kalibrace{PCA (~12\,\%) je vzácnější, ale opakované jako konceptuální + vizuální otázka. Definice (komponenty = vlastní vektory kovariance) + postup = 2-bodová záloha.}
+\past{PCA hledá směry maximálního \emph{rozptylu}, ne směry oddělující třídy (to je LDA). Bez centrování/škálování vyjdou komponenty zkreslené.}

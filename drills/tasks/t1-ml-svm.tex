@@ -1,0 +1,19 @@
+\ulohahead{specializace UI-SU}{Metoda podpůrných vektoru (SVM)}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Popište SVM pro lineárně separabilní třídy: co je rozdělující nadrovina, margin a podpůrné vektory (support vectors)?
+  \item \bod{2} Co je měkký margin a parametr $C$? Jaký je kompromis mezi šířkou marginu a počtem chyb?
+  \item \bod{3} K čemu slouží jádrové funkce (kernel trick) a jak se chová RBF jádro? Jak SVM klasifikuje do více tříd?
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} SVM hledá \emph{rozdělující nadrovinu} $w^{\!\top}x+b=0$ s \emph{maximálním marginem} (pásem) mezi třídami. Margin je vzdálenost nadroviny k nejbližším bodum; ty body leží na okraji a nazývají se \emph{podpůrné vektory} - jen ony určují řešení (ostatní lze odebrat beze změny). Maximalizace marginu $=$ minimalizace $\tfrac12\lVert w\rVert^2$ za podmínek $y_i(w^{\!\top}x_i+b)\ge1$.
+
+\textbf{(b)} Když data nejsou separabilní, zavede se \emph{měkký margin} s prom.\ uvolnění $\xi_i\ge0$: minimalizujeme $\tfrac12\lVert w\rVert^2+C\sum_i\xi_i$. Parametr $C$ váží chyby proti šířce marginu: \emph{velké} $C$ = málo chyb, úzký margin (riziko přeučení); \emph{malé} $C$ = širší margin, toleruje víc chyb (lepší generalizace).
+
+\textbf{(c)} \emph{Jádrový trik}: nahradí skalární součin $x_i^{\!\top}x_j$ jádrem $K(x_i,x_j)$, čímž SVM počítá v (implicitně vysokorozměrném) prostoru rysu, aniž ho explicitně sestrojí - umožní nelineární hranice. \emph{RBF} $K(x,z)=\exp(-\gamma\lVert x-z\rVert^2)$ měří podobnost lokálně; malé $\gamma$ = hladká hranice, velké $\gamma$ = klikatá (přeučení). \emph{Více tříd}: kombinací binárních klasifikátoru one-vs-rest nebo one-vs-one.
+\end{reseni}
+
+\kalibrace{SVM (~12\,\%) je vzácnější, ale když padne, je konceptuální (,,popište, nakreslete hranici, vliv bodu, kdy RBF''). Definice marginu + role $C$/jádra = 2-bodová záloha.}
+\past{Hranici určují jen podpůrné vektory. Velké $C$ = méně tolerance chyb (užší margin), ne naopak; RBF s velkým $\gamma$ se přeučuje.}

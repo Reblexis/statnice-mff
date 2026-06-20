@@ -1,0 +1,43 @@
+\ulohahead{společná informatika}{Objektové programování a návrh (C\#)}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Vysvětlete abstrakci, zapouzdření a polymorfismus a související konstrukty (třída, rozhraní, dědičnost, viditelnost). Rozdíl mezi statickým a dynamickým typováním a mezi virtuální a nevirtuální metodou.
+  \item \bod{2} Navrhněte v C\# malou hierarchii geometrických tvaru s rozhraním a polymorfním výpočtem obsahu; ukažte ošetření chyby výjimkou.
+  \item \bod{3} Jak je implementován dynamický polymorfismus (tabulka virtuálních metod)? K čemu jsou generické typy a jaký je rozdíl mezi hodnotovými a referenčními typy v C\#?
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Abstrakce} skrývá detaily za rozhraním; \emph{zapouzdření} drží data + operace pohromadě a omezuje přístup (viditelnost \texttt{private}/\texttt{public}/\texttt{protected}); \emph{polymorfismus} = jednotné volání nad různými typy. \emph{Třída} definuje typ, \emph{rozhraní} (interface) jen kontrakt, \emph{dědičnost} přebírá a rozšiřuje. \emph{Statické} typování kontroluje typy při překladu, \emph{dynamické} za běhu. \emph{Virtuální} metoda se vybírá podle skutečného typu objektu za běhu (override), \emph{nevirtuální} podle deklarovaného typu.
+
+\textbf{(b)}
+\begin{lstlisting}
+public interface IShape { double Area(); }
+
+public sealed class Circle : IShape {
+    private readonly double r;
+    public Circle(double r) {
+        if (r < 0) throw new ArgumentException("zaporny polomer");
+        this.r = r;
+    }
+    public double Area() => Math.PI * r * r;
+}
+
+public sealed class Rectangle : IShape {
+    private readonly double w, h;
+    public Rectangle(double w, double h) { this.w = w; this.h = h; }
+    public double Area() => w * h;
+}
+
+double TotalArea(IEnumerable<IShape> shapes) {
+    double sum = 0;
+    foreach (var s in shapes) sum += s.Area(); // polymorfni volani
+    return sum;
+}
+\end{lstlisting}
+
+\textbf{(c)} \emph{Dynamický polymorfismus} se realizuje \emph{tabulkou virtuálních metod} (vtable): každý objekt drží ukazatel na tabulku své třídy, volání virtuální metody = skok přes položku tabulky (vybere se override potomka). \emph{Generické typy} umožní psát kód nezávislý na konkrétním typu (\texttt{List<T>}) bez ztráty typové kontroly a bez boxingu u hodnotových typu. \emph{Hodnotové} typy (\texttt{struct}, \texttt{int}) se kopírují podle hodnoty (typicky na zásobníku), \emph{referenční} (\texttt{class}) žijí na haldě a předává se reference; spravuje je garbage collector.
+\end{reseni}
+
+\kalibrace{Programovací jazyky / OO návrh je v moderním formátu vzácnější, ale když padne, bývá implementační. Definice (a) + funkční kostra hierarchie (b) tě udrží nad nulou; jazyk je C\# (volba majitele).}
+\past{Rozhraní není abstraktní třída (nemá stav/implementaci, lze jich implementovat víc). Virtuální dispatch jde podle \emph{skutečného} typu - jinak by polymorfismus nefungoval.}

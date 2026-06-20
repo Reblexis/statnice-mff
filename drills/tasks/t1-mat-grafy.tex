@@ -1,0 +1,19 @@
+\ulohahead{společná matematika}{Teorie grafu: souvislost, stromy, barevnost, rovinnost, toky}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte graf, stupeň vrcholu, souvislost a komponentu, strom (uveďte aspoň dvě ekvivalentní charakteristiky) a bipartitní graf.
+  \item \bod{2} Definujte dobré obarvení a barevnost $\chi(G)$. Uveďte vztah barevnosti a klikovosti. Určete $\chi(C_5)$ (kružnice délky 5) a zdůvodněte.
+  \item \bod{3} Zformulujte Eulerovu formuli pro rovinný graf a odvoďte horní mez počtu hran. Definujte síť, tok a řez a uveďte větu o max.\ toku a min.\ řezu.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Graf} $G=(V,E)$, $E\subseteq\binom{V}{2}$. \emph{Stupeň} $\deg(v)$ = počet hran u $v$ (princip podání rukou: $\sum_v\deg v=2|E|$). $G$ je \emph{souvislý}, existuje-li cesta mezi každou dvojicí vrcholu; \emph{komponenta} = maximální souvislý podgraf. \emph{Strom} = souvislý graf bez kružnice; ekvivalentně: souvislý s $|E|=|V|-1$; nebo: mezi každými dvěma vrcholy existuje právě jedna cesta. \emph{Bipartitní} graf: $V$ lze rozdělit na dvě části tak, že každá hrana vede mezi nimi (ekvivalentně: neobsahuje lichou kružnici).
+
+\textbf{(b)} \emph{Dobré obarvení} $k$ barvami: zobrazení $V\to\{1,\dots,k\}$ tak, že sousední vrcholy mají různou barvu. \emph{Barevnost} $\chi(G)$ = nejmenší takové $k$. Platí $\chi(G)\ge\omega(G)$ (klikovost; klika potřebuje tolik barev, kolik má vrcholu), ale rovnost obecně neplatí. $C_5$: jako lichá kružnice není bipartitní, takže $\chi>2$; třemi barvami obarvit lze, tedy $\chi(C_5)=3$.
+
+\textbf{(c)} \emph{Eulerova formule:} pro souvislý rovinný graf s $V$ vrcholy, $E$ hranami a $F$ stěnami platí $V-E+F=2$. U jednoduchého grafu s $V\ge3$ je každá stěna ohraničena $\ge3$ hranami a každá hrana sousedí se 2 stěnami, takže $2E\ge3F$; dosazením $F=2-V+E$ dostaneme $E\le 3V-6$. (U grafu s mosty je třeba argument doplnit, závěr ale platí.) \emph{Síť} = orientovaný graf s kapacitami $c$, zdrojem $s$ a stokem $t$; \emph{tok} $f$ splňuje $0\le f\le c$ a Kirchhoffuv zákon (zachování v každém vnitřním vrcholu); \emph{řez} = rozdělení vrcholu na $S\ni s$ a $T\ni t$, jeho kapacita = součet kapacit hran z $S$ do $T$. \emph{Věta:} velikost maximálního toku se rovná kapacitě minimálního řezu (max-flow = min-cut).
+\end{reseni}
+
+\kalibrace{Grafy jsou stabilní okruh matematiky (barevnost, eulerovské/rovinné grafy, souvislost se v zadáních opakují). Definice + jedno odvození (např.\ $E\le3V-6$) = 2 body.}
+\past{$\chi\ge\omega$ je jen nerovnost - existují grafy bez trojúhelníku s libovolně velkou barevností. Eulerova formule platí pro \emph{souvislé} rovinné grafy.}

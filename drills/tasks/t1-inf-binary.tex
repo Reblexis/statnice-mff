@@ -1,0 +1,46 @@
+\ulohahead{společná informatika}{Reprezentace dat a čtení binárního souboru (C\#)}
+\begin{zadani}
+Binární soubor má tento formát: 4 bajty ASCII ,,\texttt{REC1}'' (magic), poté \texttt{uint32} \texttt{count} (little-endian), poté \texttt{count} záznamů, kde každý záznam je \texttt{int32 id} (little-endian) následovaný \texttt{float32 value} (IEEE\,754, little-endian).
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Vysvětlete pojmy \emph{little-endian} vs.\ \emph{big-endian} a \emph{zarovnání} (alignment). Jak je v paměti uloženo \texttt{int32} s hodnotou \texttt{0x01020304} v little-endian?
+  \item \bod{2} Napište v C\# metodu, která soubor načte do pole struktur \texttt{(int Id, float Value)}.
+  \item \bod{3} Co se stane na big-endian stroji a jak to ošetřit? Jak ověřit magic a obránit se proti poškozenému/zkrácenému souboru?
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Endianita} je pořadí bajtu vícebajtové hodnoty v paměti. \emph{Little-endian} ukládá nejméně významný bajt na nejnižší adresu. Hodnota \texttt{0x01020304} se tedy v paměti jeví jako bajty \texttt{04 03 02 01} (od nízké adresy). Big-endian by uložil \texttt{01 02 03 04}. \emph{Zarovnání} znamená, že hodnota typu o velikosti $s$ má typicky začínat na adrese dělitelné $s$ (např.\ \texttt{int32} na násobku 4); překladač proto vkládá výplň (padding) mezi položky struktury. V binárním \emph{formátu souboru} se ale spoléháme na přesné pořadí bajtu a žádné implicitní zarovnání nepředpokládáme.
+
+\textbf{(b)} \texttt{BinaryReader} v .NET čte v little-endian, což sedí na zadání:
+\begin{lstlisting}
+public readonly record struct Rec(int Id, float Value);
+
+public static Rec[] Load(string path)
+{
+    using var fs = File.OpenRead(path);
+    using var br = new BinaryReader(fs);
+
+    // magic "REC1"
+    var magic = br.ReadBytes(4);
+    if (magic.Length != 4 || magic[0] != (byte)'R' || magic[1] != (byte)'E'
+        || magic[2] != (byte)'C' || magic[3] != (byte)'1')
+        throw new InvalidDataException("spatny magic");
+
+    uint count = br.ReadUInt32();          // little-endian
+    var recs = new Rec[count];
+    for (uint i = 0; i < count; i++)
+    {
+        int id = br.ReadInt32();           // 4 bajty LE
+        float val = br.ReadSingle();       // 4 bajty IEEE754 LE
+        recs[i] = new Rec(id, val);
+    }
+    return recs;
+}
+\end{lstlisting}
+Ruční složení int32 z bajtu (ukázka principu): \texttt{id = b0 | b1<<8 | b2<<16 | b3<<24}.
+
+\textbf{(c)} Pozor na endianitu CPU: \texttt{BinaryReader} i explicitní složení \texttt{b0 | b1<<8 | b2<<16 | b3<<24} dávají \emph{vždy} little-endian výsledek nezávisle na procesoru (to je správně a přenositelné). Co přenositelné \emph{není}, je reinterpretace syrových bajtu v nativním pořadí CPU (např.\ \texttt{BitConverter.ToInt32} nebo přetypování ukazatele) - ta by na big-endian stroji vrátila prohozené bajty. Robustní je proto skládat bajty s pevným pořadím podle \emph{formátu} (LE): v .NET \texttt{BinaryPrimitives.ReadInt32LittleEndian(span)} a \texttt{BinaryPrimitives.ReadSingleLittleEndian(span)}, případně podle \texttt{BitConverter.IsLittleEndian} bajty otočit. \emph{Obrana proti poškození}: ověř magic; po načtení \texttt{count} zkontroluj, že zbývající délka souboru je $=8\cdot\texttt{count}$ bajtu (jinak vyhoď výjimku) místo slepého čtení do EOF; \texttt{ReadBytes}/\texttt{ReadInt32} při zkrácení vyhodí \texttt{EndOfStreamException}, kterou je nutno ošetřit.
+\end{reseni}
+
+\kalibrace{Implementační otázky ze společné informatiky (binární soubor, alokátor, semafor, OO návrh) jsou hlavní příčina propadnutí ,,naoko připraveného'' studenta - na nule z této otázky se podlaha $\ge 5/12$ hroutí. Cíl: NIKDY nedostat 0. Část (a) je čistá definice (1 bod), kostra metody v (b) přidá druhý bod i bez doladění (c).}
+\past{\texttt{BinaryReader} čte vždy little-endian bez ohledu na CPU - na zkoušce to klidně řekni, ale dodej, že pro přenositelnost a big-endian CPU je správně \texttt{BinaryPrimitives}. Nezapomeň na ošetření konce souboru.}

@@ -1,0 +1,19 @@
+\ulohahead{společná matematika}{Pravděpodobnost a statistika: Bayes, střední hodnota, rozptyl, CLT, testování}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte pravděpodobnostní prostor, podmíněnou pravděpodobnost a nezávislost jevu. Zformulujte Bayesovu větu.
+  \item \bod{2} Definujte střední hodnotu a rozptyl náhodné veličiny. Uveďte linearitu střední hodnoty a vzorec pro rozptyl součtu. Spočtěte $\mathbb{E}X$ a $\operatorname{var}X$ pro hod férovou kostkou.
+  \item \bod{3} Zformulujte zákon velkých čísel a centrální limitní větu. Popište testování hypotéz: hladina významnosti, chyba 1.\ a 2.\ druhu.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Pravděpodobnostní prostor} $(\Omega,\mathcal{F},P)$: množina elementárních jevu $\Omega$, $\sigma$-algebra jevu $\mathcal{F}$, míra $P$ s $P(\Omega)=1$. \emph{Podmíněná} $P(A\mid B)=\frac{P(A\cap B)}{P(B)}$ pro $P(B)>0$. Jevy \emph{nezávislé}, je-li $P(A\cap B)=P(A)P(B)$. \emph{Bayes:} $P(A\mid B)=\dfrac{P(B\mid A)P(A)}{P(B)}$, kde $P(B)=\sum_i P(B\mid A_i)P(A_i)$ (úplná pravděpodobnost).
+
+\textbf{(b)} $\mathbb{E}X=\sum_x x\,P(X=x)$ (diskrétně), \emph{linearita}: $\mathbb{E}(aX+bY)=a\mathbb{E}X+b\mathbb{E}Y$ (vždy, i pro závislé). $\operatorname{var}X=\mathbb{E}(X-\mathbb{E}X)^2=\mathbb{E}X^2-(\mathbb{E}X)^2$; $\operatorname{var}(aX)=a^2\operatorname{var}X$; pro \emph{nezávislé} $\operatorname{var}(X+Y)=\operatorname{var}X+\operatorname{var}Y$. Kostka: $\mathbb{E}X=\tfrac{1+\dots+6}{6}=3{,}5$, $\mathbb{E}X^2=\tfrac{1+4+9+16+25+36}{6}=\tfrac{91}{6}$, $\operatorname{var}X=\tfrac{91}{6}-\tfrac{49}{4}=\tfrac{35}{12}\approx2{,}92$.
+
+\textbf{(c)} \emph{ZVČ:} prumer $\bar X_n$ nezávislých stejně rozdělených veličin konverguje k $\mathbb{E}X$. \emph{CLT:} pro nezávislé stejně rozdělené se střední hodnotou $\mu$ a rozptylem $\sigma^2$ platí $\frac{\sqrt n(\bar X_n-\mu)}{\sigma}\xrightarrow{d}\mathcal{N}(0,1)$, tj.\ normovaný prumer má asymptoticky normální rozdělení. \emph{Testování:} nulová hypotéza $H_0$ vs.\ alternativa; \emph{hladina významnosti} $\alpha$ = max.\ přípustná pravděpodobnost \emph{chyby 1.\ druhu} (zamítnout platné $H_0$); \emph{chyba 2.\ druhu} $\beta$ = nezamítnout neplatné $H_0$; síla testu $=1-\beta$.
+\end{reseni}
+
+\kalibrace{Pravděpodobnost a teorie informace se v matematice objevují středně často; definice Bayes/EX/var + jeden výpočet je bezpečná záloha. Tyto pojmy navíc podpírají ML specializaci (regrese, naivní pravděpodobnostní úvahy).}
+\past{Linearita střední hodnoty platí \emph{i pro závislé} veličiny; aditivita rozptylu jen pro \emph{nezávislé} (jinak $+2\operatorname{cov}$). Hladina významnosti řídí chybu 1.\ druhu, ne 2.}

@@ -1,0 +1,40 @@
+\ulohahead{společná informatika}{Synchronizace: kritická sekce, semafory, producent-konzument (C\#)}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte časově závislou chybu (race condition), kritickou sekci a vzájemné vyloučení. Co je zámek a jaký je rozdíl mezi aktivním a pasivním čekáním?
+  \item \bod{2} Co je semafor (operace \textsc{wait}/P a \textsc{signal}/V)? Napište v C\# řešení producent-konzument s omezeným bufferem pomocí semaforu.
+  \item \bod{3} Uveďte čtyři podmínky uváznutí (deadlock). Porovnejte spinlock a mutex a vysvětlete atomickou operaci compare-and-swap (CAS).
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Race condition}: výsledek závisí na nedeterministickém prokládání vláken nad sdíleným stavem. \emph{Kritická sekce}: úsek kódu, který smí běžet nejvýše jedno vlákno najednou. \emph{Vzájemné vyloučení} (mutual exclusion) tuto vlastnost zajišťuje. \emph{Zámek} (lock) chrání kritickou sekci; \emph{aktivní čekání} (spin) cyklí a pálí CPU, \emph{pasivní} vlákno uspí a plánovač ho probudí (lepší při delším čekání).
+
+\textbf{(b)} \emph{Semafor} = čítač s atomickými operacemi: \textsc{wait}/P sníží čítač (a zablokuje při 0), \textsc{signal}/V zvýší (a probudí čekající). Omezený buffer kapacity $N$:
+\begin{lstlisting}
+// empty: kolik je volnych mist, full: kolik je obsazenych
+var empty = new SemaphoreSlim(N, N);
+var full  = new SemaphoreSlim(0, N);
+var mutex = new object();
+var buffer = new Queue<int>();
+
+void Producer(int item) {
+    empty.Wait();                 // pockej na volne misto (P)
+    lock (mutex) { buffer.Enqueue(item); }
+    full.Release();               // pribyl prvek (V)
+}
+
+int Consumer() {
+    full.Wait();                  // pockej na prvek (P)
+    int item;
+    lock (mutex) { item = buffer.Dequeue(); }
+    empty.Release();              // uvolnil se slot (V)
+    return item;
+}
+\end{lstlisting}
+
+\textbf{(c)} \emph{Deadlock} nastane při současném splnění: (1) vzájemné vyloučení, (2) drž a čekej, (3) bez odebrání (no preemption), (4) kruhové čekání. \emph{Spinlock} aktivně čeká (vhodný pro velmi krátké sekce na více jádrech), \emph{mutex} uspí vlákno (vhodný pro delší). \emph{CAS}\,(\texttt{CompareAndSwap}(addr, expected, new)): atomicky porovná a případně zapíše; základ neblokujících (lock-free) struktur.
+\end{reseni}
+
+\kalibrace{Synchronizace (semafory, kritická sekce, race condition) je nejčastější OS podtéma a často chce \emph{kód}. Definice (a) = jistý bod, kostra semaforu (b) = druhý; tím se vyhneš nule na implementační otázce.}
+\past{Pořadí semaforu u producent-konzument je klíčové: čekej na zdroj (\textsc{wait}) PŘED zámkem, jinak hrozí deadlock. \texttt{empty} a \texttt{full} se nesmí prohodit.}

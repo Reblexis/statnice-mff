@@ -1,0 +1,19 @@
+\ulohahead{společná informatika}{Grafové algoritmy: prohledávání, nejkratší cesty, kostry, toky}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Popište prohledávání do šířky (BFS) a do hloubky (DFS), jejich složitost a reprezentaci grafu.
+  \item \bod{2} Popište topologické třídění DAG a algoritmy pro nejkratší cesty: Dijkstra a Bellman-Ford (kdy který, složitost).
+  \item \bod{3} Popište minimální kostru a algoritmy Jarník (Prim) a Borůvka (řezové lemma). Uveďte princip hledání maximálního toku (Ford-Fulkerson).
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{BFS}: z počátku prohledává po vrstvách pomocí fronty; dává nejkratší cesty v neohodnoceném grafu. \emph{DFS}: jde do hloubky pomocí zásobníku/rekurze; klasifikuje hrany (stromové, zpětné, dopředné, příčné), detekuje cykly. Obě $O(V+E)$ při reprezentaci \emph{seznamy sousedu}.
+
+\textbf{(b)} \emph{Topologické třídění} (jen DAG): lineární uspořádání vrcholu tak, že každá hrana vede ,,vpřed''; spočítá se opakovaným odebíráním vrcholu se vstupním stupněm 0 nebo přes časy dokončení DFS, $O(V+E)$. \emph{Dijkstra}: nejkratší cesty z jednoho zdroje pro \emph{nezáporné} váhy, hladově s prioritní frontou, $O((V+E)\log V)$. \emph{Bellman-Ford}: zvládá \emph{záporné} hrany, $V-1$ relaxací všech hran, $O(VE)$, navíc detekuje záporný cyklus.
+
+\textbf{(c)} \emph{Minimální kostra} (MST) = kostra s minimálním součtem vah. \emph{Jarník/Prim}: roste jeden strom, vždy přidá nejlevnější hranu ven, $O((V+E)\log V)$. \emph{Borůvka}: každá komponenta paralelně přidá svou nejlevnější hranu, $O(E\log V)$. Korektnost plyne z \emph{řezového lemmatu}: nejlevnější hrana přes libovolný řez patří do nějaké MST. \emph{Ford-Fulkerson}: opakovaně hledej zlepšující cestu ze $s$ do $t$ v reziduální síti a posílej po ní tok, dokud existuje. Pro celočíselné kapacity vždy skončí; když už zlepšující cesta neexistuje, je tok maximální a jeho velikost se rovná kapacitě minimálního řezu.
+\end{reseni}
+
+\kalibrace{Grafové algoritmy jsou opakovaný informatický okruh (BFS/DFS, topo, MST, toky). Definice + jeden algoritmus s složitostí = 2 body; tady jde o breadth, ne hloubku důkazu.}
+\past{Dijkstra selže na záporných hranách - tam Bellman-Ford. Řezové lemma je klíč ke korektnosti MST; znej ho aspoň slovně.}

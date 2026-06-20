@@ -1,0 +1,23 @@
+\ulohahead{společná matematika}{Integrály, primitivní funkce a řady}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte primitivní funkci a Riemannuv integrál a uveďte jejich vztah (Newtonova-Leibnizova formule). Definujte součet geometrické řady a uveďte vzorec pro $\sum_{n=0}^\infty ar^n$.
+  \item \bod{2} Spočtěte $\displaystyle\int x e^{x}\,dx$ metodou per partes a určete $\displaystyle\int_0^1 x e^{x}\,dx$.
+  \item \bod{3} Napište vzorec pro obsah pod grafem a pro objem rotačního tělesa. Vysvětlete odhad součtu řady integrálem (integrální kritérium).
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} $F$ je \emph{primitivní funkce} k $f$ na intervalu, je-li $F'=f$. \emph{Riemannuv integrál} $\int_a^b f$ je společná limita horních a dolních součtu přes zjemňující se dělení (existuje, je-li $f$ např.\ spojitá). \emph{Newton-Leibniz:} je-li $F$ primitivní k spojité $f$, pak $\int_a^b f = F(b)-F(a)$. \emph{Geometrická řada:} $\sum_{n=0}^\infty ar^n=\frac{a}{1-r}$ pro $|r|<1$ (jinak diverguje); částečný součet $\sum_{n=0}^{N}ar^n=a\frac{1-r^{N+1}}{1-r}$.
+
+\textbf{(b)} Per partes $u=x,\ dv=e^x dx$, tedy $du=dx,\ v=e^x$:
+\[
+\int x e^x\,dx = x e^x-\int e^x\,dx = (x-1)e^x + C.
+\]
+Určitě: $\int_0^1 x e^x\,dx=\big[(x-1)e^x\big]_0^1=(0)\cdot e-(-1)\cdot 1 = 1.$
+
+\textbf{(c)} \emph{Obsah} pod nezápornou $f$ na $[a,b]$: $S=\int_a^b f(x)\,dx$. \emph{Objem} tělesa vzniklého rotací grafu kolem osy $x$: $V=\pi\int_a^b f(x)^2\,dx$. \emph{Integrální kritérium:} je-li $f$ kladná klesající, pak $\sum_{n=1}^\infty f(n)$ konverguje právě tehdy, když konverguje $\int_1^\infty f(x)\,dx$, a platí odhad $\int_1^{N+1}f \le \sum_{n=1}^{N} f(n) \le f(1)+\int_1^{N} f$.
+\end{reseni}
+
+\kalibrace{Integrál + geometrická řada jsou opakované matematické podotázky (geometrická řada byla i samostatná otázka). Vzorec per partes a součet geometrické řady umět zpaměti.}
+\past{Per partes: vol $u$ tak, aby se derivováním zjednodušilo (polynom), $dv$ tak, aby šlo integrovat. Geometrická řada konverguje jen pro $|r|<1$ - vždy ověř.}

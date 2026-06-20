@@ -1,0 +1,42 @@
+\ulohahead{specializace UI-SU}{Lineární a logistická regrese, regularizace}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte model lineární regrese a chybovou funkci (MSE). Napište \emph{normální rovnice} a analytické řešení metodou nejmenších čtverců.
+  \item \bod{2} Co je L2 (ridge) regularizace? Jak změní normální rovnice a jaký má vliv na koeficienty? Proč pomáhá proti přeučení a kdy je nutná (singularita $X^{\!\top}X$)?
+  \item \bod{3} Logistická regrese pro binární klasifikaci: napište predikci (sigmoid), ztrátovou funkci (NLL / křížová entropie) a gradient pro jeden krok SGD. Nemusíte nic počítat numericky.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a) Lineární regrese.} Data $X\in\mathbb{R}^{n\times d}$ (řádky $x_i$), cíle $y\in\mathbb{R}^n$, model $\hat y=Xw$ (sloupec jedniček v $X$ dává bias). Chyba:
+\[
+\mathrm{MSE}(w)=\tfrac1n\sum_{i=1}^n (x_i^{\!\top}w-y_i)^2=\tfrac1n\lVert Xw-y\rVert^2.
+\]
+Minimum: $\nabla_w=\tfrac2n X^{\!\top}(Xw-y)=0$, tj.\ \emph{normální rovnice}
+\[
+X^{\!\top}X\,w = X^{\!\top}y \quad\Rightarrow\quad w=(X^{\!\top}X)^{-1}X^{\!\top}y \ \text{(pokud je $X^{\!\top}X$ regulární).}
+\]
+
+\textbf{(b) L2 / ridge.} Minimalizujeme $\lVert Xw-y\rVert^2+\lambda\lVert w\rVert^2$, $\lambda>0$. Normální rovnice se změní na
+\[
+(X^{\!\top}X+\lambda I)\,w=X^{\!\top}y,\qquad w=(X^{\!\top}X+\lambda I)^{-1}X^{\!\top}y.
+\]
+Matice $X^{\!\top}X+\lambda I$ je vždy regulární (pozitivně definitní), takže řešení existuje i při kolineárních příznacích nebo $d>n$, kdy je $X^{\!\top}X$ singulární. Regularizace \emph{smršťuje} koeficienty směrem k nule (snižuje rozptyl modelu za cenu malého vychýlení), čímž omezuje přeučení. Větší $\lambda$ = silnější smrštění; $\lambda$ se volí křížovou validací.
+
+\textbf{(c) Logistická regrese.} Predikce pravděpodobnosti třídy 1:
+\[
+p_i=\sigma(w^{\!\top}x_i)=\frac{1}{1+e^{-w^{\!\top}x_i}}.
+\]
+Ztráta (negativní log-věrohodnost / binární křížová entropie):
+\[
+L(w)=-\sum_{i=1}^n\big[y_i\ln p_i+(1-y_i)\ln(1-p_i)\big].
+\]
+Gradient má jednoduchý tvar $\nabla_w L=\sum_i (p_i-y_i)\,x_i$. Krok SGD na jednom příkladu $(x_i,y_i)$:
+\[
+w\leftarrow w-\eta\,(p_i-y_i)\,x_i,
+\]
+kde $\eta$ je rychlost učení. (Pro více tříd: softmax místo sigmoidu, ztráta = kategoriální křížová entropie, gradient $(p_i-\mathbb{1}_{y_i})x_i$.)
+\end{reseni}
+
+\kalibrace{Regrese je nejčastější ML okruh (~67\,\% zkoušek) a sytí kritickou podlahu specializace ($\ge 7/12$, kde potřebuješ tři ze čtyř otázek na $\ge 2$ body). Sigmoid, NLL a normální rovnice umět zpaměti = spolehlivé 2-3 body.}
+\past{,,Metoda nejmenších čtverců'' = analytické řešení přes normální rovnice; SGD je iterativní alternativa. Pleteš-li si je, ztrácíš bod. U ridge nezapomeň, že bias ($w_0$) se obvykle neregularizuje.}

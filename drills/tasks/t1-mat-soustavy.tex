@@ -1,0 +1,27 @@
+\ulohahead{společná matematika}{Soustavy rovnic, determinant, hodnost, skalární součin a ortogonalizace}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte hodnost matice, regulární a inverzní matici a determinant. Uveďte vztah mezi regularitou, determinantem a vlastními čísly.
+  \item \bod{2} Spočtěte determinant matice $B=\begin{psmallmatrix}1&2&0\\0&1&3\\1&0&1\end{psmallmatrix}$ a rozhodněte o její regularitě. Popište, jak Gaussova eliminace určí množinu řešení soustavy.
+  \item \bod{3} Definujte skalární součin a kolmost. Gram-Schmidtovou ortogonalizací zpracujte vektory $v_1=(1,1,0)$, $v_2=(1,0,1)$ a výsledek znormujte.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Hodnost} $\operatorname{rank}A$ je dimenze řádkového (= sloupcového) prostoru, tj.\ počet nenulových řádku v odstupňovaném tvaru. Matice $A\in\mathbb{R}^{n\times n}$ je \emph{regulární}, má-li hodnost $n$; pak existuje \emph{inverzní} $A^{-1}$ s $AA^{-1}=I$. \emph{Determinant} $\det A$ je multilineární antisymetrická funkce sloupcu s $\det I=1$; platí $\det(AB)=\det A\det B$, $\det A^{\!\top}=\det A$. Ekvivalentně: $A$ regulární $\iff \det A\neq 0 \iff 0$ není vlastní číslo $\iff \operatorname{rank}A=n$.
+
+\textbf{(b)} Laplaceuv rozvoj podle prvního řádku:
+\[
+\det B = 1\cdot\det\!\begin{psmallmatrix}1&3\\0&1\end{psmallmatrix} -2\cdot\det\!\begin{psmallmatrix}0&3\\1&1\end{psmallmatrix} +0 = 1\cdot 1 -2\cdot(0-3) = 1+6 = 7 \neq 0,
+\]
+takže $B$ je regulární. \emph{Gaussova eliminace}: soustavu $Ax=b$ převedeme řádkovými úpravami na odstupňovaný tvar. Pak: pokud vznikne řádek $0=c$ s $c\neq0$, soustava nemá řešení; jinak je počet volných proměnných $=$ (počet neznámých) $-\operatorname{rank}A$ a řešení je jednoznačné právě tehdy, když $\operatorname{rank}A=$ počtu neznámých.
+
+\textbf{(c)} \emph{Skalární součin} $\langle x,y\rangle=\sum_i x_iy_i$ (standardní), \emph{norma} $\lVert x\rVert=\sqrt{\langle x,x\rangle}$, vektory jsou \emph{kolmé}, je-li $\langle x,y\rangle=0$. Gram-Schmidt:
+\[
+u_1=v_1=(1,1,0),\quad u_2=v_2-\frac{\langle v_2,u_1\rangle}{\langle u_1,u_1\rangle}u_1=(1,0,1)-\tfrac12(1,1,0)=\big(\tfrac12,-\tfrac12,1\big).
+\]
+Kontrola: $\langle u_1,u_2\rangle=\tfrac12-\tfrac12+0=0$. Znormování: $e_1=\tfrac1{\sqrt2}(1,1,0)$, $\lVert u_2\rVert=\sqrt{\tfrac14+\tfrac14+1}=\sqrt{3/2}$, takže $e_2=\tfrac1{\sqrt6}(1,-1,2)$.
+\end{reseni}
+
+\kalibrace{Lineární algebra je nejčastější okruh společné matematiky; tato úloha jistí ,,výpočetní'' polovinu (soustavy/determinant/ortogonalizace) vedle úlohy o vlastních číslech. Definice z (a) = jistý 1 bod.}
+\past{Determinant počítej rozvojem podle řádku/sloupce s nejvíce nulami. U Gram-Schmidta nezapomeň odečítat \emph{projekci} (s dělením $\langle u_1,u_1\rangle$), ne jen vektor.}

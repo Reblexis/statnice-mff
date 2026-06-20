@@ -1,0 +1,78 @@
+\documentclass[11pt]{article}
+\input{preambule}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\bfseries\color{mffblue} Cvičné úlohy ke státnicím \\[2pt]
+  Úroveň 1 \textnormal{(cíl: $>90\,\%$ pravděpodobnost složení)}}\\[4pt]
+  {\small Informatika - Umělá inteligence, zaměření Strojové učení (UI-SU) \quad|\quad MFF UK}
+\end{center}
+
+\begin{infobox}[title={Jak je to zkalibrované (přečti první)}]
+\footnotesize
+Zkouška pro UI-SU = 8 otázek (2 spol.\ matematika, 2 spol.\ informatika, 4 specializace), každá 0-3 body.
+Složení \textbf{není} hra o celkový součet, ale o \textbf{dvě nezávislé podlahy}:
+\[
+\text{projdeš} \iff \underbrace{(\text{společné}\ \ge 5/12)}_{\text{shovívavé: }2{+}1{+}1{+}1}\ \textbf{ a }\ \underbrace{(\text{specializace}\ \ge 7/12)}_{\text{přísné: }2{+}2{+}2{+}1}.
+\]
+Klíčový důsledek: ve specializaci musíš dostat \textbf{tři ze čtyř} otázek na $\ge 2$ body, kdežto společné okruhy ustojíš jednou jistotou plus definicemi. Proto úroveň~1 obsahuje:
+\begin{itemize}\setlength{\itemsep}{1pt}
+  \item plné zvládnutí nejčastějších témat (regrese, shlukování, evaluační metriky, rozhodovací stromy; lineární algebra, automaty);
+  \item u \emph{každé} rodiny specializace (i ,,Základy UI'') aspoň \textbf{2-bodovou zálohu} = přesná definice + jeden kanonický postup;
+  \item u společné informatiky ,,\textbf{nikdy nedostat 0}'' i na implementační otázce (binární soubor, semafor, OO v C\#);
+  \item přesné definice/znění vět napříč okruhy (nejlevnější body).
+\end{itemize}
+\textbf{Jak procvičovat:} u každé úlohy zakryj \emph{Řešení}, odpověz nahlas a miř na ,,2 body'' (definice + jeden postup). Oranžová \emph{Kalibrace} říká, proč úloha sytí kterou podlahu.\\
+\textbf{Dále:} úroveň 2 ($>95\,\%$) přidá výpočetní varianty a důkazové náčrty; úroveň 3 (maximální pokrytí, realisticky $\sim 98\,\%$) přidá vzácný ,,ocas'' požadavku a celé nanečisto-zkoušky. Z 9 zkoušek dat a velkého oficiálního okruhu nelze poctivě garantovat $>99\,\%$; reálný strop pilného studenta je $\sim 97\text{-}98{,}5\,\%$.
+\end{infobox}
+
+\tableofcontents
+\bigskip
+
+\section{Společná matematika}
+\input{tasks/t1-mat-linalg}
+\input{tasks/t1-mat-soustavy}
+\input{tasks/t1-mat-analyza1}
+\input{tasks/t1-mat-analyza2}
+\input{tasks/t1-mat-grafy}
+\input{tasks/t1-mat-pravdep}
+\input{tasks/t1-mat-logika}
+\input{tasks/t1-mat-diskretni}
+
+\section{Společná informatika}
+\input{tasks/t1-inf-automaty1}
+\input{tasks/t1-inf-automaty2}
+\input{tasks/t1-inf-slozitost}
+\input{tasks/t1-inf-rozdel}
+\input{tasks/t1-inf-grafalg}
+\input{tasks/t1-inf-ds}
+\input{tasks/t1-inf-binary}
+\input{tasks/t1-inf-os}
+\input{tasks/t1-inf-sync}
+\input{tasks/t1-inf-oop}
+
+\section{Specializace: Strojové učení (Téma 3)}
+\input{tasks/t1-ml-regrese}
+\input{tasks/t1-ml-shlukovani}
+\input{tasks/t1-ml-metriky}
+\input{tasks/t1-ml-stromy}
+\input{tasks/t1-ml-ensemble}
+\input{tasks/t1-ml-svm}
+\input{tasks/t1-ml-pca}
+\input{tasks/t1-ml-knn}
+\input{tasks/t1-ml-testy}
+\input{tasks/t1-ml-vyhodnoceni}
+\input{tasks/t1-ml-tabular}
+
+\section{Specializace: Základy umělé inteligence (Téma 1)}
+\input{tasks/t1-ai-csp}
+\input{tasks/t1-ai-prohledavani}
+\input{tasks/t1-ai-hry}
+\input{tasks/t1-ai-bayes-site}
+\input{tasks/t1-ai-bayes-uceni-em}
+\input{tasks/t1-ai-hmm}
+\input{tasks/t1-ai-mdp}
+\input{tasks/t1-ai-logika}
+
+\end{document}

@@ -1,0 +1,27 @@
+\ulohahead{společná matematika}{Diskrétní matematika: relace, kombinatorika, inkluze-exkluze}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte vlastnosti binární relace (reflexivita, symetrie, antisymetrie, tranzitivita), ekvivalenci a rozkladové třídy a částečné uspořádání (řetězec, antiřetězec).
+  \item \bod{2} Kolik je prostých a kolik všech funkcí z $m$-prvkové do $n$-prvkové množiny? Zformulujte binomickou větu a princip inkluze a exkluze.
+  \item \bod{3} Pomocí inkluze-exkluze odvoďte počet surjekcí z $m$-prvkové na $n$-prvkovou množinu a počet permutací bez pevného bodu (problém šatnářky).
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} Relace $R\subseteq X\times X$ je \emph{reflexivní} ($\forall x: xRx$), \emph{symetrická} ($xRy\Rightarrow yRx$), \emph{antisymetrická} ($xRy\wedge yRx\Rightarrow x=y$), \emph{tranzitivní} ($xRy\wedge yRz\Rightarrow xRz$). \emph{Ekvivalence} = reflexivní + symetrická + tranzitivní; její \emph{rozkladové třídy} tvoří rozklad $X$. \emph{Částečné uspořádání} = reflexivní + antisymetrické + tranzitivní; \emph{řetězec} = po dvou porovnatelné prvky, \emph{antiřetězec} = po dvou neporovnatelné.
+
+\textbf{(b)} Všech funkcí $X\to Y$ je $n^m$; \emph{prostých} (pro $m\le n$) je $n(n-1)\cdots(n-m+1)=\frac{n!}{(n-m)!}$. \emph{Binomická věta:} $(x+y)^n=\sum_{k=0}^n\binom{n}{k}x^k y^{n-k}$. \emph{Inkluze-exkluze:} $\big|\bigcup_{i=1}^n A_i\big|=\sum_i|A_i|-\sum_{i<j}|A_i\cap A_j|+\cdots+(-1)^{n+1}|A_1\cap\cdots\cap A_n|$.
+
+\textbf{(c)} \emph{Surjekce} z $m$ na $n$: od všech $n^m$ funkcí odečteme ty, které vynechají aspoň jeden prvek cíle. Označíme-li $A_i$ funkce vynechávající $i$-tý prvek, dostaneme inkluzí-exkluzí
+\[
+\#\text{surjekcí}=\sum_{i=0}^{n}(-1)^i\binom{n}{i}(n-i)^m.
+\]
+\emph{Problém šatnářky} (derangement): permutace $\{1,\dots,n\}$ bez pevného bodu; $A_i$ = permutace s $\pi(i)=i$, $|A_{i_1}\cap\cdots\cap A_{i_k}|=(n-k)!$, takže
+\[
+D_n=\sum_{k=0}^n(-1)^k\binom{n}{k}(n-k)!=n!\sum_{k=0}^n\frac{(-1)^k}{k!}\approx \frac{n!}{e}.
+\]
+(Hallova věta o SRR a párování v bipartitním grafu je příbuzné téma - viz vyšší úroveň.)
+\end{reseni}
+
+\kalibrace{Diskrétní matematika dává levné definiční body (relace, ekvivalence) a jeden klasický I-E výpočet. Inkluze-exkluze je opakovaný typ.}
+\past{Antisymetrie není ,,opak symetrie''. Počet surjekcí není $\binom{n}{?}$ trik - jde přes inkluzi-exkluzi; nezapomeň člen $i=0$ (= $n^m$).}

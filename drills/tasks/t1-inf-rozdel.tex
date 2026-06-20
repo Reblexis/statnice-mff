@@ -1,0 +1,25 @@
+\ulohahead{společná informatika}{Rozděl a panuj, Master theorem, třídění}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Popište princip metody rozděl a panuj. Zformulujte Master theorem (kuchařkovou větu) a dolní odhad složitosti porovnávacího třídění.
+  \item \bod{2} Popište Mergesort (pseudokód) a odvoďte jeho složitost z rekurentní rovnice. Uveďte princip a nejhorší/průměrný případ Quicksortu.
+  \item \bod{3} Pomocí Master theorem určete asymptotiku pro $T(n)=2T(n/2)+n$ a $T(n)=3T(n/2)+n$. Co z toho plyne pro Karatsubovo násobení?
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Rozděl a panuj}: rozděl úlohu na podproblémy, vyřeš rekurzivně, slož výsledky. \emph{Master theorem:} pro $T(n)=aT(n/b)+f(n)$ ($a\ge1,b>1$) porovnej $f(n)$ s $n^{\log_b a}$:
+\begin{itemize}\setlength\itemsep{0pt}
+  \item $f=O(n^{\log_b a-\varepsilon})\Rightarrow T=\Theta(n^{\log_b a})$;
+  \item $f=\Theta(n^{\log_b a})\Rightarrow T=\Theta(n^{\log_b a}\log n)$;
+  \item $f=\Omega(n^{\log_b a+\varepsilon})$ a regularita $\Rightarrow T=\Theta(f(n))$.
+\end{itemize}
+\emph{Dolní odhad} porovnávacího třídění: $\Omega(n\log n)$ (rozhodovací strom má $n!$ listu, hloubka $\ge\log_2 n!=\Theta(n\log n)$).
+
+\textbf{(b)} Mergesort: rozděl pole na poloviny, setřiď rekurzivně, slij ($\textsc{Merge}$) v $O(n)$. Rekurence $T(n)=2T(n/2)+O(n)$, dle Master (případ 2) $T(n)=\Theta(n\log n)$; stabilní, $O(n)$ paměť navíc. Quicksort: zvol pivota, rozděl na menší/větší, rekurzivně; průměrně $O(n\log n)$, nejhůře $O(n^2)$ (špatný pivot), in-place.
+
+\textbf{(c)} $T(n)=2T(n/2)+n$: $a=b=2$, $n^{\log_b a}=n$, $f=\Theta(n)$, případ 2 $\Rightarrow \Theta(n\log n)$. $T(n)=3T(n/2)+n$: $\log_2 3\approx1{,}585$, $n^{\log_2 3}$ roste rychleji než $f=n$, případ 1 $\Rightarrow \Theta(n^{\log_2 3})$. \emph{Karatsuba} násobí $n$-ciferná čísla rekurzí $T(n)=3T(n/2)+O(n)$, tedy $\Theta(n^{\log_2 3})\approx n^{1{,}585}$ - lepší než školní $\Theta(n^2)$.
+\end{reseni}
+
+\kalibrace{Třídění a rozděl-a-panuj jsou opakovaný algoritmický okruh; Master theorem + Mergesort je vděčný typový výpočet na 2-3 body.}
+\past{Master theorem porovnává $f(n)$ s $n^{\log_b a}$, ne s $n$. Quicksort má nejhorší případ $O(n^2)$ - nezaměňuj s průměrným.}

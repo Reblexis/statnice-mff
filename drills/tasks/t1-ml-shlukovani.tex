@@ -1,0 +1,19 @@
+\ulohahead{specializace UI-SU}{Shlukování: k-means a hierarchické shlukování}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Definujte úlohu shlukování (učení bez učitele) a algoritmus k-means (krok přiřazení a krok aktualizace) a jeho účelovou funkci.
+  \item \bod{2} Co je inicializace k-means++? Proč ztráta v k-means monotónně klesá a proč algoritmus konverguje (do lokálního minima)? Popište aglomerativní hierarchické shlukování a dendrogram.
+  \item \bod{3} Jak zvolit počet shluku $k$? Proč je k-means citlivý na škálování příznaku? Proveďte jeden krok k-means pro body $1,2,\;10,11$ na přímce s centry $c_1=0,c_2=20$.
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Shlukování}: rozděl neoznačená data do $k$ skupin podle podobnosti. \emph{k-means} minimalizuje vnitroshlukový součet čtvercu $J=\sum_{i}\lVert x_i-\mu_{c(i)}\rVert^2$ střídáním: (1) \emph{přiřazení} každého bodu k nejbližšímu centru; (2) \emph{aktualizace} center na průměr přiřazených bodu.
+
+\textbf{(b)} \emph{k-means++}: počáteční centra volí postupně s pravděpodobností úměrnou $D(x)^2$ (vzdálenost k nejbližšímu už zvolenému centru), což snižuje riziko špatného startu. Oba kroky $J$ nezvyšují (přiřazení k nejbližšímu i průměr jsou optimální dílčí kroky), $J$ je zdola omezené, konfigurací je konečně mnoho $\Rightarrow$ konvergence, ale jen do \emph{lokálního} minima (proto víc restartu). \emph{Aglomerativní} shlukování začíná s každým bodem zvlášť a opakovaně spojuje dva nejbližší shluky (linkage: single/complete/average); historii zachytí \emph{dendrogram}, který se ,,uřízne'' na požadovaný počet shluku.
+
+\textbf{(c)} $k$ se volí např.\ metodou lokte (zlom v poklesu $J$) nebo silhouette skórem. \emph{Škálování}: euklidovská vzdálenost míchá jednotky, takže příznak s velkým rozsahem dominuje; proto se data standardizují. Krok pro body $\{1,2,10,11\}$, $c_1=0,c_2=20$: přiřazení: $1,2,10,11$ jsou blíž $c_1$ než $c_2$? $|10-0|=|10-20|=10$ (remíza), $|11-0|=11>|11-20|=9$, takže 11 jde k $c_2$. Tedy $\{1,2,10\}\to c_1$, $\{11\}\to c_2$ (remízu u 10 dáme $c_1$). Aktualizace: $c_1=\tfrac{1+2+10}{3}=4{,}33$, $c_2=11$. (Další iterace už rozdělí na $\{1,2\}$ a $\{10,11\}$.)
+\end{reseni}
+
+\kalibrace{Shlukování je druhý nejčastější ML okruh (~44\,\%, k-means se opakuje). Definice + jeden krok výpočtu = 2 body do kritické podlahy specializace.}
+\past{k-means najde jen \emph{lokální} minimum a předpokládá zhruba kulové shluky; není deterministický (závisí na inicializaci). Před během škáluj příznaky.}
