@@ -8,7 +8,7 @@
 \end{zadani}
 
 \begin{reseni}
-\textbf{(a)} \emph{DFA} $=(Q,\Sigma,\delta,q_0,F)$ s $\delta:Q\times\Sigma\to Q$; přijímá $w$, skončí-li ve stavu z $F$. \emph{NFA} má $\delta:Q\times\Sigma\to 2^Q$ (a případně $\varepsilon$-přechody); přijímá, existuje-li přijímající běh. \emph{Regulární (pravá lineární) gramatika} je čtveřice $G=(N,\Sigma,P,S)$: neterminály $N$, terminály $\Sigma$, počáteční neterminál $S\in N$ a pravidla $P$ tvaru $A\to aB$ nebo $A\to a$ (případně $S\to\varepsilon$). \emph{Regulární výraz} se tvoří z $\emptyset,\varepsilon,$ symbolu operacemi $\cup,\cdot,{}^*$. \emph{Kleeneho věta:} třídy jazyku popsatelných DFA, NFA, regulární gramatikou a regulárním výrazem jsou totožné (= regulární jazyky).
+\textbf{(a)} \emph{DFA} $=(Q,\Sigma,\delta,q_0,F)$ s $\delta:Q\times\Sigma\to Q$; přijímá $w$, skončí-li ve stavu z $F$. \emph{NFA} má $\delta:Q\times\Sigma\to 2^Q$ (a případně $\varepsilon$-přechody); přijímá, existuje-li přijímající běh. \emph{Regulární (pravá lineární) gramatika} je čtveřice $G=(N,\Sigma,P,S)$: neterminály $N$, terminály $\Sigma$, počáteční neterminál $S\in N$ a pravidla $P$ tvaru $A\to wB$ nebo $A\to w$ s $w\in\Sigma^*$ (v normovaném tvaru $A\to aB$, $A\to a$, $S\to\varepsilon$). \emph{Regulární výraz} se tvoří z $\emptyset,\varepsilon,$ symbolu operacemi $\cup,\cdot,{}^*$. \emph{Kleeneho věta:} třídy jazyku popsatelných DFA, NFA, regulární gramatikou a regulárním výrazem jsou totožné (= regulární jazyky).
 
 \textbf{(b)} DFA se 3 stavy, $F=\{q_2\}$:
 \[

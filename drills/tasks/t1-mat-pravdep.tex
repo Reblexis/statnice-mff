@@ -8,7 +8,7 @@
 \end{zadani}
 
 \begin{reseni}
-\textbf{(a)} \emph{Pravděpodobnostní prostor} $(\Omega,\mathcal{F},P)$: množina elementárních jevu $\Omega$, $\sigma$-algebra jevu $\mathcal{F}$, míra $P$ s $P(\Omega)=1$. \emph{Podmíněná} $P(A\mid B)=\frac{P(A\cap B)}{P(B)}$ pro $P(B)>0$. Jevy \emph{nezávislé}, je-li $P(A\cap B)=P(A)P(B)$. \emph{Bayes:} $P(A\mid B)=\dfrac{P(B\mid A)P(A)}{P(B)}$, kde $P(B)=\sum_i P(B\mid A_i)P(A_i)$ (úplná pravděpodobnost).
+\textbf{(a)} \emph{Pravděpodobnostní prostor} $(\Omega,\mathcal{F},P)$: množina elementárních jevu $\Omega$, $\sigma$-algebra jevu $\mathcal{F}$, míra $P$ s $P(\Omega)=1$. \emph{Podmíněná} $P(A\mid B)=\frac{P(A\cap B)}{P(B)}$ pro $P(B)>0$. Jevy \emph{nezávislé}, je-li $P(A\cap B)=P(A)P(B)$. \emph{Bayes:} $P(A\mid B)=\dfrac{P(B\mid A)P(A)}{P(B)}$, kde dle \emph{úplné pravděpodobnosti} $P(B)=\sum_i P(B\mid A_i)P(A_i)$ pro rozklad $\{A_i\}$ množiny $\Omega$ (po dvou disjunktní, pokrývající, $P(A_i)>0$).
 
 \textbf{(b)} $\mathbb{E}X=\sum_x x\,P(X=x)$ (diskrétně), resp.\ $\mathbb{E}X=\int_{-\infty}^{\infty}x\,f_X(x)\,dx$ (spojitě). \emph{Linearita}: $\mathbb{E}(aX+bY)=a\mathbb{E}X+b\mathbb{E}Y$ (vždy, i pro závislé). $\operatorname{var}X=\mathbb{E}(X-\mathbb{E}X)^2=\mathbb{E}X^2-(\mathbb{E}X)^2$; $\operatorname{var}(aX)=a^2\operatorname{var}X$. Obecně $\operatorname{var}(X+Y)=\operatorname{var}X+\operatorname{var}Y+2\operatorname{cov}(X,Y)$, takže pro \emph{nezávislé} (kde $\operatorname{cov}=0$) je $\operatorname{var}(X+Y)=\operatorname{var}X+\operatorname{var}Y$. Kostka: $\mathbb{E}X=\tfrac{1+\dots+6}{6}=3{,}5$, $\mathbb{E}X^2=\tfrac{1+4+9+16+25+36}{6}=\tfrac{91}{6}$, $\operatorname{var}X=\tfrac{91}{6}-\tfrac{49}{4}=\tfrac{35}{12}\approx2{,}92$.
 

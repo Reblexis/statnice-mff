@@ -8,7 +8,7 @@
 \end{zadani}
 
 \begin{reseni}
-\textbf{(a)} \emph{Formulace}: počáteční stav, množina \emph{operátoru} (akce s cenou) generujících následníky, \emph{cílový test}, cena cesty. \emph{Stromové} prohledávání neeviduje navštívené stavy (může opakovat), \emph{grafové} drží uzavřenou množinu (closed set). \emph{BFS}: po vrstvách (fronta), úplné, optimální při jednotkových cenách. \emph{DFS}: do hloubky (zásobník), paměťově levné, neúplné/nesuboptimální. \emph{Uniform-cost}: rozšiřuje uzel s nejmenší $g$ (Dijkstra), optimální pro nezáporné ceny.
+\textbf{(a)} \emph{Formulace}: počáteční stav, množina \emph{operátoru} (akce s cenou) generujících následníky, \emph{cílový test}, cena cesty. \emph{Stromové} prohledávání neeviduje navštívené stavy (může opakovat), \emph{grafové} drží uzavřenou množinu (closed set). \emph{BFS}: po vrstvách (fronta), úplné, optimální při jednotkových cenách. \emph{DFS}: do hloubky (zásobník), paměťově levné; obecně není optimální. Stromové DFS může být neúplné (nekonečná hloubka / cykly), grafové DFS (s evidencí navštívených) je na konečném grafu úplné. \emph{Uniform-cost}: rozšiřuje uzel s nejmenší $g$ (Dijkstra), optimální pro nezáporné ceny.
 
 \textbf{(b)} \emph{A*} rozšiřuje uzel s nejmenším $f(n)=g(n)+h(n)$, kde $g$ je cena z počátku a $h$ \emph{heuristický} odhad ceny do cíle. Heuristika je \emph{přípustná}, pokud nikdy nepřeceňuje ($0\le h(n)\le h^*(n)$); \emph{konzistentní} (monotónní), pokud $h(n)\le c(n,n')+h(n')$ pro každý přechod (trojúhelníková nerovnost).
 
