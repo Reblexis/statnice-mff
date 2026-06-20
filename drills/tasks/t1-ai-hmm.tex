@@ -19,5 +19,9 @@ tj.\ krok predikce (přes přechod) a poté přenásobení emisí a normalizace.
 \textbf{(c)} \emph{Viterbi} dynamickým programováním najde \emph{nejpravděpodobnější posloupnost skrytých stavu} pro dané pozorování (max místo součtu ve forward rekurzi + zpětný chod). HMM je speciální případ \emph{dynamické Bayesovské sítě} (řetězec s jednou skrytou proměnnou na krok); DBN dovolují víc proměnných a strukturovanějších závislostí na časový krok.
 \end{reseni}
 
+\begin{jadro}
+HMM = skryté stavy (přechody $P(X_t\mid X_{t-1})$) + emise $P(E_t\mid X_t)$. Filtrace (forward): $P(X_t\mid e_{1:t})\propto P(e_t\mid X_t)\sum_{x_{t-1}}P(X_t\mid x_{t-1})P(x_{t-1}\mid e_{1:t-1})$. Viterbi = nejpravděpodobnější cesta (max místo sumy).
+\end{jadro}
+
 \kalibrace{HMM (~12\,\%) je opakované ,,Základy UI'' téma (filtrace se zkoušela numericky). Definice + forward rekurence = 2-bodová záloha; pro 3 body umět jeden krok filtrace dosadit.}
 \past{Filtrace je jen ,,dopředu'', vyhlazování využívá i \emph{budoucí} pozorování. Viterbi hledá nejpravděpodobnější \emph{celou cestu}, ne stav po stavu.}

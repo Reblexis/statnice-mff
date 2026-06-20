@@ -15,5 +15,9 @@
 \textbf{(c)} \emph{Lineární regrese} pro zhruba lineární vztahy (rychlá, interpretovatelná); \emph{stromové metody} (rozhodovací strom, \emph{náhodný les}, \emph{gradient boosting}) pro nelineární vztahy a smíšené typy příznaku - na tabulárních datech bývají nejlepší a robustní. Stromy dělí podle \emph{prahu} jednoho příznaku, takže jsou \emph{invariantní k monotónní transformaci} (škálování nezmění pořadí hodnot, tedy ani štěpení) - proto nepotřebují normalizaci.
 \end{reseni}
 
+\begin{jadro}
+Předzpracování: one-hot kategorie, škáluj spojité, imputuj chybějící. $\mathrm{MAE}=\frac1n\sum|y-\hat y|$ (robustní), $\mathrm{RMSE}=\sqrt{\frac1n\sum(y-\hat y)^2}$ (trestá velké chyby). Stromy/boosting bývají nejlepší a nepotřebují škálování.
+\end{jadro}
+
 \kalibrace{Tabulární workflow (~10\,\%) se objevil nedávno a chtěl předzpracování + metriky (ne jen definici modelu). MAE/RMSE a one-hot/škálování/imputace = 2-bodová záloha proti ,,end-to-end'' otázce.}
 \past{One-hot pro neuspořádané kategorie (jinak modelu podsouváš falešné pořadí). RMSE je v jednotkách cíle (odmocnina), MSE ne; stromy škálování nepotřebují, lineární/kNN/SVM ano.}

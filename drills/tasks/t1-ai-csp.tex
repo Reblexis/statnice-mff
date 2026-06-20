@@ -17,5 +17,9 @@
 \emph{Lokální vs.\ globální.} Hranová konzistence je \emph{lokální} vlastnost (po dvojicích). Nezaručuje globální řešení: např.\ tři proměnné s doménami $\{1,2\}$ a omezeními ,,navzájem různé'' jsou hranově konzistentní (každá hodnota má podporu u souseda), ale tři po dvou různé hodnoty z dvouprvkové domény neexistují, takže CSP je nesplnitelný. Proto se AC-3 kombinuje s prohledáváním (backtracking), typicky algoritmus MAC = po každém přiřazení znovu udělat hranovou konzistenci.
 \end{reseni}
 
+\begin{jadro}
+CSP $=(V,D,C)$. Hranová konzistence: každá hodnota $a\in D_i$ má podporu $b\in D_j$ splňující omezení. AC-3 (fronta hran, revize, šíření při zúžení), $O(e\,d^3)$. Nezaručuje řešení -> nutný backtracking/MAC.
+\end{jadro}
+
 \kalibrace{Specializaci tvoří ~3 ML + 1 ,,Základy UI''. AI okruhy (CSP, minimax, Bayesovské sítě, A*, MDP, HMM) jsou jednotlivě vzácné, ale slot na jednu z nich je skoro vždy. Proto v úrovni 1 musí mít každá AI rodina aspoň 2-bodovou zálohu: přesná definice + jeden kanonický postup.}
 \past{Hranová konzistence \emph{nedokazuje} řešitelnost - to je oblíbená chytací podotázka. Vždy zmiň protipříklad (např.\ all-different na malé doméně) a roli backtrackingu/MAC.}

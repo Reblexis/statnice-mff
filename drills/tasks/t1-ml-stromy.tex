@@ -15,5 +15,9 @@
 \textbf{(c)} \emph{Přeučení}: strom roste do hloubky, učí se šum a na trénovacích datech má nulovou chybu, ale špatně generalizuje. \emph{Pre-pruning} (předčasné zastavení): omezení hloubky, minimální počet vzorku v listu, minimální zisk. \emph{Post-pruning}: nech strom dorůst a pak ořezávej podstromy, které nezlepšují chybu na validační množině (nahrazení listem).
 \end{reseni}
 
+\begin{jadro}
+Entropie $H(S)=-\sum_k p_k\log_2 p_k$, informační zisk $\mathrm{IG}=H(S)-\sum_j\frac{|S_j|}{|S|}H(S_j)$ (vážený), Gini $1-\sum p_k^2$. Greedy konstrukce podle max IG, prořezávání proti přeučení.
+\end{jadro}
+
 \kalibrace{Rozhodovací stromy jsou častý okruh (~33\,\%) a vděčí za body za entropii/Gini a jeden výpočet IG. Patří do plně zvládnutého jádra specializace.}
 \past{Entropie se počítá s $\log_2$ (bity). Informační zisk je \emph{vážený} podle velikostí dětí, ne prostý rozdíl entropií.}

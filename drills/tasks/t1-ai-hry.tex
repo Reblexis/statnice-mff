@@ -3,7 +3,7 @@
 \begin{enumerate}[label=(\alph*)]
   \item \bod{1} Popište algoritmus Minimax pro hru dvou hráču s nulovým součtem. Co předpokládá o protihráči?
   \item \bod{2} Popište alfa-beta prořezávání: co a proč prořezává a jak pořadí tahu ovlivní úsporu.
-  \item \bod{3} Vysvětlete základy teorie her: vězňovo dilema, dominantní strategie, Nashovo ekvilibrium a Paretovskou optimalitu.
+  \item \bod{3} Vysvětlete základy teorie her: vězňovo dilema, dominantní strategie, Nashovo ekvilibrium a Paretovskou optimalitu. Co je mechanism design a jaké jsou typy aukcí?
 \end{enumerate}
 \end{zadani}
 
@@ -12,8 +12,12 @@
 
 \textbf{(b)} \emph{Alfa-beta} udržuje $\alpha$ (nejlepší jistá hodnota pro MAX) a $\beta$ (pro MIN). Větev se \emph{ořízne}, jakmile $\alpha\ge\beta$, protože ji racionální hráč stejně nezvolí, takže nemá smysl ji dál prohledávat. Výsledek je identický s minimaxem. Při \emph{dobrém pořadí} tahu (nejlepší první) klesne počet prohledaných uzlu z $O(b^d)$ až na $O(b^{d/2})$, tj.\ dvojnásobná dosažitelná hloubka.
 
-\textbf{(c)} \emph{Vězňovo dilema}: dva hráči, každý volí spolupráci/zradu; zrada je \emph{dominantní strategie} (lepší bez ohledu na soupeře), takže oba zradí, ač by oboustranná spolupráce byla lepší. \emph{Nashovo ekvilibrium}: profil strategií, kde nikdo nezíská jednostrannou změnou (vzájemně nejlepší odpovědi); ve vězňově dilematu je to (zrada, zrada). \emph{Paretovsky optimální} je výsledek, který nelze zlepšit jednomu bez zhoršení druhému - (spolupráce, spolupráce) je Pareto-lepší, ale není Nashovo ekvilibrium.
+\textbf{(c)} \emph{Vězňovo dilema}: dva hráči, každý volí spolupráci/zradu; zrada je \emph{dominantní strategie} (lepší bez ohledu na soupeře), takže oba zradí, ač by oboustranná spolupráce byla lepší. \emph{Nashovo ekvilibrium}: profil strategií, kde nikdo nezíská jednostrannou změnou (vzájemně nejlepší odpovědi); ve vězňově dilematu je to (zrada, zrada). \emph{Paretovsky optimální} je výsledek, který nelze zlepšit jednomu bez zhoršení druhému - (spolupráce, spolupráce) je Pareto-lepší, ale není Nashovo ekvilibrium. \emph{Mechanism design} je ,,obrácená'' teorie her: navrhuje pravidla hry tak, aby racionální hráči svým chováním dosáhli žádoucího výsledku. Příklad jsou \emph{aukce}: anglická (rostoucí, otevřená), holandská (klesající), prvocenová obálková a \emph{Vickreyova} (druhá cena) - u Vickreyovy je dominantní strategií dražit svou pravou hodnotu (pravdomluvnost).
 \end{reseni}
+
+\begin{jadro}
+Minimax: MAX maximalizuje, MIN minimalizuje hodnoty listu. Alfa-beta ořeže větev při $\alpha\ge\beta$ (až $O(b^{d/2})$). Nashovo ekvilibrium = profil, kde nikdo nezíská jednostrannou změnou (vězňovo dilema: (zrada, zrada)).
+\end{jadro}
 
 \kalibrace{Hry (~22\,\%, minimax + teorie her) jsou opakovaná ,,Základy UI'' otázka. Minimax + alfa-beta + Nash = 2-3 body za vysvětlení.}
 \past{Alfa-beta nemění \emph{výsledek}, jen rychlost. Nashovo ekvilibrium nemusí být Paretovsky optimální (vězňovo dilema je důkaz).}

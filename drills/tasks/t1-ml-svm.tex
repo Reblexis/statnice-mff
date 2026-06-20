@@ -15,5 +15,9 @@
 \textbf{(c)} \emph{Jádrový trik}: nahradí skalární součin $x_i^{\!\top}x_j$ jádrem $K(x_i,x_j)$, čímž SVM počítá v (implicitně vysokorozměrném) prostoru rysu, aniž ho explicitně sestrojí - umožní nelineární hranice. \emph{RBF} $K(x,z)=\exp(-\gamma\lVert x-z\rVert^2)$ měří podobnost lokálně; malé $\gamma$ = hladká hranice, velké $\gamma$ = klikatá (přeučení). \emph{Více tříd}: kombinací binárních klasifikátoru one-vs-rest nebo one-vs-one.
 \end{reseni}
 
+\begin{jadro}
+SVM maximalizuje margin: $\min\frac12\lVert w\rVert^2$ za $y_i(w^{\!\top}x_i+b)\ge1$; hranici určují podpůrné vektory. Měkký margin: $+C\sum\xi_i$ ($C$ váží chyby vs šířku marginu). Jádro (RBF) = nelineární hranice bez explicitního prostoru rysu.
+\end{jadro}
+
 \kalibrace{SVM (~12\,\%) je vzácnější, ale když padne, je konceptuální (,,popište, nakreslete hranici, vliv bodu, kdy RBF''). Definice marginu + role $C$/jádra = 2-bodová záloha.}
 \past{Hranici určují jen podpůrné vektory. Velké $C$ = méně tolerance chyb (užší margin), ne naopak; RBF s velkým $\gamma$ se přeučuje.}

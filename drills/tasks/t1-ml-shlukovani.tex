@@ -15,5 +15,9 @@
 \textbf{(c)} $k$ se volí např.\ metodou lokte (zlom v poklesu $J$) nebo silhouette skórem. \emph{Škálování}: euklidovská vzdálenost míchá jednotky, takže příznak s velkým rozsahem dominuje; proto se data standardizují. Krok pro body $\{1,2,10,11\}$, $c_1=0,c_2=20$: přiřazení: $1,2,10,11$ jsou blíž $c_1$ než $c_2$? $|10-0|=|10-20|=10$ (remíza), $|11-0|=11>|11-20|=9$, takže 11 jde k $c_2$. Tedy $\{1,2,10\}\to c_1$, $\{11\}\to c_2$ (remízu u 10 dáme $c_1$). Aktualizace: $c_1=\tfrac{1+2+10}{3}=4{,}33$, $c_2=11$. (Další iterace už rozdělí na $\{1,2\}$ a $\{10,11\}$.)
 \end{reseni}
 
+\begin{jadro}
+k-means minimalizuje $J=\sum_i\lVert x_i-\mu_{c(i)}\rVert^2$ střídáním: (1) přiřaď bod k nejbližšímu centru, (2) přepočti centra na průměr. Konverguje jen do lokálního minima (víc restartu, k-means++), škáluj data. Hierarchické = spojuj nejbližší shluky, dendrogram.
+\end{jadro}
+
 \kalibrace{Shlukování je druhý nejčastější ML okruh (~44\,\%, k-means se opakuje). Definice + jeden krok výpočtu = 2 body do kritické podlahy specializace.}
 \past{k-means najde jen \emph{lokální} minimum a předpokládá zhruba kulové shluky; není deterministický (závisí na inicializaci). Před během škáluj příznaky.}

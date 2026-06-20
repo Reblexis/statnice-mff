@@ -23,5 +23,9 @@ $\text{accuracy}=\frac{\mathrm{TP+TN}}{\text{vše}}$, $\text{precision}=\frac{\m
 \textbf{(c)} \emph{ROC} vynáší $\mathrm{TPR}$ proti $\mathrm{FPR}$ při měnícím se prahu klasifikace; \emph{AUC} (plocha pod ní) je pravděpodobnost, že náhodný pozitivní dostane vyšší skóre než náhodný negativní (1 = ideál, 0{,}5 = náhoda). Pro zadání: $\text{precision}=\frac{20}{20+30}=0{,}4$, $\text{recall}=\frac{20}{20+5}=0{,}8$.
 \end{reseni}
 
+\begin{jadro}
+$\text{precision}=\frac{TP}{TP+FP}$, $\text{recall}=\frac{TP}{TP+FN}$, $F_1=\frac{2PR}{P+R}$ (harmonický). U nevyvážených tříd accuracy klame. Rekonstrukce: $TP=\mathrm{TPR}\cdot P$, $FP=\mathrm{FPR}\cdot N$. ROC = TPR vs FPR.
+\end{jadro}
+
 \kalibrace{Evaluační metriky jsou velmi častý ML okruh (~44\,\%) a opakovaně chtějí rekonstrukci počtu z metrik. Vzorce P/R/F1 a převod TPR/FPR umět zpaměti = spolehlivé body.}
 \past{Precision a recall si nepleť (jmenovatel: u precision predikované pozitivní, u recall skutečně pozitivní). F1 je harmonický, ne aritmetický průměr.}

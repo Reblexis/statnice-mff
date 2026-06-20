@@ -15,5 +15,9 @@
 \textbf{(c)} \emph{Prokletí dimenzionality}: ve vysoké dimenzi se vzdálenosti mezi body vyrovnávají (poměr nejbližší/nejvzdálenější $\to1$), takže pojem ,,soused'' ztrácí smysl a kNN selhává; navíc je třeba exponenciálně víc dat. \emph{Složitost} naivní predikce je $O(nd)$ na jeden dotaz (projít $n$ bodu v dimenzi $d$); urychlení přes k-d stromy či přibližné hledání.
 \end{reseni}
 
+\begin{jadro}
+kNN = ulož data, pro nový bod najdi $k$ nejbližších; klasifikace = hlasování, regrese = průměr. Líné učení. $k$ přes křížovou validaci (malé $k$ = rozptyl, velké = vychýlení). Škáluj příznaky; trpí prokletím dimenzionality.
+\end{jadro}
+
 \kalibrace{kNN (~12\,\%) je vzácnější, ale jednoduchý a vděčný. Definice + role $k$ a škálování = spolehlivá 2-bodová záloha; navíc nese pojem prokletí dimenzionality.}
 \past{kNN netrénuje (lazy) - ,,trénink'' je jen uložení dat. Bez škálování dominuje příznak s velkou jednotkou; pozor i na liché $k$ u dvou tříd (remízy).}

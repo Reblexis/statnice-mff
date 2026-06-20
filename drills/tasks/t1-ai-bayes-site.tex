@@ -19,5 +19,9 @@ což šetří parametry oproti plné tabulce (využívá podmíněné nezávislo
 \textbf{(c)} \emph{Eliminace proměnných} sčítá zprava efektivněji: postupně ,,vysčítá'' skryté proměnné, mezivýsledky drží jako faktory a opakované součiny nepřepočítává - výrazně rychlejší než holá enumerace. \emph{Aproximace (Monte Carlo)}: \emph{zamítavé vzorkování} (rejection) generuje vzorky z priorů a zahodí ty neslučitelné s $e$ (neefektivní při vzácném $e$); \emph{vážení věrohodností} (likelihood weighting) fixuje pozorované proměnné a každý vzorek váží součinem jejich pravděpodobností - žádný vzorek nezahazuje.
 \end{reseni}
 
+\begin{jadro}
+Bayesovská síť = DAG + tabulky $P(X_i\mid\text{rodiče}(X_i))$, kóduje $P(X_1,\dots,X_n)=\prod_i P(X_i\mid\text{rodiče}(X_i))$. Inference: $P(Q\mid e)\propto\sum_{\text{skryté }h}P(Q,e,h)$ (enumerace, efektivněji eliminace proměnných).
+\end{jadro}
+
 \kalibrace{Bayesovské sítě (~22\,\% s Bayesovským učením) jsou opakovaná ,,Základy UI'' otázka. Faktorizace + enumerace = 2-bodová záloha; tady je AI rodina, kde je vhodné mít i hlubší zvládnutí.}
 \past{Faktorizace je součin $P(X_i\mid\text{rodiče})$ - ne marginálu. Likelihood weighting nezahazuje vzorky (na rozdíl od rejection), proto je efektivnější při vzácné evidenci.}

@@ -15,5 +15,9 @@
 \textbf{(c)} \emph{AdaBoost}: udržuje váhy příkladu, v každém kole natrénuje slabý klasifikátor, zvýší váhy špatně klasifikovaných a přidá klasifikátor s váhou podle jeho přesnosti; finální predikce = vážené hlasování. Ensemble pomáhá nejvíc, jsou-li dílčí modely \emph{lepší než náhoda} a dělají \emph{různé/nekorelované} chyby. Naopak nepomůže, dělají-li všechny stejné chyby (dokonale korelované) - pak majoritní hlasování dopadne stejně jako jeden model; nejlepší případ je, když se chyby nepřekrývají a většina vždy ,,přehlasuje'' menšinu chybujících.
 \end{reseni}
 
+\begin{jadro}
+Bagging = trénuj nezávisle na bootstrap vzorcích + průměruj (snižuje rozptyl). Boosting = sekvenčně, každý model na chybách předchozích (snižuje vychýlení). Random forest = bagging stromu + náhodná podmnožina příznaku (dekorelace). Pomáhá při nekorelovaných chybách.
+\end{jadro}
+
 \kalibrace{Kombinace modelu (~22\,\%) je vděčná konceptuální otázka (žádný výpočet). Bagging vs boosting + random forest = 2-3 body za vysvětlení.}
 \past{Bagging $\neq$ boosting: bagging paralelně/nezávisle (rozptyl), boosting sekvenčně na chybách (vychýlení). Les pomáhá díky \emph{dekorelaci} stromu, ne jen jejich počtu.}

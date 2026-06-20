@@ -15,5 +15,9 @@
 \textbf{(c)} A* je optimální se \emph{přípustnou} heuristikou ve stromovém prohledávání a s \emph{konzistentní} heuristikou v grafovém (jinak je nutné znovuotevírání uzlu). \emph{Dominance}: $h_2$ dominuje $h_1$, je-li $h_2(n)\ge h_1(n)$ pro všechny $n$ (a obě přípustné); pak A* s $h_2$ rozšíří méně uzlu (efektivnější), protože vyšší přípustný odhad ořeže víc.
 \end{reseni}
 
+\begin{jadro}
+A* rozšiřuje uzel s nejmenším $f(n)=g(n)+h(n)$. Přípustná: $h\le h^*$ (nepřeceňuje). Konzistentní: $h(n)\le c(n,n')+h(n')$. Optimální s přípustnou (stromově) / konzistentní (grafově) heuristikou.
+\end{jadro}
+
 \kalibrace{Prohledávání (~15\,\%) je opakovaná ,,Základy UI'' otázka (A* se objevil). Definice A* + přípustnost/konzistence = 2-bodová záloha pro AI slot specializace.}
 \past{Přípustná $\neq$ konzistentní (konzistence je silnější a implikuje přípustnost). V grafovém A* je pro optimalitu potřeba konzistence, ne jen přípustnost.}

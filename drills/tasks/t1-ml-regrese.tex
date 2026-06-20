@@ -38,5 +38,9 @@ w\leftarrow w-\eta\,(p_i-y_i)\,x_i,
 kde $\eta$ je rychlost učení. (Pro více tříd: softmax místo sigmoidu, ztráta = kategoriální křížová entropie, gradient $(p_i-\mathbb{1}_{y_i})x_i$.)
 \end{reseni}
 
+\begin{jadro}
+Lineární: normální rovnice $X^{\!\top}X\,w=X^{\!\top}y$. Ridge: $(X^{\!\top}X+\lambda I)\,w=X^{\!\top}y$ (smršťuje, vždy řešitelné). Logistická: $p=\sigma(w^{\!\top}x)$, ztráta NLL, gradient $\sum_i(p_i-y_i)x_i$, SGD krok $w\leftarrow w-\eta(p_i-y_i)x_i$.
+\end{jadro}
+
 \kalibrace{Regrese je nejčastější ML okruh (~67\,\% zkoušek) a sytí kritickou podlahu specializace ($\ge 7/12$, kde potřebuješ tři ze čtyř otázek na $\ge 2$ body). Sigmoid, NLL a normální rovnice umět zpaměti = spolehlivé 2-3 body.}
 \past{,,Metoda nejmenších čtverců'' = analytické řešení přes normální rovnice; SGD je iterativní alternativa. Pleteš-li si je, ztrácíš bod. U ridge nezapomeň, že bias ($w_0$) se obvykle neregularizuje.}

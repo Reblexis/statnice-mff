@@ -15,5 +15,9 @@
 \textbf{(c)} \emph{Rezoluce}: dokazuje $T\models\varphi$ sporem - k $T$ přidá $\neg\varphi$, převede na CNF a opakovaně tvoří rezolventy; odvození \emph{prázdné klauzule} znamená nesplnitelnost, tedy platnost $\varphi$. V \emph{predikátové} logice je nutná \emph{unifikace}: najití nejobecnějšího substitučního přiřazení proměnných, které dva literály ztotožní, aby šly rezolvovat.
 \end{reseni}
 
+\begin{jadro}
+DPLL = jednotková propagace + čistý literál + větvení s backtrackingem. Hornovy klauzule ($\le1$ pozitivní literál) = dopředné/zpětné řetězení. Rezoluce = důkaz sporem (přidej $\neg\varphi$, odvoď prázdnou klauzuli); v predikátové logice s unifikací.
+\end{jadro}
+
 \kalibrace{Logické uvažování (~10\,\%, DPLL se zkoušelo) je vzácnější ,,Základy UI'' okruh. CNF + DPLL kroky = 2-bodová záloha; navíc se prolíná s matematickou logikou.}
 \past{Jednotková propagace a čistý literál nejsou totéž. Rezoluce dokazuje sporem (přidej negaci cíle); cílem je odvodit prázdnou klauzuli.}

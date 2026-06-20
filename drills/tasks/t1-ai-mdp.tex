@@ -20,8 +20,12 @@ V^*(s)=\max_{a}\sum_{s'}P(s'\mid s,a)\big[R(s,a,s')+\gamma V^*(s')\big].
 \[
 Q(s,a)\leftarrow Q(s,a)+\alpha\big[r+\gamma\max_{a'}Q(s',a')-Q(s,a)\big]
 \]
-(off-policy). \emph{Explorace vs exploitace}: je třeba občas zkusit i nepreferované akce (např.\ $\varepsilon$-greedy), jinak agent uvázne v suboptimu; SARSA je on-policy obdoba (místo $\max$ použije skutečně zvolenou $a'$).
+(off-policy). \emph{Explorace vs exploitace}: je třeba občas zkusit i nepreferované akce (např.\ $\varepsilon$-greedy), jinak agent uvázne v suboptimu; SARSA je on-policy obdoba (místo $\max$ použije skutečně zvolenou $a'$). \emph{POMDP} (částečně pozorovatelný MDP): agent stav přímo nevidí, udržuje \emph{belief} (rozdělení pravděpodobnosti nad stavy), které po akci a pozorování aktualizuje (Bayes), a rozhoduje se podle něj.
 \end{reseni}
+
+\begin{jadro}
+MDP $=(S,A,P,R,\gamma)$. Bellman: $V^*(s)=\max_a\sum_{s'}P(s'\!\mid\!s,a)[R+\gamma V^*(s')]$; iterace hodnot aplikuje toto jako update. Q-učení: $Q(s,a)\leftarrow Q+\alpha[r+\gamma\max_{a'}Q(s',a')-Q]$.
+\end{jadro}
 
 \kalibrace{MDP/RL (~15\,\%) je opakovaná ,,Základy UI'' otázka (Bellmanova rovnice se zkoušela). Definice MDP + Bellman + iterace hodnot = 2-bodová záloha.}
 \past{Bellman pro optimum má $\max_a$ (u dané strategie je tam suma přes $\pi$). Q-učení je off-policy ($\max$), SARSA on-policy - nezaměňuj.}

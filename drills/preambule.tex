@@ -101,6 +101,12 @@
 \newcommand{\past}[1]{\par\smallskip\noindent
   \textbf{\color{gapred}Pozor (častá chyba):}~#1\par}
 
+% jádro na 2 body: krystalizace minimální jisté odpovědi (cílí na P(skore<=1))
+\newtcolorbox{jadro}{enhanced, breakable, colback=resgreen!10, colframe=resgreen!80!black,
+  boxrule=0.6pt, arc=1.5pt, left=7pt, right=7pt, top=2pt, bottom=3pt,
+  before skip=4pt, after skip=4pt, fonttitle=\bfseries\footnotesize, coltitle=resgreen!70!black,
+  title={Jádro na 2 body \textnormal{\footnotesize(tohle umět nazpaměť = jistá $\ge2$)}}}
+
 % info box
 \newtcolorbox{infobox}[1][]{enhanced, breakable, colback=mffaccent!5, colframe=mffaccent,
   boxrule=0.7pt, left=6pt, right=6pt, top=4pt, bottom=4pt, arc=2pt,

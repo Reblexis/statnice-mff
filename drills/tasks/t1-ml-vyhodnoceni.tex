@@ -15,5 +15,9 @@
 \textbf{(c)} \emph{Bias-variance}: příliš jednoduchý model má velké \emph{vychýlení} (podučení), příliš složitý velký \emph{rozptyl} (přeučení); cílem je minimum jejich součtu. \emph{Prokletí dimenzionality}: s rostoucím počtem příznaku roste potřeba dat exponenciálně a vzdálenosti se vyrovnávají, takže složitější modely snáz přeučí - proto redukce dimenze/regularizace.
 \end{reseni}
 
+\begin{jadro}
+Train (učení) / dev (ladění) / test (jediný závěrečný odhad); $k$-fold CV průměruje. Přeučení = malá train, velká test chyba. L2 hladce smršťuje, L1 dělá řídké váhy (výběr příznaku). Bias-variance: minimalizuj součet.
+\end{jadro}
+
 \kalibrace{Toto je ,,zastřešující'' ML téma (evaluace, regularizace) prolínající mnoho otázek; opakovaně se ptá na křížovou validaci a přeučení. Solidní definice = body napříč specializací.}
 \past{Na testovacích datech se \emph{neladí}. L1 dělá řídké váhy (výběr příznaku), L2 jen smršťuje - nezaměňuj jejich efekt.}

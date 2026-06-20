@@ -15,5 +15,9 @@
 \textbf{(c)} Pro centrovaná data $X=U\Sigma V^{\!\top}$ (SVD) jsou hlavní komponenty sloupce $V$ a singulární hodnoty $\sigma_i$ souvisí s vlastními čísly kovariance přes $\lambda_i=\sigma_i^2/n$; SVD je numericky stabilnější cesta. \emph{Škálování} je nutné, protože PCA reaguje na rozptyl: příznak s velkou jednotkou (rozsahem) by jinak uměle dominoval první komponentě. PCA minimalizuje \emph{rekonstrukční chybu} (součet čtvercu kolmých vzdáleností k podprostoru), což je ekvivalentní maximalizaci zachyceného rozptylu.
 \end{reseni}
 
+\begin{jadro}
+Hlavní komponenty = vlastní vektory kovarianční matice (seřazené podle vlastních čísel = rozptylu), projekce na top-$k$. Postup: centruj/škáluj, kovariance, vlastní rozklad / SVD, projekce. Maximalizuje rozptyl = minimalizuje rekonstrukční chybu.
+\end{jadro}
+
 \kalibrace{PCA (~12\,\%) je vzácnější, ale opakované jako konceptuální + vizuální otázka. Definice (komponenty = vlastní vektory kovariance) + postup = 2-bodová záloha.}
 \past{PCA hledá směry maximálního \emph{rozptylu}, ne směry oddělující třídy (to je LDA). Bez centrování/škálování vyjdou komponenty zkreslené.}

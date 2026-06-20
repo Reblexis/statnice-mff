@@ -1,0 +1,23 @@
+\ulohahead{specializace UI-SU}{Automatické plánování a reprezentace znalostí}
+\begin{zadani}
+\begin{enumerate}[label=(\alph*)]
+  \item \bod{1} Popište formulaci plánovacího problému a definici operátoru (předpoklady a efekty), počáteční stav a cíl.
+  \item \bod{2} Vysvětlete dopředné (progression) a zpětné (regression) plánování a jejich rozdíl.
+  \item \bod{3} Co je situační kalkulus a problém rámce (frame problem) a jak se řeší?
+\end{enumerate}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a)} \emph{Plánovací problém} (např.\ STRIPS): počáteční stav (množina platných faktu), množina \emph{operátoru} a cílová podmínka. \emph{Operátor} má \emph{předpoklady} (precondition - co musí platit, aby šel provést) a \emph{efekty} (add list = co začne platit, delete list = co přestane platit). Plán = posloupnost operátoru vedoucí z počátečního stavu do stavu splňujícího cíl.
+
+\textbf{(b)} \emph{Dopředné plánování}: začni v počátečním stavu a aplikuj použitelné operátory, dokud nedosáhneš cíle (prohledávání stavového prostoru vpřed); velký větvící faktor. \emph{Zpětné plánování}: začni od cíle a hledej operátory, jejichž efekty cíl (částečně) splňují, a nahraď cíl jejich předpoklady (regrese); pracuje jen s relevantními operátory, ale stavy jsou částečné (množiny podcílu).
+
+\textbf{(c)} \emph{Situační kalkulus} popisuje svět v predikátové logice: \emph{fluenty} (vlastnosti závislé na situaci, např.\ $At(x,s)$), akce a funkci $do(a,s)$ pro situaci po akci. \emph{Problém rámce}: je třeba vyjádřit nejen co se akcí \emph{změní}, ale i co zustane \emph{beze změny} - jinak by se počet axiomu rozrostl pro každou dvojici akce/fluent. Řeší se \emph{successor-state axiomy} (pro každý fluent jeden axiom popisující, kdy v nové situaci platí), což stručně zachytí setrvačnost (co akce neovlivní, zustává).
+\end{reseni}
+
+\begin{jadro}
+Operátor $=$ (precondition, add efekty, delete efekty). \emph{Dopředné} plánování jde od počátku vpřed, \emph{zpětné} regreduje od cíle přes efekty operátoru. Problém rámce $=$ jak vyjádřit, co se akcí nemění (successor-state axiomy).
+\end{jadro}
+
+\kalibrace{Plánování a reprezentace znalostí jsou vzácnější ,,Základy UI'' rodiny, ale legální draw do skoro vždy přítomného AI slotu. Bez této zálohy hrozí na takové otázce skóre 0-1, což přímo ohrožuje podlahu specializace ($\ge7/12$).}
+\past{Dopředné vs zpětné nepleť: regrese jde od cíle a nahrazuje cíl předpoklady operátoru. Problém rámce není o ,,výpočtu'', ale o stručném popisu neměnnosti.}

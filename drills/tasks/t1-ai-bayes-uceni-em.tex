@@ -19,5 +19,9 @@ r_{ik}=P(z_i=k\mid x_i)=\frac{\pi_k\,p(x_i\mid\theta_k)}{\sum_{j=1}^K \pi_j\,p(x
 \emph{M-krok}: $\pi_k=\frac1n\sum_i r_{ik}$ a parametry $\theta_k$ se odhadnou váženě responsibilitami (např.\ vážený průměr $\mu_k=\frac{\sum_i r_{ik}x_i}{\sum_i r_{ik}}$); u kategoriálních dat = vážené relativní četnosti.
 \end{reseni}
 
+\begin{jadro}
+$h_{MAP}=\arg\max_h P(D\mid h)P(h)$ ($=$ ML při uniformním prioru). EM: E-krok responsibility $r_{ik}=\frac{\pi_k\,p(x_i\mid\theta_k)}{\sum_j\pi_j\,p(x_i\mid\theta_j)}$; M-krok $\pi_k=\frac1n\sum_i r_{ik}$ a vážené přepočty parametru.
+\end{jadro}
+
 \kalibrace{,,Bayesovské učení'' a EM jsou opakovaný ,,Základy UI'' okruh; EM zkouška chtěla \emph{jeden výpočetní update} (responsibility), ne jen pojem. Vzorec responsibility umět zpaměti.}
 \past{MAP $\neq$ ML, liší se priorem. EM najde jen \emph{lokální} maximum (závisí na inicializaci); responsibility se musí normovat přes všechny shluky.}
