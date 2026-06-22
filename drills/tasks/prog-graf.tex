@@ -1,0 +1,50 @@
+\ulohahead{programování (C\#)}{Objektový návrh grafu a značkování komponent}
+\begin{zadani}
+Navrhněte rozhraní grafu a implementaci seznamem sousedu. Napište značkování komponent souvislosti (každému vrcholu přiřadit id komponenty). \emph{(Typ úlohy: 2022-podzim Q4, 2019-podzim Q2 - programování + grafy.)}
+\end{zadani}
+
+\begin{reseni}
+\begin{lstlisting}
+public interface IGraph {
+    int N { get; }
+    IEnumerable<int> Neighbors(int v);
+}
+
+public sealed class AdjListGraph : IGraph {
+    private readonly List<int>[] adj;
+    public AdjListGraph(int n) {
+        adj = new List<int>[n];
+        for (int i = 0; i < n; i++) adj[i] = new List<int>();
+    }
+    public int N => adj.Length;
+    public void AddEdge(int u, int v) { adj[u].Add(v); adj[v].Add(u); } // neorientovany
+    public IEnumerable<int> Neighbors(int v) => adj[v];
+}
+
+// znackovani komponent pomoci BFS; vraci comp[v] = id komponenty
+public static int[] Components(IGraph g) {
+    var comp = new int[g.N];
+    Array.Fill(comp, -1);
+    int c = 0;
+    for (int s = 0; s < g.N; s++) {
+        if (comp[s] != -1) continue;        // uz navstiveny
+        var q = new Queue<int>();
+        q.Enqueue(s); comp[s] = c;
+        while (q.Count > 0) {
+            int v = q.Dequeue();
+            foreach (int w in g.Neighbors(v))
+                if (comp[w] == -1) { comp[w] = c; q.Enqueue(w); }
+        }
+        c++;                                // dalsi komponenta
+    }
+    return comp;
+}
+\end{lstlisting}
+\textbf{Složitost} $O(V+E)$ (každý vrchol/hrana zpracován jednou). Algoritmus závisí jen na \texttt{IGraph}, takže funguje i pro jinou reprezentaci (matice sousednosti) bez změny.
+\end{reseni}
+
+\begin{jadro}
+Rozhraní \texttt{IGraph} (počet vrcholu + sousedé); reprezentace = seznam sousedu. Komponenty: pro každý nenavštívený vrchol spusť BFS/DFS a obarvi dosažené stejným id, $O(V+E)$.
+\end{jadro}
+
+\past{Algoritmus piš proti \texttt{IGraph}, ne proti konkrétní třídě. Nezapomeň na vrcholy v různých komponentách (vnější smyčka přes všechny vrcholy). Pole \texttt{comp} inicializuj na $-1$ (nenavštíveno).}

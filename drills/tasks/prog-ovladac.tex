@@ -1,0 +1,33 @@
+\ulohahead{programování (C\#)}{Ovladač zařízení programovaným V/V (PIO)}
+\begin{zadani}
+Pro řadič disku s porty STATUS, COMMAND a DATA napište programem řízenou obsluhu (PIO): vydejte příkaz čtení a přečtěte 512 bajtu polling-em stavového registru. Vysvětlete variantu s přerušením. \emph{(Typ úlohy: 2024-jaro Q2 - ovladač pro řadič disku; 2021-podzim - myš.)}
+\end{zadani}
+
+\begin{reseni}
+Řadič má registry adresované jako V/V porty; CPU s ním komunikuje instrukcemi in/out (zde abstraktně \texttt{Inb}/\texttt{Outb}).
+\begin{lstlisting}
+const int DATA = 0x1F0, STATUS = 0x1F7, COMMAND = 0x1F7;
+const int BSY = 0x80, DRQ = 0x08;       // bity stavoveho registru
+
+static byte Inb(int port) { /* HW: precti bajt z portu */ return 0; }
+static void Outb(int port, byte v) { /* HW: zapis bajt na port */ }
+
+static byte[] ReadSector() {            // PIO ctene polling-em
+    Outb(COMMAND, 0x20);                // prikaz READ SECTOR
+    var buf = new byte[512];
+    for (int i = 0; i < 512; i++) {
+        while ((Inb(STATUS) & BSY) != 0) { }   // cekej, az radic neni zaneprazdnen
+        while ((Inb(STATUS) & DRQ) == 0) { }   // cekej, az jsou data pripravena
+        buf[i] = Inb(DATA);                     // precti bajt dat
+    }
+    return buf;
+}
+\end{lstlisting}
+\textbf{Polling vs přerušení:} polling \emph{aktivně} cyklí na stavovém registru a pálí CPU. \emph{Přerušení}: řadič po dokončení vyvolá IRQ; procesor přeruší běžící kód, skočí do obslužné rutiny (ISR), ta přečte data a oznámí dokončení (nastaví událost / probudí čekající vlákno). Procesor: dokončí instrukci, uloží kontext, podle vektoru přerušení skočí do ISR; OS: naplánuje obsluhu, po \texttt{iret} obnoví kontext.
+\end{reseni}
+
+\begin{jadro}
+Registry řadiče = V/V porty (\texttt{in}/\texttt{out}). PIO polling: vydej příkaz, opakovaně čti STATUS (BSY/DRQ), pak čti DATA. Přerušení místo pollingu: IRQ $\to$ ISR přečte data $\to$ probudí čekajícího (nepálí CPU).
+\end{jadro}
+
+\past{Polling plýtvá CPU - u pomalých zařízení se použije přerušení. Pořadí bitu: čekej, až BSY=0 a DRQ=1, teprve pak čti DATA. Příkaz se zapisuje do COMMAND, data se čtou z DATA.}

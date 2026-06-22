@@ -1,0 +1,56 @@
+\ulohahead{programování (C\#)}{Jednoduchý správce paměti (first-fit alokátor)}
+\begin{zadani}
+Implementujte alokátor nad blokem o dané velikosti: \texttt{Alloc} strategií first-fit (s rozdělením bloku) a \texttt{Free} (se slučováním sousedních volných bloku). \emph{(Typ úlohy: 2025-léto Q2 - jednoduchý správce paměti.)}
+\end{zadani}
+
+\begin{reseni}
+\begin{lstlisting}
+public sealed class Allocator {
+    public sealed class Block {           // slouzi i jako "handle" pro Free
+        public int Offset, Size;
+        public bool Free = true;
+        public Block? Next, Prev;
+    }
+    private readonly Block head;
+    public Allocator(int size) => head = new Block { Offset = 0, Size = size };
+    private static int Align(int n, int a) => (n + a - 1) / a * a;
+
+    public Block? Alloc(int n) {
+        n = Align(n, 8);
+        for (var b = head; b != null; b = b.Next)
+            if (b.Free && b.Size >= n) {       // first-fit: prvni dost velky
+                if (b.Size > n) Split(b, n);
+                b.Free = false;
+                return b;
+            }
+        return null;                           // nenalezeno
+    }
+
+    private void Split(Block b, int n) {       // odstrihni zbytek jako novy volny blok
+        var rest = new Block { Offset = b.Offset + n, Size = b.Size - n,
+                               Next = b.Next, Prev = b };
+        if (b.Next != null) b.Next.Prev = rest;
+        b.Next = rest; b.Size = n;
+    }
+
+    public void Free(Block b) {
+        b.Free = true;
+        if (b.Next is { Free: true } n) {      // sluc s pravym sousedem
+            b.Size += n.Size; b.Next = n.Next;
+            if (n.Next != null) n.Next.Prev = b;
+        }
+        if (b.Prev is { Free: true } p) {      // sluc s levym sousedem
+            p.Size += b.Size; p.Next = b.Next;
+            if (b.Next != null) b.Next.Prev = p;
+        }
+    }
+}
+\end{lstlisting}
+\textbf{Fragmentace:} \emph{vnitřní} = zaokrouhlení na zarovnání nechá nevyužitý zbytek v bloku; \emph{vnější} = volná paměť roztříštěná na malé kousky. Slučování ve \texttt{Free} brání vnější fragmentaci.
+\end{reseni}
+
+\begin{jadro}
+Spojový seznam bloku (offset, velikost, volný?). Alloc = první dost velký volný blok, případně rozděl. Free = označ volný a slučuj s volnými sousedy. Zarovnání zaokrouhlí velikost nahoru.
+\end{jadro}
+
+\past{Po \texttt{Free} se MUSÍ slučovat sousední volné bloky, jinak vnější fragmentace roste. Hlavička/režie bloku zabírá místo. First-fit je rychlý, ale ne nejúspornější (vs best-fit).}

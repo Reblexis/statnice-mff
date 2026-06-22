@@ -1,0 +1,41 @@
+\ulohahead{programování (C\#)}{Vlákna: producent-konzument semafory a oprava race condition}
+\begin{zadani}
+(a) Napište producent-konzument s omezeným bufferem pomocí semaforu. (b) Ukažte časově závislou chybu (race condition) na sdíleném čítači a opravte ji. \emph{(Typ úlohy: 2024-léto Q2, 2026-jaro Q2 - Semafor; 2023-podzim Q1 - race condition.)}
+\end{zadani}
+
+\begin{reseni}
+\textbf{(a) Producent-konzument} (buffer kapacity $N$): semafor \texttt{empty} počítá volná místa, \texttt{full} obsazená, \texttt{lock} chrání frontu.
+\begin{lstlisting}
+var empty = new SemaphoreSlim(N, N);   // volna mista
+var full  = new SemaphoreSlim(0, N);   // obsazena mista
+var gate  = new object();
+var buffer = new Queue<int>();
+
+void Produce(int item) {
+    empty.Wait();                       // pockej na volne misto (P)
+    lock (gate) { buffer.Enqueue(item); }
+    full.Release();                     // pribyl prvek (V)
+}
+int Consume() {
+    full.Wait();                        // pockej na prvek (P)
+    int item; lock (gate) { item = buffer.Dequeue(); }
+    empty.Release();                    // uvolnil se slot (V)
+    return item;
+}
+\end{lstlisting}
+
+\textbf{(b) Race condition:} \texttt{counter++} není atomické (load, inkrement, store); dvě vlákna se mohou proložit a jeden inkrement se ztratí. Oprava zámkem nebo atomickou operací:
+\begin{lstlisting}
+// chybne: for(...) counter++;  z N vlaken -> vysledek < N*kroku
+// spravne A) zamek:
+lock (gate) { counter++; }
+// spravne B) atomicky:
+Interlocked.Increment(ref counter);
+\end{lstlisting}
+\end{reseni}
+
+\begin{jadro}
+Semafor: \texttt{Wait}=P (sniž, blokuj při 0), \texttt{Release}=V. Pořadí: \emph{nejdřív} \texttt{empty.Wait()}/\texttt{full.Wait()}, \emph{pak} \texttt{lock}. Race: nechráněný \texttt{counter++} ztrácí inkrementy; oprava \texttt{lock} nebo \texttt{Interlocked}.
+\end{jadro}
+
+\past{Nezaměň pořadí semaforu a zámku (čekej na zdroj PŘED zámkem, jinak deadlock). \texttt{empty} a \texttt{full} se nesmí prohodit. \texttt{counter++} bez synchronizace je klasická race.}

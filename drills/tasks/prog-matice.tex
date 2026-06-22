@@ -1,0 +1,56 @@
+\ulohahead{programování (C\#)}{Knihovna pro práci s maticemi (rozhraní + hustá/řídká)}
+\begin{zadani}
+Navrhněte knihovnu pro matice: společné rozhraní, hustou implementaci a \emph{řídkou} (sparse) implementaci téhož rozhraní, a operaci násobení pracující nad rozhraním. \emph{(Typ úlohy: 2025-jaro Q2 - knihovna pro výpočty s maticemi.)}
+\end{zadani}
+
+\begin{reseni}
+\begin{lstlisting}
+public interface IMatrix {
+    int Rows { get; }
+    int Cols { get; }
+    double this[int r, int c] { get; }   // indexer pro cteni prvku
+}
+
+public sealed class DenseMatrix : IMatrix {
+    private readonly double[,] a;
+    public DenseMatrix(double[,] a) => this.a = a;
+    public int Rows => a.GetLength(0);
+    public int Cols => a.GetLength(1);
+    public double this[int r, int c] => a[r, c];
+}
+
+// ridka matice: ulozi jen nenulove prvky, ale navenek je to tataz abstrakce
+public sealed class SparseMatrix : IMatrix {
+    private readonly Dictionary<(int r, int c), double> nz = new();
+    public int Rows { get; }
+    public int Cols { get; }
+    public SparseMatrix(int rows, int cols) { Rows = rows; Cols = cols; }
+    public void Set(int r, int c, double v) {
+        if (v != 0) nz[(r, c)] = v; else nz.Remove((r, c));
+    }
+    public double this[int r, int c] => nz.TryGetValue((r, c), out var v) ? v : 0.0;
+}
+
+// nasobeni pracuje jen pres rozhrani -> funguje pro libovolnou kombinaci
+public static class MatrixOps {
+    public static DenseMatrix Multiply(IMatrix x, IMatrix y) {
+        if (x.Cols != y.Rows) throw new ArgumentException("nekompatibilni rozmery");
+        var r = new double[x.Rows, y.Cols];
+        for (int i = 0; i < x.Rows; i++)
+            for (int j = 0; j < y.Cols; j++) {
+                double s = 0;
+                for (int k = 0; k < x.Cols; k++) s += x[i, k] * y[k, j];
+                r[i, j] = s;
+            }
+        return new DenseMatrix(r);
+    }
+}
+\end{lstlisting}
+\textbf{Proč to takhle:} operace závisí jen na \texttt{IMatrix}, takže přidání nové reprezentace (pásová, jednotková, \dots) nevyžaduje změnu \texttt{Multiply} (polymorfismus přes indexer). Tovární metoda (\texttt{IMatrix Create(\dots)}) by volajícímu skryla výběr husté/řídké podle hustoty dat.
+\end{reseni}
+
+\begin{jadro}
+Rozhraní \texttt{IMatrix} (rozměry + indexer); hustá i řídká jsou jen různé implementace; algoritmy (násobení) píšeš proti rozhraní, ne proti konkrétní třídě. Násobení $O(n^3)$, kontroluj rozměry.
+\end{jadro}
+
+\past{Násobení vyžaduje \texttt{x.Cols == y.Rows}. Řídká matice nesmí ukládat nuly (jinak ztrácí smysl); indexer vrací 0 pro chybějící klíč. Indexer je v C\# \texttt{this[int,int]}.}

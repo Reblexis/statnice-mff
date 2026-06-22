@@ -1,0 +1,44 @@
+\documentclass[11pt]{article}
+\input{preambule}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\bfseries\color{mffblue} Programovací úlohy ke státnicím (C\#)}\\[4pt]
+  {\small Informatika - Umělá inteligence, zaměření Strojové učení (UI-SU) \quad|\quad MFF UK}\\[2pt]
+  {\footnotesize\itshape Implementační otázky společné informatiky přímo podle zadání zkoušek. Jazyk: C\# (volba majitele).}
+\end{center}
+
+\begin{infobox}[title={Proč zvlášť a jak to číst}]
+\footnotesize
+Ve společné informatice je skoro vždy jedna \textbf{implementační} otázka (návrh tříd nebo kód). To je nejčastější příčina \emph{nuly} na společné části - definici si vybavíš, ale ,,napište program'' tě zaskočí. Tenhle sešit sbírá opakované programovací typy ze zkoušek 2019-2026 s úplným řešením v C\#:
+\begin{itemize}\setlength{\itemsep}{1pt}
+  \item \textbf{Objektový návrh} (nejčastější): výrazový strom, maticová knihovna, graf - rozhraní, polymorfismus, princip open/closed, rozšiřitelnost.
+  \item \textbf{Reprezentace dat}: čtení strukturovaného binárního souboru.
+  \item \textbf{Vlákna a synchronizace}: producent-konzument semafory, oprava race condition.
+  \item \textbf{Nízká úroveň}: alokátor paměti, ovladač zařízení (PIO), emulátor procesoru.
+\end{itemize}
+\textbf{Jak procvičovat:} přečti zadání, napiš kód \emph{na papír} (na zkoušce není počítač), pak porovnej. Cíl není odladěný program, ale \textbf{správná struktura} (rozhraní, klíčové metody, ošetření okrajových případu) - to nese body. Zelené \emph{Jádro} je kostra, kterou musíš umět z hlavy.\\
+\textbf{Souvislost:} tyto úlohy odpovídají ,,no-zero'' drilum z úrovní 1-2; tady jsou pohromadě a s plnějším kódem.
+\end{infobox}
+
+\tableofcontents
+\bigskip
+
+\section{Objektový návrh}
+\input{tasks/prog-vyrazy}
+\input{tasks/prog-matice}
+\input{tasks/prog-graf}
+
+\section{Reprezentace dat a soubory}
+\input{tasks/prog-binary}
+
+\section{Vlákna a synchronizace}
+\input{tasks/prog-vlakna}
+
+\section{Nízkoúrovňové úlohy}
+\input{tasks/prog-alokator}
+\input{tasks/prog-ovladac}
+\input{tasks/prog-emulator}
+
+\end{document}

@@ -1,0 +1,52 @@
+\ulohahead{programování (C\#)}{Objektový návrh: výrazový strom (eval + symbolická derivace)}
+\begin{zadani}
+Navrhněte objektový model aritmetického výrazu nad konstantami, proměnnými a operacemi $+$ a $\cdot$. Umožněte (a) vyhodnocení v daném prostředí (hodnoty proměnných), (b) symbolickou derivaci podle proměnné, (c) rozšíření o novou operaci bez zásahu do stávajícího kódu. \emph{(Typ úlohy: 2019-jaro Q4, 2020-léto Q4 - výrazové stromy.)}
+\end{zadani}
+
+\begin{reseni}
+Jedno rozhraní \texttt{IExpr}, každý druh uzlu je samostatná třída (polymorfismus, princip open/closed):
+\begin{lstlisting}
+public interface IExpr {
+    double Eval(IReadOnlyDictionary<string,double> env);
+    IExpr Derive(string x);          // symbolicka derivace podle x
+}
+
+public sealed class Const : IExpr {
+    private readonly double v;
+    public Const(double v) => this.v = v;
+    public double Eval(IReadOnlyDictionary<string,double> env) => v;
+    public IExpr Derive(string x) => new Const(0);
+}
+
+public sealed class Var : IExpr {
+    private readonly string name;
+    public Var(string name) => this.name = name;
+    public double Eval(IReadOnlyDictionary<string,double> env) => env[name];
+    public IExpr Derive(string x) => new Const(name == x ? 1 : 0);
+}
+
+public sealed class Add : IExpr {
+    private readonly IExpr a, b;
+    public Add(IExpr a, IExpr b) { this.a = a; this.b = b; }
+    public double Eval(IReadOnlyDictionary<string,double> env) => a.Eval(env) + b.Eval(env);
+    public IExpr Derive(string x) => new Add(a.Derive(x), b.Derive(x));
+}
+
+public sealed class Mul : IExpr {
+    private readonly IExpr a, b;
+    public Mul(IExpr a, IExpr b) { this.a = a; this.b = b; }
+    public double Eval(IReadOnlyDictionary<string,double> env) => a.Eval(env) * b.Eval(env);
+    // pravidlo o soucinu: (a*b)' = a'*b + a*b'
+    public IExpr Derive(string x) => new Add(new Mul(a.Derive(x), b), new Mul(a, b.Derive(x)));
+}
+\end{lstlisting}
+Použití: výraz $x\cdot x + 3$ je \texttt{new Add(new Mul(new Var("x"), new Var("x")), new Const(3))}; \texttt{Eval} s \texttt{\{["x"]=2\}} dá $7$, \texttt{Derive("x")} dá symbolicky $x{\cdot}1+1{\cdot}x$ ($+0$).
+
+\textbf{Rozšiřitelnost (c):} novou operaci (např.\ \texttt{Sin}) přidáme jako novou třídu implementující \texttt{IExpr} - \emph{beze změny} stávajících tříd (open/closed). Sdílení podvýrazu (DAG) je zdarma: tentýž objekt \texttt{IExpr} lze odkázat z více míst (uzly jsou neměnné).
+\end{reseni}
+
+\begin{jadro}
+Jedno rozhraní s operacemi (\texttt{Eval}, \texttt{Derive}), uzel = třída implementující ho; rekurze přes děti. Derivace součinu = pravidlo $(ab)'=a'b+ab'$. Rozšíření = nová třída, ne \texttt{switch}.
+\end{jadro}
+
+\past{Nepoužívej \texttt{switch} na typ uzlu - to porušuje open/closed a u nového uzlu zapomeneš větev. Polymorfismus přes rozhraní je správně. Uzly drž neměnné (immutable) kvuli sdílení.}

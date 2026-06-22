@@ -1,0 +1,35 @@
+\ulohahead{programování (C\#)}{Emulátor jednoduchého procesoru (instrukční dispatch)}
+\begin{zadani}
+Napište emulátor jednoduchého registrového procesoru s instrukcemi \texttt{LOAD}, \texttt{ADD}, \texttt{SUB}, \texttt{JMP}, \texttt{JZ}, \texttt{HALT}. Program je pole instrukcí, stav jsou registry a čítač instrukcí (PC). \emph{(Typ úlohy: 2022-léto Q4 - emulátor procesoru.)}
+\end{zadani}
+
+\begin{reseni}
+\begin{lstlisting}
+public enum Op { Load, Add, Sub, Jmp, Jz, Halt }
+public readonly record struct Instr(Op Op, int A, int B);
+
+public static int[] Run(Instr[] prog, int regCount) {
+    var reg = new int[regCount];
+    int pc = 0;
+    while (true) {
+        var ins = prog[pc];
+        switch (ins.Op) {
+            case Op.Load: reg[ins.A] = ins.B;          pc++;            break; // reg[A] = B
+            case Op.Add:  reg[ins.A] += reg[ins.B];    pc++;            break; // reg[A]+=reg[B]
+            case Op.Sub:  reg[ins.A] -= reg[ins.B];    pc++;            break;
+            case Op.Jmp:  pc = ins.A;                                   break; // skok na adresu A
+            case Op.Jz:   pc = (reg[ins.A] == 0) ? ins.B : pc + 1;      break; // if reg[A]==0 goto B
+            case Op.Halt: return reg;
+            default: throw new InvalidOperationException("neznama instrukce");
+        }
+    }
+}
+\end{lstlisting}
+\textbf{Princip:} smyčka \emph{fetch-decode-execute} - načti instrukci na \texttt{pc}, rozskoč podle opkódu (\texttt{switch}), proveď, aktualizuj \texttt{pc} (skoky mění \texttt{pc} přímo). \emph{Alternativa OO:} každá instrukce jako třída implementující \texttt{IInstr.Execute(state)} - dispatch přes polymorfismus místo \texttt{switch} (snáz rozšiřitelné).
+\end{reseni}
+
+\begin{jadro}
+Stav = registry + PC. Smyčka fetch-decode-execute: \texttt{switch} podle opkódu provede instrukci a posune PC; skoky nastaví PC přímo; \texttt{HALT} ukončí. OO varianta = instrukce jako třídy s \texttt{Execute}.
+\end{jadro}
+
+\past{Po skoku PC \emph{neinkrementuj} (skok ho už nastavil). \texttt{JZ} testuje registr a větví. Bez \texttt{HALT} / chybného PC hrozí nekonečná smyčka nebo přístup mimo pole - ošetři.}

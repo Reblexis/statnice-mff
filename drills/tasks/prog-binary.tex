@@ -1,0 +1,42 @@
+\ulohahead{programování (C\#)}{Čtení strukturovaného binárního souboru}
+\begin{zadani}
+Binární soubor: 4 bajty ASCII ,,\texttt{REC1}'' (magic), \texttt{uint32} \texttt{count} (little-endian), poté \texttt{count} záznamů, každý \texttt{int32 id} + \texttt{float32 value} (LE). Napište načtení do pole struktur a ošetřete poškozený soubor. \emph{(Typ úlohy: 2024-podzim Q2, 2025-podzim Q2, reprezentace dat / binární soubor.)}
+\end{zadani}
+
+\begin{reseni}
+\begin{lstlisting}
+public readonly record struct Rec(int Id, float Value);
+
+public static Rec[] Load(string path) {
+    using var fs = File.OpenRead(path);
+    using var br = new BinaryReader(fs);   // cte little-endian
+
+    var magic = br.ReadBytes(4);           // ReadBytes muze vratit MENE bajtu
+    if (magic.Length != 4 ||
+        magic[0] != (byte)'R' || magic[1] != (byte)'E' ||
+        magic[2] != (byte)'C' || magic[3] != (byte)'1')
+        throw new InvalidDataException("spatny magic");
+
+    uint count = br.ReadUInt32();
+    // obrana proti nesmyslnemu count: over proti zbyvajici delce souboru
+    long remaining = fs.Length - fs.Position;
+    if ((long)count * 8 != remaining)
+        throw new InvalidDataException("delka neodpovida count");
+
+    var recs = new Rec[count];
+    for (uint i = 0; i < count; i++) {
+        int id = br.ReadInt32();           // pri zkraceni vyhodi EndOfStreamException
+        float val = br.ReadSingle();
+        recs[i] = new Rec(id, val);
+    }
+    return recs;
+}
+\end{lstlisting}
+\textbf{Ruční složení int32 z bajtu} (princip endianity, nezávislé na CPU): \texttt{id = b0 | b1<<8 | b2<<16 | b3<<24}. Na big-endian CPU by selhalo až nativní přetypování (\texttt{BitConverter.ToInt32}), ne tohle explicitní složení; přenositelně lze použít \texttt{BinaryPrimitives.ReadInt32LittleEndian}.
+\end{reseni}
+
+\begin{jadro}
+\texttt{BinaryReader} čte LE; ověř magic, \emph{ověř \texttt{count} proti délce souboru před alokací}, čti záznamy. \texttt{ReadBytes} vrací i méně bajtu (kontroluj délku), \texttt{ReadInt32} při zkrácení vyhodí výjimku.
+\end{jadro}
+
+\past{Nealokuj \texttt{new Rec[count]} bez ověření \texttt{count} (riziko OOM u poškozeného souboru). Little-endian = nejméně významný bajt první. Zarovnání ve \emph{formátu} souboru nepředpokládej.}
